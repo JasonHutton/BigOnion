@@ -19,7 +19,31 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\engine\graphic\model.cpp" />
+    <ClCompile Include="src\engine\BOEngine.cpp" />
+    <ClCompile Include="src\engine\graphic\camera.cpp" />
+    <ClCompile Include="src\engine\graphic\shader.cpp" />
+    <ClCompile Include="src\game\game_controller.cpp" />
+    <ClCompile Include="src\game\game_loader.cpp" />
+    <ClCompile Include="src\game\game_renderer.cpp" />
     <ClCompile Include="src\Launcher.cpp" />
+    <ClCompile Include="src\game\models\suit_man.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\engine\BOEngine.h" />
+    <ClInclude Include="src\engine\graphic\camera.h" />
+    <ClInclude Include="src\engine\filesystem.h" />
+    <ClInclude Include="src\engine\graphic\model.h" />
+    <ClInclude Include="src\engine\graphic\model_mesh.h" />
+    <ClInclude Include="src\engine\graphic\shader_m.h" />
+    <ClInclude Include="src\engine\resource.h" />
+    <ClInclude Include="src\game\game_controller.h" />
+    <ClInclude Include="src\game\game_loader.h" />
+    <ClInclude Include="src\game\game_renderer.h" />
+    <ClInclude Include="src\game\models\suit_man.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="src\engine\vertex.glsl" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
@@ -83,7 +107,7 @@
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
-      <AdditionalDependencies>glad.lib;glfw3.lib;glfw3dll.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>glad.lib;glfw3.lib;glfw3dll.lib;assimp-vc140-mt.lib;IrrXML.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(SolutionDir)lib</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>

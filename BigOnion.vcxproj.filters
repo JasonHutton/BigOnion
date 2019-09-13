@@ -13,10 +13,98 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Source Files\engine">
+      <UniqueIdentifier>{df790805-5b2b-4d7f-b561-0b21dec3e897}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\game">
+      <UniqueIdentifier>{2941abc6-8bd8-4e9c-b90d-1e17e11c690d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\engine\graphic">
+      <UniqueIdentifier>{bbf2fb44-bc50-4cb9-9b1b-5c6c88d5a4ec}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\engine">
+      <UniqueIdentifier>{b06836bb-0fcd-42ac-98b7-7971fe607602}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\game">
+      <UniqueIdentifier>{f29bd02f-2e84-42e7-a8d4-4b1f5b40cbe7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\engine\graphic">
+      <UniqueIdentifier>{30ddeb68-c3b5-41c0-bcea-13f2d4ecba45}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\game\models">
+      <UniqueIdentifier>{91aa2d3f-d87f-4e2e-8406-5eaee09c6fa9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\game\models">
+      <UniqueIdentifier>{a6f013db-1db4-4535-b925-6120051e822d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Launcher.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\game\game_loader.cpp">
+      <Filter>Source Files\game</Filter>
+    </ClCompile>
+    <ClCompile Include="src\engine\BOEngine.cpp">
+      <Filter>Source Files\engine</Filter>
+    </ClCompile>
+    <ClCompile Include="src\engine\graphic\camera.cpp">
+      <Filter>Source Files\engine\graphic</Filter>
+    </ClCompile>
+    <ClCompile Include="src\game\game_controller.cpp">
+      <Filter>Source Files\game</Filter>
+    </ClCompile>
+    <ClCompile Include="src\game\models\suit_man.cpp">
+      <Filter>Source Files\game\models</Filter>
+    </ClCompile>
+    <ClCompile Include="src\game\game_renderer.cpp">
+      <Filter>Source Files\game</Filter>
+    </ClCompile>
+    <ClCompile Include="src\engine\graphic\shader.cpp">
+      <Filter>Source Files\engine\graphic</Filter>
+    </ClCompile>
+    <ClCompile Include="src\engine\graphic\model.cpp">
+      <Filter>Source Files\engine\graphic</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\engine\BOEngine.h">
+      <Filter>Header Files\engine</Filter>
+    </ClInclude>
+    <ClInclude Include="src\engine\filesystem.h">
+      <Filter>Header Files\engine</Filter>
+    </ClInclude>
+    <ClInclude Include="src\game\game_loader.h">
+      <Filter>Header Files\game</Filter>
+    </ClInclude>
+    <ClInclude Include="src\engine\resource.h">
+      <Filter>Header Files\engine</Filter>
+    </ClInclude>
+    <ClInclude Include="src\engine\graphic\camera.h">
+      <Filter>Header Files\engine\graphic</Filter>
+    </ClInclude>
+    <ClInclude Include="src\game\game_controller.h">
+      <Filter>Header Files\game</Filter>
+    </ClInclude>
+    <ClInclude Include="src\game\game_renderer.h">
+      <Filter>Header Files\game</Filter>
+    </ClInclude>
+    <ClInclude Include="src\game\models\suit_man.h">
+      <Filter>Header Files\game\models</Filter>
+    </ClInclude>
+    <ClInclude Include="src\engine\graphic\model.h">
+      <Filter>Header Files\engine\graphic</Filter>
+    </ClInclude>
+    <ClInclude Include="src\engine\graphic\model_mesh.h">
+      <Filter>Header Files\engine\graphic</Filter>
+    </ClInclude>
+    <ClInclude Include="src\engine\graphic\shader_m.h">
+      <Filter>Header Files\engine\graphic</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="src\engine\vertex.glsl">
+      <Filter>Resource Files</Filter>
+    </None>
   </ItemGroup>
 </Project>
