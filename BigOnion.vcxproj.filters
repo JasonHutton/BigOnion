@@ -37,6 +37,15 @@
     <Filter Include="Header Files\game\models">
       <UniqueIdentifier>{a6f013db-1db4-4535-b925-6120051e822d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\engine\audio">
+      <UniqueIdentifier>{405d96ca-4cb3-4aa7-9922-d9f55eb45183}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\engine\audio">
+      <UniqueIdentifier>{bdff59da-e153-45ab-b871-4b0e430066da}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\game\sounds">
+      <UniqueIdentifier>{80fe01b0-b5bb-405d-8870-60faaeb709eb}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Launcher.cpp">
@@ -65,6 +74,9 @@
     </ClCompile>
     <ClCompile Include="src\engine\graphic\model.cpp">
       <Filter>Source Files\engine\graphic</Filter>
+    </ClCompile>
+    <ClCompile Include="AudioEngine.cpp">
+      <Filter>Source Files\engine\audio</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -101,10 +113,18 @@
     <ClInclude Include="src\engine\graphic\shader_m.h">
       <Filter>Header Files\engine\graphic</Filter>
     </ClInclude>
+    <ClInclude Include="AudioEngine.h">
+      <Filter>Header Files\engine\audio</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="src\engine\vertex.glsl">
       <Filter>Resource Files</Filter>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Media Include="src\game\sounds\sample.mp3">
+      <Filter>Source Files\game\sounds</Filter>
+    </Media>
   </ItemGroup>
 </Project>
