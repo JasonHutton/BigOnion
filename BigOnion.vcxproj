@@ -19,7 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="AudioEngine.cpp" />
+    <ClCompile Include="src\engine\audio\AudioEngine.cpp" />
     <ClCompile Include="src\engine\graphic\model.cpp" />
     <ClCompile Include="src\engine\BOEngine.cpp" />
     <ClCompile Include="src\engine\graphic\camera.cpp" />
@@ -31,7 +31,7 @@
     <ClCompile Include="src\game\models\suit_man.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="AudioEngine.h" />
+    <ClInclude Include="src\engine\audio\AudioEngine.h" />
     <ClInclude Include="src\engine\BOEngine.h" />
     <ClInclude Include="src\engine\graphic\camera.h" />
     <ClInclude Include="src\engine\filesystem.h" />
@@ -46,9 +46,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="src\engine\vertex.glsl" />
-  </ItemGroup>
-  <ItemGroup>
-    <Media Include="src\game\sounds\sample.mp3" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
@@ -115,6 +112,9 @@
       <AdditionalDependencies>glad.lib;glfw3.lib;glfw3dll.lib;assimp-vc140-mt.lib;IrrXML.lib;fmodL_vc.lib;fmodstudioL_vc.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(SolutionDir)lib;$(SolutionDir)lib\FMOD lib</AdditionalLibraryDirectories>
     </Link>
+    <PostBuildEvent>
+      <Command>xcopy /y /d "$(SolutionDir)lib\FMOD lib\*.dll" "$(OutDir)"</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>

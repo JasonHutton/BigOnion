@@ -41,6 +41,9 @@ void GameLoader::createGame() {
 
 	engine.initialize();
 	gameRenderer.init();
+	audio.Init();
+	audio.LoadSound("src/game/assets/sounds/sample.mp3", false);
+	audio.PlaySounds("src/game/assets/sounds/sample.mp3", Vector3{ 0, 0, 0 }, audio.VolumeTodB(1.0f));
 }
 
 void GameLoader::setupGame() {
@@ -85,10 +88,13 @@ void GameLoader::startGame() {
 		engine.render();
 		gameRenderer.render(engine);
 
+		audio.Update();
+
 		// glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
 		// -------------------------------------------------------------------------------
 		glfwSwapBuffers(window);
 		glfwPollEvents();
+
 	}
 
 	// glfw: terminate, clearing all previously allocated GLFW resources.
