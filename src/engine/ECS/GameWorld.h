@@ -9,6 +9,7 @@ class GameObject;
 class GameWorld
 {
 public:
+	GameWorld();
 	void addGameObject(std::unique_ptr<GameObject> gameObject);
 	void removeGameObject(std::string id);
 	void updateGameObjects(float deltaTime);

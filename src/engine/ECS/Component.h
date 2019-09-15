@@ -7,12 +7,12 @@ class GameObject;
 class Component
 {
 public:
-	Component(std::weak_ptr<GameObject> gameObject);
-	void update(float deltaTime);
-	void lateUpdate(float deltaTime);
+	Component(GameObject* gameObject);
+	virtual void update(float deltaTime) = 0;
+	virtual void lateUpdate(float deltaTime) = 0;
 
 private:
 	Component();
-	std::weak_ptr<GameObject> gameObject;
+	GameObject* gameObject;
 
 };
