@@ -6,6 +6,8 @@
 
 class Component;
 
+constexpr int INIT_COMPONENTS_SIZE = 5;
+
 class GameObject
 {
 public:
