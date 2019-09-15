@@ -36,7 +36,9 @@
   <ItemGroup>
     <ClInclude Include="src\engine\audio\AudioEngine.h" />
     <ClInclude Include="src\engine\BOEngine.h" />
+    <ClInclude Include="src\engine\ECS\Component.fwd.h" />
     <ClInclude Include="src\engine\ECS\Component.h" />
+    <ClInclude Include="src\engine\ECS\GameObject.fwd.h" />
     <ClInclude Include="src\engine\ECS\GameObject.h" />
     <ClInclude Include="src\engine\ECS\GameWorld.h" />
     <ClInclude Include="src\engine\graphic\camera.h" />

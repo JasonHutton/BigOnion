@@ -10,6 +10,11 @@ GameObject::GameObject(std::string id)
 {
 }
 
+GameObject::~GameObject()
+{
+	// todo
+}
+
 /*
 	Adds a component to this Game Object's component collection.
 	Needs to be called with std::move() for this Game Object to have ownership of the std::unique_ptr.

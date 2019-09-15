@@ -8,3 +8,8 @@ Component::Component(GameObject* gameObject)
 {
 }
 
+Component::~Component()
+{
+	// todo
+}
+

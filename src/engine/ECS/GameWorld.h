@@ -3,8 +3,7 @@
 #include <memory>
 #include <string>
 #include <vector>
-
-class GameObject;
+#include "GameObject.fwd.h"
 
 constexpr int INIT_GAMEWORLD_SIZE = 5;
 
@@ -12,6 +11,7 @@ class GameWorld
 {
 public:
 	GameWorld();
+	~GameWorld();
 	void addGameObject(std::unique_ptr<GameObject> gameObject);
 	void removeGameObject(std::string id);
 	void updateGameObjects(float deltaTime);

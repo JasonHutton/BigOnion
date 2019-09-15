@@ -9,6 +9,11 @@ GameWorld::GameWorld()
 {
 }
 
+GameWorld::~GameWorld()
+{
+	// todo
+}
+
 /*
 	Adds a Game Object to this Game World's component collection.
 	Needs to be called with std::move() for this Game World to have ownership of the std::unique_ptr.
