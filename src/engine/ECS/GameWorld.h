@@ -6,6 +6,8 @@
 
 class GameObject;
 
+constexpr int INIT_GAMEWORLD_SIZE = 5;
+
 class GameWorld
 {
 public:
@@ -16,6 +18,6 @@ public:
 	void teardownWorld();
 
 private:
-	std::vector<std::unique_ptr<GameObject>> gameObjects;
+	std::vector<std::unique_ptr<GameObject>> gameObjects; // TODO: consider using a hash table to give each game object a unique id
 
 };
