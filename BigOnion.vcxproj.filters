@@ -43,6 +43,12 @@
     <Filter Include="Source Files\engine\audio">
       <UniqueIdentifier>{bdff59da-e153-45ab-b871-4b0e430066da}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\engine\ECS">
+      <UniqueIdentifier>{1455c8f3-87b3-4724-a98a-ef0054b637c9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\engine\ECS">
+      <UniqueIdentifier>{ff2ad7fa-ac04-48f1-afe0-a9f87e35b788}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Launcher.cpp">
@@ -74,6 +80,15 @@
     </ClCompile>
     <ClCompile Include="src\engine\audio\AudioEngine.cpp">
       <Filter>Source Files\engine\audio</Filter>
+    </ClCompile>
+    <ClCompile Include="src\engine\ECS\GameWorld.cpp">
+      <Filter>Source Files\engine\ECS</Filter>
+    </ClCompile>
+    <ClCompile Include="src\engine\ECS\Component.cpp">
+      <Filter>Source Files\engine\ECS</Filter>
+    </ClCompile>
+    <ClCompile Include="src\engine\ECS\GameObject.cpp">
+      <Filter>Source Files\engine\ECS</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -112,6 +127,15 @@
     </ClInclude>
     <ClInclude Include="src\engine\audio\AudioEngine.h">
       <Filter>Header Files\engine\audio</Filter>
+    </ClInclude>
+    <ClInclude Include="src\engine\ECS\GameWorld.h">
+      <Filter>Header Files\engine\ECS</Filter>
+    </ClInclude>
+    <ClInclude Include="src\engine\ECS\Component.h">
+      <Filter>Header Files\engine\ECS</Filter>
+    </ClInclude>
+    <ClInclude Include="src\engine\ECS\GameObject.h">
+      <Filter>Header Files\engine\ECS</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

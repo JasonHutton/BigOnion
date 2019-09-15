@@ -20,6 +20,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\engine\audio\AudioEngine.cpp" />
+    <ClCompile Include="src\engine\ECS\Component.cpp" />
+    <ClCompile Include="src\engine\ECS\GameObject.cpp" />
+    <ClCompile Include="src\engine\ECS\GameWorld.cpp" />
     <ClCompile Include="src\engine\graphic\model.cpp" />
     <ClCompile Include="src\engine\BOEngine.cpp" />
     <ClCompile Include="src\engine\graphic\camera.cpp" />
@@ -33,6 +36,9 @@
   <ItemGroup>
     <ClInclude Include="src\engine\audio\AudioEngine.h" />
     <ClInclude Include="src\engine\BOEngine.h" />
+    <ClInclude Include="src\engine\ECS\Component.h" />
+    <ClInclude Include="src\engine\ECS\GameObject.h" />
+    <ClInclude Include="src\engine\ECS\GameWorld.h" />
     <ClInclude Include="src\engine\graphic\camera.h" />
     <ClInclude Include="src\engine\filesystem.h" />
     <ClInclude Include="src\engine\graphic\model.h" />
