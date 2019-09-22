@@ -1,0 +1,68 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="16.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="C:\Users\Paul\Downloads\bullet-2.82-r2704\bullet-2.82-r2704\src\BulletMultiThreaded\GpuSoftBodySolvers\OpenCL\btSoftBodySolver_OpenCL.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\Paul\Downloads\bullet-2.82-r2704\bullet-2.82-r2704\src\BulletMultiThreaded\GpuSoftBodySolvers\OpenCL\btSoftBodySolver_OpenCLSIMDAware.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\Paul\Downloads\bullet-2.82-r2704\bullet-2.82-r2704\src\BulletMultiThreaded\GpuSoftBodySolvers\OpenCL\btSoftBodySolverOutputCLtoGL.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="C:\Users\Paul\Downloads\bullet-2.82-r2704\bullet-2.82-r2704\src\BulletMultiThreaded\GpuSoftBodySolvers\OpenCL\btSoftBodySolver_OpenCL.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\Paul\Downloads\bullet-2.82-r2704\bullet-2.82-r2704\src\BulletMultiThreaded\GpuSoftBodySolvers\OpenCL\btSoftBodySolver_OpenCLSIMDAware.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\Paul\Downloads\bullet-2.82-r2704\bullet-2.82-r2704\src\BulletMultiThreaded\GpuSoftBodySolvers\Shared\btSoftBodySolverData.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\Paul\Downloads\bullet-2.82-r2704\bullet-2.82-r2704\src\BulletMultiThreaded\GpuSoftBodySolvers\OpenCL\btSoftBodySolverVertexData_OpenCL.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\Paul\Downloads\bullet-2.82-r2704\bullet-2.82-r2704\src\BulletMultiThreaded\GpuSoftBodySolvers\OpenCL\btSoftBodySolverTriangleData_OpenCL.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\Paul\Downloads\bullet-2.82-r2704\bullet-2.82-r2704\src\BulletMultiThreaded\GpuSoftBodySolvers\OpenCL\btSoftBodySolverLinkData_OpenCL.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\Paul\Downloads\bullet-2.82-r2704\bullet-2.82-r2704\src\BulletMultiThreaded\GpuSoftBodySolvers\OpenCL\btSoftBodySolverLinkData_OpenCLSIMDAware.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\Paul\Downloads\bullet-2.82-r2704\bullet-2.82-r2704\src\BulletMultiThreaded\GpuSoftBodySolvers\OpenCL\btSoftBodySolverBuffer_OpenCL.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\Paul\Downloads\bullet-2.82-r2704\bullet-2.82-r2704\src\BulletMultiThreaded\GpuSoftBodySolvers\OpenCL\btSoftBodySolverVertexBuffer_OpenGL.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\Paul\Downloads\bullet-2.82-r2704\bullet-2.82-r2704\src\BulletMultiThreaded\GpuSoftBodySolvers\OpenCL\btSoftBodySolverOutputCLtoGL.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\Paul\Downloads\bullet-2.82-r2704\bullet-2.82-r2704\src\BulletMultiThreaded\GpuSoftBodySolvers\OpenCL\Intel\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="C:\Users\Paul\Downloads\bullet-2.82-r2704\bullet-2.82-r2704\src\BulletMultiThreaded\GpuSoftBodySolvers\OpenCL\OpenCLC10\UpdateNormals.cl" />
+    <None Include="C:\Users\Paul\Downloads\bullet-2.82-r2704\bullet-2.82-r2704\src\BulletMultiThreaded\GpuSoftBodySolvers\OpenCL\OpenCLC10\Integrate.cl" />
+    <None Include="C:\Users\Paul\Downloads\bullet-2.82-r2704\bullet-2.82-r2704\src\BulletMultiThreaded\GpuSoftBodySolvers\OpenCL\OpenCLC10\UpdatePositions.cl" />
+    <None Include="C:\Users\Paul\Downloads\bullet-2.82-r2704\bullet-2.82-r2704\src\BulletMultiThreaded\GpuSoftBodySolvers\OpenCL\OpenCLC10\UpdateNodes.cl" />
+    <None Include="C:\Users\Paul\Downloads\bullet-2.82-r2704\bullet-2.82-r2704\src\BulletMultiThreaded\GpuSoftBodySolvers\OpenCL\OpenCLC10\SolvePositions.cl" />
+    <None Include="C:\Users\Paul\Downloads\bullet-2.82-r2704\bullet-2.82-r2704\src\BulletMultiThreaded\GpuSoftBodySolvers\OpenCL\OpenCLC10\UpdatePositionsFromVelocities.cl" />
+    <None Include="C:\Users\Paul\Downloads\bullet-2.82-r2704\bullet-2.82-r2704\src\BulletMultiThreaded\GpuSoftBodySolvers\OpenCL\OpenCLC10\ApplyForces.cl" />
+    <None Include="C:\Users\Paul\Downloads\bullet-2.82-r2704\bullet-2.82-r2704\src\BulletMultiThreaded\GpuSoftBodySolvers\OpenCL\OpenCLC10\PrepareLinks.cl" />
+    <None Include="C:\Users\Paul\Downloads\bullet-2.82-r2704\bullet-2.82-r2704\src\BulletMultiThreaded\GpuSoftBodySolvers\OpenCL\OpenCLC10\VSolveLinks.cl" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{CD5EE022-5628-31B3-ABAE-A152627790FC}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{002F0037-F607-366D-8651-69B51AE29B82}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

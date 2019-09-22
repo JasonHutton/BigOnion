@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="16.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="C:\Users\Paul\Downloads\bullet-2.82-r2704\bullet-2.82-r2704\Demos\VehicleDemo\heightfield128x128.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\Paul\Downloads\bullet-2.82-r2704\bullet-2.82-r2704\Demos\VehicleDemo\VehicleDemo.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\Paul\Downloads\bullet-2.82-r2704\bullet-2.82-r2704\Demos\VehicleDemo\main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\Paul\Downloads\bullet-2.82-r2704\bullet-2.82-r2704\Demos\VehicleDemo\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{002F0037-F607-366D-8651-69B51AE29B82}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>
