@@ -38,12 +38,17 @@ GameLoader::GameLoader()
 void GameLoader::createGame() {
 
 	std::cout << "createGame" << std::endl;
-
 	engine.initialize();
 	gameRenderer.init();
 	audio.Init();
-	audio.LoadSound("src/game/assets/sounds/sample.mp3", false);
-	audio.PlaySounds("src/game/assets/sounds/sample.mp3", Vector3{ 0, 0, 0 }, audio.VolumeTodB(1.0f));
+	//audio.LoadSound("src/game/assets/sounds/sample.mp3", false);
+	//audio.PlaySounds("src/game/assets/sounds/sample.mp3", Vector3{ 0, 0, 0 }, audio.VolumeTodB(1.0f));
+	//test gun sound on the right
+	audio.PlaySounds("src/game/assets/sounds/gun.wav", Vector3{ 20, 0, 0 }, audio.VolumeTodB(1.0f));
+	//test siren sounds on the left
+	audio.PlaySounds("src/game/assets/sounds/siren.wav", Vector3{ -20, 0, 0 }, audio.VolumeTodB(1.0f));
+	//test bomb sounds center
+	audio.PlaySounds("src/game/assets/sounds/bomb.wav", Vector3{ 0, 0, 0 }, audio.VolumeTodB(1.5f));
 }
 
 void GameLoader::setupGame() {
