@@ -41,8 +41,7 @@ void GameLoader::createGame() {
 	engine.initialize();
 	gameRenderer.init();
 	audio.Init();
-	//audio.LoadSound("src/game/assets/sounds/sample.mp3", false);
-	//audio.PlaySounds("src/game/assets/sounds/sample.mp3", Vector3{ 0, 0, 0 }, audio.VolumeTodB(1.0f));
+	audio.PlaySounds("src/game/assets/sounds/test.wav", Vector3{ 0, 0, 10 }, audio.VolumeTodB(1.0f));
 	//test gun sound on the right
 	audio.PlaySounds("src/game/assets/sounds/gun.wav", Vector3{ 20, 0, 0 }, audio.VolumeTodB(1.0f));
 	//test siren sounds on the left
