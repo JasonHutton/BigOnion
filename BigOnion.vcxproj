@@ -19,6 +19,8 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="File.cpp" />
+    <ClCompile Include="FileSystem.cpp" />
     <ClCompile Include="src\engine\audio\AudioEngine.cpp" />
     <ClCompile Include="src\engine\graphic\model.cpp" />
     <ClCompile Include="src\engine\BOEngine.cpp" />
@@ -31,10 +33,11 @@
     <ClCompile Include="src\game\models\suit_man.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="File.h" />
+    <ClInclude Include="FileSystem.h" />
     <ClInclude Include="src\engine\audio\AudioEngine.h" />
     <ClInclude Include="src\engine\BOEngine.h" />
     <ClInclude Include="src\engine\graphic\camera.h" />
-    <ClInclude Include="src\engine\filesystem.h" />
     <ClInclude Include="src\engine\graphic\model.h" />
     <ClInclude Include="src\engine\graphic\model_mesh.h" />
     <ClInclude Include="src\engine\graphic\shader_m.h" />

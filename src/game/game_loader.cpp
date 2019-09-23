@@ -39,11 +39,17 @@ void GameLoader::createGame() {
 
 	std::cout << "createGame" << std::endl;
 
+	FileSystem::Init("./src");
+
 	engine.initialize();
 	gameRenderer.init();
 	audio.Init();
-	audio.LoadSound("src/game/assets/sounds/sample.mp3", false);
-	audio.PlaySounds("src/game/assets/sounds/sample.mp3", Vector3{ 0, 0, 0 }, audio.VolumeTodB(1.0f));
+	File* loadSound = new File("game/assets/sounds/sample.mp3");
+	
+	audio.LoadSound(loadSound->GetOSPath(), false);
+	audio.PlaySounds(loadSound->GetOSPath(), Vector3{ 0, 0, 0 }, audio.VolumeTodB(1.0f));
+	
+	delete loadSound;
 }
 
 void GameLoader::setupGame() {

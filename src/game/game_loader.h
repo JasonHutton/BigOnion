@@ -4,6 +4,7 @@
 #include "game_renderer.h"
 #include "game_controller.h"
 #include "../src/engine/audio/AudioEngine.h"
+#include "../FileSystem.h"
 
 class GameLoader
 {
