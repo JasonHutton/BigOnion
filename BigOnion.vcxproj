@@ -31,8 +31,10 @@
     <ClCompile Include="src\game\game_renderer.cpp" />
     <ClCompile Include="src\Launcher.cpp" />
     <ClCompile Include="src\game\models\suit_man.cpp" />
+    <ClCompile Include="TextFile.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AccessibleFileI.h" />
     <ClInclude Include="File.h" />
     <ClInclude Include="FileSystem.h" />
     <ClInclude Include="src\engine\audio\AudioEngine.h" />
@@ -46,6 +48,7 @@
     <ClInclude Include="src\game\game_loader.h" />
     <ClInclude Include="src\game\game_renderer.h" />
     <ClInclude Include="src\game\models\suit_man.h" />
+    <ClInclude Include="TextFile.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="src\engine\vertex.glsl" />
