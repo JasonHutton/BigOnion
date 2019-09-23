@@ -90,6 +90,9 @@
     <ClCompile Include="TextFile.cpp">
       <Filter>Source Files\engine\FileSystem</Filter>
     </ClCompile>
+    <ClCompile Include="SoundFile.cpp">
+      <Filter>Source Files\engine\FileSystem</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\engine\BOEngine.h">
@@ -135,6 +138,9 @@
       <Filter>Header Files\engine\FileSystem</Filter>
     </ClInclude>
     <ClInclude Include="AccessibleFileI.h">
+      <Filter>Header Files\engine\FileSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="SoundFile.h">
       <Filter>Header Files\engine\FileSystem</Filter>
     </ClInclude>
   </ItemGroup>

@@ -6,6 +6,8 @@
 
 #include "../engine/BOEngine.h"
 
+#include "../SoundFile.h"
+
 // functions
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void mouse_callback(GLFWwindow* window, double xpos, double ypos);
@@ -44,12 +46,11 @@ void GameLoader::createGame() {
 	engine.initialize();
 	gameRenderer.init();
 	audio.Init();
-	File* loadSound = new File("game/assets/sounds/sample.mp3");
-	
-	audio.LoadSound(loadSound->GetOSPath(), false);
-	audio.PlaySounds(loadSound->GetOSPath(), Vector3{ 0, 0, 0 }, audio.VolumeTodB(1.0f));
-	
-	delete loadSound;
+
+	SoundFile* sound = new SoundFile(&audio, "game/assets/sounds/sample.mp3");
+	sound->load();
+	sound->play();
+	delete sound;
 }
 
 void GameLoader::setupGame() {

@@ -21,6 +21,7 @@
   <ItemGroup>
     <ClCompile Include="File.cpp" />
     <ClCompile Include="FileSystem.cpp" />
+    <ClCompile Include="SoundFile.cpp" />
     <ClCompile Include="src\engine\audio\AudioEngine.cpp" />
     <ClCompile Include="src\engine\graphic\model.cpp" />
     <ClCompile Include="src\engine\BOEngine.cpp" />
@@ -37,6 +38,7 @@
     <ClInclude Include="AccessibleFileI.h" />
     <ClInclude Include="File.h" />
     <ClInclude Include="FileSystem.h" />
+    <ClInclude Include="SoundFile.h" />
     <ClInclude Include="src\engine\audio\AudioEngine.h" />
     <ClInclude Include="src\engine\BOEngine.h" />
     <ClInclude Include="src\engine\graphic\camera.h" />
