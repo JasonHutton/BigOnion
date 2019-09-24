@@ -10,11 +10,11 @@ class GameLoader
 	private:
 		BOEngine engine;
 		GameRenderer gameRenderer;
-		AudioEngine audio;
+		
 		void setupGame();
 	public:
 		GameLoader();
-
+		AudioEngine audio;
 		void createGame();
 		void reload();
 		void startGame();
