@@ -1,4 +1,6 @@
 #include "BOEngine.h"
+#include "ECS/GameObject.h"
+#include "../game/components/TestComponent.h"
 
 
 
@@ -55,6 +57,12 @@ void BOEngine::initialize()
 		//return -1;
 	}
 
+	// Game World initialization
+	gameWorld = GameWorld();
+
+	GameObject* obj = new GameObject("Test");
+	obj->addComponent(new TestComponent());
+	gameWorld.addGameObject(obj);
 }
 
 void BOEngine::preRender()
@@ -79,11 +87,10 @@ void BOEngine::preRender()
 
 void BOEngine::updateEngine(float deltaTime)
 {
-	std::cout << "Test" << std::endl;
+	gameWorld.updateGameObjects(deltaTime);
 }
 
 void BOEngine::render()
 {
 
 }
-

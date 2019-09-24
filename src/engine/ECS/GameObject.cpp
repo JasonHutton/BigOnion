@@ -1,13 +1,12 @@
-#include <type_traits>
 #include "GameObject.h"
 #include "Component.h"
 
 /*
-	Initializes this Game Object with an id.
+	Initializes this Game Object.
 */
 GameObject::GameObject(std::string id)
 	: id(id)
-	,components(INIT_COMPONENTS_SIZE)
+	, components()
 {
 }
 
@@ -21,11 +20,11 @@ GameObject::~GameObject()
 
 /*
 	Adds a component to this Game Object's component collection.
-	Needs to be called with std::move() for this Game Object to have ownership of the std::unique_ptr.
 */
-void GameObject::addComponent(std::unique_ptr<Component> component)
+void GameObject::addComponent(Component* component)
 {
-	components.push_back(std::move(component));
+	component->gameObject = this;
+	components.push_back(component);
 }
 
 /*
@@ -33,9 +32,8 @@ void GameObject::addComponent(std::unique_ptr<Component> component)
 */
 void GameObject::updateComponents(float deltaTime)
 {
-	for (auto& it : components)
+	for (Component* component : components)
 	{
-		Component* component = it.get();
 		component->update(deltaTime);
 	}
 }
@@ -45,9 +43,8 @@ void GameObject::updateComponents(float deltaTime)
 */
 void GameObject::lateUpdateComponents(float deltaTime)
 {
-	for (auto& it : components)
+	for (Component* component : components)
 	{
-		Component* component = it.get();
 		component->lateUpdate(deltaTime);
 	}
 }

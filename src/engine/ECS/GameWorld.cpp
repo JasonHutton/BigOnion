@@ -1,11 +1,12 @@
 #include "GameWorld.h"
 #include "GameObject.h"
+#include <iostream>
 
 /*
 	Initializes this Game World.
 */
 GameWorld::GameWorld()
-	: gameObjects(INIT_GAMEWORLD_SIZE)
+	: gameObjects()
 {
 }
 
@@ -19,11 +20,10 @@ GameWorld::~GameWorld()
 
 /*
 	Adds a Game Object to this Game World's component collection.
-	Needs to be called with std::move() for this Game World to have ownership of the std::unique_ptr.
 */
-void GameWorld::addGameObject(std::unique_ptr<GameObject> gameObject)
+void GameWorld::addGameObject(GameObject* gameObject)
 {
-	gameObjects[gameObject->id] = std::move(gameObject);
+	gameObjects.emplace(std::pair<std::string, GameObject*>(gameObject->id, gameObject));
 }
 
 void GameWorld::removeGameObject(std::string id)
@@ -37,16 +37,14 @@ void GameWorld::removeGameObject(std::string id)
 void GameWorld::updateGameObjects(float deltaTime)
 {
 	// first run the updateComponents method on each GameObject...
-	for (auto& it : gameObjects)
+	for (auto& pair : gameObjects)
 	{
-		GameObject* obj = it.second.get();
-		obj->updateComponents(deltaTime);
+		pair.second->updateComponents(deltaTime);
 	}
 
 	// ...then run the lateUpdateComponents method on each GameObject
-	for (auto& it : gameObjects)
+	for (auto& pair : gameObjects)
 	{
-		GameObject* obj = it.second.get();
-		obj->lateUpdateComponents(deltaTime);
+		pair.second->lateUpdateComponents(deltaTime);
 	}
 }

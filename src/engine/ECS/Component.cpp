@@ -1,21 +1,5 @@
 #include "Component.h"
-
-/*
-	Initializes this Component and store its parent Game Object.
-*/
-Component::Component(GameObject* gameObject)
-	: gameObject(gameObject)
-{
-	// to be implemented by inheriting classes, default behaviour is nothing
-}
-
-/*
-	Deconstructor.
-*/
-Component::~Component()
-{
-	// to be implemented by inheriting classes, default behaviour is nothing
-}
+#include <iostream>
 
 /*
 	Update method, to be implemented by inheriting classes.
@@ -26,7 +10,7 @@ void Component::update(float deltaTime)
 }
 
 /*
-	:ate Update method, to be implemented by inheriting classes.
+	Late Update method, to be implemented by inheriting classes.
 */
 void Component::lateUpdate(float deltaTime)
 {

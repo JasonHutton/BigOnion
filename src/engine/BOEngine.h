@@ -10,7 +10,7 @@
 #include "../engine/graphic/camera.h"
 #include "../engine/graphic/model.h"
 
-#include "../engine/ECS/GameWorld.h"
+#include "ECS/GameWorld.h"
 
 #include <iostream>
 

@@ -49,6 +49,12 @@
     <Filter Include="Header Files\engine\ECS">
       <UniqueIdentifier>{ff2ad7fa-ac04-48f1-afe0-a9f87e35b788}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\game\components">
+      <UniqueIdentifier>{b60e7236-9103-47bc-a231-fd02e2ebb780}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\game\components">
+      <UniqueIdentifier>{9c8af86e-8254-42c7-bd52-b0de56323ee9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Launcher.cpp">
@@ -89,6 +95,9 @@
     </ClCompile>
     <ClCompile Include="src\engine\ECS\GameObject.cpp">
       <Filter>Source Files\engine\ECS</Filter>
+    </ClCompile>
+    <ClCompile Include="src\game\components\TestComponent.cpp">
+      <Filter>Source Files\game\components</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -145,6 +154,9 @@
     </ClInclude>
     <ClInclude Include="src\engine\ECS\GameWorld.fwd.h">
       <Filter>Header Files\engine\ECS</Filter>
+    </ClInclude>
+    <ClInclude Include="src\game\components\TestComponent.h">
+      <Filter>Header Files\game\components</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

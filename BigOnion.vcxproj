@@ -27,6 +27,7 @@
     <ClCompile Include="src\engine\BOEngine.cpp" />
     <ClCompile Include="src\engine\graphic\camera.cpp" />
     <ClCompile Include="src\engine\graphic\shader.cpp" />
+    <ClCompile Include="src\game\components\TestComponent.cpp" />
     <ClCompile Include="src\game\game_controller.cpp" />
     <ClCompile Include="src\game\game_loader.cpp" />
     <ClCompile Include="src\game\game_renderer.cpp" />
@@ -48,6 +49,7 @@
     <ClInclude Include="src\engine\graphic\model_mesh.h" />
     <ClInclude Include="src\engine\graphic\shader_m.h" />
     <ClInclude Include="src\engine\resource.h" />
+    <ClInclude Include="src\game\components\TestComponent.h" />
     <ClInclude Include="src\game\game_controller.h" />
     <ClInclude Include="src\game\game_loader.h" />
     <ClInclude Include="src\game\game_renderer.h" />
