@@ -1,3 +1,4 @@
+#include <type_traits>
 #include "GameObject.h"
 #include "Component.h"
 
@@ -10,9 +11,12 @@ GameObject::GameObject(std::string id)
 {
 }
 
+/*
+	Deconstructor.
+*/
 GameObject::~GameObject()
 {
-	// todo
+	components.clear();
 }
 
 /*
@@ -29,9 +33,9 @@ void GameObject::addComponent(std::unique_ptr<Component> component)
 */
 void GameObject::updateComponents(float deltaTime)
 {
-	for (std::vector<std::unique_ptr<Component>>::iterator it = components.begin(); it != components.end(); ++it) {
-
-		Component* component = (*it).get();
+	for (auto& it : components)
+	{
+		Component* component = it.get();
 		component->update(deltaTime);
 	}
 }
@@ -41,9 +45,9 @@ void GameObject::updateComponents(float deltaTime)
 */
 void GameObject::lateUpdateComponents(float deltaTime)
 {
-	for (std::vector<std::unique_ptr<Component>>::iterator it = components.begin(); it != components.end(); ++it) {
-
-		Component* component = (*it).get();
+	for (auto& it : components)
+	{
+		Component* component = it.get();
 		component->lateUpdate(deltaTime);
 	}
 }

@@ -40,6 +40,7 @@
     <ClInclude Include="src\engine\ECS\Component.h" />
     <ClInclude Include="src\engine\ECS\GameObject.fwd.h" />
     <ClInclude Include="src\engine\ECS\GameObject.h" />
+    <ClInclude Include="src\engine\ECS\GameWorld.fwd.h" />
     <ClInclude Include="src\engine\ECS\GameWorld.h" />
     <ClInclude Include="src\engine\graphic\camera.h" />
     <ClInclude Include="src\engine\filesystem.h" />

@@ -143,6 +143,9 @@
     <ClInclude Include="src\engine\ECS\Component.fwd.h">
       <Filter>Header Files\engine\ECS</Filter>
     </ClInclude>
+    <ClInclude Include="src\engine\ECS\GameWorld.fwd.h">
+      <Filter>Header Files\engine\ECS</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="src\engine\vertex.glsl">

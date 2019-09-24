@@ -79,6 +79,7 @@ void BOEngine::preRender()
 
 void BOEngine::updateEngine(float deltaTime)
 {
+	std::cout << "Test" << std::endl;
 }
 
 void BOEngine::render()

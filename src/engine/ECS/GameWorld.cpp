@@ -9,9 +9,12 @@ GameWorld::GameWorld()
 {
 }
 
+/*
+	Deconstructor.
+*/
 GameWorld::~GameWorld()
 {
-	// todo
+	gameObjects.clear();
 }
 
 /*
@@ -20,12 +23,12 @@ GameWorld::~GameWorld()
 */
 void GameWorld::addGameObject(std::unique_ptr<GameObject> gameObject)
 {
-	gameObjects.push_back(std::move(gameObject));
+	gameObjects[gameObject->id] = std::move(gameObject);
 }
 
 void GameWorld::removeGameObject(std::string id)
 {
-	// todo
+	gameObjects.erase(id);
 }
 
 /*
@@ -34,21 +37,16 @@ void GameWorld::removeGameObject(std::string id)
 void GameWorld::updateGameObjects(float deltaTime)
 {
 	// first run the updateComponents method on each GameObject...
-	for (std::vector<std::unique_ptr<GameObject>>::iterator it = gameObjects.begin(); it != gameObjects.end(); ++it) {
-
-		GameObject* obj = (*it).get();
+	for (auto& it : gameObjects)
+	{
+		GameObject* obj = it.second.get();
 		obj->updateComponents(deltaTime);
 	}
 
 	// ...then run the lateUpdateComponents method on each GameObject
-	for (std::vector<std::unique_ptr<GameObject>>::iterator it = gameObjects.begin(); it != gameObjects.end(); ++it) {
-
-		GameObject* obj = (*it).get();
+	for (auto& it : gameObjects)
+	{
+		GameObject* obj = it.second.get();
 		obj->lateUpdateComponents(deltaTime);
 	}
-}
-
-void GameWorld::teardownWorld()
-{
-	// todo
 }
