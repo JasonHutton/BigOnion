@@ -47,7 +47,7 @@ public:
 
 	void LoadSound(const string& strSoundName, bool b3d = true, bool bLooping = false, bool bStream = false);
 	void UnLoadSound(const string& strSoundName);
-	//void Set3dListenerAndOrientation(const Vector3& vPosition, const Vector3& vLook, const Vector3& vUp);
+	void Set3dListenerAndOrientation(const Vector3& vPosition, const Vector3& vVel, const Vector3& vLook, const Vector3& vUp);
 	int PlaySounds(const string& strSoundName, const Vector3& vPos = Vector3{ 0, 0, 0 }, float fVolumedB = 0.0f);
 	void StopChannel(int nChannelId);
 	//void StopAllChannels();

@@ -10,6 +10,8 @@
 #include "../engine/graphic/camera.h"
 #include "../engine/graphic/model.h"
 
+#include "ECS/GameWorld.h"
+
 #include <iostream>
 
 
@@ -18,6 +20,7 @@ class BOEngine
 	public: 
 		GLFWwindow* window;
 		Camera camera;
+		GameWorld gameWorld;
 
 		const unsigned int SCR_WIDTH = 1000;
 		const unsigned int SCR_HEIGHT = 800;
