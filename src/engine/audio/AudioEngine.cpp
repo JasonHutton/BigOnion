@@ -15,6 +15,7 @@ Implementation::~Implementation() {
 }
 
 void Implementation::Update() {
+
 	vector<ChannelMap::iterator> pStoppedChannels;
 	for (auto it = mChannels.begin(), itEnd = mChannels.end(); it != itEnd; ++it)
 	{
@@ -97,14 +98,19 @@ int AudioEngine::PlaySounds(const string& strSoundName, const Vector3& vPosition
 	return nChannelId;
 }
 
-void AudioEngine::Set3dListenerAndOrientation(const Vector3& vPosition, const Vector3& vVel, const Vector3& vLook, const Vector3& vUp)
+void AudioEngine::Set3dListenerAndOrientation(const Vector3& vPosition,const Vector3& vVel, const Vector3& vLook, const Vector3& vUp)
 {
 	FMOD_VECTOR position = VectorToFmod(vPosition);
 	FMOD_VECTOR forward = VectorToFmod(vLook);
 	FMOD_VECTOR up = VectorToFmod(vUp);
 	FMOD_VECTOR velocity = VectorToFmod(vVel);
-	FMOD_3D_ATTRIBUTES listener = { (position, velocity, forward, up) };
+	FMOD_3D_ATTRIBUTES listener;
+	listener.position = position;
+	listener.forward = forward;
+	listener.up = up;
+	listener.velocity = velocity;
 	AudioEngine::ErrorCheck(sgpImplementation->mpStudioSystem->setListenerAttributes(0, &listener));
+	//std::cout << "Position: " << listener.forward.x << "," << listener.forward.y << "," << listener.forward.z << std::endl;
 }
 
 void AudioEngine::SetChannel3dPosition(int nChannelId, const Vector3& vPosition)
