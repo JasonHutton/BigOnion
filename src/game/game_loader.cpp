@@ -6,9 +6,6 @@
 
 #include "../engine/BOEngine.h"
 
-#pragma comment(lib, "BulletDynamics_Debug.lib")
-#pragma comment(lib, "BulletCollision_Debug.lib")
-#pragma comment(lib, "LinearMath_Debug.lib")
 #include <btBulletDynamicsCommon.h>
 #include <GL/gl.h>
 #include <GL/glu.h>

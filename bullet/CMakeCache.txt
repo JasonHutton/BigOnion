@@ -109,7 +109,7 @@ CMAKE_C_STANDARD_LIBRARIES:STRING=kernel32.lib user32.lib gdi32.lib winspool.lib
 CMAKE_DEBUG_POSTFIX:STRING=_Debug
 
 //Flags used by the linker during all build types.
-CMAKE_EXE_LINKER_FLAGS:STRING=/machine:x64
+CMAKE_EXE_LINKER_FLAGS:STRING=/machine:X86
 
 //Flags used by the linker during DEBUG builds.
 CMAKE_EXE_LINKER_FLAGS_DEBUG:STRING=/debug /INCREMENTAL
@@ -124,17 +124,17 @@ CMAKE_EXE_LINKER_FLAGS_RELEASE:STRING=/INCREMENTAL:NO
 CMAKE_EXE_LINKER_FLAGS_RELWITHDEBINFO:STRING=/debug /INCREMENTAL
 
 //Install path prefix, prepended onto install directories.
-CMAKE_INSTALL_PREFIX:PATH=C:/Program Files (x86)/BULLET_PHYSICS
+CMAKE_INSTALL_PREFIX:PATH=D:/Documents/BigOnion/bullet/New folder
 
 //Path to a program.
-CMAKE_LINKER:FILEPATH=C:/Program Files (x86)/Microsoft Visual Studio/2019/Enterprise/VC/Tools/MSVC/14.22.27905/bin/Hostx64/x64/link.exe
+CMAKE_LINKER:FILEPATH=C:/Program Files (x86)/Microsoft Visual Studio/2019/Enterprise/VC/Tools/MSVC/14.22.27905/bin/Hostx64/x86/link.exe
 
 //Adds a postfix for MinsizeRelease-built libraries.
 CMAKE_MINSIZEREL_POSTFIX:STRING=_MinsizeRel
 
 //Flags used by the linker during the creation of modules during
 // all build types.
-CMAKE_MODULE_LINKER_FLAGS:STRING=/machine:x64
+CMAKE_MODULE_LINKER_FLAGS:STRING=/machine:X86
 
 //Flags used by the linker during the creation of modules during
 // DEBUG builds.
@@ -187,7 +187,7 @@ CMAKE_RELWITHDEBINFO_POSTFIX:STRING=_RelWithDebugInfo
 
 //Flags used by the linker during the creation of shared libraries
 // during all build types.
-CMAKE_SHARED_LINKER_FLAGS:STRING=/machine:x64
+CMAKE_SHARED_LINKER_FLAGS:STRING=/machine:X86
 
 //Flags used by the linker during the creation of shared libraries
 // during DEBUG builds.
@@ -214,7 +214,7 @@ CMAKE_SKIP_RPATH:BOOL=OFF
 
 //Flags used by the linker during the creation of static libraries
 // during all build types.
-CMAKE_STATIC_LINKER_FLAGS:STRING=/machine:x64
+CMAKE_STATIC_LINKER_FLAGS:STRING=/machine:X86
 
 //Flags used by the linker during the creation of static libraries
 // during DEBUG builds.
@@ -317,7 +317,13 @@ USE_MSVC_FUNCTION_LEVEL_LINKING:BOOL=ON
 USE_MSVC_INCREMENTAL_LINKING:BOOL=OFF
 
 //Use MSVC Runtime Library DLL (/MD or /MDd)
-USE_MSVC_RUNTIME_LIBRARY_DLL:BOOL=OFF
+USE_MSVC_RUNTIME_LIBRARY_DLL:BOOL=ON
+
+//Use MSVC /arch:sse option
+USE_MSVC_SSE:BOOL=OFF
+
+//Compile your program with SSE2 instructions
+USE_MSVC_SSE2:BOOL=ON
 
 //Use MSVC /GF string pooling option
 USE_MSVC_STRING_POOLING:BOOL=ON
@@ -390,7 +396,7 @@ CMAKE_GENERATOR:INTERNAL=Visual Studio 16 2019
 //Generator instance identifier.
 CMAKE_GENERATOR_INSTANCE:INTERNAL=C:/Program Files (x86)/Microsoft Visual Studio/2019/Enterprise
 //Name of generator platform.
-CMAKE_GENERATOR_PLATFORM:INTERNAL=
+CMAKE_GENERATOR_PLATFORM:INTERNAL=Win32
 //Name of generator toolset.
 CMAKE_GENERATOR_TOOLSET:INTERNAL=
 //Source directory with the top level CMakeLists.txt file for this

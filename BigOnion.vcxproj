@@ -116,12 +116,13 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)include;$(SolutionDir)include\FMOD inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)bullet3-master\src;$(SolutionDir)include;$(SolutionDir)include\FMOD inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
-      <AdditionalDependencies>glad.lib;glfw3.lib;glfw3dll.lib;assimp-vc140-mt.lib;IrrXML.lib;fmodL_vc.lib;fmodstudioL_vc.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(SolutionDir)lib</AdditionalLibraryDirectories>
+      <AdditionalDependencies>glad.lib;glfw3.lib;glfw3dll.lib;assimp-vc140-mt.lib;IrrXML.lib;fmodL_vc.lib;fmodstudioL_vc.lib;BulletDynamics_Debug.lib;BulletCollision_Debug.lib;LinearMath_Debug.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)bullet\lib\Debug;$(SolutionDir)lib</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
       <Command>C:\Windows\System32\xcopy /y /d "$(SolutionDir)lib\*.dll" "$(OutDir)"</Command>
