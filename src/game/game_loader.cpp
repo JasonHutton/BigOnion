@@ -11,6 +11,7 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void mouse_callback(GLFWwindow* window, double xpos, double ypos);
 void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
 void processInput(GLFWwindow* window);
+void updateListener();
 unsigned int loadTexture(const char* path);
 
 // settings
@@ -30,6 +31,11 @@ float lastFrame = 0.0f;
 // lighting
 glm::vec3 lightPos(1.2f, 1.0f, 2.0f);
 
+//listener
+Vector3 position{ 0,0,0 };
+Vector3 front{ 0,0,0 };
+Vector3 up{ 0,0,0 };
+Vector3 vel{ 0,0,0 };
 
 GameLoader::GameLoader()
 {
@@ -41,13 +47,13 @@ void GameLoader::createGame() {
 	engine.initialize();
 	gameRenderer.init();
 	audio.Init();
-	audio.PlaySounds("src/game/assets/sounds/test.wav", Vector3{ 0, 0, 10 }, audio.VolumeTodB(1.0f));
+	audio.PlaySounds("src/game/assets/sounds/test.wav", Vector3{ 0, 0, -10 }, audio.VolumeTodB(1.0f));
 	//test gun sound on the right
-	audio.PlaySounds("src/game/assets/sounds/gun.wav", Vector3{ 20, 0, 0 }, audio.VolumeTodB(1.0f));
+	audio.PlaySounds("src/game/assets/sounds/gun.wav", Vector3{ 3, 0, 0}, audio.VolumeTodB(1.0f));
 	//test siren sounds on the left
-	audio.PlaySounds("src/game/assets/sounds/siren.wav", Vector3{ -20, 0, 0 }, audio.VolumeTodB(1.0f));
+	audio.PlaySounds("src/game/assets/sounds/siren.wav", Vector3{ -3, 0, 0}, audio.VolumeTodB(1.0f));
 	//test bomb sounds center
-	audio.PlaySounds("src/game/assets/sounds/bomb.wav", Vector3{ 0, 0, 0 }, audio.VolumeTodB(1.5f));
+	audio.PlaySounds("src/game/assets/sounds/bomb.wav", Vector3{ 0, 0, 0}, audio.VolumeTodB(1.0f));
 }
 
 void GameLoader::setupGame() {
@@ -62,6 +68,13 @@ void GameLoader::startGame() {
 	// --------------------
 	GLFWwindow* window = engine.window;
 	camera = &engine.camera;
+
+	//listener
+	//position = { (camera->Position.z,camera->Position.y,camera->Position.x) };
+	//front = { (camera->Front.z,camera->Front.y,camera->Front.x) };
+	//up = { (camera->Up.z,camera->Up.y,camera->Up.x) };
+	//vel = { 0 };
+	
 
 	// inputs
 	
@@ -86,12 +99,15 @@ void GameLoader::startGame() {
 		// -----
 		processInput(window);
 
+		
 		engine.updateEngine(deltaTime);
 		gameRenderer.updateWithDelta(deltaTime);
 
 		engine.render();
 		gameRenderer.render(engine);
 
+		updateListener();
+		audio.Set3dListenerAndOrientation(position, vel, up, front);
 		audio.Update();
 
 		// glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
@@ -105,6 +121,20 @@ void GameLoader::startGame() {
 	// ------------------------------------------------------------------
 	glfwTerminate();
 	//            return 0;
+}
+
+//Update Listener Position and Orientation
+void updateListener()
+{
+		position.x = camera->Position.x;
+		position.y = camera->Position.y;
+		position.z = camera->Position.z;
+		front.x = camera->Front.x;
+		front.y = camera->Front.y;
+		front.z = camera->Front.z;
+		up.x = camera->Up.x;
+		up.y = camera->Up.y;
+		up.z = camera->Up.z;
 }
 
 // process all input: query GLFW whether relevant keys are pressed/released this frame and react accordingly
@@ -152,6 +182,7 @@ void mouse_callback(GLFWwindow* window, double xpos, double ypos)
 	lastY = ypos;
 
 	camera->ProcessMouseMovement((float)xoffset, (float)yoffset); // We should probably be using double instead of float, but that's spawning off a LOT of required changes...
+	
 }
 
 // glfw: whenever the mouse scroll wheel scrolls, this callback is called
