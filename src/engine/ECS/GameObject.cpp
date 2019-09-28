@@ -15,7 +15,10 @@ GameObject::GameObject(std::string id)
 */
 GameObject::~GameObject()
 {
-	components.clear();
+	for (Component* c : components)
+	{
+		delete c;
+	}
 }
 
 /*

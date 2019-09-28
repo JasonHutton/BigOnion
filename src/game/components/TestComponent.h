@@ -5,5 +5,6 @@
 class TestComponent : public Component
 {
 public:
+	~TestComponent();
 	void update(float deltaTime) override;
 };

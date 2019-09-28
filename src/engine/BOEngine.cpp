@@ -63,6 +63,7 @@ void BOEngine::initialize()
 	GameObject* obj = new GameObject("Test");
 	obj->addComponent(new TestComponent());
 	gameWorld.addGameObject(obj);
+	gameWorld.removeGameObject("Test");
 }
 
 void BOEngine::preRender()

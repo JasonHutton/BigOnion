@@ -13,7 +13,7 @@ public:
 
 	void updateWithDelta(float deltaTime);
 
-	void render(BOEngine engine);
+	void render(BOEngine* engine);
 
 private:
 	//TODO: move object to game

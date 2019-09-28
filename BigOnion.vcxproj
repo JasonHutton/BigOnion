@@ -20,7 +20,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\engine\audio\AudioEngine.cpp" />
-    <ClCompile Include="src\engine\ECS\Component.cpp" />
     <ClCompile Include="src\engine\ECS\GameObject.cpp" />
     <ClCompile Include="src\engine\ECS\GameWorld.cpp" />
     <ClCompile Include="src\engine\graphic\model.cpp" />

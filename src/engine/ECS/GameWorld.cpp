@@ -15,7 +15,10 @@ GameWorld::GameWorld()
 */
 GameWorld::~GameWorld()
 {
-	gameObjects.clear();
+	for (auto& pair : gameObjects)
+	{
+		delete pair.second;
+	}
 }
 
 /*
@@ -28,6 +31,7 @@ void GameWorld::addGameObject(GameObject* gameObject)
 
 void GameWorld::removeGameObject(std::string id)
 {
+	delete gameObjects[id];
 	gameObjects.erase(id);
 }
 

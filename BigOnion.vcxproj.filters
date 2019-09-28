@@ -90,9 +90,6 @@
     <ClCompile Include="src\engine\ECS\GameWorld.cpp">
       <Filter>Source Files\engine\ECS</Filter>
     </ClCompile>
-    <ClCompile Include="src\engine\ECS\Component.cpp">
-      <Filter>Source Files\engine\ECS</Filter>
-    </ClCompile>
     <ClCompile Include="src\engine\ECS\GameObject.cpp">
       <Filter>Source Files\engine\ECS</Filter>
     </ClCompile>

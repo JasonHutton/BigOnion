@@ -15,7 +15,7 @@ void GameRenderer::updateWithDelta(float deltaTime)
 {
 }
 
-void GameRenderer::render(BOEngine engine)
+void GameRenderer::render(BOEngine* engine)
 {
 	// render
 	// ------
@@ -28,11 +28,11 @@ void GameRenderer::render(BOEngine engine)
 	int scrWidth = 10; //TODO get from window
 	int scrHeight = 8; //TODO get from window
 
-	glfwGetWindowSize(engine.window, &scrWidth, &scrHeight);
+	glfwGetWindowSize(engine->window, &scrWidth, &scrHeight);
 
 	// view/projection transformations
-	glm::mat4 projection = glm::perspective(glm::radians(engine.camera.Zoom), (float)scrWidth / (float)scrHeight, 0.1f, 100.0f);
-	glm::mat4 view = engine.camera.GetViewMatrix();
+	glm::mat4 projection = glm::perspective(glm::radians(engine->camera.Zoom), (float)scrWidth / (float)scrHeight, 0.1f, 100.0f);
+	glm::mat4 view = engine->camera.GetViewMatrix();
 	
 	modelShader.setMat4("projection", projection);
 	modelShader.setMat4("view", view);
