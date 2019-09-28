@@ -3,7 +3,7 @@
 #include "GameObject.fwd.h"
 
 /*
-	Component is an abstract class to be inherited from.
+	Component is an abstract class to be inherited from. The base class implements no functionality.
 */
 class Component
 {
