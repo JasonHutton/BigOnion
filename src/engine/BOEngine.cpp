@@ -58,6 +58,7 @@ void BOEngine::initialize()
 	}
 
 	// Game World initialization
+	currentTime = std::chrono::high_resolution_clock::now();
 	gameWorld = GameWorld();
 	// commented out for the sanity of my groupmates :)
 	/*
