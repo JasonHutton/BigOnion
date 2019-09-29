@@ -151,7 +151,7 @@ void GameLoader::startGame() {
 		gameRenderer.updateWithDelta(deltaTime);
 
 		engine.render();
-		gameRenderer.render(engine);
+		gameRenderer.render(&engine);
 
 		updateListener();
 		audio.Set3dListenerAndOrientation(position, vel, up, front);

@@ -13,6 +13,7 @@ public:
 	void addComponent(Component* component);
 	void updateComponents(float deltaTime);
 	void lateUpdateComponents(float deltaTime);
+	void fixedUpdateComponents(float deltaTime);
 
 private:
 	std::vector<Component*> components;
