@@ -63,7 +63,6 @@ void BOEngine::initialize()
 	GameObject* obj = new GameObject("Test");
 	obj->addComponent(new TestComponent());
 	gameWorld.addGameObject(obj);
-	gameWorld.removeGameObject("Test");
 }
 
 void BOEngine::preRender()
@@ -88,6 +87,24 @@ void BOEngine::preRender()
 
 void BOEngine::updateEngine(float deltaTime)
 {
+	auto newTime = std::chrono::high_resolution_clock::now();
+	std::chrono::duration<double> frameTime = newTime - currentTime;
+	if (frameTime > MAX_FRAMETIME)
+	{
+		frameTime = MAX_FRAMETIME;
+	}
+	currentTime = newTime;
+
+	accumulator += frameTime;
+
+	while (accumulator >= FIXED_DELTA_TIME_DURATION)
+	{
+		gameWorld.fixedUpdateGameObjects(FIXED_DELTA_TIME);
+		accumulator -= FIXED_DELTA_TIME_DURATION;
+	}
+
+	// this value is currently unused. it could be useful in the future for interpolating between fixed game states on higher framerates
+	// double alpha = accumulator / FIXED_DELTA_TIME_DURATION;
 	gameWorld.updateGameObjects(deltaTime);
 }
 

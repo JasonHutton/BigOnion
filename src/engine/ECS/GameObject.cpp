@@ -51,3 +51,14 @@ void GameObject::lateUpdateComponents(float deltaTime)
 		component->lateUpdate(deltaTime);
 	}
 }
+
+/*
+	Calls the fixedUpdate() function of all components owned by this Game Object.
+*/
+void GameObject::fixedUpdateComponents(float deltaTime)
+{
+	for (Component* component : components)
+	{
+		component->fixedUpdate(deltaTime);
+	}
+}
