@@ -96,6 +96,9 @@
     <ClCompile Include="src\game\components\TestComponent.cpp">
       <Filter>Source Files\game\components</Filter>
     </ClCompile>
+    <ClCompile Include="src\engine\ECS\SDL.cpp">
+      <Filter>Source Files\engine\ECS</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\engine\BOEngine.h">
