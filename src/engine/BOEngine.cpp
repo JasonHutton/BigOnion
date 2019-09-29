@@ -59,10 +59,12 @@ void BOEngine::initialize()
 
 	// Game World initialization
 	gameWorld = GameWorld();
-
+	// commented out for the sanity of my groupmates :)
+	/*
 	GameObject* obj = new GameObject("Test");
 	obj->addComponent(new TestComponent());
 	gameWorld.addGameObject(obj);
+	*/
 }
 
 void BOEngine::preRender()
@@ -87,6 +89,7 @@ void BOEngine::preRender()
 
 void BOEngine::updateEngine(float deltaTime)
 {
+	// figure out how much time has elapsed since the last frame, capping at the min fps frametime
 	auto newTime = std::chrono::high_resolution_clock::now();
 	std::chrono::duration<double> frameTime = newTime - currentTime;
 	if (frameTime > MAX_FRAMETIME)
@@ -95,8 +98,9 @@ void BOEngine::updateEngine(float deltaTime)
 	}
 	currentTime = newTime;
 
+	// add the frametime to the accumulator
 	accumulator += frameTime;
-
+	// do fixed updates until the accumulator is near empty
 	while (accumulator >= FIXED_DELTA_TIME_DURATION)
 	{
 		gameWorld.fixedUpdateGameObjects(FIXED_DELTA_TIME);
