@@ -52,3 +52,15 @@ void GameWorld::updateGameObjects(float deltaTime)
 		pair.second->lateUpdateComponents(deltaTime);
 	}
 }
+
+/*
+	Calls the fixedUpdateComponents() function of all Game Objects owned by this Game World.
+*/
+void GameWorld::fixedUpdateGameObjects(float deltaTime)
+{
+	// first run the updateComponents method on each GameObject...
+	for (auto& pair : gameObjects)
+	{
+		pair.second->fixedUpdateComponents(deltaTime);
+	}
+}

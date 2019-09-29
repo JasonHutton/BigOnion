@@ -12,5 +12,6 @@ public:
 	virtual ~Component() {};
 	virtual void update(float deltaTime) {};
 	virtual void lateUpdate(float deltaTime) {};
+	virtual void fixedUpdate(float deltaTime) {};
 
 };
