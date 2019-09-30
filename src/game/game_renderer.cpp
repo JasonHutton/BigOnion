@@ -20,15 +20,7 @@ void GameRenderer::init()
 	world = new btDiscreteDynamicsWorld(dispatcher, broadphase, solver, collisionConfig);
 	world->setGravity(btVector3(0, -9.8, 0));	//gravity on Earth
 
-	btTransform t;
-	t.setIdentity();
-	t.setOrigin(btVector3(0, -3.25, 0));
-	btStaticPlaneShape* plane = new btStaticPlaneShape(btVector3(0, 1, 0), 0);
-	btMotionState* motion = new btDefaultMotionState(t);
-	btRigidBody::btRigidBodyConstructionInfo info(0.0, motion, plane);
-	btRigidBody* body = new btRigidBody(info);
-	world->addRigidBody(body);
-	bodies.push_back(body);
+	addPlane(0, -3.25, 0);
 
 	addCube(1.0, 1.0, 1.0, 1.0, 20.0, 0, 1.0);
 }
@@ -114,5 +106,18 @@ btRigidBody* GameRenderer::addCube(float width, float height, float depth, float
 	btRigidBody* body = new btRigidBody(info);	//let's create the body itself
 	world->addRigidBody(body);	//and let the world know about it
 	bodies.push_back(body);	//to be easier to clean, I store them a vector
+	return body;
+}
+
+btRigidBody* GameRenderer::addPlane(float x, float y, float z) {
+	btTransform t;
+	t.setIdentity();
+	t.setOrigin(btVector3(x, y, z));
+	btStaticPlaneShape* plane = new btStaticPlaneShape(btVector3(0, 1, 0), 0);
+	btMotionState* motion = new btDefaultMotionState(t);
+	btRigidBody::btRigidBodyConstructionInfo info(0.0, motion, plane);
+	btRigidBody* body = new btRigidBody(info);
+	world->addRigidBody(body);
+	bodies.push_back(body);
 	return body;
 }

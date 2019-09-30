@@ -19,6 +19,9 @@ public:
 	void render(BOEngine* engine);
 
 	btRigidBody* addCube(float width, float height, float depth, float x, float y, float z, float mass);
+
+	btRigidBody* addPlane(float x, float y, float z);
+
 private:
 	//TODO: move object to game
 	Shader modelShader;
