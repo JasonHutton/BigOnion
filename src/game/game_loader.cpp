@@ -115,7 +115,6 @@ void GameLoader::startGame() {
 		// input
 		// -----
 		processInput(window);
-
 		
 		engine.updateEngine(deltaTime);
 		gameRenderer.updateWithDelta(deltaTime);

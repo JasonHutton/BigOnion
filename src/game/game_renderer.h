@@ -22,6 +22,8 @@ public:
 
 	btRigidBody* addPlane(float x, float y, float z);
 
+	btRigidBody* addCylinder(float width, float height, float depth, float x, float y, float z, float mass);
+
 private:
 	//TODO: move object to game
 	Shader modelShader;
