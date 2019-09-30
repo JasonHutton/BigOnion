@@ -6,10 +6,6 @@
 
 #include "../engine/BOEngine.h"
 
-#include <btBulletDynamicsCommon.h>
-#include <GL/gl.h>
-#include <GL/glu.h>
-
 // functions
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void mouse_callback(GLFWwindow* window, double xpos, double ypos);
@@ -41,15 +37,6 @@ Vector3 front{ 0,0,0 };
 Vector3 up{ 0,0,0 };
 Vector3 vel{ 0,0,0 };
 
-//physics stuff
-GLUquadricObj* quad;
-btDynamicsWorld* world;	//every physical object go to the world
-btDispatcher* dispatcher;	//what collision algorithm to use?
-btCollisionConfiguration* collisionConfig;	//what collision algorithm to use?
-btBroadphaseInterface* broadphase;	//should Bullet examine every object, or just what close to each other
-btConstraintSolver* solver;					//solve collisions, apply forces, impulses
-std::vector<btRigidBody*> bodies;
-
 GameLoader::GameLoader()
 {
 }
@@ -67,16 +54,8 @@ void GameLoader::createGame() {
 	audio.PlaySounds("src/game/assets/sounds/siren.wav", Vector3{ -3, 0, 0}, audio.VolumeTodB(1.0f));
 	//test bomb sounds center
 	audio.PlaySounds("src/game/assets/sounds/bomb.wav", Vector3{ 0, 0, 0}, audio.VolumeTodB(1.0f));
-
-	collisionConfig = new btDefaultCollisionConfiguration();
-	dispatcher = new btCollisionDispatcher(collisionConfig);
-	broadphase = new btDbvtBroadphase();
-	solver = new btSequentialImpulseConstraintSolver();
-	world = new btDiscreteDynamicsWorld(dispatcher, broadphase, solver, collisionConfig);
-	world->setGravity(btVector3(0, -10, 0));	//gravity on Earth
 }
 
-//similar then renderSphere function
 void renderPlane(btRigidBody* plane)
 {
 	glColor3f(0.8, 0.8, 0.8);
@@ -87,10 +66,10 @@ void renderPlane(btRigidBody* plane)
 	glPushMatrix();
 	glMultMatrixf(mat);	//translation,rotation
 	glBegin(GL_QUADS);
-	glVertex3f(-1000, 0, 1000);
-	glVertex3f(-1000, 0, -1000);
-	glVertex3f(1000, 0, -1000);
-	glVertex3f(1000, 0, 1000);
+	glVertex3f(-1000, -3, 1000);
+	glVertex3f(-1000, -3, -1000);
+	glVertex3f(1000, -3, -1000);
+	glVertex3f(1000, -3, 1000);
 	glEnd();
 	glPopMatrix();
 }
@@ -101,15 +80,6 @@ void GameLoader::setupGame() {
 }
 
 void GameLoader::startGame() {
-	btTransform t;
-	t.setIdentity();
-	t.setOrigin(btVector3(0, 0, 0));
-	btStaticPlaneShape* plane = new btStaticPlaneShape(btVector3(0, 1, 0), 0);
-	btMotionState* motion = new btDefaultMotionState(t);
-	btRigidBody::btRigidBodyConstructionInfo info(0.0, motion, plane);
-	btRigidBody* body = new btRigidBody(info);
-	world->addRigidBody(body);
-
 	std::cout << "startGame" << std::endl;
 	// glfw window creation
 	// --------------------
@@ -156,12 +126,10 @@ void GameLoader::startGame() {
 		updateListener();
 		audio.Set3dListenerAndOrientation(position, vel, up, front);
 		audio.Update();
-		renderPlane(body);
 		// glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
 		// -------------------------------------------------------------------------------
 		glfwSwapBuffers(window);
 		glfwPollEvents();
-		world->stepSimulation(deltaTime);
 	}
 
 	// glfw: terminate, clearing all previously allocated GLFW resources.
