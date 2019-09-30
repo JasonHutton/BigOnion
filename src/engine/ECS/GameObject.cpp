@@ -15,7 +15,10 @@ GameObject::GameObject(std::string id)
 */
 GameObject::~GameObject()
 {
-	components.clear();
+	for (Component* c : components)
+	{
+		delete c;
+	}
 }
 
 /*
@@ -46,5 +49,16 @@ void GameObject::lateUpdateComponents(float deltaTime)
 	for (Component* component : components)
 	{
 		component->lateUpdate(deltaTime);
+	}
+}
+
+/*
+	Calls the fixedUpdate() function of all components owned by this Game Object.
+*/
+void GameObject::fixedUpdateComponents(float deltaTime)
+{
+	for (Component* component : components)
+	{
+		component->fixedUpdate(deltaTime);
 	}
 }
