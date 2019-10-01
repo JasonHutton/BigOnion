@@ -61,8 +61,6 @@ void GameRenderer::render(BOEngine* engine)
 			bodies[i]->getMotionState()->getWorldTransform(transform);	//get the transform
 			transform.getOpenGLMatrix(glm::value_ptr(planeModel));
 
-			//btVector3 translation = transform.getOrigin();
-			//planeModel = glm::translate(planeModel, glm::vec3(translation.getX(), translation.getY(), translation.getZ()));
 			planeModel = glm::scale(planeModel, glm::vec3(100.0f, 1.0f, 100.0f));
 
 			modelShader.setMat4("model", planeModel);
@@ -74,12 +72,6 @@ void GameRenderer::render(BOEngine* engine)
 			bodies[i]->getMotionState()->getWorldTransform(transform);	//get the transform
 			transform.getOpenGLMatrix(glm::value_ptr(cubeModel));
 
-			/*btVector3 translation = transform.getOrigin();
-			btQuaternion rotation = transform.getRotation();
-			cubeModel = glm::translate(cubeModel, glm::vec3(translation.getX(), translation.getY(), translation.getZ()));
-			cubeModel = glm::rotate(cubeModel, rotation.getX(), glm::vec3(1, 0, 0));
-			cubeModel = glm::rotate(cubeModel, rotation.getY(), glm::vec3(0, 1, 0));
-			cubeModel = glm::rotate(cubeModel, rotation.getZ(), glm::vec3(0, 0, 1));*/
 			btVector3 scale = ((btBoxShape*)bodies[i]->getCollisionShape())->getHalfExtentsWithoutMargin();
 			cubeModel = glm::scale(cubeModel, glm::vec3(2 * scale.getX(), 2 * scale.getY(), 2 * scale.getZ()));
 
@@ -93,12 +85,6 @@ void GameRenderer::render(BOEngine* engine)
 			bodies[i]->getMotionState()->getWorldTransform(transform);	//get the transform
 			transform.getOpenGLMatrix(glm::value_ptr(suitModel));
 
-			/*btQuaternion rotation = transform.getRotation();
-			btVector3 translation = transform.getOrigin();
-			suitModel = glm::translate(suitModel, glm::vec3(translation.getX(), translation.getY() - 1.5, translation.getZ())); // translate it down so it's at the center of the scene
-			suitModel = glm::rotate(suitModel, rotation.getX(), glm::vec3(1, 0, 0));
-			suitModel = glm::rotate(suitModel, rotation.getY(), glm::vec3(0, 1, 0));
-			suitModel = glm::rotate(suitModel, rotation.getZ(), glm::vec3(0, 0, 1));*/
 			suitModel = glm::scale(suitModel, glm::vec3(0.2f, 0.2f, 0.2f));	// it's a bit too big for our scene, so scale it down
 
 			modelShader.setMat4("model", suitModel);
