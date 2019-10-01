@@ -86,13 +86,6 @@ void GameLoader::startGame() {
 	GLFWwindow* window = engine.window;
 	camera = &engine.camera;
 
-	//listener
-	//position = { (camera->Position.z,camera->Position.y,camera->Position.x) };
-	//front = { (camera->Front.z,camera->Front.y,camera->Front.x) };
-	//up = { (camera->Up.z,camera->Up.y,camera->Up.x) };
-	//vel = { 0 };
-	
-
 	// inputs
 	
 	glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
