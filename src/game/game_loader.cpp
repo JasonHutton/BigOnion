@@ -56,13 +56,30 @@ void GameLoader::createGame() {
 	audio.PlaySounds("src/game/assets/sounds/bomb.wav", Vector3{ 0, 0, 0}, audio.VolumeTodB(1.0f));
 }
 
+void renderPlane(btRigidBody* plane)
+{
+	glColor3f(0.8, 0.8, 0.8);
+	btTransform t;
+	plane->getMotionState()->getWorldTransform(t);
+	float mat[16];
+	t.getOpenGLMatrix(mat);
+	glPushMatrix();
+	glMultMatrixf(mat);	//translation,rotation
+	glBegin(GL_QUADS);
+	glVertex3f(-1000, -3, 1000);
+	glVertex3f(-1000, -3, -1000);
+	glVertex3f(1000, -3, -1000);
+	glVertex3f(1000, -3, 1000);
+	glEnd();
+	glPopMatrix();
+}
+
 void GameLoader::setupGame() {
 
 	std::cout << "setupGame" << std::endl;
 }
 
 void GameLoader::startGame() {
-
 	std::cout << "startGame" << std::endl;
 	// glfw window creation
 	// --------------------
@@ -91,7 +108,6 @@ void GameLoader::startGame() {
 		// input
 		// -----
 		processInput(window);
-
 		
 		engine.updateEngine(deltaTime);
 		gameRenderer.updateWithDelta(deltaTime);
@@ -102,12 +118,10 @@ void GameLoader::startGame() {
 		updateListener();
 		audio.Set3dListenerAndOrientation(position, vel, up, front);
 		audio.Update();
-
 		// glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
 		// -------------------------------------------------------------------------------
 		glfwSwapBuffers(window);
 		glfwPollEvents();
-
 	}
 
 	// glfw: terminate, clearing all previously allocated GLFW resources.
