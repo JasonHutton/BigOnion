@@ -12,7 +12,6 @@ void mouse_callback(GLFWwindow* window, double xpos, double ypos);
 void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
 void processInput(GLFWwindow* window);
 void updateListener();
-unsigned int loadTexture(const char* path);
 
 // settings
 const unsigned int SCR_WIDTH = 1000;
@@ -41,11 +40,9 @@ GameLoader::GameLoader()
 {
 }
 
-void GameLoader::createGame() {
+std::unique_ptr<Game>  GameLoader::createGame() {
 
 	std::cout << "createGame" << std::endl;
-	engine.initialize();
-	gameRenderer.init();
 	audio.Init();
 	audio.PlaySounds("src/game/assets/sounds/test.wav", Vector3{ 0, 0, -10 }, audio.VolumeTodB(1.0f));
 	//test gun sound on the right
@@ -54,6 +51,8 @@ void GameLoader::createGame() {
 	audio.PlaySounds("src/game/assets/sounds/siren.wav", Vector3{ -3, 0, 0}, audio.VolumeTodB(1.0f));
 	//test bomb sounds center
 	audio.PlaySounds("src/game/assets/sounds/bomb.wav", Vector3{ 0, 0, 0}, audio.VolumeTodB(1.0f));
+	
+	return std::make_unique<Game>();
 }
 
 void renderPlane(btRigidBody* plane)
@@ -74,17 +73,12 @@ void renderPlane(btRigidBody* plane)
 	glPopMatrix();
 }
 
-void GameLoader::setupGame() {
-
-	std::cout << "setupGame" << std::endl;
-}
-
 void GameLoader::startGame() {
 	std::cout << "startGame" << std::endl;
 	// glfw window creation
 	// --------------------
-	GLFWwindow* window = engine.window;
-	camera = &engine.camera;
+	GLFWwindow* window = engine->window;
+	camera = &engine->camera;
 
 	// inputs
 	
@@ -94,7 +88,7 @@ void GameLoader::startGame() {
 	// tell GLFW to capture mouse
 	glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 	
-	engine.preRender();
+	engine->preRender();
 
 
 	// render loop
@@ -109,11 +103,7 @@ void GameLoader::startGame() {
 		// -----
 		processInput(window);
 		
-		engine.updateEngine(deltaTime);
-		gameRenderer.updateWithDelta(deltaTime);
-
-		engine.render();
-		gameRenderer.render(&engine);
+		engine->updateEngine(deltaTime);
 
 		updateListener();
 		audio.Set3dListenerAndOrientation(position, vel, up, front);
@@ -199,46 +189,8 @@ void scroll_callback(GLFWwindow* window, double xoffset, double yoffset)
 	camera->ProcessMouseScroll((float)yoffset); // We should probably be using double instead of float, but that's spawning off a LOT of required changes...
 }
 
-// utility function for loading a 2D texture from file
-// ---------------------------------------------------
-unsigned int loadTexture(char const* path)
-{
-	unsigned int textureID;
-	glGenTextures(1, &textureID);
-
-	int width, height, nrComponents;
-	//stbi_set_flip_vertically_on_load(true); // tell stb_image.h to flip loaded texture's on the y-axis.
-	unsigned char* data = stbi_load(path, &width, &height, &nrComponents, 0);
-	if (data)
-	{
-		GLenum format = GL_RGBA;
-		if (nrComponents == 1)
-			format = GL_RED;
-		else if (nrComponents == 3)
-			format = GL_RGB;
-		else if (nrComponents == 4)
-			format = GL_RGBA;
-
-		glBindTexture(GL_TEXTURE_2D, textureID);
-
-		// set the texture wrapping parameters
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);	// set texture wrapping to GL_REPEAT (default wrapping method)
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-		// set texture filtering parameters
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-
-		glTexImage2D(GL_TEXTURE_2D, 0, format, width, height, 0, format, GL_UNSIGNED_BYTE, data);
-		glGenerateMipmap(GL_TEXTURE_2D);
-	}
-	else
-	{
-		std::cout << "Texture failed to load at path: " << path << std::endl;
-	}
-
-	stbi_image_free(data);
-
-	return textureID;
+void GameLoader::setEngine(BOEngine& boe) {
+	this->engine = &boe; 
 }
 
 void GameLoader::reload() {

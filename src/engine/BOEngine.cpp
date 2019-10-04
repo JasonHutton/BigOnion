@@ -21,8 +21,9 @@
 //glm::vec3 lightPos(1.2f, 1.0f, 2.0f);
 
 
-BOEngine::BOEngine()
+BOEngine::BOEngine(std::unique_ptr<Game> gm)
 {
+	game = std::move(gm);
 }
 
 void BOEngine::initialize()
@@ -66,20 +67,13 @@ void BOEngine::initialize()
 	obj->addComponent(new TestComponent());
 	gameWorld.addGameObject(obj);
 	*/
+
+	game->init(this);
 }
 
 void BOEngine::preRender()
 {
-	// configure global opengl state
-// -----------------------------
 	glEnable(GL_DEPTH_TEST);
-
-	// draw in wireframe
-	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-
-		// build and compile our shader program
-	// ------------------------------------
-	
 	//TODO comment: shader test
 	Shader ourShader("src/engine/graphic/shader/vertex.glsl", "src/engine/graphic/shader/fragment.glsl"); // you can name your shader files however you like
 	Shader lightShader("src/engine/graphic/shader/vertex.glsl", "src/engine/graphic/shader/light.fs.glsl");
@@ -111,9 +105,14 @@ void BOEngine::updateEngine(float deltaTime)
 	// this value is currently unused. it could be useful in the future for interpolating between fixed game states on higher framerates
 	// double alpha = accumulator / FIXED_DELTA_TIME_DURATION;
 	gameWorld.updateGameObjects(deltaTime);
+
+
+	game->updateWithDelta(deltaTime);
+
+	game->render(this);
 }
 
-void BOEngine::render()
+void BOEngine::exitInError(const std::string& error)
 {
-
+	std::cout << "\n\nUnknown unhandled exception." << error << std::endl;
 }

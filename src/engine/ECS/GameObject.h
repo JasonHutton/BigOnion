@@ -3,11 +3,13 @@
 #include <string>
 #include <vector>
 #include "Component.h"
+#include "TransformComponent.h"
 
 class GameObject
 {
 public:
 	std::string id;
+	TransformComponent transform;
 	GameObject(std::string id);
 	~GameObject();
 	void addComponent(Component* component);

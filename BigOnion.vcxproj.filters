@@ -55,6 +55,9 @@
     <Filter Include="Source Files\game\components">
       <UniqueIdentifier>{9c8af86e-8254-42c7-bd52-b0de56323ee9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\engine\utils">
+      <UniqueIdentifier>{97edd3ce-3ddc-4829-80ef-05eac1ebf6ed}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Launcher.cpp">
@@ -69,14 +72,8 @@
     <ClCompile Include="src\engine\graphic\camera.cpp">
       <Filter>Source Files\engine\graphic</Filter>
     </ClCompile>
-    <ClCompile Include="src\game\game_controller.cpp">
-      <Filter>Source Files\game</Filter>
-    </ClCompile>
     <ClCompile Include="src\game\models\suit_man.cpp">
       <Filter>Source Files\game\models</Filter>
-    </ClCompile>
-    <ClCompile Include="src\game\game_renderer.cpp">
-      <Filter>Source Files\game</Filter>
     </ClCompile>
     <ClCompile Include="src\engine\graphic\shader.cpp">
       <Filter>Source Files\engine\graphic</Filter>
@@ -99,28 +96,31 @@
     <ClCompile Include="src\engine\ECS\SDL.cpp">
       <Filter>Source Files\engine\ECS</Filter>
     </ClCompile>
+    <ClCompile Include="src\engine\ECS\TransformComponent.cpp">
+      <Filter>Source Files\engine\ECS</Filter>
+    </ClCompile>
+    <ClCompile Include="src\engine\graphic\RenderComponent.cpp">
+      <Filter>Source Files\engine\graphic</Filter>
+    </ClCompile>
+    <ClCompile Include="src\game\game.cpp">
+      <Filter>Source Files\game</Filter>
+    </ClCompile>
+    <ClCompile Include="src\engine\graphic\ShaderAttribute.cpp">
+      <Filter>Source Files\engine\graphic</Filter>
+    </ClCompile>
+    <ClCompile Include="src\engine\graphic\ViewRenderer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\engine\BOEngine.h">
       <Filter>Header Files\engine</Filter>
     </ClInclude>
-    <ClInclude Include="src\engine\filesystem.h">
-      <Filter>Header Files\engine</Filter>
-    </ClInclude>
     <ClInclude Include="src\game\game_loader.h">
       <Filter>Header Files\game</Filter>
     </ClInclude>
-    <ClInclude Include="src\engine\resource.h">
-      <Filter>Header Files\engine</Filter>
-    </ClInclude>
     <ClInclude Include="src\engine\graphic\camera.h">
       <Filter>Header Files\engine\graphic</Filter>
-    </ClInclude>
-    <ClInclude Include="src\game\game_controller.h">
-      <Filter>Header Files\game</Filter>
-    </ClInclude>
-    <ClInclude Include="src\game\game_renderer.h">
-      <Filter>Header Files\game</Filter>
     </ClInclude>
     <ClInclude Include="src\game\models\suit_man.h">
       <Filter>Header Files\game\models</Filter>
@@ -157,6 +157,33 @@
     </ClInclude>
     <ClInclude Include="src\game\components\TestComponent.h">
       <Filter>Header Files\game\components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\engine\ECS\TransformComponent.h">
+      <Filter>Header Files\engine\ECS</Filter>
+    </ClInclude>
+    <ClInclude Include="src\engine\utils\utils.h">
+      <Filter>Header Files\engine\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="src\engine\utils\Vector3.h">
+      <Filter>Header Files\engine\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="src\engine\graphic\RenderComponent.h">
+      <Filter>Header Files\engine\graphic</Filter>
+    </ClInclude>
+    <ClInclude Include="src\game\game.h">
+      <Filter>Header Files\game</Filter>
+    </ClInclude>
+    <ClInclude Include="src\engine\filesystem.h">
+      <Filter>Header Files\engine\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="src\engine\resource.h">
+      <Filter>Header Files\engine\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="src\engine\graphic\ShaderAttribute.h">
+      <Filter>Header Files\engine\graphic</Filter>
+    </ClInclude>
+    <ClInclude Include="src\engine\graphic\ViewRenderer.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

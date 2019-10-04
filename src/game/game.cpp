@@ -1,4 +1,4 @@
-#include "game_renderer.h"
+#include "game.h"
 
 
 Game::Game()
@@ -6,8 +6,10 @@ Game::Game()
 
 }
 
-void Game::init()
+void Game::init(BOEngine* engine)
 {
+	std::cout << "Game init" << std::endl;
+
 	collisionConfig = new btDefaultCollisionConfiguration();
 	dispatcher = new btCollisionDispatcher(collisionConfig);
 	broadphase = new btDbvtBroadphase();
@@ -21,10 +23,19 @@ void Game::init()
 
 	addCylinder(0.75, 1.5, 0.25, 0, 20, 0, 1.0);
 
-	modelShader = Shader("src/engine/graphic/shader/model_loading.vs", "src/engine/graphic/shader/model_loading.fs");
-	ourModel = Model("src/game/assets/nanosuit/nanosuit.obj");
-	groundModel = Model("src/game/assets/ground/plane.obj");
-	boxModel = Model("src/game/assets/box/cube.obj");
+	modelShader = new Shader("src/engine/graphic/shader/model_loading.vs", "src/engine/graphic/shader/model_loading.fs");
+	ourModel = new Model("src/game/assets/nanosuit/nanosuit.obj", modelShader);
+	groundModel = new Model("src/game/assets/ground/plane.obj", modelShader);
+	boxModel = new Model("src/game/assets/box/cube.obj", modelShader);
+
+	suitMan = new GameObject("SuitMan");
+	suitMan->addComponent(new RenderComponent(&ourModel->shaderAttribute));
+	suitMan->transform.scale = Vector3f(0.2f, 0.2f, 0.2f);
+	suitMan->transform.rotation.y = 3.14f;
+	engine->gameWorld.addGameObject(suitMan);
+
+	GameObject box = GameObject("Box");
+	GameObject ground = GameObject("Ground");
 }
 
 void Game::updateWithDelta(float deltaTime)
@@ -39,7 +50,7 @@ void Game::render(BOEngine* engine)
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	// don't forget to enable shader before setting uniforms
-	modelShader.use();
+	modelShader->use();
 
 	int scrWidth = 10; //TODO get from window
 	int scrHeight = 8; //TODO get from window
@@ -50,8 +61,8 @@ void Game::render(BOEngine* engine)
 	glm::mat4 projection = glm::perspective(glm::radians(engine->camera.Zoom), (float)scrWidth / (float)scrHeight, 0.1f, 100.0f);
 	glm::mat4 view = engine->camera.GetViewMatrix();
 	
-	modelShader.setMat4("projection", projection);
-	modelShader.setMat4("view", view);
+	modelShader->setMat4("projection", projection);
+	modelShader->setMat4("view", view);
 
 	for (int i = 0; i < bodies.size(); i++)
 	{
@@ -63,8 +74,8 @@ void Game::render(BOEngine* engine)
 
 			planeModel = glm::scale(planeModel, glm::vec3(100.0f, 1.0f, 100.0f));
 
-			modelShader.setMat4("model", planeModel);
-			groundModel.Draw(modelShader);
+			groundModel->shaderAttribute.setMat4("model", planeModel);
+			groundModel->Draw();
 		}
 		else if (bodies[i]->getCollisionShape()->getShapeType() == BOX_SHAPE_PROXYTYPE) {
 			glm::mat4 cubeModel = glm::mat4(1.0f);
@@ -75,20 +86,19 @@ void Game::render(BOEngine* engine)
 			btVector3 scale = ((btBoxShape*)bodies[i]->getCollisionShape())->getHalfExtentsWithoutMargin();
 			cubeModel = glm::scale(cubeModel, glm::vec3(2 * scale.getX(), 2 * scale.getY(), 2 * scale.getZ()));
 
-			modelShader.setMat4("model", cubeModel);
-			boxModel.Draw(modelShader);
+			boxModel->shaderAttribute.setMat4("model", cubeModel);
+			boxModel->Draw();
 		}
 		else if (bodies[i]->getCollisionShape()->getShapeType() == CYLINDER_SHAPE_PROXYTYPE) {
 			// render the loaded model
-			glm::mat4 suitModel = glm::mat4(1.0f);
+			glm::mat4* suitModel = &suitMan->transform.getModelMatrix();
+
 			btTransform transform;
 			bodies[i]->getMotionState()->getWorldTransform(transform);	//get the transform
-			transform.getOpenGLMatrix(glm::value_ptr(suitModel));
+			transform.getOpenGLMatrix(glm::value_ptr(*suitModel));
 
-			suitModel = glm::scale(suitModel, glm::vec3(0.2f, 0.2f, 0.2f));	// it's a bit too big for our scene, so scale it down
-
-			modelShader.setMat4("model", suitModel);
-			ourModel.Draw(modelShader);
+			ourModel->shaderAttribute.setMat4("model", *suitModel);
+			ourModel->Draw();
 		}
 	}
 

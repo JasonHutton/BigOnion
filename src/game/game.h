@@ -4,15 +4,17 @@
 #include <btBulletDynamicsCommon.h>
 #include <GL/gl.h>
 #include <GL/glu.h>
+#include <string>
+#include "../engine/graphic/RenderComponent.h"
 
-class GameRenderer
+class BOEngine;
+
+class Game
 {
 public:
-	BOEngine engine;
+	Game();
 
-	GameRenderer();
-
-	void init();
+	void init(BOEngine* engine);
 
 	void updateWithDelta(float deltaTime);
 
@@ -26,10 +28,14 @@ public:
 
 private:
 	//TODO: move object to game
-	Shader modelShader;
-	Model ourModel;
-	Model groundModel;
-	Model boxModel;
+	Shader* modelShader = nullptr;
+	Model* ourModel = nullptr;
+	Model* groundModel = nullptr;
+	Model* boxModel = nullptr;
+
+	GameObject* suitMan;
+	GameObject* box;
+	GameObject* ground;
 
 	//physics stuff
 	GLUquadricObj* quad;

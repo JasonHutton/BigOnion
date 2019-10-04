@@ -7,6 +7,7 @@
 GameObject::GameObject(std::string id)
 	: id(id)
 	, components()
+	, transform()
 {
 }
 
