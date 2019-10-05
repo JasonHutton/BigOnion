@@ -1,6 +1,8 @@
 #include "game.h"
 
 
+int test_counter = 0;
+
 Game::Game()
 {
 
@@ -17,29 +19,83 @@ void Game::init(BOEngine* engine)
 	world = new btDiscreteDynamicsWorld(dispatcher, broadphase, solver, collisionConfig);
 	world->setGravity(btVector3(0, -9.8, 0));	//gravity on Earth
 
-	addPlane(0, -3.25, 0);
-
-	addCube(1.0, 1.0, 1.0, 5.0, 20.0, 0, 1.0);
-
-	addCylinder(0.75, 1.5, 0.25, 0, 20, 0, 1.0);
 
 	modelShader = new Shader("src/engine/graphic/shader/model_loading.vs", "src/engine/graphic/shader/model_loading.fs");
-	ourModel = new Model("src/game/assets/nanosuit/nanosuit.obj", modelShader);
-	groundModel = new Model("src/game/assets/ground/plane.obj", modelShader);
-	boxModel = new Model("src/game/assets/box/cube.obj", modelShader);
+
+	// create suit man
+	suitManModel = new Model("src/game/assets/nanosuit/nanosuit.obj", modelShader);
 
 	suitMan = new GameObject("SuitMan");
-	suitMan->addComponent(new RenderComponent(&ourModel->shaderAttribute));
-	suitMan->transform.scale = Vector3f(0.2f, 0.2f, 0.2f);
-	suitMan->transform.rotation.y = 3.14f;
-	engine->gameWorld.addGameObject(suitMan);
+	suitMan->addComponent(new RenderComponent(&suitManModel->shaderAttribute)); // connect object - model
+	suitMan->transform.setPosition(Vector3f(0.0f, 10.f, 0.0f));
+	suitMan->transform.setScale(Vector3f(0.2f, 0.2f, 0.2f));
+	suitMan->transform.setRotation(Vector3f(3.14f, 3.14f, 0.0f));
 
-	GameObject box = GameObject("Box");
-	GameObject ground = GameObject("Ground");
+	suitMan->addComponent(new RigidBodyComponent(addCylinder(0.75, 1.5, 0.25, 0, 20, 0, 1.0))); // connect object - rigibody
+	engine->gameWorld.addGameObject(suitMan); // maybe auto register?
+
+	// create ground
+	groundModel = new Model("src/game/assets/ground/plane.obj", modelShader);
+	ground = new GameObject("Ground");
+	ground->addComponent(new RenderComponent(&groundModel->shaderAttribute));
+	ground->addComponent(new RigidBodyComponent(addPlane(0, -3.25, 0)));
+	engine->gameWorld.addGameObject(ground);
+
+	ground->transform.setPosition(Vector3f(0, -3.25, 0));
+	ground->transform.setScale(Vector3f(100.0f, 1.0f, 100.0f));
+
+	// create box
+	boxModel = new Model("src/game/assets/box/cube.obj", modelShader);
+	box = new  GameObject("Box");
+	box->addComponent(new RenderComponent(&boxModel->shaderAttribute));
+	box->addComponent(new RigidBodyComponent(addCube(1.0, 1.0, 1.0, 5.0, 20.0, 0, 1.0)));
+	engine->gameWorld.addGameObject(box);
+
+	box->transform.setPosition(Vector3f(5.0, 0.8, 0));
+	box->transform.setScale(2.5);
+
+	// create box without physics
+	boxWithoutBtModel = new Model("src/game/assets/box/cube.obj", modelShader);
+	boxWithoutBt = new  GameObject("boxWithoutBt");
+	boxWithoutBt->addComponent(new RenderComponent(&boxWithoutBtModel->shaderAttribute));
+	// boxWithoutBt->addComponent(new RigidBodyComponent(addCube(1.0, 1.0, 1.0, 5.0, 20.0, 0, 1.0)));
+	engine->gameWorld.addGameObject(boxWithoutBt);
+
+	boxWithoutBt->transform.setPosition(Vector3f(0.0, 0.2, -2));
+	boxWithoutBt->transform.setScale(1.5);
+
 }
 
 void Game::updateWithDelta(float deltaTime)
 {
+
+	Vector3f p = box->transform.getPosition();
+	p.z -= 0.01f;
+	// p.x -= 0.01f;
+	//box->transform.setPosition(p);
+
+	Vector3f p2 = boxWithoutBt->transform.getPosition();
+	p2.z -= 0.01f;
+	// p2.x -= 0.01f;
+	//boxWithoutBt->transform.setPosition(p2);
+
+
+	Vector3f r = box->transform.getRotation();
+	r.z -= 0.01f;
+	r.x = 1.01f;
+	box->transform.setRotation(r);
+
+	Vector3f r2 = boxWithoutBt->transform.getRotation();
+	r2.z -= 0.01f;
+	r2.x = 1.01f;
+	boxWithoutBt->transform.setRotation(r2);
+
+	Vector3f r3 = suitMan->transform.getRotation();
+	r3.z -= 0.01f;
+	r3.x = 1.01f;
+	// suitMan->transform.setRotation(r3);
+
+	return;
 }
 
 void Game::render(BOEngine* engine)
@@ -60,47 +116,45 @@ void Game::render(BOEngine* engine)
 	// view/projection transformations
 	glm::mat4 projection = glm::perspective(glm::radians(engine->camera.Zoom), (float)scrWidth / (float)scrHeight, 0.1f, 100.0f);
 	glm::mat4 view = engine->camera.GetViewMatrix();
-	
+
 	modelShader->setMat4("projection", projection);
 	modelShader->setMat4("view", view);
+
+	groundModel->Draw();
+	boxModel->Draw();
+	boxWithoutBtModel->Draw();
+	suitManModel->Draw();
 
 	for (int i = 0; i < bodies.size(); i++)
 	{
 		if (bodies[i]->getCollisionShape()->getShapeType() == STATIC_PLANE_PROXYTYPE) {
-			glm::mat4 planeModel = glm::mat4(1.0f);
-			btTransform transform;
-			bodies[i]->getMotionState()->getWorldTransform(transform);	//get the transform
-			transform.getOpenGLMatrix(glm::value_ptr(planeModel));
-
-			planeModel = glm::scale(planeModel, glm::vec3(100.0f, 1.0f, 100.0f));
-
-			groundModel->shaderAttribute.setMat4("model", planeModel);
-			groundModel->Draw();
 		}
 		else if (bodies[i]->getCollisionShape()->getShapeType() == BOX_SHAPE_PROXYTYPE) {
-			glm::mat4 cubeModel = glm::mat4(1.0f);
-			btTransform transform;
-			bodies[i]->getMotionState()->getWorldTransform(transform);	//get the transform
-			transform.getOpenGLMatrix(glm::value_ptr(cubeModel));
+			//glm::mat4 cubeModel = glm::mat4(1.0f);
+			//btTransform transform;
+			//bodies[i]->getMotionState()->getWorldTransform(transform);	//get the transform
+			//transform.getOpenGLMatrix(glm::value_ptr(cubeModel));
 
-			btVector3 scale = ((btBoxShape*)bodies[i]->getCollisionShape())->getHalfExtentsWithoutMargin();
-			cubeModel = glm::scale(cubeModel, glm::vec3(2 * scale.getX(), 2 * scale.getY(), 2 * scale.getZ()));
+			//btVector3 scale = ((btBoxShape*)bodies[i]->getCollisionShape())->getHalfExtentsWithoutMargin();
+			//cubeModel = glm::scale(cubeModel, glm::vec3(2 * scale.getX(), 2 * scale.getY(), 2 * scale.getZ()));
 
-			boxModel->shaderAttribute.setMat4("model", cubeModel);
-			boxModel->Draw();
+			//boxModel->shaderAttribute.setMat4("model", cubeModel);
+			//boxModel->Draw();
 		}
 		else if (bodies[i]->getCollisionShape()->getShapeType() == CYLINDER_SHAPE_PROXYTYPE) {
 			// render the loaded model
-			glm::mat4* suitModel = &suitMan->transform.getModelMatrix();
 
-			btTransform transform;
-			bodies[i]->getMotionState()->getWorldTransform(transform);	//get the transform
-			transform.getOpenGLMatrix(glm::value_ptr(*suitModel));
+						//}
+			//glm::mat4 modelMatrix = glm::translate(glm::mat4(1.0f), glm::vec3(0, 10, 0));
+			//modelMatrix = glm::rotate(modelMatrix, 3.14f, glm::vec3(1.0f, 0.0f, 0.0f));
+			//modelMatrix = glm::rotate(modelMatrix, 3.14f, glm::vec3(0.0f, 1.0f, 0.0f));
+			//modelMatrix = glm::rotate(modelMatrix, 0.0f, glm::vec3(0.0f, 0.0f, 1.0f));
+			//modelMatrix = glm::scale(modelMatrix, suitMan->transform.getScale().getGlmVec3());
 
-			ourModel->shaderAttribute.setMat4("model", *suitModel);
-			ourModel->Draw();
 		}
+
 	}
+
 
 	world->stepSimulation(1 / 60.0);
 }

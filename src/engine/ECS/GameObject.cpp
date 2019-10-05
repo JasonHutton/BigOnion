@@ -6,9 +6,12 @@
 */
 GameObject::GameObject(std::string id)
 	: id(id)
-	, components()
 	, transform()
+	, components()
+
 {
+	transform.gameObject = this;
+	// components.push_back(&transform); // this line will cause program terminate....why? dead lopp?
 }
 
 /*
@@ -29,6 +32,7 @@ void GameObject::addComponent(Component* component)
 {
 	component->gameObject = this;
 	components.push_back(component);
+	component->onAddToGameObject();
 }
 
 /*

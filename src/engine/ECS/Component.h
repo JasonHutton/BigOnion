@@ -8,10 +8,12 @@
 class Component
 {
 public:
-	GameObject* gameObject;
+	GameObject* gameObject = nullptr;
 	virtual ~Component() {};
 	virtual void update(float deltaTime) {};
 	virtual void lateUpdate(float deltaTime) {};
 	virtual void fixedUpdate(float deltaTime) {};
 
+	virtual void onAddToGameObject() {};
+	
 };

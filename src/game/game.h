@@ -5,7 +5,8 @@
 #include <GL/gl.h>
 #include <GL/glu.h>
 #include <string>
-#include "../engine/graphic/RenderComponent.h"
+
+#include "../engine/ECS/RigidBodyComponent.h" // remove, already in engine
 
 class BOEngine;
 
@@ -29,13 +30,15 @@ public:
 private:
 	//TODO: move object to game
 	Shader* modelShader = nullptr;
-	Model* ourModel = nullptr;
+	Model* suitManModel = nullptr;
 	Model* groundModel = nullptr;
 	Model* boxModel = nullptr;
+	Model* boxWithoutBtModel;
 
 	GameObject* suitMan;
 	GameObject* box;
 	GameObject* ground;
+	GameObject* boxWithoutBt;
 
 	//physics stuff
 	GLUquadricObj* quad;

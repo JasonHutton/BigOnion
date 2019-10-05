@@ -109,7 +109,10 @@
       <Filter>Source Files\engine\graphic</Filter>
     </ClCompile>
     <ClCompile Include="src\engine\graphic\ViewRenderer.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\engine\graphic</Filter>
+    </ClCompile>
+    <ClCompile Include="src\engine\ECS\RigidbodyComponent.cpp">
+      <Filter>Source Files\engine\ECS</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -183,7 +186,10 @@
       <Filter>Header Files\engine\graphic</Filter>
     </ClInclude>
     <ClInclude Include="src\engine\graphic\ViewRenderer.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\engine\graphic</Filter>
+    </ClInclude>
+    <ClInclude Include="src\engine\ECS\RigidbodyComponent.h">
+      <Filter>Header Files\engine\ECS</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -7,12 +7,14 @@
 #include <glm/gtc/type_ptr.hpp>
 #include <chrono>
 
-#include "../engine/graphic/shader_m.h"
-#include "../engine/graphic/camera.h"
-#include "../engine/graphic/model.h"
-#include "../engine/graphic/ShaderAttribute.h"
+#include "graphic/shader_m.h"
+#include "graphic/camera.h"
+#include "graphic/model.h"
+#include "graphic/ShaderAttribute.h"
+#include "graphic/RenderComponent.h"
 
 #include "ECS/GameWorld.h"
+#include "ECS/RigidbodyComponent.h"
 
 #include <iostream>
 
