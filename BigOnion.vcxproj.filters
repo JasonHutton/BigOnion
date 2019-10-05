@@ -111,7 +111,7 @@
     <ClCompile Include="src\engine\graphic\ViewRenderer.cpp">
       <Filter>Source Files\engine\graphic</Filter>
     </ClCompile>
-    <ClCompile Include="src\engine\ECS\RigidbodyComponent.cpp">
+    <ClCompile Include="src\engine\ECS\RigidBodyComponent.cpp">
       <Filter>Source Files\engine\ECS</Filter>
     </ClCompile>
   </ItemGroup>
@@ -188,7 +188,7 @@
     <ClInclude Include="src\engine\graphic\ViewRenderer.h">
       <Filter>Header Files\engine\graphic</Filter>
     </ClInclude>
-    <ClInclude Include="src\engine\ECS\RigidbodyComponent.h">
+    <ClInclude Include="src\engine\ECS\RigidBodyComponent.h">
       <Filter>Header Files\engine\ECS</Filter>
     </ClInclude>
   </ItemGroup>

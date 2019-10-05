@@ -19,7 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\engine\ECS\RigidbodyComponent.cpp" />
+    <ClCompile Include="src\engine\ECS\RigidBodyComponent.cpp" />
     <ClCompile Include="src\engine\graphic\RenderComponent.cpp" />
     <ClCompile Include="src\engine\audio\AudioEngine.cpp" />
     <ClCompile Include="src\engine\ECS\GameObject.cpp" />
@@ -39,7 +39,7 @@
     <ClCompile Include="src\game\models\suit_man.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\engine\ECS\RigidbodyComponent.h" />
+    <ClInclude Include="src\engine\ECS\RigidBodyComponent.h" />
     <ClInclude Include="src\engine\graphic\RenderComponent.h" />
     <ClInclude Include="src\engine\audio\AudioEngine.h" />
     <ClInclude Include="src\engine\BOEngine.h" />

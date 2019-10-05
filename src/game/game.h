@@ -6,8 +6,6 @@
 #include <GL/glu.h>
 #include <string>
 
-#include "../engine/ECS/RigidBodyComponent.h" // remove, already in engine
-
 class BOEngine;
 
 class Game

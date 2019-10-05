@@ -1,8 +1,5 @@
 #include "game.h"
 
-
-int test_counter = 0;
-
 Game::Game()
 {
 
