@@ -1,5 +1,4 @@
 #include "RenderComponent.h"
-#include <iostream>
 
 void RenderComponent::lateUpdate(float deltaTime)
 {

@@ -61,12 +61,6 @@ void BOEngine::initialize()
 	// Game World initialization
 	currentTime = std::chrono::high_resolution_clock::now();
 	gameWorld = GameWorld();
-	// commented out for the sanity of my groupmates :)
-	/*
-	GameObject* obj = new GameObject("Test");
-	obj->addComponent(new TestComponent());
-	gameWorld.addGameObject(obj);
-	*/
 
 	game->init(this);
 }

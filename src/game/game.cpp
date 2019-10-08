@@ -64,8 +64,6 @@ void Game::init(BOEngine* engine)
 
 void Game::updateWithDelta(float deltaTime)
 {
-
-
 	Vector3f p2 = boxWithoutBt->transform.position;
 	p2.z -= 0.01f;
 	// p2.x -= 0.01f;
@@ -114,37 +112,6 @@ void Game::render(BOEngine* engine)
 	boxModel->Draw();
 	boxWithoutBtModel->Draw();
 	suitManModel->Draw();
-
-	for (int i = 0; i < bodies.size(); i++)
-	{
-		if (bodies[i]->getCollisionShape()->getShapeType() == STATIC_PLANE_PROXYTYPE) {
-		}
-		else if (bodies[i]->getCollisionShape()->getShapeType() == BOX_SHAPE_PROXYTYPE) {
-			//glm::mat4 cubeModel = glm::mat4(1.0f);
-			//btTransform transform;
-			//bodies[i]->getMotionState()->getWorldTransform(transform);	//get the transform
-			//transform.getOpenGLMatrix(glm::value_ptr(cubeModel));
-
-			//btVector3 scale = ((btBoxShape*)bodies[i]->getCollisionShape())->getHalfExtentsWithoutMargin();
-			//cubeModel = glm::scale(cubeModel, glm::vec3(2 * scale.getX(), 2 * scale.getY(), 2 * scale.getZ()));
-
-			//boxModel->shaderAttribute.setMat4("model", cubeModel);
-			//boxModel->Draw();
-		}
-		else if (bodies[i]->getCollisionShape()->getShapeType() == CYLINDER_SHAPE_PROXYTYPE) {
-			// render the loaded model
-
-						//}
-			//glm::mat4 modelMatrix = glm::translate(glm::mat4(1.0f), glm::vec3(0, 10, 0));
-			//modelMatrix = glm::rotate(modelMatrix, 3.14f, glm::vec3(1.0f, 0.0f, 0.0f));
-			//modelMatrix = glm::rotate(modelMatrix, 3.14f, glm::vec3(0.0f, 1.0f, 0.0f));
-			//modelMatrix = glm::rotate(modelMatrix, 0.0f, glm::vec3(0.0f, 0.0f, 1.0f));
-			//modelMatrix = glm::scale(modelMatrix, suitMan->transform.getScale().getGlmVec3());
-
-		}
-
-	}
-
 
 	world->stepSimulation(1 / 60.0);
 }
