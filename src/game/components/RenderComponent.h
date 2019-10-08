@@ -1,7 +1,7 @@
 #pragma once
-#include "../ECS/Component.h"
-#include "model.h"
-#include "../BOEngine.fwd.h"
+#include "../../engine/ECS/Component.h"
+#include "../../engine/graphic/model.h"
+#include "../../engine/BOEngine.fwd.h"
 
 
 class RenderComponent 

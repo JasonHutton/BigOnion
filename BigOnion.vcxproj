@@ -20,7 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\game\components\RigidBodyComponent.cpp" />
-    <ClCompile Include="src\engine\graphic\RenderComponent.cpp" />
+    <ClCompile Include="src\game\components\RenderComponent.cpp" />
     <ClCompile Include="File.cpp" />
     <ClCompile Include="FileSystem.cpp" />
     <ClCompile Include="SoundFile.cpp" />
@@ -38,13 +38,12 @@
     <ClCompile Include="src\game\game_loader.cpp" />
     <ClCompile Include="src\game\game.cpp" />
     <ClCompile Include="src\Launcher.cpp" />
-    <ClCompile Include="src\game\models\suit_man.cpp" />
     <ClCompile Include="TextFile.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="BOEngine.fwd.h" />
+    <ClInclude Include="src\engine\BOEngine.fwd.h" />
     <ClInclude Include="src\game\components\RigidBodyComponent.h" />
-    <ClInclude Include="src\engine\graphic\RenderComponent.h" />
+    <ClInclude Include="src\game\components\RenderComponent.h" />
     <ClInclude Include="AccessibleFileI.h" />
     <ClInclude Include="File.h" />
     <ClInclude Include="FileSystem.h" />
@@ -70,7 +69,6 @@
     <ClInclude Include="src\game\components\TestComponent.h" />
     <ClInclude Include="src\game\game_loader.h" />
     <ClInclude Include="src\game\game.h" />
-    <ClInclude Include="src\game\models\suit_man.h" />
     <ClInclude Include="TextFile.h" />
   </ItemGroup>
   <ItemGroup>

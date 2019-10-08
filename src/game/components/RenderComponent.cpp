@@ -1,7 +1,7 @@
 #include "RenderComponent.h"
-#include "../utils/Vector3.h"
-#include "../ECS/GameObject.h"
-#include "../BOEngine.h"
+#include "../../engine/utils/Vector3.h"
+#include "../../engine/ECS/GameObject.h"
+#include "../../engine/BOEngine.h"
 
 RenderComponent::RenderComponent(BOEngine* engine, std::string modelPath, Shader* shader)
 	: model (modelPath, shader)

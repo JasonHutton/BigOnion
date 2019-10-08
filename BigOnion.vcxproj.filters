@@ -31,12 +31,6 @@
     <Filter Include="Header Files\engine\graphic">
       <UniqueIdentifier>{30ddeb68-c3b5-41c0-bcea-13f2d4ecba45}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\game\models">
-      <UniqueIdentifier>{91aa2d3f-d87f-4e2e-8406-5eaee09c6fa9}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\game\models">
-      <UniqueIdentifier>{a6f013db-1db4-4535-b925-6120051e822d}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\engine\audio">
       <UniqueIdentifier>{405d96ca-4cb3-4aa7-9922-d9f55eb45183}</UniqueIdentifier>
     </Filter>
@@ -78,9 +72,6 @@
     <ClCompile Include="src\engine\graphic\camera.cpp">
       <Filter>Source Files\engine\graphic</Filter>
     </ClCompile>
-    <ClCompile Include="src\game\models\suit_man.cpp">
-      <Filter>Source Files\game\models</Filter>
-    </ClCompile>
     <ClCompile Include="src\engine\graphic\shader.cpp">
       <Filter>Source Files\engine\graphic</Filter>
     </ClCompile>
@@ -98,9 +89,6 @@
     </ClCompile>
     <ClCompile Include="src\game\components\TestComponent.cpp">
       <Filter>Source Files\game\components</Filter>
-    </ClCompile>
-    <ClCompile Include="src\engine\graphic\RenderComponent.cpp">
-      <Filter>Source Files\engine\graphic</Filter>
     </ClCompile>
     <ClCompile Include="src\game\game.cpp">
       <Filter>Source Files\game</Filter>
@@ -129,6 +117,9 @@
     <ClCompile Include="SoundFile.cpp">
       <Filter>Source Files\engine\FileSystem</Filter>
     </ClCompile>
+    <ClCompile Include="src\game\components\RenderComponent.cpp">
+      <Filter>Source Files\game\components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\engine\BOEngine.h">
@@ -139,9 +130,6 @@
     </ClInclude>
     <ClInclude Include="src\engine\graphic\camera.h">
       <Filter>Header Files\engine\graphic</Filter>
-    </ClInclude>
-    <ClInclude Include="src\game\models\suit_man.h">
-      <Filter>Header Files\game\models</Filter>
     </ClInclude>
     <ClInclude Include="src\engine\graphic\model.h">
       <Filter>Header Files\engine\graphic</Filter>
@@ -182,14 +170,8 @@
     <ClInclude Include="src\engine\utils\Vector3.h">
       <Filter>Header Files\engine\utils</Filter>
     </ClInclude>
-    <ClInclude Include="src\engine\graphic\RenderComponent.h">
-      <Filter>Header Files\engine\graphic</Filter>
-    </ClInclude>
     <ClInclude Include="src\game\game.h">
       <Filter>Header Files\game</Filter>
-    </ClInclude>
-    <ClInclude Include="src\engine\filesystem.h">
-      <Filter>Header Files\engine\utils</Filter>
     </ClInclude>
     <ClInclude Include="src\engine\resource.h">
       <Filter>Header Files\engine\utils</Filter>
@@ -220,6 +202,12 @@
     </ClInclude>
     <ClInclude Include="SoundFile.h">
       <Filter>Header Files\engine\FileSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="src\game\components\RenderComponent.h">
+      <Filter>Header Files\game\components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\engine\BOEngine.fwd.h">
+      <Filter>Header Files\engine</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

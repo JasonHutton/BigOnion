@@ -11,7 +11,7 @@
 #include "graphic/camera.h"
 #include "graphic/model.h"
 #include "graphic/ShaderAttribute.h"
-#include "graphic/RenderComponent.h"
+#include "../game/components/RenderComponent.h"
 
 #include "ECS/GameWorld.h"
 #include "../game/components/RigidbodyComponent.h"
