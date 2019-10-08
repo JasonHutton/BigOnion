@@ -188,6 +188,9 @@
     <ClInclude Include="src\engine\ECS\Transform.h">
       <Filter>Header Files\engine\ECS</Filter>
     </ClInclude>
+    <ClInclude Include="BOEngine.fwd.h">
+      <Filter>Header Files\engine</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="src\engine\vertex.glsl">

@@ -11,13 +11,7 @@ class BOEngine;
 class Game
 {
 public:
-	Game();
-
-	void init(BOEngine* engine);
-
-	void updateWithDelta(float deltaTime);
-
-	void render(BOEngine* engine);
+	void init(BOEngine* engine, Shader* shader);
 
 	btRigidBody* addCube(float width, float height, float depth, float x, float y, float z, float mass);
 
@@ -27,7 +21,7 @@ public:
 
 private:
 	//TODO: move object to game
-	Shader* modelShader = nullptr;
+	
 	Model* suitManModel = nullptr;
 	Model* groundModel = nullptr;
 	Model* boxModel = nullptr;
@@ -40,11 +34,7 @@ private:
 
 	//physics stuff
 	GLUquadricObj* quad;
-	btDynamicsWorld* world;	//every physical object go to the world
-	btDispatcher* dispatcher;	//what collision algorithm to use?
-	btCollisionConfiguration* collisionConfig;	//what collision algorithm to use?
-	btBroadphaseInterface* broadphase;	//should Bullet examine every object, or just what close to each other
-	btConstraintSolver* solver;					//solve collisions, apply forces, impulses
+	
 	std::vector<btRigidBody*> bodies;
 };
 

@@ -38,6 +38,7 @@
     <ClCompile Include="src\game\models\suit_man.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="BOEngine.fwd.h" />
     <ClInclude Include="src\game\components\RigidBodyComponent.h" />
     <ClInclude Include="src\engine\graphic\RenderComponent.h" />
     <ClInclude Include="src\engine\audio\AudioEngine.h" />

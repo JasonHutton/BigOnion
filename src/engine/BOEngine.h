@@ -39,6 +39,8 @@ public:
 	void initialize();
 	void preRender();
 	void updateEngine(float deltaTime);
+	void render();
+	void addRenderComponent(RenderComponent* renderComponent);
 
 	void exitInError(const std::string& error);
 	int exit() const { return exitCode; }
@@ -52,5 +54,8 @@ private:
 	
 	int exitCode;
 
-	std::unique_ptr<Game> game;
+	Shader* modelShader;
+	std::vector<RenderComponent*> renderComponents;
+
+	std::unique_ptr<Game> game; // delete this
 };

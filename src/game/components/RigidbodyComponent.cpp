@@ -1,6 +1,6 @@
 #include "RigidBodyComponent.h"
 #include "../../engine/ECS/GameObject.h"
-#include <iostream>
+#include "../../engine/ECS/GameWorld.h"
 
 RigidBodyComponent::RigidBodyComponent(btRigidBody* _body)
 	: rigidBody(_body)
@@ -21,7 +21,7 @@ void RigidBodyComponent::fixedUpdate(float deltaTime)
 	gameObject->transform.rotation = Vector3f(x, y, z);
 }
 
-void RigidBodyComponent::onAddToGameObject()
+void RigidBodyComponent::onAddToGameWorld()
 {
 	btTransform trans = rigidBody->getWorldTransform();
 	gameObject->transform.position = Vector3f(trans.getOrigin().x(), trans.getOrigin().y(), trans.getOrigin().z());
@@ -31,4 +31,6 @@ void RigidBodyComponent::onAddToGameObject()
 	trans.setOrigin(btVector3(gameObject->transform.position.x, pos.y, pos.z));
 	rigidBody->setWorldTransform(trans);
 	*/
+
+	gameObject->world->physicsWorld->addRigidBody(rigidBody);
 }

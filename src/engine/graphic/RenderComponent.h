@@ -1,19 +1,16 @@
 #pragma once
 #include "../ECS/Component.h"
-#include "../ECS/GameObject.h"
-#include "ShaderAttribute.h"
-#include "../utils/Vector3.h"
+#include "model.h"
+#include "../BOEngine.fwd.h"
 
 
 class RenderComponent 
 	: public Component
 {
 public:
-	RenderComponent(ShaderAttribute* _shaderAttribute) :shaderAttribute(_shaderAttribute) {};
+	Model model;
+	RenderComponent(BOEngine* engine, std::string modelPath, Shader* shader);
 	void lateUpdate(float deltaTime) override;
-
-private:
-	ShaderAttribute* shaderAttribute;
 
 };
 

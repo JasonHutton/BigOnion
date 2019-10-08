@@ -9,7 +9,7 @@ public:
 	RigidBodyComponent(btRigidBody*);
 
 	void fixedUpdate(float deltaTime) override;
-	void onAddToGameObject() override;
+	void onAddToGameWorld() override;
 
 private:
 	btRigidBody* rigidBody;
