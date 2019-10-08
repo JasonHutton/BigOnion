@@ -1,4 +1,5 @@
 #include "game.h"
+#include "../FileSystem.h"
 
 Game::Game()
 {
@@ -41,7 +42,9 @@ void Game::init(BOEngine* engine)
 	ground->transform.scale = Vector3f(100.0f, 1.0f, 100.0f);
 
 	// create box
-	boxModel = new Model("src/game/assets/box/cube.obj", modelShader);
+	string osPathBox;
+	FileSystem::BuildOSPath(FileSystem::FindFile("game/assets/box/cube.obj"), "game/assets/box/cube.obj", osPathBox);
+	boxModel = new Model(osPathBox, modelShader);
 	box = new  GameObject("Box");
 	box->addComponent(new RenderComponent(&boxModel->shaderAttribute));
 	box->addComponent(new RigidBodyComponent(addCube(1.0, 1.0, 1.0, 5.0, 20.0, 0, 1.0)));
