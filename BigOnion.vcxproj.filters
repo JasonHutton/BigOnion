@@ -111,6 +111,9 @@
     <ClCompile Include="src\engine\ECS\RigidBodyComponent.cpp">
       <Filter>Source Files\engine\ECS</Filter>
     </ClCompile>
+    <ClCompile Include="src\engine\UI.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\engine\BOEngine.h">
@@ -187,6 +190,9 @@
     </ClInclude>
     <ClInclude Include="src\engine\ECS\RigidBodyComponent.h">
       <Filter>Header Files\engine\ECS</Filter>
+    </ClInclude>
+    <ClInclude Include="src\engine\UI.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
