@@ -3,6 +3,7 @@
 #include "../engine/BOEngine.h"
 #include "game.h"
 #include "../src/engine/audio/AudioEngine.h"
+#include "../FileSystem.h"
 
 class GameLoader
 {

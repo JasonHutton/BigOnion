@@ -58,6 +58,12 @@
     <Filter Include="Header Files\engine\utils">
       <UniqueIdentifier>{97edd3ce-3ddc-4829-80ef-05eac1ebf6ed}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\engine\FileSystem">
+      <UniqueIdentifier>{d6462bc9-3f31-41a5-8a73-084abd6ae64c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\engine\FileSystem">
+      <UniqueIdentifier>{f94ff06b-d921-43a5-bc99-d285e69dd070}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Launcher.cpp">
@@ -110,6 +116,18 @@
     </ClCompile>
     <ClCompile Include="src\engine\ECS\Transform.cpp">
       <Filter>Source Files\engine\ECS</Filter>
+    </ClCompile>
+    <ClCompile Include="FileSystem.cpp">
+      <Filter>Source Files\engine\FileSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="File.cpp">
+      <Filter>Source Files\engine\FileSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="TextFile.cpp">
+      <Filter>Source Files\engine\FileSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="SoundFile.cpp">
+      <Filter>Source Files\engine\FileSystem</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -187,6 +205,21 @@
     </ClInclude>
     <ClInclude Include="src\engine\ECS\Transform.h">
       <Filter>Header Files\engine\ECS</Filter>
+    </ClInclude>
+    <ClInclude Include="FileSystem.h">
+      <Filter>Header Files\engine\FileSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="File.h">
+      <Filter>Header Files\engine\FileSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="TextFile.h">
+      <Filter>Header Files\engine\FileSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="AccessibleFileI.h">
+      <Filter>Header Files\engine\FileSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="SoundFile.h">
+      <Filter>Header Files\engine\FileSystem</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

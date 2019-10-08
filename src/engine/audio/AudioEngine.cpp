@@ -1,4 +1,5 @@
 #include "AudioEngine.h"
+#include "../FileSystem.h"
 
 Implementation::Implementation() {
 	mpStudioSystem = NULL;
@@ -53,7 +54,11 @@ void AudioEngine::LoadSound(const std::string& strSoundName, bool b3d, bool bLoo
 	eMode |= bLooping ? FMOD_LOOP_NORMAL : FMOD_LOOP_OFF;
 	eMode |= bStream ? FMOD_CREATESTREAM : FMOD_CREATECOMPRESSEDSAMPLE;
 	FMOD::Sound* pSound = nullptr;
-	AudioEngine::ErrorCheck(sgpImplementation->mpSystem->createSound(strSoundName.c_str(), eMode, nullptr, &pSound));
+
+	string osPath;
+	FileSystem::BuildOSPath(FileSystem::FindFile(strSoundName), strSoundName, osPath);
+	AudioEngine::ErrorCheck(sgpImplementation->mpSystem->createSound(osPath.c_str(), eMode, nullptr, &pSound));
+	
 	if (pSound) {
 		sgpImplementation->mSounds[strSoundName] = pSound;
 	}
