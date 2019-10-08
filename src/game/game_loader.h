@@ -1,22 +1,21 @@
 #pragma once
 
 #include "../engine/BOEngine.h"
-#include "game_renderer.h"
-#include "game_controller.h"
+#include "game.h"
 #include "../src/engine/audio/AudioEngine.h"
 #include "../FileSystem.h"
 
 class GameLoader
 {
 	private:
-		BOEngine engine;
-		GameRenderer gameRenderer;
-		AudioEngine audio;
-		void setupGame();
+		BOEngine* engine = nullptr;
+
 	public:
 		GameLoader();
+		AudioEngine audio;
 
-		void createGame();
+		std::unique_ptr<Game> createGame();
+		void setEngine(BOEngine&);
 		void reload();
 		void startGame();
 		void exitGame();

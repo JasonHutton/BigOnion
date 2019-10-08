@@ -19,36 +19,56 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\game\components\RigidBodyComponent.cpp" />
+    <ClCompile Include="src\engine\graphic\RenderComponent.cpp" />
     <ClCompile Include="File.cpp" />
     <ClCompile Include="FileSystem.cpp" />
     <ClCompile Include="SoundFile.cpp" />
     <ClCompile Include="src\engine\audio\AudioEngine.cpp" />
+    <ClCompile Include="src\engine\ECS\GameObject.cpp" />
+    <ClCompile Include="src\engine\ECS\GameWorld.cpp" />
+    <ClCompile Include="src\engine\ECS\Transform.cpp" />
     <ClCompile Include="src\engine\graphic\model.cpp" />
     <ClCompile Include="src\engine\BOEngine.cpp" />
     <ClCompile Include="src\engine\graphic\camera.cpp" />
     <ClCompile Include="src\engine\graphic\shader.cpp" />
-    <ClCompile Include="src\game\game_controller.cpp" />
+    <ClCompile Include="src\engine\graphic\ShaderAttribute.cpp" />
+    <ClCompile Include="src\engine\graphic\ViewRenderer.cpp" />
+    <ClCompile Include="src\game\components\TestComponent.cpp" />
     <ClCompile Include="src\game\game_loader.cpp" />
-    <ClCompile Include="src\game\game_renderer.cpp" />
+    <ClCompile Include="src\game\game.cpp" />
     <ClCompile Include="src\Launcher.cpp" />
     <ClCompile Include="src\game\models\suit_man.cpp" />
     <ClCompile Include="TextFile.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\game\components\RigidBodyComponent.h" />
+    <ClInclude Include="src\engine\graphic\RenderComponent.h" />
     <ClInclude Include="AccessibleFileI.h" />
     <ClInclude Include="File.h" />
     <ClInclude Include="FileSystem.h" />
     <ClInclude Include="SoundFile.h" />
     <ClInclude Include="src\engine\audio\AudioEngine.h" />
     <ClInclude Include="src\engine\BOEngine.h" />
+    <ClInclude Include="src\engine\ECS\Component.fwd.h" />
+    <ClInclude Include="src\engine\ECS\Component.h" />
+    <ClInclude Include="src\engine\ECS\GameObject.fwd.h" />
+    <ClInclude Include="src\engine\ECS\GameObject.h" />
+    <ClInclude Include="src\engine\ECS\GameWorld.fwd.h" />
+    <ClInclude Include="src\engine\ECS\GameWorld.h" />
+    <ClInclude Include="src\engine\ECS\Transform.h" />
     <ClInclude Include="src\engine\graphic\camera.h" />
     <ClInclude Include="src\engine\graphic\model.h" />
     <ClInclude Include="src\engine\graphic\model_mesh.h" />
+    <ClInclude Include="src\engine\graphic\ShaderAttribute.h" />
     <ClInclude Include="src\engine\graphic\shader_m.h" />
+    <ClInclude Include="src\engine\graphic\ViewRenderer.h" />
     <ClInclude Include="src\engine\resource.h" />
-    <ClInclude Include="src\game\game_controller.h" />
+    <ClInclude Include="src\engine\utils\utils.h" />
+    <ClInclude Include="src\engine\utils\Vector3.h" />
+    <ClInclude Include="src\game\components\TestComponent.h" />
     <ClInclude Include="src\game\game_loader.h" />
-    <ClInclude Include="src\game\game_renderer.h" />
+    <ClInclude Include="src\game\game.h" />
     <ClInclude Include="src\game\models\suit_man.h" />
     <ClInclude Include="TextFile.h" />
   </ItemGroup>
@@ -113,15 +133,15 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)include;$(SolutionDir)include\FMOD inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)include\bullet;$(SolutionDir)include;$(SolutionDir)include\FMOD inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
-      <AdditionalDependencies>glad.lib;glfw3.lib;glfw3dll.lib;assimp-vc140-mt.lib;IrrXML.lib;fmodL_vc.lib;fmodstudioL_vc.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(SolutionDir)lib;$(SolutionDir)lib\FMOD lib</AdditionalLibraryDirectories>
+      <AdditionalDependencies>glad.lib;glfw3.lib;glfw3dll.lib;assimp-vc140-mt.lib;IrrXML.lib;fmodL_vc.lib;fmodstudioL_vc.lib;BulletDynamics_Debug.lib;BulletCollision_Debug.lib;LinearMath_Debug.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)lib\bullet;$(SolutionDir)lib</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy /y /d "$(SolutionDir)lib\FMOD lib\*.dll" "$(OutDir)"</Command>
+      <Command>C:\Windows\System32\xcopy /y /d "$(SolutionDir)lib\*.dll" "$(OutDir)"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -130,11 +150,11 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>D:\Documents\BigOnion\bullet3-master\src;$(SolutionDir)include;$(SolutionDir)include\FMOD inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
-      <AdditionalLibraryDirectories>$(SolutionDir)lib</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>D:\Documents\BigOnion\bullet\lib\Debug;$(SolutionDir)lib</AdditionalLibraryDirectories>
       <AdditionalDependencies>glad.lib;glfw3.lib;glfw3dll.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
