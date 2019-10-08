@@ -6,7 +6,7 @@ void Game::init(BOEngine* engine, Shader* shader)
 	std::cout << "Game init" << std::endl;
 
 	// create suit man
-	suitMan = new GameObject("SuitMan");
+	GameObject* suitMan = new GameObject("SuitMan");
 	suitMan->addComponent(new RenderComponent(engine, "src/game/assets/nanosuit/nanosuit.obj", shader)); // connect object - model
 	suitMan->transform.position = Vector3f(0.0f, 10.f, 0.0f);
 	suitMan->transform.scale = Vector3f(0.2f, 0.2f, 0.2f);
@@ -16,7 +16,7 @@ void Game::init(BOEngine* engine, Shader* shader)
 	engine->gameWorld.addGameObject(suitMan); // maybe auto register?
 
 	// create ground
-	ground = new GameObject("Ground");
+	GameObject* ground = new GameObject("Ground");
 	ground->addComponent(new RenderComponent(engine, "src/game/assets/ground/plane.obj", shader));
 	ground->addComponent(new RigidBodyComponent(addPlane(0, -3.25, 0)));
 	engine->gameWorld.addGameObject(ground);
@@ -27,7 +27,7 @@ void Game::init(BOEngine* engine, Shader* shader)
 	// create box
 	string osPathBox;
 	FileSystem::BuildOSPath(FileSystem::FindFile("game/assets/box/cube.obj"), "game/assets/box/cube.obj", osPathBox);
-	box = new  GameObject("Box");
+	GameObject* box = new  GameObject("Box");
 	box->addComponent(new RenderComponent(engine, osPathBox, shader));
 	box->addComponent(new RigidBodyComponent(addCube(1.0, 1.0, 1.0, 5.0, 20.0, 0, 1.0)));
 	engine->gameWorld.addGameObject(box);
@@ -36,7 +36,7 @@ void Game::init(BOEngine* engine, Shader* shader)
 	box->transform.scale = 2.5;
 
 	// create box without physics
-	boxWithoutBt = new  GameObject("boxWithoutBt");
+	GameObject* boxWithoutBt = new  GameObject("boxWithoutBt");
 	boxWithoutBt->addComponent(new RenderComponent(engine, "src/game/assets/box/cube.obj", shader));
 	// boxWithoutBt->addComponent(new RigidBodyComponent(addCube(1.0, 1.0, 1.0, 5.0, 20.0, 0, 1.0)));
 	engine->gameWorld.addGameObject(boxWithoutBt);
@@ -59,7 +59,6 @@ btRigidBody* Game::addCube(float width, float height, float depth, float x, floa
 	btMotionState* motion = new btDefaultMotionState(t);	//set the position (and motion)
 	btRigidBody::btRigidBodyConstructionInfo info(mass, motion, box, inertia);	//create the constructioninfo, you can create multiple bodies with the same info
 	btRigidBody* body = new btRigidBody(info);	//let's create the body itself
-	bodies.push_back(body);	//to be easier to clean, I store them a vector
 	return body;
 }
 
@@ -71,7 +70,6 @@ btRigidBody* Game::addPlane(float x, float y, float z) {
 	btMotionState* motion = new btDefaultMotionState(t);
 	btRigidBody::btRigidBodyConstructionInfo info(0.0, motion, plane);
 	btRigidBody* body = new btRigidBody(info);
-	bodies.push_back(body);
 	return body;
 }
 
@@ -87,6 +85,5 @@ btRigidBody* Game::addCylinder(float width, float height, float depth, float x, 
 	btMotionState* motion = new btDefaultMotionState(t);	//set the position (and motion)
 	btRigidBody::btRigidBodyConstructionInfo info(mass, motion, cylinder, inertia);	//create the constructioninfo, you can create multiple bodies with the same info
 	btRigidBody* body = new btRigidBody(info);	//let's create the body itself
-	bodies.push_back(body);	//to be easier to clean, I store them a vector
 	return body;
 }

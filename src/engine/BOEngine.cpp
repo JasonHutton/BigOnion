@@ -118,7 +118,6 @@ void BOEngine::render()
 
 void BOEngine::addRenderComponent(RenderComponent* renderComponent)
 {
-	std::cout << "Added a render component!" << std::endl;
 	renderComponents.push_back(renderComponent);
 }
 

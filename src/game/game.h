@@ -18,22 +18,4 @@ public:
 	btRigidBody* addPlane(float x, float y, float z);
 
 	btRigidBody* addCylinder(float width, float height, float depth, float x, float y, float z, float mass);
-
-private:
-	//TODO: move object to game
-	
-	Model* suitManModel = nullptr;
-	Model* groundModel = nullptr;
-	Model* boxModel = nullptr;
-	Model* boxWithoutBtModel;
-
-	GameObject* suitMan;
-	GameObject* box;
-	GameObject* ground;
-	GameObject* boxWithoutBt;
-
-	//physics stuff
-	GLUquadricObj* quad;
-	
-	std::vector<btRigidBody*> bodies;
 };
