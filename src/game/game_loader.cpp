@@ -6,6 +6,8 @@
 
 #include "../engine/BOEngine.h"
 
+#include "../SoundFile.h"
+
 // functions
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void mouse_callback(GLFWwindow* window, double xpos, double ypos);
@@ -43,14 +45,16 @@ GameLoader::GameLoader()
 std::unique_ptr<Game>  GameLoader::createGame() {
 
 	std::cout << "createGame" << std::endl;
+	FileSystem::Init("./src");
 	audio.Init();
-	audio.PlaySounds("src/game/assets/sounds/test.wav", Vector3{ 0, 0, -10 }, audio.VolumeTodB(1.0f));
+	
+	audio.PlaySounds("game/assets/sounds/test.wav", Vector3{ 0, 0, -10 }, audio.VolumeTodB(1.0f));
 	//test gun sound on the right
-	audio.PlaySounds("src/game/assets/sounds/gun.wav", Vector3{ 3, 0, 0}, audio.VolumeTodB(1.0f));
+	audio.PlaySounds("game/assets/sounds/gun.wav", Vector3{ 3, 0, 0}, audio.VolumeTodB(1.0f));
 	//test siren sounds on the left
-	audio.PlaySounds("src/game/assets/sounds/siren.wav", Vector3{ -3, 0, 0}, audio.VolumeTodB(1.0f));
+	audio.PlaySounds("game/assets/sounds/siren.wav", Vector3{ -3, 0, 0}, audio.VolumeTodB(1.0f));
 	//test bomb sounds center
-	audio.PlaySounds("src/game/assets/sounds/bomb.wav", Vector3{ 0, 0, 0}, audio.VolumeTodB(1.0f));
+	audio.PlaySounds("game/assets/sounds/bomb.wav", Vector3{ 0, 0, 0}, audio.VolumeTodB(1.0f));
 	
 	return std::make_unique<Game>();
 }
