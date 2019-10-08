@@ -48,7 +48,7 @@ void Game::init(BOEngine* engine)
 	box->addComponent(new RigidBodyComponent(addCube(1.0, 1.0, 1.0, 5.0, 20.0, 0, 1.0)));
 	engine->gameWorld.addGameObject(box);
 
-	box->transform.setPosition(Vector3f(5.0, 0.8, 0));
+	box->transform.setPosition(Vector3f(5.0, 30, 0));
 	box->transform.setScale(2.5);
 
 	// create box without physics
@@ -66,10 +66,6 @@ void Game::init(BOEngine* engine)
 void Game::updateWithDelta(float deltaTime)
 {
 
-	Vector3f p = box->transform.getPosition();
-	p.z -= 0.01f;
-	// p.x -= 0.01f;
-	//box->transform.setPosition(p);
 
 	Vector3f p2 = boxWithoutBt->transform.getPosition();
 	p2.z -= 0.01f;
@@ -78,8 +74,6 @@ void Game::updateWithDelta(float deltaTime)
 
 
 	Vector3f r = box->transform.getRotation();
-	r.z -= 0.01f;
-	r.x = 1.01f;
 	box->transform.setRotation(r);
 
 	Vector3f r2 = boxWithoutBt->transform.getRotation();
