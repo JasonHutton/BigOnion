@@ -108,8 +108,8 @@
     <ClCompile Include="src\engine\graphic\ViewRenderer.cpp">
       <Filter>Source Files\engine\graphic</Filter>
     </ClCompile>
-    <ClCompile Include="src\engine\ECS\RigidBodyComponent.cpp">
-      <Filter>Source Files\engine\ECS</Filter>
+    <ClCompile Include="src\game\components\RigidBodyComponent.cpp">
+      <Filter>Source Files\game\components</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -185,8 +185,8 @@
     <ClInclude Include="src\engine\graphic\ViewRenderer.h">
       <Filter>Header Files\engine\graphic</Filter>
     </ClInclude>
-    <ClInclude Include="src\engine\ECS\RigidBodyComponent.h">
-      <Filter>Header Files\engine\ECS</Filter>
+    <ClInclude Include="src\game\components\RigidBodyComponent.h">
+      <Filter>Header Files\game\components</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -1,6 +1,6 @@
 #pragma once
-#include "Component.h"
-#include "GameObject.h"
+#include "../../engine/ECS/Component.h"
+#include <btBulletDynamicsCommon.h>
 
 class RigidBodyComponent :
 	public Component
@@ -13,4 +13,3 @@ public:
 private:
 	btRigidBody* rigidBody;
 };
-

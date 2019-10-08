@@ -14,7 +14,7 @@
 #include "graphic/RenderComponent.h"
 
 #include "ECS/GameWorld.h"
-#include "ECS/RigidbodyComponent.h"
+#include "../game/components/RigidbodyComponent.h"
 
 #include <iostream>
 

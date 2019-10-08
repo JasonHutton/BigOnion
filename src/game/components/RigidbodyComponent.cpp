@@ -1,4 +1,5 @@
 #include "RigidBodyComponent.h"
+#include "../../engine/ECS/GameObject.h"
 #include <iostream>
 
 RigidBodyComponent::RigidBodyComponent(btRigidBody* _body): rigidBody(_body)
