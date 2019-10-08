@@ -2,7 +2,6 @@
 
 Game::Game()
 {
-
 }
 
 void Game::init(BOEngine* engine)
@@ -24,9 +23,9 @@ void Game::init(BOEngine* engine)
 
 	suitMan = new GameObject("SuitMan");
 	suitMan->addComponent(new RenderComponent(&suitManModel->shaderAttribute)); // connect object - model
-	suitMan->transform.setPosition(Vector3f(0.0f, 10.f, 0.0f));
-	suitMan->transform.setScale(Vector3f(0.2f, 0.2f, 0.2f));
-	suitMan->transform.setRotation(Vector3f(3.14f, 3.14f, 0.0f));
+	suitMan->transform.position = Vector3f(0.0f, 10.f, 0.0f);
+	suitMan->transform.scale = Vector3f(0.2f, 0.2f, 0.2f);
+	suitMan->transform.rotation = Vector3f(3.14f, 3.14f, 0.0f);
 
 	suitMan->addComponent(new RigidBodyComponent(addCylinder(0.75, 1.5, 0.25, 0, 20, 0, 1.0))); // connect object - rigibody
 	engine->gameWorld.addGameObject(suitMan); // maybe auto register?
@@ -38,8 +37,8 @@ void Game::init(BOEngine* engine)
 	ground->addComponent(new RigidBodyComponent(addPlane(0, -3.25, 0)));
 	engine->gameWorld.addGameObject(ground);
 
-	ground->transform.setPosition(Vector3f(0, -3.25, 0));
-	ground->transform.setScale(Vector3f(100.0f, 1.0f, 100.0f));
+	ground->transform.position = Vector3f(0, -3.25, 0);
+	ground->transform.scale = Vector3f(100.0f, 1.0f, 100.0f);
 
 	// create box
 	boxModel = new Model("src/game/assets/box/cube.obj", modelShader);
@@ -48,8 +47,8 @@ void Game::init(BOEngine* engine)
 	box->addComponent(new RigidBodyComponent(addCube(1.0, 1.0, 1.0, 5.0, 20.0, 0, 1.0)));
 	engine->gameWorld.addGameObject(box);
 
-	box->transform.setPosition(Vector3f(5.0, 30, 0));
-	box->transform.setScale(2.5);
+	box->transform.position = Vector3f(5.0, 30, 0);
+	box->transform.scale = 2.5;
 
 	// create box without physics
 	boxWithoutBtModel = new Model("src/game/assets/box/cube.obj", modelShader);
@@ -58,8 +57,8 @@ void Game::init(BOEngine* engine)
 	// boxWithoutBt->addComponent(new RigidBodyComponent(addCube(1.0, 1.0, 1.0, 5.0, 20.0, 0, 1.0)));
 	engine->gameWorld.addGameObject(boxWithoutBt);
 
-	boxWithoutBt->transform.setPosition(Vector3f(0.0, 0.2, -2));
-	boxWithoutBt->transform.setScale(1.5);
+	boxWithoutBt->transform.position = Vector3f(0.0, 0.2, -2);
+	boxWithoutBt->transform.scale = 1.5;
 
 }
 
@@ -67,21 +66,21 @@ void Game::updateWithDelta(float deltaTime)
 {
 
 
-	Vector3f p2 = boxWithoutBt->transform.getPosition();
+	Vector3f p2 = boxWithoutBt->transform.position;
 	p2.z -= 0.01f;
 	// p2.x -= 0.01f;
 	//boxWithoutBt->transform.setPosition(p2);
 
 
-	Vector3f r = box->transform.getRotation();
-	box->transform.setRotation(r);
+	Vector3f r = box->transform.rotation;
+	box->transform.rotation = r;
 
-	Vector3f r2 = boxWithoutBt->transform.getRotation();
+	Vector3f r2 = boxWithoutBt->transform.rotation;
 	r2.z -= 0.01f;
 	r2.x = 1.01f;
-	boxWithoutBt->transform.setRotation(r2);
+	boxWithoutBt->transform.rotation = r2;
 
-	Vector3f r3 = suitMan->transform.getRotation();
+	Vector3f r3 = suitMan->transform.rotation;
 	r3.z -= 0.01f;
 	r3.x = 1.01f;
 	// suitMan->transform.setRotation(r3);

@@ -5,14 +5,13 @@
 #include <btBulletDynamicsCommon.h>
 
 #include "Component.h"
-#include "TransformComponent.h"
+#include "Transform.h"
 
 class GameObject
 {
 public:
 	std::string id;
-	TransformComponent transform;
-	btRigidBody* rigidBody = nullptr;
+	Transform transform;
 
 	GameObject(std::string id);
 	~GameObject();

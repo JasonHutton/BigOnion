@@ -8,6 +8,7 @@ class RigidBodyComponent :
 public:
 	RigidBodyComponent(btRigidBody*);
 
+	void fixedUpdate(float deltaTime) override;
 	void onAddToGameObject() override;
 
 private:

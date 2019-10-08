@@ -10,7 +10,6 @@ GameObject::GameObject(std::string id)
 	, components()
 
 {
-	transform.gameObject = this;
 	// components.push_back(&transform); // this line will cause program terminate....why? dead lopp?
 }
 

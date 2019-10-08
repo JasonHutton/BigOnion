@@ -93,9 +93,6 @@
     <ClCompile Include="src\game\components\TestComponent.cpp">
       <Filter>Source Files\game\components</Filter>
     </ClCompile>
-    <ClCompile Include="src\engine\ECS\TransformComponent.cpp">
-      <Filter>Source Files\engine\ECS</Filter>
-    </ClCompile>
     <ClCompile Include="src\engine\graphic\RenderComponent.cpp">
       <Filter>Source Files\engine\graphic</Filter>
     </ClCompile>
@@ -110,6 +107,9 @@
     </ClCompile>
     <ClCompile Include="src\game\components\RigidBodyComponent.cpp">
       <Filter>Source Files\game\components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\engine\ECS\Transform.cpp">
+      <Filter>Source Files\engine\ECS</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -158,9 +158,6 @@
     <ClInclude Include="src\game\components\TestComponent.h">
       <Filter>Header Files\game\components</Filter>
     </ClInclude>
-    <ClInclude Include="src\engine\ECS\TransformComponent.h">
-      <Filter>Header Files\engine\ECS</Filter>
-    </ClInclude>
     <ClInclude Include="src\engine\utils\utils.h">
       <Filter>Header Files\engine\utils</Filter>
     </ClInclude>
@@ -187,6 +184,9 @@
     </ClInclude>
     <ClInclude Include="src\game\components\RigidBodyComponent.h">
       <Filter>Header Files\game\components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\engine\ECS\Transform.h">
+      <Filter>Header Files\engine\ECS</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
