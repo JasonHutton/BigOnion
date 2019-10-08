@@ -37,4 +37,3 @@ private:
 	
 	std::vector<btRigidBody*> bodies;
 };
-

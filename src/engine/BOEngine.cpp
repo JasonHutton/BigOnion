@@ -86,8 +86,6 @@ void BOEngine::updateEngine(float deltaTime)
 	gameWorld.updateGameObjects(deltaTime);
 
 	render();
-
-	game->updateWithDelta(deltaTime);
 }
 
 void BOEngine::render()
