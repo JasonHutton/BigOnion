@@ -133,7 +133,8 @@
       <AdditionalLibraryDirectories>$(SolutionDir)lib\bullet;$(SolutionDir)lib</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
-      <Command>C:\Windows\System32\xcopy /y /d "$(SolutionDir)lib\*.dll" "$(OutDir)"</Command>
+      <Command>C:\Windows\System32\xcopy /y /d "$(SolutionDir)lib\*.dll" "$(OutDir)"
+C:\Windows\System32\xcopy /y /d "$(SolutionDir)dll\*.dll" "$(OutDir)"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
