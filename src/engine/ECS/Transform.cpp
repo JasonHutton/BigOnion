@@ -10,7 +10,7 @@ Transform::Transform()
 
 glm::mat4 Transform::toModelMatrix()
 {
-	glm::mat4 matrix = glm::mat4();
+	glm::mat4 matrix = glm::mat4(1.0);
 
 	// translation
 	matrix = glm::translate(matrix, position.getGlmVec3());

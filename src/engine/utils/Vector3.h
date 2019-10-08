@@ -53,9 +53,6 @@ public:
 	constexpr inline Vector3D operator *= (const T p) { x *= p; y *= p; z *= p; return *this; }
 	constexpr inline Vector3D operator /= (const T p) { x /= p; y /= p; z /= p; return *this; }
 
-	// Stream operations
-	std::ostream& operator<<(std::ostream& strm, const A& a) { return strm << "x: " << x << ", y: " << y << ", z: " << z; }
-
 	// Get the normalized vector (unit vector)
 	inline Vector3D unit() const
 	{
