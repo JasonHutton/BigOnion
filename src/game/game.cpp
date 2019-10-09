@@ -32,13 +32,12 @@ void Game::init(BOEngine* engine, Shader* shader)
 	box->addComponent(new RigidBodyComponent(addCube(1.0, 1.0, 1.0, 5.0, 20.0, 0, 1.0)));
 	engine->gameWorld.addGameObject(box);
 
-	box->transform.position = Vector3f(5.0, 30, 0);
-	box->transform.scale = 2.5;
+	box->transform.position = Vector3f(5.0, 20, 0);
+	box->transform.scale = 2.0;
 
 	// create box without physics
 	GameObject* boxWithoutBt = new  GameObject("boxWithoutBt");
 	boxWithoutBt->addComponent(new RenderComponent(engine, "src/game/assets/box/cube.obj", shader));
-	// boxWithoutBt->addComponent(new RigidBodyComponent(addCube(1.0, 1.0, 1.0, 5.0, 20.0, 0, 1.0)));
 	engine->gameWorld.addGameObject(boxWithoutBt);
 
 	boxWithoutBt->transform.position = Vector3f(0.0, 0.2, -2);
