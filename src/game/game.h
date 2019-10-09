@@ -13,9 +13,9 @@ class Game
 public:
 	void init(BOEngine* engine, Shader* shader);
 
-	btRigidBody* addCube(float width, float height, float depth, float x, float y, float z, float mass);
+	btRigidBody* addCube(float width, float height, float depth, float x, float y, float z, float mass, float yaw, float pitch, float roll);
 
 	btRigidBody* addPlane(float x, float y, float z);
 
-	btRigidBody* addCylinder(float width, float height, float depth, float x, float y, float z, float mass);
+	btRigidBody* addCylinder(float width, float height, float depth, float x, float y, float z, float mass, float yaw, float pitch, float roll);
 };

@@ -9,8 +9,7 @@ void Game::init(BOEngine* engine, Shader* shader)
 	GameObject* suitMan = new GameObject("SuitMan");
 	suitMan->addComponent(new RenderComponent(engine, "src/game/assets/nanosuit/nanosuit.obj", shader)); // connect object - model
 	suitMan->transform.scale = Vector3f(0.2f, 0.2f, 0.2f);
-
-	suitMan->addComponent(new RigidBodyComponent(addCylinder(0.75, 1.5, 0.25, 0, 20, 0, 1.0))); // connect object - rigibody
+	suitMan->addComponent(new RigidBodyComponent(addCylinder(0.75, 1.5, 0.25, 0, 20, 0, 1.0, 90, 90, 90))); // connect object - rigibody
 	engine->gameWorld.addGameObject(suitMan); // maybe auto register?
 
 	// create ground
@@ -26,7 +25,7 @@ void Game::init(BOEngine* engine, Shader* shader)
 	FileSystem::BuildOSPath(FileSystem::FindFile("game/assets/box/cube.obj"), "game/assets/box/cube.obj", osPathBox);
 	GameObject* box = new  GameObject("Box");
 	box->addComponent(new RenderComponent(engine, osPathBox, shader));
-	box->addComponent(new RigidBodyComponent(addCube(1.0, 1.0, 1.0, 5.0, 20.0, 0, 1.0)));
+	box->addComponent(new RigidBodyComponent(addCube(1.0, 1.0, 1.0, 5.0, 20.0, 0, 1.0, 45, 45, 45)));
 	engine->gameWorld.addGameObject(box);
 
 	box->transform.scale = 2.0;
@@ -41,11 +40,14 @@ void Game::init(BOEngine* engine, Shader* shader)
 
 }
 
-btRigidBody* Game::addCube(float width, float height, float depth, float x, float y, float z, float mass)
+btRigidBody* Game::addCube(float width, float height, float depth, float x, float y, float z, float mass, float yaw, float pitch, float roll)
 {
 	btTransform t;	//position and rotation
 	t.setIdentity();
 	t.setOrigin(btVector3(x, y, z));	//put it to x,y,z coordinates
+	btQuaternion quat;
+	quat.setEuler(yaw, pitch, roll);
+	t.setRotation(quat);
 	btBoxShape* box = new btBoxShape(btVector3(width, height, depth));
 	btVector3 inertia(0, 0, 0);	//inertia is 0,0,0 for static object, else
 	if (mass != 0.0)
@@ -68,10 +70,13 @@ btRigidBody* Game::addPlane(float x, float y, float z) {
 	return body;
 }
 
-btRigidBody* Game::addCylinder(float width, float height, float depth, float x, float y, float z, float mass) {
+btRigidBody* Game::addCylinder(float width, float height, float depth, float x, float y, float z, float mass, float yaw, float pitch, float roll) {
 	btTransform t;	//position and rotation
 	t.setIdentity();
 	t.setOrigin(btVector3(x, y, z));	//put it to x,y,z coordinates
+	btQuaternion quat;
+	quat.setEuler(yaw, pitch, roll);
+	t.setRotation(quat);
 	btCylinderShape* cylinder = new btCylinderShape(btVector3(width, height, depth));
 	btVector3 inertia(0, 0, 0);	//inertia is 0,0,0 for static object, else
 	if (mass != 0.0)
