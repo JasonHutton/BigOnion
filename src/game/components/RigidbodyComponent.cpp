@@ -23,8 +23,8 @@ void RigidBodyComponent::fixedUpdate(float deltaTime)
 
 void RigidBodyComponent::onAddToGameWorld()
 {
-	btTransform trans = rigidBody->getWorldTransform();
-	gameObject->transform.position = Vector3f(trans.getOrigin().x(), trans.getOrigin().y(), trans.getOrigin().z());
+	btTransform bTransform = rigidBody->getWorldTransform();
+	gameObject->transform.position = Vector3f(bTransform.getOrigin().x(), bTransform.getOrigin().y(), bTransform.getOrigin().z());
 	//TODO: ABSOLUTELY FIX THIS
 	/*
 	Vector3f pos = gameObject->transform.position;
