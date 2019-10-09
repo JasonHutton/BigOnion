@@ -9,7 +9,7 @@ void Game::init(BOEngine* engine, Shader* shader)
 	GameObject* suitMan = new GameObject("SuitMan");
 	suitMan->addComponent(new RenderComponent(engine, "src/game/assets/nanosuit/nanosuit.obj", shader)); // connect object - model
 	suitMan->transform.scale = Vector3f(0.2f, 0.2f, 0.2f);
-	suitMan->addComponent(new RigidBodyComponent(addCylinder(0.75, 1.5, 0.25, 0, 20, 0, 1.0, 90, 90, 90))); // connect object - rigibody
+	suitMan->addComponent(new RigidBodyComponent(addCylinder(0.75, 1.5, 0.25, 0, 20, 0, 1.0, 45, 45, 45))); // connect object - rigibody
 	engine->gameWorld.addGameObject(suitMan); // maybe auto register?
 
 	// create ground
@@ -25,10 +25,10 @@ void Game::init(BOEngine* engine, Shader* shader)
 	FileSystem::BuildOSPath(FileSystem::FindFile("game/assets/box/cube.obj"), "game/assets/box/cube.obj", osPathBox);
 	GameObject* box = new  GameObject("Box");
 	box->addComponent(new RenderComponent(engine, osPathBox, shader));
-	box->addComponent(new RigidBodyComponent(addCube(1.0, 1.0, 1.0, 5.0, 20.0, 0, 1.0, 45, 45, 45)));
+	box->addComponent(new RigidBodyComponent(addCube(1.0, 1.0, 1.0, 5.0, 20.0, 0, 1.0, 0, 0, 0)));
 	engine->gameWorld.addGameObject(box);
 
-	box->transform.scale = 2.0;
+	box->transform.scale = 2.0; // has to be double because dimensions of 1.0 entered above refer to distance from origin to edge
 
 	// create box without physics
 	GameObject* boxWithoutBt = new  GameObject("boxWithoutBt");
@@ -46,9 +46,9 @@ btRigidBody* Game::addCube(float width, float height, float depth, float x, floa
 	t.setIdentity();
 	t.setOrigin(btVector3(x, y, z));	//put it to x,y,z coordinates
 	btQuaternion quat;
-	quat.setEuler(yaw, pitch, roll);
+	quat.setEuler(yaw, pitch, roll); //rotate it to yaw,pitch,roll angles
 	t.setRotation(quat);
-	btBoxShape* box = new btBoxShape(btVector3(width, height, depth));
+	btBoxShape* box = new btBoxShape(btVector3(width, height, depth)); // note cube's dimensions will be twice the input values as these refer to distance from the origin to the edge
 	btVector3 inertia(0, 0, 0);	//inertia is 0,0,0 for static object, else
 	if (mass != 0.0)
 		box->calculateLocalInertia(mass, inertia);	//it can be determined by this function (for all kind of shapes)
