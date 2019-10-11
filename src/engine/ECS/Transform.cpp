@@ -1,5 +1,6 @@
 #include "Transform.h"
 #include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtx/euler_angles.hpp>
 
 Transform::Transform()
 	: position()
@@ -10,15 +11,14 @@ Transform::Transform()
 
 glm::mat4 Transform::toModelMatrix()
 {
-	//glm::mat4 matrix = glm::mat4(1.0);
+	glm::mat4 matrix = glm::mat4(1.0);
 
 	// translation
-	/*matrix = glm::translate(matrix, position.getGlmVec3());
+	matrix = glm::translate(matrix, position.getGlmVec3());
 
 	// rotation
-	matrix = glm::rotate(matrix, rotation.x, glm::vec3(1.0f, 0.0f, 0.0f));
-	matrix = glm::rotate(matrix, rotation.y, glm::vec3(0.0f, 1.0f, 0.0f));
-	matrix = glm::rotate(matrix, rotation.z, glm::vec3(0.0f, 0.0f, 1.0f));*/
+	glm::mat4 rotationalMatrix = glm::eulerAngleZYX(rotation.z, rotation.y, rotation.x);
+	matrix = matrix * rotationalMatrix;
 
 	// scale
 	matrix = glm::scale(matrix, scale.getGlmVec3());
