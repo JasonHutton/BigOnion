@@ -10,15 +10,15 @@ Transform::Transform()
 
 glm::mat4 Transform::toModelMatrix()
 {
-	glm::mat4 matrix = glm::mat4(1.0);
+	//glm::mat4 matrix = glm::mat4(1.0);
 
 	// translation
-	matrix = glm::translate(matrix, position.getGlmVec3());
+	/*matrix = glm::translate(matrix, position.getGlmVec3());
 
 	// rotation
 	matrix = glm::rotate(matrix, rotation.x, glm::vec3(1.0f, 0.0f, 0.0f));
 	matrix = glm::rotate(matrix, rotation.y, glm::vec3(0.0f, 1.0f, 0.0f));
-	matrix = glm::rotate(matrix, rotation.z, glm::vec3(0.0f, 0.0f, 1.0f));
+	matrix = glm::rotate(matrix, rotation.z, glm::vec3(0.0f, 0.0f, 1.0f));*/
 
 	// scale
 	matrix = glm::scale(matrix, scale.getGlmVec3());

@@ -11,7 +11,7 @@ public:
 	Vector3f position;
 	Vector3f rotation;
 	Vector3f scale;
+	glm::mat4 matrix;
 
 	glm::mat4 toModelMatrix();
-
 };
