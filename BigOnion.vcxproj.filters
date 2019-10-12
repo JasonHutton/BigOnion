@@ -90,9 +90,6 @@
     <ClCompile Include="src\game\components\TestComponent.cpp">
       <Filter>Source Files\game\components</Filter>
     </ClCompile>
-    <ClCompile Include="src\game\game.cpp">
-      <Filter>Source Files\game</Filter>
-    </ClCompile>
     <ClCompile Include="src\engine\graphic\ShaderAttribute.cpp">
       <Filter>Source Files\engine\graphic</Filter>
     </ClCompile>
@@ -119,6 +116,9 @@
     </ClCompile>
     <ClCompile Include="src\game\components\RenderComponent.cpp">
       <Filter>Source Files\game\components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\game\GameWorldHelper.cpp">
+      <Filter>Source Files\game</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -170,9 +170,6 @@
     <ClInclude Include="src\engine\utils\Vector3.h">
       <Filter>Header Files\engine\utils</Filter>
     </ClInclude>
-    <ClInclude Include="src\game\game.h">
-      <Filter>Header Files\game</Filter>
-    </ClInclude>
     <ClInclude Include="src\engine\resource.h">
       <Filter>Header Files\engine\utils</Filter>
     </ClInclude>
@@ -208,6 +205,9 @@
     </ClInclude>
     <ClInclude Include="src\engine\BOEngine.fwd.h">
       <Filter>Header Files\engine</Filter>
+    </ClInclude>
+    <ClInclude Include="src\game\GameWorldHelper.h">
+      <Filter>Header Files\game</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -1,11 +1,11 @@
 #include "BOEngine.h"
 #include "ECS/GameObject.h"
 #include "../game/components/TestComponent.h"
+#include "../game/GameWorldHelper.h"
 
 
-BOEngine::BOEngine(std::unique_ptr<Game> gm)
+BOEngine::BOEngine()
 {
-	game = std::move(gm);
 }
 
 void BOEngine::initialize()
@@ -47,7 +47,7 @@ void BOEngine::initialize()
 	// Game World initialization
 	currentTime = std::chrono::high_resolution_clock::now();
 	gameWorld = GameWorld();
-	game->init(this, modelShader);
+	GameWorldHelper::initTestScene(this, modelShader);
 }
 
 void BOEngine::preRender()

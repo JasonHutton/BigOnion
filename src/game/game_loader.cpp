@@ -42,7 +42,7 @@ GameLoader::GameLoader()
 {
 }
 
-std::unique_ptr<Game>  GameLoader::createGame() {
+void GameLoader::createGame() {
 
 	std::cout << "createGame" << std::endl;
 	FileSystem::Init("./src");
@@ -55,8 +55,7 @@ std::unique_ptr<Game>  GameLoader::createGame() {
 	audio.PlaySounds("game/assets/sounds/siren.wav", Vector3{ -3, 0, 0}, audio.VolumeTodB(1.0f));
 	//test bomb sounds center
 	audio.PlaySounds("game/assets/sounds/bomb.wav", Vector3{ 0, 0, 0}, audio.VolumeTodB(1.0f));
-	
-	return std::make_unique<Game>();
+
 }
 
 void renderPlane(btRigidBody* plane)

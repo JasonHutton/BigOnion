@@ -1,7 +1,6 @@
 #pragma once
 
 #include "../engine/BOEngine.h"
-#include "game.h"
 #include "../src/engine/audio/AudioEngine.h"
 #include "../FileSystem.h"
 
@@ -14,10 +13,9 @@ class GameLoader
 		GameLoader();
 		AudioEngine audio;
 
-		std::unique_ptr<Game> createGame();
+		void createGame();
 		void setEngine(BOEngine&);
 		void reload();
 		void startGame();
 		void exitGame();
 };
-

@@ -18,11 +18,6 @@
 
 #include <iostream>
 
-#include "../game/game.h" //TODO move to engine
-
-
-class Game;
-
 class BOEngine
 {
 
@@ -34,7 +29,7 @@ public:
 	const unsigned int SCR_WIDTH = 1000;
 	const unsigned int SCR_HEIGHT = 800;
 
-	BOEngine(std::unique_ptr<Game> game);
+	BOEngine();
 
 	void initialize();
 	void preRender();
@@ -56,6 +51,4 @@ private:
 
 	Shader* modelShader;
 	std::vector<RenderComponent*> renderComponents;
-
-	std::unique_ptr<Game> game; // delete this
 };
