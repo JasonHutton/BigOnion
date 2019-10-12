@@ -24,14 +24,14 @@ void RigidBodyComponent::fixedUpdate(float deltaTime)
 void RigidBodyComponent::onAddToGameWorld()
 {
 	// position
-	/*btTransform bTransform;
+	btTransform bTransform;
 	rigidBody->getMotionState()->getWorldTransform(bTransform);
 	gameObject->transform.position = Vector3f(bTransform.getOrigin().x(), bTransform.getOrigin().y(), bTransform.getOrigin().z());
 
 	// rotation
 	float z, y, x;
 	bTransform.getRotation().getEulerZYX(z, y, x);
-	gameObject->transform.rotation = Vector3f(x, y, z);*/
+	gameObject->transform.rotation = Vector3f(x, y, z);
 
 	//TODO: ABSOLUTELY FIX THIS
 	/*
