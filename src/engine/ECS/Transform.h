@@ -13,5 +13,4 @@ public:
 	Vector3f scale;
 
 	glm::mat4 toModelMatrix();
-
 };

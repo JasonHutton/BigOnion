@@ -26,17 +26,29 @@ void GameWorldHelper::initTestScene(BOEngine* engine, Shader* shader)
 	FileSystem::BuildOSPath(FileSystem::FindFile("game/assets/box/cube.obj"), "game/assets/box/cube.obj", osPathBox);
 	GameObject* box = new  GameObject("Box");
 	box->addComponent(new RenderComponent(engine, osPathBox, shader));
-	box->addComponent(RigidBodyComponent::createWithCube(1.0, 1.0, 1.0, 5.0, 20.0, 0, 1.0, 0, 0, 0));
+	box->addComponent(RigidBodyComponent::createWithCube(1.0, 1.0, 1.0, 5.0, 10.0, 0, 1.0, 0, 0, 0));
 	engine->gameWorld.addGameObject(box);
 
 	box->transform.scale = 2.0; // has to be double because dimensions of 1.0 entered above refer to distance from origin to edge
 
-	// create box without physics
-	GameObject* boxWithoutBt = new  GameObject("boxWithoutBt");
-	boxWithoutBt->addComponent(new RenderComponent(engine, "src/game/assets/box/cube.obj", shader));
-	engine->gameWorld.addGameObject(boxWithoutBt);
+	GameObject* box2 = new  GameObject("Box2");
+	box2->addComponent(new RenderComponent(engine, osPathBox, shader));
+	box2->addComponent(RigidBodyComponent::createWithCube(1.0, 1.0, 1.0, 5.0, 15.0, 0, 1.0, 0, 0, 0));
+	engine->gameWorld.addGameObject(box2);
 
-	boxWithoutBt->transform.position = Vector3f(0.0, 0.2, -2);
-	boxWithoutBt->transform.scale = 1.5;
+	box2->transform.scale = 2.0; // has to be double because dimensions of 1.0 entered above refer to distance from origin to edge
 
+	GameObject* box3 = new  GameObject("Box3");
+	box3->addComponent(new RenderComponent(engine, osPathBox, shader));
+	box3->addComponent(RigidBodyComponent::createWithCube(1.0, 1.0, 1.0, 5.0, 20.0, 0, 1.0, 0, 0, 0));
+	engine->gameWorld.addGameObject(box3);
+
+	box3->transform.scale = 2.0; // has to be double because dimensions of 1.0 entered above refer to distance from origin to edge
+
+	GameObject* box4 = new  GameObject("Box4");
+	box4->addComponent(new RenderComponent(engine, osPathBox, shader));
+	box4->addComponent(RigidBodyComponent::createWithCube(1.0, 1.0, 1.0, 5.0, 25.0, 0, 1.0, 0, 0, 0));
+	engine->gameWorld.addGameObject(box4);
+
+	box4->transform.scale = 2.0; // has to be double because dimensions of 1.0 entered above refer to distance from origin to edge
 }
