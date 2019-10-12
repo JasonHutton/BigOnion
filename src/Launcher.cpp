@@ -98,9 +98,6 @@ int main(int argc, char* argv[]) {
 		Trect.y = Trect.y + 100;
 	}
 
-
-
-
 	//SDL_Surface* surface = SDL_GetWindowSurface(window);
 	//SDL_Surface* image1 = SDL_LoadBMP("Button.bmp");
 	SDL_Surface* image = IMG_Load("B1.png");
@@ -170,7 +167,6 @@ int main(int argc, char* argv[]) {
 					else if (rect.x + imagehw > mouseX && mouseX > rect.x  && rect.y + 100 + imagehh > mouseY && mouseY > rect.y + 100) {
 						
 						quit = true;
-
 					}
 					else if (rect.x  + imagehw > mouseX && mouseX > rect.x && rect.y + 200 + imagehh > mouseY && mouseY > rect.y + 200) {
 						cout << "aaa" << endl;
@@ -192,7 +188,6 @@ int main(int argc, char* argv[]) {
 	TTF_CloseFont(font);
 	SDL_DestroyWindow(window);
 	SDL_Quit();
-	//return runMain();
 	return 0;
 }
 
