@@ -39,7 +39,7 @@ public:
 	void Draw(Shader* shader);
 
 	// draws the model with shader and attribute
-	void Draw(Shader* shader, ShaderAttribute shaderAttribute);
+	void Draw(Shader* shader, ShaderAttribute* shaderAttribute);
 
 private:
 

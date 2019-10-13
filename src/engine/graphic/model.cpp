@@ -14,13 +14,13 @@ Model::Model(string const& path, Shader* _shader) : shader(_shader), shaderAttri
 // draws the model, and thus all its meshes
 void Model::Draw()
 {
-	this->Draw(this->shader, this->shaderAttribute);
+	this->Draw(this->shader, &this->shaderAttribute);
 }
 
 // draws the model, and thus all its meshes
-void Model::Draw(Shader* _shader, ShaderAttribute shaderAttribute)
+void Model::Draw(Shader* _shader, ShaderAttribute* shaderAttribute)
 {
-	shaderAttribute.applyAttributeTo(_shader);
+	shaderAttribute->applyAttributeTo(_shader);
 
 	this->Draw(_shader);
 }
