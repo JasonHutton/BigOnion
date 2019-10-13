@@ -55,7 +55,7 @@ int main()
 */
 int main(int argc, char* argv[]) {
 
-	SDL_Surface* pTextSurface = NULL;//文本表面
+	SDL_Surface* pTextSurface = NULL;
 	SDL_Texture* pTextTexture = NULL;
 	
 	SDL_Rect rect;
@@ -75,6 +75,19 @@ int main(int argc, char* argv[]) {
 		SDL_WINDOW_SHOWN);
 
 	SDL_Renderer* rend = SDL_CreateRenderer(window,-1,SDL_RENDERER_ACCELERATED);
+	
+	//background*****
+	SDL_Rect xrect;
+	xrect.x = 0;
+	xrect.y = 0;
+	xrect.h = 600;
+	xrect.w = 800;
+
+	SDL_Surface* image2 = IMG_Load("onion.jpg");
+	SDL_Texture* imagetex2 = SDL_CreateTextureFromSurface(rend, image2);
+
+	SDL_RenderCopy(rend, imagetex2, NULL, &xrect);
+	SDL_RenderPresent(rend);
 
 	if (TTF_Init() == -1)
 		return -1;
@@ -86,22 +99,31 @@ int main(int argc, char* argv[]) {
 
 		return -1;
 	}
+	//**
+
+
+	//Text********
 	
-	SDL_Color color2 = { 255,255,255 };
-	pTextSurface = TTF_RenderText_Blended(font, "Paly Game", color2);
+	SDL_Color color2 = { 255,225,0 };
+	pTextSurface = TTF_RenderText_Blended(font, "Play Game", color2);
 	pTextTexture = SDL_CreateTextureFromSurface(rend, pTextSurface);
-	SDL_RenderClear(rend);
 
 	for (int i = 0; i < 3; i++) {
 		SDL_RenderCopy(rend, pTextTexture, NULL, &Trect); 
 		SDL_RenderPresent(rend);
 		Trect.y = Trect.y + 100;
 	}
+	//Text*****
 
 	//SDL_Surface* surface = SDL_GetWindowSurface(window);
 	//SDL_Surface* image1 = SDL_LoadBMP("Button.bmp");
+
+
+	//Buttons******************************
+
 	SDL_Surface* image = IMG_Load("B1.png");
 	SDL_Texture* imagetex = SDL_CreateTextureFromSurface(rend, image);
+
 
 	rect.w = image->w;
 	rect.h = image->h;
@@ -121,7 +143,9 @@ int main(int argc, char* argv[]) {
 	}
 	SDL_RenderClear(rend);
 	rect.y = 100;
+	//Buttons******************************
 
+	//Event********************
 	SDL_Event event;
 	bool quit = false;
 	while (quit == false) {
