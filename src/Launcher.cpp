@@ -9,7 +9,6 @@
 #include "SDL_image.h"
 #include "SDL_ttf.h"
 #include <iostream>
-
 #define STB_IMAGE_IMPLEMENTATION
 
 
@@ -89,26 +88,29 @@ int main(int argc, char* argv[]) {
 	SDL_RenderCopy(rend, imagetex2, NULL, &xrect);
 	SDL_RenderPresent(rend);
 
+
+	//Text******************************
 	if (TTF_Init() == -1)
 		return -1;
 	
 	TTF_Font* font;
-	font = TTF_OpenFont("Roboto-Black.ttf", 16);
+	font = TTF_OpenFont("Roboto-Black.ttf", 12);
 	if (!font)
 	{
 
 		return -1;
 	}
-	//**
 
-
-	//Text********
-	
 	SDL_Color color2 = { 255,225,0 };
-	pTextSurface = TTF_RenderText_Blended(font, "Play Game", color2);
-	pTextTexture = SDL_CreateTextureFromSurface(rend, pTextSurface);
 
+	
+	const char* Text[3] = { "Play Game", "Shop", "Rate List" };
 	for (int i = 0; i < 3; i++) {
+
+		pTextSurface = TTF_RenderText_Blended(font, Text[i], color2);
+		pTextTexture = SDL_CreateTextureFromSurface(rend, pTextSurface);
+
+
 		SDL_RenderCopy(rend, pTextTexture, NULL, &Trect); 
 		SDL_RenderPresent(rend);
 		Trect.y = Trect.y + 100;
@@ -122,8 +124,8 @@ int main(int argc, char* argv[]) {
 	//Buttons******************************
 
 	SDL_Surface* image = IMG_Load("B1.png");
-	SDL_Texture* imagetex = SDL_CreateTextureFromSurface(rend, image);
-
+	SDL_Texture* imagetex = NULL;
+	
 
 	rect.w = image->w;
 	rect.h = image->h;
@@ -135,14 +137,20 @@ int main(int argc, char* argv[]) {
 
 	
 	for (int i = 0; i < 3; i++) {
+
+		const char* Button[3] = { "B1.png", "shop2.png", "onionrate.png" };
+		SDL_Surface* image = IMG_Load(Button[i]);
+		SDL_SetColorKey(image, SDL_TRUE, SDL_MapRGB(image->format, 255, 255, 255));//transparent white
+	    imagetex = SDL_CreateTextureFromSurface(rend, image);
+
 		//SDL_BlitSurface(image, NULL, surface, &rect);
 		//SDL_RenderClear(rend);
 		SDL_RenderCopy(rend, imagetex, NULL, &rect);
 		SDL_RenderPresent(rend);
 		rect.y = rect.y + 100;
 	}
-	SDL_RenderClear(rend);
 	rect.y = 100;
+	SDL_RenderClear(rend);
 	//Buttons******************************
 
 	//Event********************
@@ -190,25 +198,27 @@ int main(int argc, char* argv[]) {
 					}
 					else if (rect.x + imagehw > mouseX && mouseX > rect.x  && rect.y + 100 + imagehh > mouseY && mouseY > rect.y + 100) {
 						
-						quit = true;
+						cout << "lol" << endl;
 					}
 					else if (rect.x  + imagehw > mouseX && mouseX > rect.x && rect.y + 200 + imagehh > mouseY && mouseY > rect.y + 200) {
-						cout << "aaa" << endl;
+						cout << "lmao" << endl;
 					}
 				}
 			}   
 			SDL_UpdateWindowSurface(window);
 		}
-		
+		SDL_Delay(5);
 	}
 
 	SDL_FreeSurface(image);
+	SDL_FreeSurface(image2);
 	SDL_FreeSurface(pTextSurface);
 	//SDL_FreeSurface(image1);
 	//SDL_FreeSurface(surface);
 	SDL_DestroyRenderer(rend);
 	SDL_DestroyTexture(pTextTexture);
 	SDL_DestroyTexture(imagetex);
+	SDL_DestroyTexture(imagetex2);
 	TTF_CloseFont(font);
 	SDL_DestroyWindow(window);
 	SDL_Quit();
