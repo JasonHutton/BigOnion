@@ -3,6 +3,8 @@
 // #define STB_IMAGE_IMPLEMENTATION
 #include <stb/stb_image.h> // stb_image can only be included in cpp instead of header.
 
+#include "../FileSystem.h"
+
 using namespace std;
 
 // constructor, expects a filepath to a 3D model.
@@ -38,7 +40,10 @@ void Model::loadModel(string const& path)
 {
 	// read file via ASSIMP
 	Assimp::Importer importer;
-	const aiScene* scene = importer.ReadFile(path, aiProcess_Triangulate | aiProcess_FlipUVs | aiProcess_CalcTangentSpace);
+	string osPath;
+	FileSystem::BuildOSPath(FileSystem::FindFile(path), path, osPath);
+	
+	const aiScene* scene = importer.ReadFile(osPath, aiProcess_Triangulate | aiProcess_FlipUVs | aiProcess_CalcTangentSpace);
 	
 	// check for errors
 	if (!scene || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode) // if is Not Zero
@@ -190,11 +195,14 @@ unsigned int Model::TextureFromFile(const char* path, const string& directory, b
 	string filename = string(path);
 	filename = directory + '/' + filename;
 
+	string osPath;
+	FileSystem::BuildOSPath(FileSystem::FindFile(filename), filename, osPath);
+
 	unsigned int textureID;
 	glGenTextures(1, &textureID);
 
 	int width, height, nrComponents;
-	unsigned char* data = stbi_load(filename.c_str(), &width, &height, &nrComponents, 0);
+	unsigned char* data = stbi_load(osPath.c_str(), &width, &height, &nrComponents, 0);
 	if (data)
 	{
 		GLenum format = GL_RGBA;
