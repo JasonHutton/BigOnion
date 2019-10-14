@@ -195,6 +195,7 @@ int main(int argc, char* argv[]) {
 					if (rect.x + imagehw > mouseX && mouseX > rect.x && rect.y + imagehh > mouseY && mouseY > rect.y) {
 
 						 runMain();
+						
 					}
 					else if (rect.x + imagehw > mouseX && mouseX > rect.x  && rect.y + 100 + imagehh > mouseY && mouseY > rect.y + 100) {
 						
