@@ -11,17 +11,12 @@
 #include "graphic/camera.h"
 #include "graphic/model.h"
 #include "graphic/ShaderAttribute.h"
-#include "graphic/RenderComponent.h"
+#include "../game/components/RenderComponent.h"
 
 #include "ECS/GameWorld.h"
-#include "ECS/RigidbodyComponent.h"
+#include "../game/components/RigidbodyComponent.h"
 
 #include <iostream>
-
-#include "../game/game.h" //TODO move to engine
-
-
-class Game;
 
 class BOEngine
 {
@@ -34,11 +29,13 @@ public:
 	const unsigned int SCR_WIDTH = 1000;
 	const unsigned int SCR_HEIGHT = 800;
 
-	BOEngine(std::unique_ptr<Game> game);
+	BOEngine();
 
 	void initialize();
 	void preRender();
 	void updateEngine(float deltaTime);
+	void render();
+	void addRenderComponent(RenderComponent* renderComponent);
 
 	void exitInError(const std::string& error);
 	int exit() const { return exitCode; }
@@ -52,5 +49,6 @@ private:
 	
 	int exitCode;
 
-	std::unique_ptr<Game> game;
+	Shader* modelShader;
+	std::vector<RenderComponent*> renderComponents;
 };

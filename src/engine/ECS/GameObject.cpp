@@ -8,9 +8,9 @@ GameObject::GameObject(std::string id)
 	: id(id)
 	, transform()
 	, components()
+	, world(nullptr)
 
 {
-	transform.gameObject = this;
 	// components.push_back(&transform); // this line will cause program terminate....why? dead lopp?
 }
 
@@ -32,7 +32,6 @@ void GameObject::addComponent(Component* component)
 {
 	component->gameObject = this;
 	components.push_back(component);
-	component->onAddToGameObject();
 }
 
 /*
@@ -65,5 +64,14 @@ void GameObject::fixedUpdateComponents(float deltaTime)
 	for (Component* component : components)
 	{
 		component->fixedUpdate(deltaTime);
+	}
+}
+
+void GameObject::addToGameWorld(GameWorld* world)
+{
+	this->world = world;
+	for (Component* component : components)
+	{
+		component->onAddToGameWorld();
 	}
 }

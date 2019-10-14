@@ -18,7 +18,8 @@ int runMain()
 	try {
 		std::unique_ptr<GameLoader> loader = std::make_unique<GameLoader>();
 
-		engine = std::make_unique<BOEngine>(loader->createGame());
+		engine = std::make_unique<BOEngine>();
+		loader->createGame();
 		engine->initialize();
 
 		loader->setEngine(*engine);

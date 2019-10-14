@@ -14,6 +14,6 @@ public:
 	virtual void lateUpdate(float deltaTime) {};
 	virtual void fixedUpdate(float deltaTime) {};
 
-	virtual void onAddToGameObject() {};
+	virtual void onAddToGameWorld() {};
 	
 };

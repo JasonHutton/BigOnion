@@ -5,14 +5,15 @@
 #include <btBulletDynamicsCommon.h>
 
 #include "Component.h"
-#include "TransformComponent.h"
+#include "Transform.h"
+#include "GameWorld.fwd.h"
 
 class GameObject
 {
 public:
 	std::string id;
-	TransformComponent transform;
-	btRigidBody* rigidBody = nullptr;
+	Transform transform;
+	GameWorld* world;
 
 	GameObject(std::string id);
 	~GameObject();
@@ -20,6 +21,7 @@ public:
 	void updateComponents(float deltaTime);
 	void lateUpdateComponents(float deltaTime);
 	void fixedUpdateComponents(float deltaTime);
+	void addToGameWorld(GameWorld* world);
 
 private:
 	std::vector<Component*> components;

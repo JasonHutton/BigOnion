@@ -31,12 +31,6 @@
     <Filter Include="Header Files\engine\graphic">
       <UniqueIdentifier>{30ddeb68-c3b5-41c0-bcea-13f2d4ecba45}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\game\models">
-      <UniqueIdentifier>{91aa2d3f-d87f-4e2e-8406-5eaee09c6fa9}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\game\models">
-      <UniqueIdentifier>{a6f013db-1db4-4535-b925-6120051e822d}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\engine\audio">
       <UniqueIdentifier>{405d96ca-4cb3-4aa7-9922-d9f55eb45183}</UniqueIdentifier>
     </Filter>
@@ -58,6 +52,12 @@
     <Filter Include="Header Files\engine\utils">
       <UniqueIdentifier>{97edd3ce-3ddc-4829-80ef-05eac1ebf6ed}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\engine\FileSystem">
+      <UniqueIdentifier>{d6462bc9-3f31-41a5-8a73-084abd6ae64c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\engine\FileSystem">
+      <UniqueIdentifier>{f94ff06b-d921-43a5-bc99-d285e69dd070}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Launcher.cpp">
@@ -71,9 +71,6 @@
     </ClCompile>
     <ClCompile Include="src\engine\graphic\camera.cpp">
       <Filter>Source Files\engine\graphic</Filter>
-    </ClCompile>
-    <ClCompile Include="src\game\models\suit_man.cpp">
-      <Filter>Source Files\game\models</Filter>
     </ClCompile>
     <ClCompile Include="src\engine\graphic\shader.cpp">
       <Filter>Source Files\engine\graphic</Filter>
@@ -93,23 +90,35 @@
     <ClCompile Include="src\game\components\TestComponent.cpp">
       <Filter>Source Files\game\components</Filter>
     </ClCompile>
-    <ClCompile Include="src\engine\ECS\TransformComponent.cpp">
-      <Filter>Source Files\engine\ECS</Filter>
-    </ClCompile>
-    <ClCompile Include="src\engine\graphic\RenderComponent.cpp">
-      <Filter>Source Files\engine\graphic</Filter>
-    </ClCompile>
-    <ClCompile Include="src\game\game.cpp">
-      <Filter>Source Files\game</Filter>
-    </ClCompile>
     <ClCompile Include="src\engine\graphic\ShaderAttribute.cpp">
       <Filter>Source Files\engine\graphic</Filter>
     </ClCompile>
     <ClCompile Include="src\engine\graphic\ViewRenderer.cpp">
       <Filter>Source Files\engine\graphic</Filter>
     </ClCompile>
-    <ClCompile Include="src\engine\ECS\RigidBodyComponent.cpp">
+    <ClCompile Include="src\game\components\RigidBodyComponent.cpp">
+      <Filter>Source Files\game\components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\engine\ECS\Transform.cpp">
       <Filter>Source Files\engine\ECS</Filter>
+    </ClCompile>
+    <ClCompile Include="FileSystem.cpp">
+      <Filter>Source Files\engine\FileSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="File.cpp">
+      <Filter>Source Files\engine\FileSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="TextFile.cpp">
+      <Filter>Source Files\engine\FileSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="SoundFile.cpp">
+      <Filter>Source Files\engine\FileSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="src\game\components\RenderComponent.cpp">
+      <Filter>Source Files\game\components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\game\GameWorldHelper.cpp">
+      <Filter>Source Files\game</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -121,9 +130,6 @@
     </ClInclude>
     <ClInclude Include="src\engine\graphic\camera.h">
       <Filter>Header Files\engine\graphic</Filter>
-    </ClInclude>
-    <ClInclude Include="src\game\models\suit_man.h">
-      <Filter>Header Files\game\models</Filter>
     </ClInclude>
     <ClInclude Include="src\engine\graphic\model.h">
       <Filter>Header Files\engine\graphic</Filter>
@@ -158,22 +164,10 @@
     <ClInclude Include="src\game\components\TestComponent.h">
       <Filter>Header Files\game\components</Filter>
     </ClInclude>
-    <ClInclude Include="src\engine\ECS\TransformComponent.h">
-      <Filter>Header Files\engine\ECS</Filter>
-    </ClInclude>
     <ClInclude Include="src\engine\utils\utils.h">
       <Filter>Header Files\engine\utils</Filter>
     </ClInclude>
     <ClInclude Include="src\engine\utils\Vector3.h">
-      <Filter>Header Files\engine\utils</Filter>
-    </ClInclude>
-    <ClInclude Include="src\engine\graphic\RenderComponent.h">
-      <Filter>Header Files\engine\graphic</Filter>
-    </ClInclude>
-    <ClInclude Include="src\game\game.h">
-      <Filter>Header Files\game</Filter>
-    </ClInclude>
-    <ClInclude Include="src\engine\filesystem.h">
       <Filter>Header Files\engine\utils</Filter>
     </ClInclude>
     <ClInclude Include="src\engine\resource.h">
@@ -185,8 +179,35 @@
     <ClInclude Include="src\engine\graphic\ViewRenderer.h">
       <Filter>Header Files\engine\graphic</Filter>
     </ClInclude>
-    <ClInclude Include="src\engine\ECS\RigidBodyComponent.h">
+    <ClInclude Include="src\game\components\RigidBodyComponent.h">
+      <Filter>Header Files\game\components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\engine\ECS\Transform.h">
       <Filter>Header Files\engine\ECS</Filter>
+    </ClInclude>
+    <ClInclude Include="FileSystem.h">
+      <Filter>Header Files\engine\FileSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="File.h">
+      <Filter>Header Files\engine\FileSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="TextFile.h">
+      <Filter>Header Files\engine\FileSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="AccessibleFileI.h">
+      <Filter>Header Files\engine\FileSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="SoundFile.h">
+      <Filter>Header Files\engine\FileSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="src\game\components\RenderComponent.h">
+      <Filter>Header Files\game\components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\engine\BOEngine.fwd.h">
+      <Filter>Header Files\engine</Filter>
+    </ClInclude>
+    <ClInclude Include="src\game\GameWorldHelper.h">
+      <Filter>Header Files\game</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
