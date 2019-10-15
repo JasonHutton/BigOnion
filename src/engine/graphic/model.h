@@ -13,6 +13,7 @@
 
 #include "model_mesh.h"
 #include "shader.h"
+#include "ShaderAttribute.h"
 
 #include <string>
 #include <fstream>
@@ -25,21 +26,27 @@ class Model
 {
 public:
 	/*  Model Data */
+
+	Shader* shader;
+	ShaderAttribute shaderAttribute;
+
+	Model(string const& path, Shader* shader);
+
+	// draws the model, and thus all its meshes
+	void Draw();
+
+	// draws the model with a outside set shader, won't set Attribute to it 
+	void Draw(Shader* shader);
+
+	// draws the model with shader and attribute
+	void Draw(Shader* shader, ShaderAttribute* shaderAttribute);
+
+private:
+
 	vector<Texture> textures_loaded;	// stores all the textures loaded so far, optimization to make sure textures aren't loaded more than once.
 	vector<Mesh> meshes;
 	string directory;
-	bool gammaCorrection;
 
-	Model() {};
-	/*  Functions   */
-	// constructor, expects a filepath to a 3D model.
-	Model(string const& path, bool gamma = false);
-
-	// draws the model, and thus all its meshes
-	void Draw(Shader shader);
-
-private:
-	/*  Functions   */
 	// loads a model with supported ASSIMP extensions from file and stores the resulting meshes in the meshes vector.
 	void loadModel(string const& path);
 
@@ -53,6 +60,7 @@ private:
 	vector<Texture> loadMaterialTextures(aiMaterial* mat, aiTextureType type, string typeName);
 
 	unsigned int TextureFromFile(const char* path, const string& directory, bool gamma = false);
+
 };
 
 #endif

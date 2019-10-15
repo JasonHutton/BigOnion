@@ -31,11 +31,38 @@
     <Filter Include="Header Files\engine\graphic">
       <UniqueIdentifier>{30ddeb68-c3b5-41c0-bcea-13f2d4ecba45}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\game\models">
-      <UniqueIdentifier>{91aa2d3f-d87f-4e2e-8406-5eaee09c6fa9}</UniqueIdentifier>
+    <Filter Include="Header Files\engine\audio">
+      <UniqueIdentifier>{405d96ca-4cb3-4aa7-9922-d9f55eb45183}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\game\models">
-      <UniqueIdentifier>{a6f013db-1db4-4535-b925-6120051e822d}</UniqueIdentifier>
+    <Filter Include="Source Files\engine\audio">
+      <UniqueIdentifier>{bdff59da-e153-45ab-b871-4b0e430066da}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\engine\ECS">
+      <UniqueIdentifier>{1455c8f3-87b3-4724-a98a-ef0054b637c9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\engine\ECS">
+      <UniqueIdentifier>{ff2ad7fa-ac04-48f1-afe0-a9f87e35b788}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\game\components">
+      <UniqueIdentifier>{b60e7236-9103-47bc-a231-fd02e2ebb780}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\game\components">
+      <UniqueIdentifier>{9c8af86e-8254-42c7-bd52-b0de56323ee9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\engine\utils">
+      <UniqueIdentifier>{97edd3ce-3ddc-4829-80ef-05eac1ebf6ed}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\engine\FileSystem">
+      <UniqueIdentifier>{d6462bc9-3f31-41a5-8a73-084abd6ae64c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\engine\FileSystem">
+      <UniqueIdentifier>{f94ff06b-d921-43a5-bc99-d285e69dd070}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\engine\input">
+      <UniqueIdentifier>{f0b81687-a563-4a58-a3a9-cb7d80f065d5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\engine\input">
+      <UniqueIdentifier>{fee87d48-1946-4096-817a-8f9a720ff3ec}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -51,46 +78,73 @@
     <ClCompile Include="src\engine\graphic\camera.cpp">
       <Filter>Source Files\engine\graphic</Filter>
     </ClCompile>
-    <ClCompile Include="src\game\game_controller.cpp">
-      <Filter>Source Files\game</Filter>
-    </ClCompile>
-    <ClCompile Include="src\game\models\suit_man.cpp">
-      <Filter>Source Files\game\models</Filter>
-    </ClCompile>
-    <ClCompile Include="src\game\game_renderer.cpp">
-      <Filter>Source Files\game</Filter>
-    </ClCompile>
     <ClCompile Include="src\engine\graphic\shader.cpp">
       <Filter>Source Files\engine\graphic</Filter>
     </ClCompile>
     <ClCompile Include="src\engine\graphic\model.cpp">
       <Filter>Source Files\engine\graphic</Filter>
     </ClCompile>
+    <ClCompile Include="src\engine\audio\AudioEngine.cpp">
+      <Filter>Source Files\engine\audio</Filter>
+    </ClCompile>
+    <ClCompile Include="src\engine\ECS\GameWorld.cpp">
+      <Filter>Source Files\engine\ECS</Filter>
+    </ClCompile>
+    <ClCompile Include="src\engine\ECS\GameObject.cpp">
+      <Filter>Source Files\engine\ECS</Filter>
+    </ClCompile>
+    <ClCompile Include="src\game\components\TestComponent.cpp">
+      <Filter>Source Files\game\components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\engine\graphic\ShaderAttribute.cpp">
+      <Filter>Source Files\engine\graphic</Filter>
+    </ClCompile>
+    <ClCompile Include="src\engine\graphic\ViewRenderer.cpp">
+      <Filter>Source Files\engine\graphic</Filter>
+    </ClCompile>
+    <ClCompile Include="src\game\components\RigidBodyComponent.cpp">
+      <Filter>Source Files\game\components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\engine\ECS\Transform.cpp">
+      <Filter>Source Files\engine\ECS</Filter>
+    </ClCompile>
+    <ClCompile Include="FileSystem.cpp">
+      <Filter>Source Files\engine\FileSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="File.cpp">
+      <Filter>Source Files\engine\FileSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="TextFile.cpp">
+      <Filter>Source Files\engine\FileSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="SoundFile.cpp">
+      <Filter>Source Files\engine\FileSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="src\game\components\RenderComponent.cpp">
+      <Filter>Source Files\game\components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\game\GameWorldHelper.cpp">
+      <Filter>Source Files\game</Filter>
+    </ClCompile>
+    <ClCompile Include="KeyInput.cpp">
+      <Filter>Source Files\engine\input</Filter>
+    </ClCompile>
+    <ClCompile Include="InputHandler.cpp">
+      <Filter>Source Files\engine\input</Filter>
+    </ClCompile>
+    <ClCompile Include="ContextControl.cpp">
+      <Filter>Source Files\engine\input</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\engine\BOEngine.h">
       <Filter>Header Files\engine</Filter>
     </ClInclude>
-    <ClInclude Include="src\engine\filesystem.h">
-      <Filter>Header Files\engine</Filter>
-    </ClInclude>
     <ClInclude Include="src\game\game_loader.h">
       <Filter>Header Files\game</Filter>
     </ClInclude>
-    <ClInclude Include="src\engine\resource.h">
-      <Filter>Header Files\engine</Filter>
-    </ClInclude>
     <ClInclude Include="src\engine\graphic\camera.h">
       <Filter>Header Files\engine\graphic</Filter>
-    </ClInclude>
-    <ClInclude Include="src\game\game_controller.h">
-      <Filter>Header Files\game</Filter>
-    </ClInclude>
-    <ClInclude Include="src\game\game_renderer.h">
-      <Filter>Header Files\game</Filter>
-    </ClInclude>
-    <ClInclude Include="src\game\models\suit_man.h">
-      <Filter>Header Files\game\models</Filter>
     </ClInclude>
     <ClInclude Include="src\engine\graphic\model.h">
       <Filter>Header Files\engine\graphic</Filter>
@@ -100,6 +154,84 @@
     </ClInclude>
     <ClInclude Include="src\engine\graphic\shader_m.h">
       <Filter>Header Files\engine\graphic</Filter>
+    </ClInclude>
+    <ClInclude Include="src\engine\audio\AudioEngine.h">
+      <Filter>Header Files\engine\audio</Filter>
+    </ClInclude>
+    <ClInclude Include="src\engine\ECS\GameWorld.h">
+      <Filter>Header Files\engine\ECS</Filter>
+    </ClInclude>
+    <ClInclude Include="src\engine\ECS\Component.h">
+      <Filter>Header Files\engine\ECS</Filter>
+    </ClInclude>
+    <ClInclude Include="src\engine\ECS\GameObject.h">
+      <Filter>Header Files\engine\ECS</Filter>
+    </ClInclude>
+    <ClInclude Include="src\engine\ECS\GameObject.fwd.h">
+      <Filter>Header Files\engine\ECS</Filter>
+    </ClInclude>
+    <ClInclude Include="src\engine\ECS\Component.fwd.h">
+      <Filter>Header Files\engine\ECS</Filter>
+    </ClInclude>
+    <ClInclude Include="src\engine\ECS\GameWorld.fwd.h">
+      <Filter>Header Files\engine\ECS</Filter>
+    </ClInclude>
+    <ClInclude Include="src\game\components\TestComponent.h">
+      <Filter>Header Files\game\components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\engine\utils\utils.h">
+      <Filter>Header Files\engine\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="src\engine\utils\Vector3.h">
+      <Filter>Header Files\engine\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="src\engine\resource.h">
+      <Filter>Header Files\engine\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="src\engine\graphic\ShaderAttribute.h">
+      <Filter>Header Files\engine\graphic</Filter>
+    </ClInclude>
+    <ClInclude Include="src\engine\graphic\ViewRenderer.h">
+      <Filter>Header Files\engine\graphic</Filter>
+    </ClInclude>
+    <ClInclude Include="src\game\components\RigidBodyComponent.h">
+      <Filter>Header Files\game\components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\engine\ECS\Transform.h">
+      <Filter>Header Files\engine\ECS</Filter>
+    </ClInclude>
+    <ClInclude Include="FileSystem.h">
+      <Filter>Header Files\engine\FileSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="File.h">
+      <Filter>Header Files\engine\FileSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="TextFile.h">
+      <Filter>Header Files\engine\FileSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="AccessibleFileI.h">
+      <Filter>Header Files\engine\FileSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="SoundFile.h">
+      <Filter>Header Files\engine\FileSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="src\game\components\RenderComponent.h">
+      <Filter>Header Files\game\components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\engine\BOEngine.fwd.h">
+      <Filter>Header Files\engine</Filter>
+    </ClInclude>
+    <ClInclude Include="src\game\GameWorldHelper.h">
+      <Filter>Header Files\game</Filter>
+    </ClInclude>
+    <ClInclude Include="InputHandler.h">
+      <Filter>Header Files\engine\input</Filter>
+    </ClInclude>
+    <ClInclude Include="KeyInput.h">
+      <Filter>Header Files\engine\input</Filter>
+    </ClInclude>
+    <ClInclude Include="ContextControl.h">
+      <Filter>Header Files\engine\input</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

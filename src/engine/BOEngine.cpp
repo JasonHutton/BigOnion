@@ -1,22 +1,7 @@
 #include "BOEngine.h"
-
-
-
-//// settings
-
-//
-//// camera
-//Camera camera(glm::vec3(0.0f, 0.0f, 3.0f));
-//float lastX = SCR_WIDTH / 2.0f;
-//float lastY = SCR_HEIGHT / 2.0f;
-//bool firstMouse = true;
-//
-//// timing
-//float deltaTime = 0.0f;	// time between current frame and last frame
-//float lastFrame = 0.0f;
-//
-//// lighting
-//glm::vec3 lightPos(1.2f, 1.0f, 2.0f);
+#include "ECS/GameObject.h"
+#include "../game/components/TestComponent.h"
+#include "../game/GameWorldHelper.h"
 
 
 BOEngine::BOEngine()
@@ -55,23 +40,22 @@ void BOEngine::initialize()
 		//return -1;
 	}
 
+	// Shader loading
+	// TODO: some models may want different shaders. cross that bridge when we meet it
+	modelShader = new Shader("engine/graphic/shader/model_loading.vs", "engine/graphic/shader/model_loading.fs");
+
+	// Game World initialization
+	currentTime = std::chrono::high_resolution_clock::now();
+	gameWorld = GameWorld();
+	GameWorldHelper::initTestScene(this, modelShader);
 }
 
 void BOEngine::preRender()
 {
-	// configure global opengl state
-// -----------------------------
 	glEnable(GL_DEPTH_TEST);
-
-	// draw in wireframe
-	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-
-		// build and compile our shader program
-	// ------------------------------------
-	
 	//TODO comment: shader test
-	Shader ourShader("src/engine/graphic/shader/vertex.glsl", "src/engine/graphic/shader/fragment.glsl"); // you can name your shader files however you like
-	Shader lightShader("src/engine/graphic/shader/vertex.glsl", "src/engine/graphic/shader/light.fs.glsl");
+	Shader ourShader("engine/graphic/shader/vertex.glsl", "engine/graphic/shader/fragment.glsl"); // you can name your shader files however you like
+	Shader lightShader("engine/graphic/shader/vertex.glsl", "engine/graphic/shader/light.fs.glsl");
 
 
 
@@ -79,10 +63,65 @@ void BOEngine::preRender()
 
 void BOEngine::updateEngine(float deltaTime)
 {
+	// figure out how much time has elapsed since the last frame, capping at the min fps frametime
+	auto newTime = std::chrono::high_resolution_clock::now();
+	std::chrono::duration<double> frameTime = newTime - currentTime;
+	if (frameTime > MAX_FRAMETIME)
+	{
+		frameTime = MAX_FRAMETIME;
+	}
+	currentTime = newTime;
+
+	// add the frametime to the accumulator
+	accumulator += frameTime;
+	// do fixed updates until the accumulator is near empty
+	while (accumulator >= FIXED_DELTA_TIME_DURATION)
+	{
+		gameWorld.fixedUpdateGameObjects(FIXED_DELTA_TIME);
+		accumulator -= FIXED_DELTA_TIME_DURATION;
+	}
+
+	// this value is currently unused. it could be useful in the future for interpolating between fixed game states on higher framerates
+	// double alpha = accumulator / FIXED_DELTA_TIME_DURATION;
+	gameWorld.updateGameObjects(deltaTime);
+
+	render();
 }
 
 void BOEngine::render()
 {
+	// render
+	// ------
+	glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+	int scrWidth = 10; //TODO get from window
+	int scrHeight = 8; //TODO get from window
+
+	glfwGetWindowSize(window, &scrWidth, &scrHeight);
+
+	// view/projection transformations
+	glm::mat4 projection = glm::perspective(glm::radians(camera.Zoom), (float)scrWidth / (float)scrHeight, 0.1f, 100.0f);
+	glm::mat4 view = camera.GetViewMatrix();
+
+	// don't forget to enable shader before setting uniforms
+	modelShader->use();
+
+	modelShader->setMat4("projection", projection);
+	modelShader->setMat4("view", view);
+
+	for (RenderComponent* rc : renderComponents)
+	{
+		rc->model.Draw();
+	}
 }
 
+void BOEngine::addRenderComponent(RenderComponent* renderComponent)
+{
+	renderComponents.push_back(renderComponent);
+}
+
+void BOEngine::exitInError(const std::string& error)
+{
+	std::cout << "\n\nUnknown unhandled exception." << error << std::endl;
+}
