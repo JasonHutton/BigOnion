@@ -139,8 +139,18 @@ void updateListener()
 
 // process all input: query GLFW whether relevant keys are pressed/released this frame and react accordingly
 // ---------------------------------------------------------------------------------------------------------
-void processInput(GLFWwindow* window)
+void GameLoader::processInput(GLFWwindow* window)
 {
+	/*for (int i = 0; i < MAX_KEYS; i++)
+	{
+		const keyState key = input.GetAllKeyStates()[i];
+		//if (key.keyDown)
+			// Do button logic
+			//m_logic.OnInput(key);
+	}
+
+	if(input.GetKeyState() == keyState.)*/
+
 	if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
 		glfwSetWindowShouldClose(window, true);
 
