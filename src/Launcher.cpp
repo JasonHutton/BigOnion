@@ -163,27 +163,7 @@ int main(int argc, char* argv[]) {
 			if (event.type == SDL_QUIT) {
 				quit = true;
 			}
-			/*
-			
-			else if(event.button.button == SDL_BUTTON_LEFT) {
-				for (int i = 0; i < 3; i++) {
-					SDL_BlitSurface(image1, NULL, surface, &rect);
-					rect.y = rect.y + 100;
-				}
-				rect.x = 100;
-				rect.y = 100;
-			}
-		
-				else if (event.button.button == SDL_BUTTON_RIGHT) {
-				for (int i = 0; i < 3; i++) {
-					SDL_BlitSurface(image, NULL, surface, &rect);
-					rect.y = rect.y + 100;
-				}
-				rect.x = 100;
-				rect.y = 100;
-			}
-			*/
-	
+
 			else if (event.type == SDL_MOUSEMOTION) {
 				mouseX = event.motion.x;
 				mouseY = event.motion.y;
@@ -194,8 +174,9 @@ int main(int argc, char* argv[]) {
 
 				if (event.button.button == SDL_BUTTON_LEFT) {
 					if (rect.x + imagehw > mouseX && mouseX > rect.x && rect.y + imagehh > mouseY && mouseY > rect.y) {
-
-						 runMain();
+		
+						return runMain();
+					
 						
 					}
 					else if (rect.x + imagehw > mouseX && mouseX > rect.x  && rect.y + 100 + imagehh > mouseY && mouseY > rect.y + 100) {
