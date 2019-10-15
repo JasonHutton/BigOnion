@@ -42,7 +42,7 @@ void BOEngine::initialize()
 
 	// Shader loading
 	// TODO: some models may want different shaders. cross that bridge when we meet it
-	modelShader = new Shader("src/engine/graphic/shader/model_loading.vs", "src/engine/graphic/shader/model_loading.fs");
+	modelShader = new Shader("engine/graphic/shader/model_loading.vs", "engine/graphic/shader/model_loading.fs");
 
 	// Game World initialization
 	currentTime = std::chrono::high_resolution_clock::now();
@@ -54,8 +54,8 @@ void BOEngine::preRender()
 {
 	glEnable(GL_DEPTH_TEST);
 	//TODO comment: shader test
-	Shader ourShader("src/engine/graphic/shader/vertex.glsl", "src/engine/graphic/shader/fragment.glsl"); // you can name your shader files however you like
-	Shader lightShader("src/engine/graphic/shader/vertex.glsl", "src/engine/graphic/shader/light.fs.glsl");
+	Shader ourShader("engine/graphic/shader/vertex.glsl", "engine/graphic/shader/fragment.glsl"); // you can name your shader files however you like
+	Shader lightShader("engine/graphic/shader/vertex.glsl", "engine/graphic/shader/light.fs.glsl");
 
 
 

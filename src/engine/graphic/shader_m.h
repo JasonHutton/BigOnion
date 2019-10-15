@@ -9,6 +9,8 @@
 #include <sstream>
 #include <iostream>
 
+#include "../FileSystem.h"
+
 
 class Shader
 {
@@ -185,7 +187,9 @@ private:
 		try
 		{
 			// open files
-			vShaderFile.open(path);
+			string osPath;
+			FileSystem::BuildOSPath(FileSystem::FindFile(path), path, osPath);
+			vShaderFile.open(osPath);
 			std::stringstream vShaderStream;
 			// read file's buffer contents into streams
 			vShaderStream << vShaderFile.rdbuf();
