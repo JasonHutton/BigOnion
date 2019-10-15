@@ -295,7 +295,7 @@ namespace KeyInput
 	}
 
 	userCmdString_t	userCmdStrings[] = {
-		{ "_toggleconsole",		UB_TOGGLECONSOLE },
+		/*{ "_toggleconsole",		UB_TOGGLECONSOLE },
 		{ "_red",				UB_RED },
 		{ "_green",				UB_GREEN },
 		{ "_blue",				UB_BLUE },
@@ -309,7 +309,7 @@ namespace KeyInput
 		{ "_rot_left",			UB_ROT_LEFT },
 		{ "_rot_right",			UB_ROT_RIGHT },
 
-		{ "_screenshot",		UB_SCREENSHOT },
+		{ "_screenshot",		UB_SCREENSHOT },*/
 
 		{ NULL,					UB_NONE } // Must be last.
 	};

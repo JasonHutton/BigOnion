@@ -1,5 +1,6 @@
 #include "InputHandler.h"
 #include <stdexcept>
+#include <GLFW/glfw3.h>
 
 InputHandler::InputHandler()
 {
@@ -10,22 +11,16 @@ InputHandler::InputHandler()
 	}
 	
 	// Setup the default controls.
-	BindDefault('`', UB_TOGGLECONSOLE);
+	BindDefault(GLFW_KEY_ESCAPE, UB_FORCE_QUIT);
+	BindDefault(GLFW_KEY_W, UB_MOVE_FORWARD);
+	BindDefault(GLFW_KEY_S, UB_MOVE_BACKWARD);
+	BindDefault(GLFW_KEY_A, UB_MOVE_LEFT);
+	BindDefault(GLFW_KEY_D, UB_MOVE_RIGHT);
 
-	BindDefault(K_F1, UB_RED);
-	BindDefault(K_F2, UB_GREEN);
-	BindDefault(K_F3, UB_BLUE);
-	BindDefault('q', UB_SELECT_PREV);
-	BindDefault('w', UB_SELECT_NEXT);
-	BindDefault(K_ESCAPE, UB_FORCE_QUIT);
-	BindDefault(K_F5, UB_LOG_GLEXTENSIONS);
-
-	BindDefault(K_UPARROW, UB_ROT_UP);
-	BindDefault(K_DOWNARROW, UB_ROT_DOWN);
-	BindDefault(K_LEFTARROW, UB_ROT_LEFT);
-	BindDefault(K_RIGHTARROW, UB_ROT_RIGHT);
-
-	BindDefault(K_F6, UB_SCREENSHOT);
+	BindDefault(GLFW_KEY_UP, UB_MOVE_FORWARD);
+	BindDefault(GLFW_KEY_DOWN, UB_MOVE_BACKWARD);
+	BindDefault(GLFW_KEY_LEFT, UB_MOVE_LEFT);
+	BindDefault(GLFW_KEY_RIGHT, UB_MOVE_RIGHT);
 	
 	ResetBindings(); // Set the default controls.
 
@@ -91,10 +86,10 @@ void InputHandler::ResetBindings()
 	}
 }
 
-/*const ContextControl& InputHandler::GetControl(const int& key) const
+const ContextControl& InputHandler::GetControl(const int& key)
 {
-	return keys[key].controls;
-}*/
+	return this->keys[key].controls;
+}
 
 /*const keyState& InputHandler::GetKeyState(const int& scankey, const string& context) const
 {
@@ -122,7 +117,7 @@ void InputHandler::UnBindAll()
 	}
 }
 
-/*const keyState* const InputHandler::GetAllKeyStates() const
+map<int, keyState>& InputHandler::GetAllKeyStates()
 {
 	return keys;
-}*/
+}
