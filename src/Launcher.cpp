@@ -118,9 +118,6 @@ int main(int argc, char* argv[]) {
 	}
 	//Text*****
 
-	//SDL_Surface* surface = SDL_GetWindowSurface(window);
-	//SDL_Surface* image1 = SDL_LoadBMP("Button.bmp");
-
 
 	//Buttons******************************
 
@@ -196,8 +193,6 @@ int main(int argc, char* argv[]) {
 	SDL_FreeSurface(image);
 	SDL_FreeSurface(image2);
 	SDL_FreeSurface(pTextSurface);
-	//SDL_FreeSurface(image1);
-	//SDL_FreeSurface(surface);
 	SDL_DestroyRenderer(rend);
 	SDL_DestroyTexture(pTextTexture);
 	SDL_DestroyTexture(imagetex);
