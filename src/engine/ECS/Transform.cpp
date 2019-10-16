@@ -9,6 +9,9 @@ Transform::Transform()
 {
 }
 
+/*
+	Converts this Transform to a glm::mat4 transformation matrix For use in graphics.
+*/
 glm::mat4 Transform::toModelMatrix()
 {
 	glm::mat4 matrix = glm::mat4(1.0);

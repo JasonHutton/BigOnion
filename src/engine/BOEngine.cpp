@@ -8,6 +8,9 @@ BOEngine::BOEngine()
 {
 }
 
+/*
+	Initializes the OpenGL context and some important local variables.
+*/
 void BOEngine::initialize()
 {
 	std::cout << "BOEngine::initialize" << std::endl;
@@ -61,6 +64,9 @@ void BOEngine::preRender()
 
 }
 
+/*
+	Propogates updates to the GameWorld, and renders.
+*/
 void BOEngine::updateEngine(float deltaTime)
 {
 	// figure out how much time has elapsed since the last frame, capping at the min fps frametime
@@ -88,6 +94,9 @@ void BOEngine::updateEngine(float deltaTime)
 	render();
 }
 
+/*
+	Calculates view transformation, and renders all models in the scene.
+*/
 void BOEngine::render()
 {
 	// render
@@ -116,6 +125,9 @@ void BOEngine::render()
 	}
 }
 
+/*
+	Adds a RenderComponent to the scene.
+*/
 void BOEngine::addRenderComponent(RenderComponent* renderComponent)
 {
 	renderComponents.push_back(renderComponent);

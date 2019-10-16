@@ -67,6 +67,9 @@ void GameObject::fixedUpdateComponents(float deltaTime)
 	}
 }
 
+/*
+	Sets the world reference for this GameObject and all components.
+*/
 void GameObject::addToGameWorld(GameWorld* world)
 {
 	this->world = world;
