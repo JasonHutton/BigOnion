@@ -43,6 +43,9 @@ void RigidBodyComponent::onAddToGameWorld()
 	gameObject->world->physicsWorld->addRigidBody(rigidBody);
 }
 
+/*
+	Returns a RigidBodyComponent with an attached Cube collider.
+*/
 RigidBodyComponent* RigidBodyComponent::createWithCube(float width, float height, float depth, float mass)
 {
 	btTransform t;	//position and rotation
@@ -60,6 +63,9 @@ RigidBodyComponent* RigidBodyComponent::createWithCube(float width, float height
 	return new RigidBodyComponent(body);
 }
 
+/*
+	Returns a RigidBodyComponent with an attached Plane collider.
+*/
 RigidBodyComponent* RigidBodyComponent::createWithPlane()
 {
 	btTransform t;
@@ -73,6 +79,9 @@ RigidBodyComponent* RigidBodyComponent::createWithPlane()
 	return new RigidBodyComponent(body);
 }
 
+/*
+	Returns a RigidBodyComponent with an attached Cylinder collider.
+*/
 RigidBodyComponent* RigidBodyComponent::createWithCylinder(float width, float height, float depth, float mass)
 {
 	btTransform t;	//position and rotation
