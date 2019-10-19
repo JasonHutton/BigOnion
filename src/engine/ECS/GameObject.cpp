@@ -33,6 +33,35 @@ void GameObject::addComponent(Component* component)
 {
 	component->gameObject = this;
 	components.push_back(component);
+
+	if (world != nullptr)
+	{
+		world->componentManager->add(component);
+	}
+}
+
+/*
+	Removes a component from this Game Object's component collection and deletes it.
+*/
+void GameObject::removeComponent(Component* component)
+{
+	for (auto iter = components.begin(); iter != components.end(); ++iter)
+	{
+		if (*iter == component)
+		{
+			components.erase(iter);
+			delete component;
+			return;
+		}
+	}
+}
+
+/*
+	Removes a component from this Game Object's component collection and deletes it.
+*/
+void GameObject::removeComponent(int index)
+{
+	components.erase(components.begin() + index);
 }
 
 /*
