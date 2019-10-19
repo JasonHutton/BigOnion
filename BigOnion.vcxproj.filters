@@ -132,9 +132,6 @@
     <ClCompile Include="ContextControl.cpp">
       <Filter>Source Files\engine\input</Filter>
     </ClCompile>
-    <ClCompile Include="include\gl3w\GL\gl3w.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\Launcher.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -247,12 +244,6 @@
     </ClInclude>
     <ClInclude Include="ContextControl.h">
       <Filter>Header Files\engine\input</Filter>
-    </ClInclude>
-    <ClInclude Include="include\gl3w\GL\gl3w.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\gl3w\GL\glcorearb.h">
-      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\imgui\imconfig.h">
       <Filter>Header Files</Filter>
