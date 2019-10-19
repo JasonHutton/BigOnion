@@ -8,7 +8,7 @@
 
 #include "../SoundFile.h"
 
-
+#include <GLFW/glfw3.h>
 
 #include "imgui.h"
 #include "imgui/imgui_impl_glfw_gl3.h"
@@ -109,6 +109,9 @@ void GameLoader::startGame() {
 	// -----------
 	while (!glfwWindowShouldClose(window))
 	{
+		float currentFrame = (float)glfwGetTime(); // We should probably be using double instead of float, but that's spawning off a LOT of required changes...
+		deltaTime = currentFrame - lastFrame;
+		lastFrame = currentFrame;
 
 
 		// input
