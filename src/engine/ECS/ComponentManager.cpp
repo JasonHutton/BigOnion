@@ -1,14 +1,14 @@
 #include "ComponentManager.h"
 #include "Component.h"
 
-ComponentManager::ComponentManager(std::string strategy[], size_t n)
+ComponentManager::ComponentManager(std::string updateStrategy[], size_t n)
 	: n(n)
 {
-	this->strategy = new std::string[n];
+	strategy = new std::string[n];
 
 	for (unsigned int i = 0; i < n; ++i)
 	{
-		this->strategy[i] = strategy[i];
+		strategy[i] = updateStrategy[i];
 	}
 }
 
@@ -32,7 +32,7 @@ void ComponentManager::add(Component* component)
 /*
 	Remove a component from the update list.
 */
-void ComponentManager::remove(Component* component)
+bool ComponentManager::remove(Component* component)
 {
 	std::string id = component->componentTypeID();
 	std::vector<Component*>* pool = componentPools[id];
@@ -42,9 +42,11 @@ void ComponentManager::remove(Component* component)
 		if (*iter == component)
 		{
 			pool->erase(iter);
-			return;
+			return true;
 		}
 	}
+
+	return false;
 }
 
 /*

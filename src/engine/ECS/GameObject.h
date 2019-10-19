@@ -18,8 +18,8 @@ public:
 	GameObject(std::string id);
 	~GameObject();
 	void addComponent(Component* component);
-	void removeComponent(Component* component);
-	void removeComponent(int index);
+	bool removeComponent(Component* component);
+	bool removeComponent(int index);
 	void addToGameWorld(GameWorld* world);
 	void* operator new(size_t i);
 	void operator delete(void* p);

@@ -6,9 +6,9 @@
 class ComponentManager
 {
 public:
-	ComponentManager(std::string strategy[], size_t n);
+	ComponentManager(std::string updateStrategy[], size_t n);
 	void add(Component* component);
-	void remove(Component* component);
+	bool remove(Component* component);
 	void update(float deltaTime);
 	void fixedUpdate(float deltaTime);
 

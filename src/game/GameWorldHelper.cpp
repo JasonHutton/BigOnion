@@ -10,8 +10,7 @@ void GameWorldHelper::initTestScene(BOEngine* engine, Shader* shader)
 	std::cout << "Game init" << std::endl;
 
 	std::string strategy[] = {RigidBodyComponent::typeID, RenderComponent::typeID};
-	ComponentManager* cm = new ComponentManager(strategy, 2);
-	engine->gameWorld = new GameWorld(cm);
+	engine->gameWorld = new GameWorld(strategy, 2);
 
 	// create suit man
 	GameObject* suitMan = new GameObject("SuitMan");

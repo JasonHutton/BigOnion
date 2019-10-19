@@ -9,12 +9,12 @@ class GameWorld
 {
 public:
 	btDynamicsWorld* physicsWorld;	//every physical object go to the world
-	ComponentManager* componentManager;
+	ComponentManager componentManager;
 	
-	GameWorld(ComponentManager* componentManager);
+	GameWorld(std::string updateStrategy[], size_t n);
 	~GameWorld();
 	void addGameObject(GameObject* gameObject);
-	void removeGameObject(std::string id);
+	bool removeGameObject(std::string id);
 	void updateGameObjects(float deltaTime);
 	void fixedUpdateGameObjects(float deltaTime);
 

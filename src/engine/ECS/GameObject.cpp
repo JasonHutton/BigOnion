@@ -21,7 +21,7 @@ GameObject::~GameObject()
 {
 	for (Component* c : components)
 	{
-		world->componentManager->remove(c);
+		world->componentManager.remove(c);
 		delete c;
 	}
 }
@@ -36,14 +36,14 @@ void GameObject::addComponent(Component* component)
 
 	if (world != nullptr)
 	{
-		world->componentManager->add(component);
+		world->componentManager.add(component);
 	}
 }
 
 /*
 	Removes a component from this Game Object's component collection and deletes it.
 */
-void GameObject::removeComponent(Component* component)
+bool GameObject::removeComponent(Component* component)
 {
 	for (auto iter = components.begin(); iter != components.end(); ++iter)
 	{
@@ -51,17 +51,25 @@ void GameObject::removeComponent(Component* component)
 		{
 			components.erase(iter);
 			delete component;
-			return;
+			return true;
 		}
 	}
+
+	return false;
 }
 
 /*
 	Removes a component from this Game Object's component collection and deletes it.
 */
-void GameObject::removeComponent(int index)
+bool GameObject::removeComponent(int index)
 {
+	if (components.size() <= index)
+	{
+		return false;
+	}
+
 	components.erase(components.begin() + index);
+	return true;
 }
 
 /*
@@ -73,7 +81,7 @@ void GameObject::addToGameWorld(GameWorld* world)
 	for (Component* component : components)
 	{
 		component->onAddToGameWorld();
-		this->world->componentManager->add(component);
+		this->world->componentManager.add(component);
 	}
 }
 
