@@ -135,6 +135,9 @@
     <ClCompile Include="ContextControl.cpp">
       <Filter>Source Files\engine\input</Filter>
     </ClCompile>
+    <ClCompile Include="src\engine\ECS\ComponentManager.cpp">
+      <Filter>Source Files\engine\ECS</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\engine\BOEngine.h">
@@ -232,6 +235,9 @@
     </ClInclude>
     <ClInclude Include="ContextControl.h">
       <Filter>Header Files\engine\input</Filter>
+    </ClInclude>
+    <ClInclude Include="src\engine\ECS\ComponentManager.h">
+      <Filter>Header Files\engine\ECS</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

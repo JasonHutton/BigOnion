@@ -22,6 +22,7 @@
     <ClCompile Include="ContextControl.cpp" />
     <ClCompile Include="InputHandler.cpp" />
     <ClCompile Include="KeyInput.cpp" />
+    <ClCompile Include="src\engine\ECS\ComponentManager.cpp" />
     <ClCompile Include="src\game\components\RigidBodyComponent.cpp" />
     <ClCompile Include="src\game\components\RenderComponent.cpp" />
     <ClCompile Include="File.cpp" />
@@ -48,6 +49,7 @@
     <ClInclude Include="InputHandler.h" />
     <ClInclude Include="KeyInput.h" />
     <ClInclude Include="src\engine\BOEngine.fwd.h" />
+    <ClInclude Include="src\engine\ECS\ComponentManager.h" />
     <ClInclude Include="src\game\components\RigidBodyComponent.h" />
     <ClInclude Include="src\game\components\RenderComponent.h" />
     <ClInclude Include="AccessibleFileI.h" />

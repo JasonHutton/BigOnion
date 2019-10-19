@@ -10,4 +10,5 @@ public:
 	TestComponent();
 	~TestComponent();
 	void fixedUpdate(float deltaTime) override;
+	std::string getComponentTypeIdentifier() override { return "Test"; }
 };

@@ -1,5 +1,6 @@
 #pragma once
 
+#include <string>
 #include "GameObject.fwd.h"
 
 /*
@@ -26,5 +27,8 @@ public:
 		Used to initialize a component once it is added to the GameWorld.
 	*/
 	virtual void onAddToGameWorld() {};
-	
+	/*
+		Pure virtual component type id function, this MUST be implemented in subclasses.
+	*/
+	virtual std::string getComponentTypeIdentifier() = 0;
 };
