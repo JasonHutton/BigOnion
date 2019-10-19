@@ -14,7 +14,7 @@ public:
 
 private:
 	ComponentManager();
-	std::unordered_map<std::string, std::vector<Component*>*> componentPools;
+	std::unordered_map<std::string, std::vector<Component*>> componentPools;
 	std::string* strategy;
 	const size_t n;
 

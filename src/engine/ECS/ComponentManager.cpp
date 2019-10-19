@@ -18,15 +18,7 @@ ComponentManager::ComponentManager(std::string updateStrategy[], size_t n)
 void ComponentManager::add(Component* component)
 {
 	std::string id = component->componentTypeID();
-
-	// if the vector has not been initialized, initialize it
-	if (componentPools.find(id) == componentPools.end())
-	{
-		componentPools[id] = new std::vector<Component*>();
-	}
-
-	std::vector<Component*>* pool = componentPools[id];
-	pool->push_back(component);
+	componentPools[id].push_back(component);
 }
 
 /*
@@ -35,7 +27,7 @@ void ComponentManager::add(Component* component)
 bool ComponentManager::remove(Component* component)
 {
 	std::string id = component->componentTypeID();
-	std::vector<Component*>* pool = componentPools[id];
+	std::vector<Component*>* pool = &componentPools[id];
 
 	for (auto iter = pool->begin(); iter != pool->end(); ++iter)
 	{
@@ -57,8 +49,7 @@ void ComponentManager::update(float deltaTime)
 	for (unsigned int i = 0; i < n; ++i)
 	{
 		std::string id = strategy[i];
-		std::vector<Component*>* pool = componentPools[id];
-		for (Component* component : *pool)
+		for (Component* component : componentPools[id])
 		{
 			component->update(deltaTime);
 		}
@@ -73,8 +64,7 @@ void ComponentManager::fixedUpdate(float deltaTime)
 	for (unsigned int i = 0; i < n; ++i)
 	{
 		std::string id = strategy[i];
-		std::vector<Component*>* pool = componentPools[id];
-		for (Component* component : *pool)
+		for (Component* component : componentPools[id])
 		{
 			component->fixedUpdate(deltaTime);
 		}
