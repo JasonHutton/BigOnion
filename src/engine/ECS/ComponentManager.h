@@ -6,14 +6,16 @@
 class ComponentManager
 {
 public:
+	ComponentManager(std::string strategy[], size_t n);
 	void add(Component* component);
 	void remove(Component* component);
-	template <unsigned int N>
-	void update(float deltaTime, std::string const (&strategy)[N]);
-	template <unsigned int N>
-	void fixedUpdate(float deltaTime, std::string const (&strategy)[N]);
+	void update(float deltaTime);
+	void fixedUpdate(float deltaTime);
 
 private:
-	std::unordered_map<std::string, std::vector<Component*>> componentPools;
+	ComponentManager();
+	std::unordered_map<std::string, std::vector<Component*>*> componentPools;
+	std::string* strategy;
+	const size_t n;
 
 };

@@ -1,5 +1,6 @@
 #include "GameObject.h"
 #include "Component.h"
+#include "GameWorld.h"
 
 /*
 	Initializes this Game Object.
@@ -11,7 +12,6 @@ GameObject::GameObject(std::string id)
 	, world(nullptr)
 
 {
-	// components.push_back(&transform); // this line will cause program terminate....why? dead lopp?
 }
 
 /*
@@ -21,6 +21,7 @@ GameObject::~GameObject()
 {
 	for (Component* c : components)
 	{
+		world->componentManager->remove(c);
 		delete c;
 	}
 }
@@ -35,39 +36,6 @@ void GameObject::addComponent(Component* component)
 }
 
 /*
-	Calls the update() function of all components owned by this Game Object.
-*/
-void GameObject::updateComponents(float deltaTime)
-{
-	for (Component* component : components)
-	{
-		component->update(deltaTime);
-	}
-}
-
-/*
-	Calls the lateUpdate() function of all components owned by this Game Object.
-*/
-void GameObject::lateUpdateComponents(float deltaTime)
-{
-	for (Component* component : components)
-	{
-		component->lateUpdate(deltaTime);
-	}
-}
-
-/*
-	Calls the fixedUpdate() function of all components owned by this Game Object.
-*/
-void GameObject::fixedUpdateComponents(float deltaTime)
-{
-	for (Component* component : components)
-	{
-		component->fixedUpdate(deltaTime);
-	}
-}
-
-/*
 	Sets the world reference for this GameObject and all components.
 */
 void GameObject::addToGameWorld(GameWorld* world)
@@ -76,5 +44,6 @@ void GameObject::addToGameWorld(GameWorld* world)
 	for (Component* component : components)
 	{
 		component->onAddToGameWorld();
+		this->world->componentManager->add(component);
 	}
 }

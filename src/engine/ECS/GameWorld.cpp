@@ -4,8 +4,9 @@
 /*
 	Initializes this Game World.
 */
-GameWorld::GameWorld()
+GameWorld::GameWorld(ComponentManager* componentManager)
 	: gameObjects()
+	, componentManager(componentManager)
 {
 	collisionConfig = new btDefaultCollisionConfiguration();
 	dispatcher = new btCollisionDispatcher(collisionConfig);
@@ -46,17 +47,7 @@ void GameWorld::removeGameObject(std::string id)
 */
 void GameWorld::updateGameObjects(float deltaTime)
 {
-	// first run the updateComponents method on each GameObject...
-	for (auto& pair : gameObjects)
-	{
-		pair.second->updateComponents(deltaTime);
-	}
-
-	// ...then run the lateUpdateComponents method on each GameObject
-	for (auto& pair : gameObjects)
-	{
-		pair.second->lateUpdateComponents(deltaTime);
-	}
+	componentManager->update(deltaTime);
 }
 
 /*
@@ -66,9 +57,5 @@ void GameWorld::fixedUpdateGameObjects(float deltaTime)
 {
 	physicsWorld->stepSimulation(deltaTime);
 
-	// first run the updateComponents method on each GameObject...
-	for (auto& pair : gameObjects)
-	{
-		pair.second->fixedUpdateComponents(deltaTime);
-	}
+	componentManager->fixedUpdate(deltaTime);
 }

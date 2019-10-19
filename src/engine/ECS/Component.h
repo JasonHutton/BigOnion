@@ -16,10 +16,6 @@ public:
 	*/
 	virtual void update(float deltaTime) {};
 	/*
-		Used to apply behaviour every frame, after update.
-	*/
-	virtual void lateUpdate(float deltaTime) {};
-	/*
 		Used to apply behaviour on a fixed timestep.
 	*/
 	virtual void fixedUpdate(float deltaTime) {};
@@ -30,5 +26,5 @@ public:
 	/*
 		Pure virtual component type id function, this MUST be implemented in subclasses.
 	*/
-	virtual std::string getComponentTypeIdentifier() = 0;
+	virtual std::string componentTypeID() = 0;
 };

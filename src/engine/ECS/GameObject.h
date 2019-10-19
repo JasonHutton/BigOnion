@@ -18,9 +18,6 @@ public:
 	GameObject(std::string id);
 	~GameObject();
 	void addComponent(Component* component);
-	void updateComponents(float deltaTime);
-	void lateUpdateComponents(float deltaTime);
-	void fixedUpdateComponents(float deltaTime);
 	void addToGameWorld(GameWorld* world);
 
 private:
