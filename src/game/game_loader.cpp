@@ -129,8 +129,12 @@ void GameLoader::startGame() {
 		glfwPollEvents();
 
 		ImGui_ImplGlfwGL3_NewFrame();
-
-		ImGui::Text("Hello, world!");
+		ImGui::SetNextWindowSize(ImVec2(200, 100));        //window size
+		ImGui::SetNextWindowPos(ImVec2(0, 0));             //window position
+		
+		ImGui::Begin("Score");
+		ImGui::Text("Score:");
+		ImGui::End();
 
 		ImGui::Render();
 		ImGui_ImplGlfwGL3_RenderDrawData(ImGui::GetDrawData());
