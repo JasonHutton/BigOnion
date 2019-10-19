@@ -3,6 +3,8 @@
 #include "../game/components/TestComponent.h"
 #include "../game/GameWorldHelper.h"
 
+#include "imgui.h"
+#include "imgui/imgui_impl_glfw_gl3.h"
 
 BOEngine::BOEngine()
 {
@@ -35,6 +37,16 @@ void BOEngine::initialize()
 
 	glfwMakeContextCurrent(window);
 
+
+	ImGui::CreateContext();
+	ImGuiIO& io = ImGui::GetIO(); (void)io;
+	
+	ImGui_ImplGlfwGL3_Init(window, true);
+
+	ImGui::StyleColorsDark();
+
+
+
 	// glad: load all OpenGL function pointers
 	// ---------------------------------------
 	if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
@@ -51,6 +63,8 @@ void BOEngine::initialize()
 	currentTime = std::chrono::high_resolution_clock::now();
 	gameWorld = GameWorld();
 	GameWorldHelper::initTestScene(this, modelShader);
+
+
 }
 
 void BOEngine::preRender()
@@ -59,9 +73,6 @@ void BOEngine::preRender()
 	//TODO comment: shader test
 	Shader ourShader("engine/graphic/shader/vertex.glsl", "engine/graphic/shader/fragment.glsl"); // you can name your shader files however you like
 	Shader lightShader("engine/graphic/shader/vertex.glsl", "engine/graphic/shader/light.fs.glsl");
-
-
-
 }
 
 /*
@@ -103,6 +114,7 @@ void BOEngine::render()
 	// ------
 	glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
 
 	int scrWidth = 10; //TODO get from window
 	int scrHeight = 8; //TODO get from window

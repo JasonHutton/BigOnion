@@ -9,6 +9,7 @@
 #include "SDL_image.h"
 #include "SDL_ttf.h"
 #include <iostream>
+
 #define STB_IMAGE_IMPLEMENTATION
 
 

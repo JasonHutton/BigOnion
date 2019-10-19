@@ -8,7 +8,12 @@
 
 #include "../SoundFile.h"
 
-#include <GLFW/glfw3.h>
+
+
+#include "imgui.h"
+#include "imgui/imgui_impl_glfw_gl3.h"
+
+
 
 // functions
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
@@ -39,6 +44,10 @@ Vector3 position{ 0,0,0 };
 Vector3 front{ 0,0,0 };
 Vector3 up{ 0,0,0 };
 Vector3 vel{ 0,0,0 };
+
+bool show_demo_window = true;
+bool show_another_window = false;
+ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
 
 GameLoader::GameLoader()
 {
@@ -100,9 +109,7 @@ void GameLoader::startGame() {
 	// -----------
 	while (!glfwWindowShouldClose(window))
 	{
-		float currentFrame = (float)glfwGetTime(); // We should probably be using double instead of float, but that's spawning off a LOT of required changes...
-		deltaTime = currentFrame - lastFrame;
-		lastFrame = currentFrame;
+
 
 		// input
 		// -----
@@ -115,12 +122,28 @@ void GameLoader::startGame() {
 		audio.Update();
 		// glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
 		// -------------------------------------------------------------------------------
-		glfwSwapBuffers(window);
+
 		glfwPollEvents();
+
+		ImGui_ImplGlfwGL3_NewFrame();
+
+		ImGui::Text("Hello, world!");
+
+		ImGui::Render();
+		ImGui_ImplGlfwGL3_RenderDrawData(ImGui::GetDrawData());
+		
+
+		glfwSwapBuffers(window);
+
+		
 	}
 
 	// glfw: terminate, clearing all previously allocated GLFW resources.
 	// ------------------------------------------------------------------
+
+	ImGui_ImplGlfwGL3_Shutdown();
+	ImGui::DestroyContext();
+
 	glfwTerminate();
 	//            return 0;
 }

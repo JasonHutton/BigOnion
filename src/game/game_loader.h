@@ -4,7 +4,6 @@
 #include "../src/engine/audio/AudioEngine.h"
 #include "../FileSystem.h"
 #include "../InputHandler.h"
-
 class GameLoader
 {
 	private:
