@@ -6,7 +6,9 @@
 
 #include "../engine/BOEngine.h"
 
+#include "../../Settings.h"
 #include "../SoundFile.h"
+#include "../TextFile.h"
 
 #include <GLFW/glfw3.h>
 
@@ -48,6 +50,31 @@ void GameLoader::createGame() {
 
 	std::cout << "createGame" << std::endl;
 	FileSystem::Init("./src");
+
+	CommandSystem::AttachInput(&input);
+
+	TextFile* settingsFile = new TextFile("settings.cfg");
+	if (settingsFile->Read())
+	{
+		Settings::LoadSettingsFromData(settingsFile->GetData());
+	}
+	else
+	{
+		// If there's no configuration file, detect the current screen settings and set them as the default for fullscreen mode.
+		/*displayMode_t dMode = GLWindow::GetCurrentDisplayMode();
+		if (dMode.bits != 0 && dMode.height != 0 && dMode.width != 0)
+		{
+			Settings::g_ResFullscreenBits.Set(dMode.bits);
+			Settings::g_ResFullscreenHeight.Set(dMode.height);
+			Settings::g_ResFullscreenWidth.Set(dMode.width);
+		}*/
+	}
+	settingsFile->SetData(Settings::SaveSettingsToData());
+	settingsFile->Write(false); // Don't overwrite any existing settings. Only write new ones if there is no file.
+	delete settingsFile;
+
+
+
 	audio.Init();
 	
 	audio.PlaySounds("game/assets/sounds/test.wav", Vector3{ 0, 0, -10 }, audio.VolumeTodB(1.0f));

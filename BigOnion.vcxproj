@@ -19,9 +19,13 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Command.cpp" />
+    <ClCompile Include="CommandSystem.cpp" />
     <ClCompile Include="ContextControl.cpp" />
     <ClCompile Include="InputHandler.cpp" />
     <ClCompile Include="KeyInput.cpp" />
+    <ClCompile Include="Setting.cpp" />
+    <ClCompile Include="Settings.cpp" />
     <ClCompile Include="src\game\components\RigidBodyComponent.cpp" />
     <ClCompile Include="src\game\components\RenderComponent.cpp" />
     <ClCompile Include="File.cpp" />
@@ -42,11 +46,16 @@
     <ClCompile Include="src\game\GameWorldHelper.cpp" />
     <ClCompile Include="src\Launcher.cpp" />
     <ClCompile Include="TextFile.cpp" />
+    <ClCompile Include="utils.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Command.h" />
+    <ClInclude Include="CommandSystem.h" />
     <ClInclude Include="ContextControl.h" />
     <ClInclude Include="InputHandler.h" />
     <ClInclude Include="KeyInput.h" />
+    <ClInclude Include="Setting.h" />
+    <ClInclude Include="Settings.h" />
     <ClInclude Include="src\engine\BOEngine.fwd.h" />
     <ClInclude Include="src\game\components\RigidBodyComponent.h" />
     <ClInclude Include="src\game\components\RenderComponent.h" />

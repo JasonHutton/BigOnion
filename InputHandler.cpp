@@ -1,10 +1,11 @@
 #include "InputHandler.h"
 #include <stdexcept>
 #include <GLFW/glfw3.h>
+#include <iostream>
 
 InputHandler::InputHandler()
 {
-	
+
 	for (map<int, keyState>::iterator it = keys.begin(); it != keys.end(); it++)
 	{
 		UnBind(it->second);

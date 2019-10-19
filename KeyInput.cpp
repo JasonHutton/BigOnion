@@ -1,5 +1,6 @@
 #include "KeyInput.h"
 #include <algorithm>
+#include <GLFW/glfw3.h>
 
 namespace KeyInput
 {
@@ -98,13 +99,20 @@ namespace KeyInput
 	{
 		{"TAB",				K_TAB,				"#str_07018"},
 		{"ENTER",			K_ENTER,			"#str_07019"},
-		{"ESCAPE",			K_ESCAPE,			"#str_07020"},
+		{"ESCAPE",			GLFW_KEY_ESCAPE,			"#str_07020"},
 		{"SPACE",			K_SPACE,			"#str_07021"},
 		{"BACKSPACE",		K_BACKSPACE,		"#str_07022"},
-		{"UPARROW",			K_UPARROW,			"#str_07023"},
-		{"DOWNARROW",		K_DOWNARROW,		"#str_07024"},
-		{"LEFTARROW",		K_LEFTARROW,		"#str_07025"},
-		{"RIGHTARROW",		K_RIGHTARROW,		"#str_07026"},
+		{"UPARROW",			GLFW_KEY_UP,			"#str_07023"},
+		{"DOWNARROW",		GLFW_KEY_DOWN,		"#str_07024"},
+		{"LEFTARROW",		GLFW_KEY_LEFT,		"#str_07025"},
+		{"RIGHTARROW",		GLFW_KEY_RIGHT,		"#str_07026"},
+
+		// ffs
+		{"A", GLFW_KEY_A, ""},
+		{"D", GLFW_KEY_D, ""},
+		{"W", GLFW_KEY_W, ""},
+		{"S", GLFW_KEY_S, ""},
+		// ffs
 
 		{"ALT",				K_ALT,				"#str_07027"},
 		{"RIGHTALT",		K_RIGHT_ALT,		"#str_07027"},
@@ -223,7 +231,6 @@ namespace KeyInput
 		{"KP_EQUALS",		K_KP_EQUALS,		"#str_07127"},
 
 		{"PAUSE",			K_PAUSE,			"#str_07128"},
-
 		//{"SEMICOLON",		';',				"#str_07129"},	// because a raw semicolon separates commands
 		//{"APOSTROPHE",		'\'',				"#str_07130"},	// because a raw apostrophe messes with parsing
 
@@ -311,7 +318,14 @@ namespace KeyInput
 
 		{ "_screenshot",		UB_SCREENSHOT },*/
 
-		{ NULL,					UB_NONE } // Must be last.
+		{ "_force_quit", UB_FORCE_QUIT },
+		{ "_move_forward", UB_MOVE_FORWARD },
+		{ "_move_backward", UB_MOVE_BACKWARD },
+		{ "_move_left", UB_MOVE_LEFT },
+		{ "_move_right", UB_MOVE_RIGHT },
+		{ NULL, UB_MAX_BUTTONS },
+
+		{ NULL,	UB_NONE } // Must be last.
 	};
 
 	const usercmdButton_t& GetButtonForName(const string& name)

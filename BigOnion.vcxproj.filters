@@ -64,6 +64,15 @@
     <Filter Include="Source Files\engine\input">
       <UniqueIdentifier>{fee87d48-1946-4096-817a-8f9a720ff3ec}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\engine\Settings">
+      <UniqueIdentifier>{b587acf7-7fd3-41f7-b848-795a0af61c94}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\engine\Settings">
+      <UniqueIdentifier>{07eae52e-6183-4fc2-abfc-0c7969313032}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\engine\Utils">
+      <UniqueIdentifier>{fcd7d97c-296e-4167-9fff-03a50e0c9738}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Launcher.cpp">
@@ -134,6 +143,21 @@
     </ClCompile>
     <ClCompile Include="ContextControl.cpp">
       <Filter>Source Files\engine\input</Filter>
+    </ClCompile>
+    <ClCompile Include="Setting.cpp">
+      <Filter>Source Files\engine\Settings</Filter>
+    </ClCompile>
+    <ClCompile Include="Settings.cpp">
+      <Filter>Source Files\engine\Settings</Filter>
+    </ClCompile>
+    <ClCompile Include="utils.cpp">
+      <Filter>Source Files\engine\Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="Command.cpp">
+      <Filter>Source Files\engine\Settings</Filter>
+    </ClCompile>
+    <ClCompile Include="CommandSystem.cpp">
+      <Filter>Source Files\engine\Settings</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -232,6 +256,18 @@
     </ClInclude>
     <ClInclude Include="ContextControl.h">
       <Filter>Header Files\engine\input</Filter>
+    </ClInclude>
+    <ClInclude Include="Setting.h">
+      <Filter>Header Files\engine\Settings</Filter>
+    </ClInclude>
+    <ClInclude Include="Settings.h">
+      <Filter>Header Files\engine\Settings</Filter>
+    </ClInclude>
+    <ClInclude Include="Command.h">
+      <Filter>Header Files\engine\Settings</Filter>
+    </ClInclude>
+    <ClInclude Include="CommandSystem.h">
+      <Filter>Header Files\engine\Settings</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
