@@ -6,12 +6,15 @@ ComponentManager::ComponentManager(std::string strategy[], size_t n)
 {
 	this->strategy = new std::string[n];
 
-	for (int i = 0; i < n; ++i)
+	for (unsigned int i = 0; i < n; ++i)
 	{
 		this->strategy[i] = strategy[i];
 	}
 }
 
+/*
+	Add a component to be updated.
+*/
 void ComponentManager::add(Component* component)
 {
 	std::string id = component->componentTypeID();
@@ -26,6 +29,9 @@ void ComponentManager::add(Component* component)
 	pool->push_back(component);
 }
 
+/*
+	Remove a component from the update list.
+*/
 void ComponentManager::remove(Component* component)
 {
 	std::string id = component->componentTypeID();
@@ -41,9 +47,12 @@ void ComponentManager::remove(Component* component)
 	}
 }
 
+/*
+	Calls the update function of all components in the order of the strategy order.
+*/
 void ComponentManager::update(float deltaTime)
 {
-	for (int i = 0; i < n; ++i)
+	for (unsigned int i = 0; i < n; ++i)
 	{
 		std::string id = strategy[i];
 		std::vector<Component*>* pool = componentPools[id];
@@ -54,9 +63,12 @@ void ComponentManager::update(float deltaTime)
 	}
 }
 
+/*
+	Calls the fixed update function of all components in the order of the strategy order.
+*/
 void ComponentManager::fixedUpdate(float deltaTime)
 {
-	for (int i = 0; i < n; ++i)
+	for (unsigned int i = 0; i < n; ++i)
 	{
 		std::string id = strategy[i];
 		std::vector<Component*>* pool = componentPools[id];

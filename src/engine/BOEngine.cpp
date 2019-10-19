@@ -1,6 +1,5 @@
 #include "BOEngine.h"
 #include "ECS/GameObject.h"
-#include "../game/components/TestComponent.h"
 #include "../game/GameWorldHelper.h"
 
 

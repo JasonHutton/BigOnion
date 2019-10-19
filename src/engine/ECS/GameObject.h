@@ -19,6 +19,8 @@ public:
 	~GameObject();
 	void addComponent(Component* component);
 	void addToGameWorld(GameWorld* world);
+	void* operator new(size_t i);
+	void operator delete(void* p);
 
 private:
 	std::vector<Component*> components;

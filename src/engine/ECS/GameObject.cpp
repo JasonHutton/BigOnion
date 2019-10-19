@@ -47,3 +47,13 @@ void GameObject::addToGameWorld(GameWorld* world)
 		this->world->componentManager->add(component);
 	}
 }
+
+void* GameObject::operator new(size_t i)
+{
+	return _mm_malloc(i, 16);
+}
+
+void GameObject::operator delete(void* p)
+{
+	_mm_free(p);
+}
