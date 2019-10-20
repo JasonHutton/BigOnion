@@ -19,6 +19,10 @@ int runMain()
 		std::unique_ptr<GameLoader> loader = std::make_unique<GameLoader>();
 
 		engine = std::make_unique<BOEngine>();
+		
+		std::cout << "Initializing Virtual File System..." << std::endl;
+		FileSystem::Init("./src");
+
 		loader->createGame();
 		engine->initialize();
 

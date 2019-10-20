@@ -49,7 +49,7 @@ GameLoader::GameLoader()
 void GameLoader::createGame() {
 
 	std::cout << "createGame" << std::endl;
-	FileSystem::Init("./src");
+
 
 	CommandSystem::AttachInput(&input);
 

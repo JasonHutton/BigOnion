@@ -24,7 +24,7 @@ class BOEngine
 public: 
 	GLFWwindow* window;
 	Camera camera;
-	GameWorld gameWorld;
+	GameWorld* gameWorld = nullptr;
 
 	const unsigned int SCR_WIDTH = 1000;
 	const unsigned int SCR_HEIGHT = 800;

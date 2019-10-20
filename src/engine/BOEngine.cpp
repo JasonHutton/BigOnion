@@ -1,6 +1,5 @@
 #include "BOEngine.h"
 #include "ECS/GameObject.h"
-#include "../game/components/TestComponent.h"
 #include "../game/GameWorldHelper.h"
 
 
@@ -49,7 +48,7 @@ void BOEngine::initialize()
 
 	// Game World initialization
 	currentTime = std::chrono::high_resolution_clock::now();
-	gameWorld = GameWorld();
+
 	GameWorldHelper::initTestScene(this, modelShader);
 }
 
@@ -83,13 +82,13 @@ void BOEngine::updateEngine(float deltaTime)
 	// do fixed updates until the accumulator is near empty
 	while (accumulator >= FIXED_DELTA_TIME_DURATION)
 	{
-		gameWorld.fixedUpdateGameObjects(FIXED_DELTA_TIME);
+		gameWorld->fixedUpdateGameObjects(FIXED_DELTA_TIME);
 		accumulator -= FIXED_DELTA_TIME_DURATION;
 	}
 
 	// this value is currently unused. it could be useful in the future for interpolating between fixed game states on higher framerates
 	// double alpha = accumulator / FIXED_DELTA_TIME_DURATION;
-	gameWorld.updateGameObjects(deltaTime);
+	gameWorld->updateGameObjects(deltaTime);
 
 	render();
 }
@@ -135,5 +134,5 @@ void BOEngine::addRenderComponent(RenderComponent* renderComponent)
 
 void BOEngine::exitInError(const std::string& error)
 {
-	std::cout << "\n\nUnknown unhandled exception." << error << std::endl;
+	std::cout << "\n\nUnknown unhandled exception. " << error << std::endl;
 }
