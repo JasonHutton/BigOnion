@@ -32,8 +32,19 @@ void CommandSystem::DoCommand(const Command& command)
 			transform(tokens[3].begin(), tokens[3].end(), tokens[3].begin(), tolower); // Context to lower
 		}
 
-		int key = GetKeyNumForName(tokens[1]);
-		usercmdButton_t button = GetButtonForName(tokens[2]);
+		int key;
+		usercmdButton_t button;
+
+		try
+		{
+			key = GetKeyNumForName(tokens[1]);
+			button = GetButtonForName(tokens[2]);
+		}
+		catch (std::runtime_error ex)
+		{
+			cout << "ERROR: " << ex.what() << endl;
+			return;
+		}
 
 		if (numTokens >= 4)
 		{
@@ -47,6 +58,11 @@ void CommandSystem::DoCommand(const Command& command)
 	else if (tokens[0].compare("unbindall") == 0 && numTokens == 1)
 	{
 		detail::m_input->UnBindAll();
+	}
+	else
+	{
+		cout << "ERROR: Unrecognized command: " << tokens[0] << endl;
+		return;
 	}
 }
 
@@ -84,7 +100,14 @@ vector<string> CommandSystem::BindingsToCommandList(vector<string>& commandList)
 			for (vector<string>::const_iterator it = contexts.begin(); it != contexts.end(); it++)
 			{
 				string os;
-				os += "bind " + GetKeyNameForNum(itk->first) + " " + GetNameForButton(control.GetControl(*it));
+				try
+				{
+					os += "bind " + GetKeyNameForNum(itk->first) + " " + GetNameForButton(control.GetControl(*it));
+				}
+				catch (std::runtime_error ex)
+				{
+					cout << "ERROR: " << ex.what() << endl;
+				}
 				if (!it->empty())
 					os += " " + *it;
 				os += "\n";

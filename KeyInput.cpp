@@ -168,7 +168,7 @@ namespace KeyInput
 			}
 		}
 
-		return kn->name;
+		throw std::runtime_error("Unable to match key number: " + std::to_string(keynum));
 	}
 
 	const usercmdButton_t& GetButtonForName(const string& name)
@@ -184,7 +184,7 @@ namespace KeyInput
 			}
 		}
 
-		return cmd->button;
+		throw std::runtime_error("Unable to match button name: " + name);
 	}
 
 	const string GetNameForButton(const usercmdButton_t& button)
