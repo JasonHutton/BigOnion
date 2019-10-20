@@ -15,7 +15,6 @@
 #include "../SoundFile.h"
 #include "../TextFile.h"
 
-
 int runMain()
 {
 	std::unique_ptr<BOEngine> engine;
@@ -25,7 +24,19 @@ int runMain()
 		engine = std::make_unique<BOEngine>();
 		
 		std::cout << "Initializing Virtual File System..." << std::endl;
-		FileSystem::Init("./src");
+		string homePath = getenv("APPDATA"); // C:\Users\*Username*\AppData\Roaming
+		if (!(homePath[homePath.length()] == '\\' || homePath[homePath.length()] == '/'))
+		{
+			homePath += "/";
+		}
+		homePath += "BigOnion/"; // C:\Users\*Username*\AppData\Roaming/BigOnion/
+		homePath = FileSystem::ReplaceSeparators(homePath); // C:/Users/*Username*/AppData/Roaming/BigOnion/
+		// Create the directory if it doesn't exist.
+		if (!FileSystem::PathExists(homePath, false))
+		{
+			FileSystem::CreatePath(homePath, false);
+		}
+		FileSystem::Init("./src", homePath);
 
 		CommandSystem::AttachInput(&loader->input);
 
