@@ -39,13 +39,17 @@ int runMain()
 		{
 			std::cout << "Configuration settings not found. Saving default configuration settings..." << std::endl; // Not exactly accurate, this is a few lines down outside of this else block. But it serves the purpose.
 			// If there's no configuration file, detect the current screen settings and set them as the default for fullscreen mode.
-			/*displayMode_t dMode = GLWindow::GetCurrentDisplayMode();
-			if (dMode.bits != 0 && dMode.height != 0 && dMode.width != 0)
+
+			/*
+			GLFWmonitor *primary = glfwGetPrimaryMonitor(); // GLFW not initializeed yet, so this fails, I think?
+			const GLFWvidmode *currentMode = glfwGetVideoMode(primary);
+			if (currentMode != NULL && currentMode->width != 0 && currentMode->height != 0)
 			{
-				Settings::g_ResFullscreenBits.Set(dMode.bits);
-				Settings::g_ResFullscreenHeight.Set(dMode.height);
-				Settings::g_ResFullscreenWidth.Set(dMode.width);
-			}*/
+				Settings::g_ResFullscreenBits.Set(currentMode->blueBits); // Need to check if this is total 32 bits or something, or just 8*8*8?
+				Settings::g_ResFullscreenHeight.Set(currentMode->height);
+				Settings::g_ResFullscreenWidth.Set(currentMode->width);
+			}
+			*/
 		}
 		settingsFile->SetData(Settings::SaveSettingsToData());
 		settingsFile->Write(false); // Don't overwrite any existing settings. Only write new ones if there is no file.
