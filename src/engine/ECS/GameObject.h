@@ -18,10 +18,11 @@ public:
 	GameObject(std::string id);
 	~GameObject();
 	void addComponent(Component* component);
-	void updateComponents(float deltaTime);
-	void lateUpdateComponents(float deltaTime);
-	void fixedUpdateComponents(float deltaTime);
+	bool removeComponent(Component* component);
+	bool removeComponent(int index);
 	void addToGameWorld(GameWorld* world);
+	void* operator new(size_t i);
+	void operator delete(void* p);
 
 private:
 	std::vector<Component*> components;

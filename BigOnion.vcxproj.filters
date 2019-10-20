@@ -93,9 +93,6 @@
     <ClCompile Include="src\engine\ECS\GameObject.cpp">
       <Filter>Source Files\engine\ECS</Filter>
     </ClCompile>
-    <ClCompile Include="src\game\components\TestComponent.cpp">
-      <Filter>Source Files\game\components</Filter>
-    </ClCompile>
     <ClCompile Include="src\engine\graphic\ShaderAttribute.cpp">
       <Filter>Source Files\engine\graphic</Filter>
     </ClCompile>
@@ -134,6 +131,9 @@
     </ClCompile>
     <ClCompile Include="ContextControl.cpp">
       <Filter>Source Files\engine\input</Filter>
+    </ClCompile>
+    <ClCompile Include="src\engine\ECS\ComponentManager.cpp">
+      <Filter>Source Files\engine\ECS</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -175,9 +175,6 @@
     </ClInclude>
     <ClInclude Include="src\engine\ECS\GameWorld.fwd.h">
       <Filter>Header Files\engine\ECS</Filter>
-    </ClInclude>
-    <ClInclude Include="src\game\components\TestComponent.h">
-      <Filter>Header Files\game\components</Filter>
     </ClInclude>
     <ClInclude Include="src\engine\utils\utils.h">
       <Filter>Header Files\engine\utils</Filter>
@@ -232,6 +229,9 @@
     </ClInclude>
     <ClInclude Include="ContextControl.h">
       <Filter>Header Files\engine\input</Filter>
+    </ClInclude>
+    <ClInclude Include="src\engine\ECS\ComponentManager.h">
+      <Filter>Header Files\engine\ECS</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

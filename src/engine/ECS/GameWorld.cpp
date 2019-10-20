@@ -4,8 +4,9 @@
 /*
 	Initializes this Game World.
 */
-GameWorld::GameWorld()
+GameWorld::GameWorld(std::string updateStrategy[], size_t n)
 	: gameObjects()
+	, componentManager(updateStrategy, n)
 {
 	collisionConfig = new btDefaultCollisionConfiguration();
 	dispatcher = new btCollisionDispatcher(collisionConfig);
@@ -35,10 +36,20 @@ void GameWorld::addGameObject(GameObject* gameObject)
 	gameObjects.emplace(std::pair<std::string, GameObject*>(gameObject->id, gameObject));
 }
 
-void GameWorld::removeGameObject(std::string id)
+/*
+	Removes a Game Object from this Game World's component collection.
+*/
+bool GameWorld::removeGameObject(std::string id)
 {
+	if (gameObjects.find(id) == gameObjects.end())
+	{
+		return false;
+	}
+
 	delete gameObjects[id];
 	gameObjects.erase(id);
+
+	return true;
 }
 
 /*
@@ -46,17 +57,7 @@ void GameWorld::removeGameObject(std::string id)
 */
 void GameWorld::updateGameObjects(float deltaTime)
 {
-	// first run the updateComponents method on each GameObject...
-	for (auto& pair : gameObjects)
-	{
-		pair.second->updateComponents(deltaTime);
-	}
-
-	// ...then run the lateUpdateComponents method on each GameObject
-	for (auto& pair : gameObjects)
-	{
-		pair.second->lateUpdateComponents(deltaTime);
-	}
+	componentManager.update(deltaTime);
 }
 
 /*
@@ -66,9 +67,5 @@ void GameWorld::fixedUpdateGameObjects(float deltaTime)
 {
 	physicsWorld->stepSimulation(deltaTime);
 
-	// first run the updateComponents method on each GameObject...
-	for (auto& pair : gameObjects)
-	{
-		pair.second->fixedUpdateComponents(deltaTime);
-	}
+	componentManager.fixedUpdate(deltaTime);
 }
