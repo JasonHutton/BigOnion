@@ -11,6 +11,10 @@
 #include <iostream>
 #define STB_IMAGE_IMPLEMENTATION
 
+#include "../../Settings.h"
+#include "../SoundFile.h"
+#include "../TextFile.h"
+
 
 int runMain()
 {
@@ -22,6 +26,30 @@ int runMain()
 		
 		std::cout << "Initializing Virtual File System..." << std::endl;
 		FileSystem::Init("./src");
+
+		CommandSystem::AttachInput(&loader->input);
+
+		std::cout << "Loading configuration settings..." << std::endl;
+		TextFile* settingsFile = new TextFile("settings.cfg");
+		if (settingsFile->Read())
+		{
+			Settings::LoadSettingsFromData(settingsFile->GetData());
+		}
+		else
+		{
+			std::cout << "Configuration settings not found. Saving default configuration settings..." << std::endl; // Not exactly accurate, this is a few lines down outside of this else block. But it serves the purpose.
+			// If there's no configuration file, detect the current screen settings and set them as the default for fullscreen mode.
+			/*displayMode_t dMode = GLWindow::GetCurrentDisplayMode();
+			if (dMode.bits != 0 && dMode.height != 0 && dMode.width != 0)
+			{
+				Settings::g_ResFullscreenBits.Set(dMode.bits);
+				Settings::g_ResFullscreenHeight.Set(dMode.height);
+				Settings::g_ResFullscreenWidth.Set(dMode.width);
+			}*/
+		}
+		settingsFile->SetData(Settings::SaveSettingsToData());
+		settingsFile->Write(false); // Don't overwrite any existing settings. Only write new ones if there is no file.
+		delete settingsFile;
 
 		loader->createGame();
 		engine->initialize();
