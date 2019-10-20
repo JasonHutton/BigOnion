@@ -45,7 +45,7 @@ GameLoader::GameLoader()
 void GameLoader::createGame() {
 
 	std::cout << "createGame" << std::endl;
-	FileSystem::Init("./src");
+
 	audio.Init();
 	
 	audio.PlaySounds("game/assets/sounds/test.wav", Vector3{ 0, 0, -10 }, audio.VolumeTodB(1.0f));
