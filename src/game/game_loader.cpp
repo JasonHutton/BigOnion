@@ -8,6 +8,8 @@
 
 #include "../SoundFile.h"
 
+#include <GLFW/glfw3.h>
+
 // functions
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void mouse_callback(GLFWwindow* window, double xpos, double ypos);
@@ -139,19 +141,45 @@ void updateListener()
 
 // process all input: query GLFW whether relevant keys are pressed/released this frame and react accordingly
 // ---------------------------------------------------------------------------------------------------------
-void processInput(GLFWwindow* window)
+void GameLoader::processInput(GLFWwindow* window)
 {
-	if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
-		glfwSetWindowShouldClose(window, true);
+	// Check all bound controls
+	for (map<int, keyState>::iterator it = input.GetAllKeyStates().begin(); it != input.GetAllKeyStates().end(); it++)
+	{
+		// If the bound control is being pressed....
+		if (glfwGetKey(window, it->first) == GLFW_PRESS)
+		{
+			// See if a bound control has a User Button associated with it.
+			ContextControl cc = input.GetControl(it->first);
+			// Do what the context control->User Button says to do.
+			switch(cc.GetControl("")) // Default context.
+			{
+			case UB_FORCE_QUIT:
+				glfwSetWindowShouldClose(window, true);
+				break;
+			case UB_MOVE_FORWARD:
+				camera->ProcessKeyboard(FORWARD, deltaTime);
+				break;
+			case UB_MOVE_BACKWARD:
+				camera->ProcessKeyboard(BACKWARD, deltaTime);
+				break;
+			case UB_MOVE_LEFT:
+				camera->ProcessKeyboard(LEFT, deltaTime);
+				break;
+			case UB_MOVE_RIGHT:
+				camera->ProcessKeyboard(RIGHT, deltaTime);
+				break;
+			case UB_NONE:
+			default:
+				break;
+			}
 
-	if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
-		camera->ProcessKeyboard(FORWARD, deltaTime);
-	if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
-		camera->ProcessKeyboard(BACKWARD, deltaTime);
-	if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
-		camera->ProcessKeyboard(LEFT, deltaTime);
-	if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
-		camera->ProcessKeyboard(RIGHT, deltaTime);
+			/*switch (cc.GetControl("Menu")) // Some other context.
+			{
+
+			}*/
+		}
+	}
 }
 
 // glfw: whenever the window size changed (by OS or user resize) this callback function executes

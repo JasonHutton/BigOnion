@@ -1,6 +1,9 @@
 #include "GameWorldHelper.h"
 #include "../engine/BOEngine.h"
 
+/*
+	Loads a test scene into the given BOEngine.
+*/
 void GameWorldHelper::initTestScene(BOEngine* engine, Shader* shader)
 {
 	std::cout << "Game init" << std::endl;
