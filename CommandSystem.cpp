@@ -10,6 +10,7 @@ void CommandSystem::DoCommand(const Command& command)
 
 	if (tokens[0].compare("set") == 0 && numTokens >= 3)
 	{
+		bool bFoundSetting = false;
 		Setting* setting = Setting::First();
 		while (setting != NULL)
 		{
@@ -18,9 +19,14 @@ void CommandSystem::DoCommand(const Command& command)
 			transform(tokens[1].begin(), tokens[1].end(), tokens[1].begin(), tolower);
 			if (sname.compare(tokens[1]) == 0)
 			{
+				bFoundSetting = true;
 				setting->Set(tokens[2]);
 			}
 			setting = setting->Next();
+		}
+		if (!bFoundSetting)
+		{
+			cout << "ERROR: Setting variable not found: " << tokens[1] << endl;
 		}
 	}
 	else if (tokens[0].compare("bind") == 0 && numTokens >= 3)
