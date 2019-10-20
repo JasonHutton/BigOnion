@@ -16,8 +16,6 @@ class InputHandler
 {
 public:
 	InputHandler();
-	void KeyEvent(const int& scankey, const bool& status, const int& repeats);
-	//const keyState& GetKey(const int& scankey) const;
 
 	void Bind(const int& key, const usercmdButton_t& button, const string& context = "");
 	void BindDefault(const int& key, const usercmdButton_t& button, const string& context = "");

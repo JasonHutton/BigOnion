@@ -27,20 +27,6 @@ InputHandler::InputHandler()
 
 }
 
-void InputHandler::KeyEvent(const int& scankey, const bool& status, const int& repeats)
-{
-	int mappedKey = MapKey(scankey);
-
-	keys[mappedKey].prevKeyDown = keys[mappedKey].keyDown;
-	keys[mappedKey].keyDown = status;
-	keys[mappedKey].repeats = repeats;
-}
-
-/*const keyState& InputHandler::GetKey(const int& scankey) const
-{
-	return keys[MapKey(scankey)];
-}*/
-
 void InputHandler::Bind(const int& key, const usercmdButton_t& button, const string& context)
 {
 	keys[key].keyDown = false;
