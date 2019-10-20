@@ -26,9 +26,6 @@ public:
 	Camera camera;
 	GameWorld* gameWorld = nullptr;
 
-	const unsigned int SCR_WIDTH = 1000;
-	const unsigned int SCR_HEIGHT = 800;
-
 	BOEngine();
 
 	void initialize();

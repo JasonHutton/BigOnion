@@ -27,4 +27,17 @@ namespace Settings
 	extern Setting g_ResFullscreenHeight;
 	extern Setting g_ResFullscreenBits;
 	extern Setting g_StartFullscreen;
+
+	extern struct Resolution
+	{
+		int width;
+		int height;
+		int bits;
+	};
+
+	extern bool IsFullscreen;
+	extern Resolution CurrentResolution;
+
+	extern float lastX;
+	extern float lastY;
 }

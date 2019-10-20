@@ -1,6 +1,7 @@
 #include "BOEngine.h"
 #include "ECS/GameObject.h"
 #include "../game/GameWorldHelper.h"
+#include "../../Settings.h"
 
 
 BOEngine::BOEngine()
@@ -23,7 +24,7 @@ void BOEngine::initialize()
 
 	// glfw window creation
 	// --------------------
-	this->window = glfwCreateWindow(SCR_WIDTH, SCR_HEIGHT, "Big Onion", NULL, NULL);
+	this->window = glfwCreateWindow(Settings::CurrentResolution.width, Settings::CurrentResolution.height, "Big Onion", NULL, NULL);
 	this->camera = Camera(glm::vec3(0.0f, 0.0f, 3.0f));
 	if (window == NULL)
 	{

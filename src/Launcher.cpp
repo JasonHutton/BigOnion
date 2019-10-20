@@ -51,6 +51,24 @@ int runMain()
 		settingsFile->Write(false); // Don't overwrite any existing settings. Only write new ones if there is no file.
 		delete settingsFile;
 
+		// Initialize some global settings...
+		Settings::IsFullscreen = Settings::g_StartFullscreen.GetBool();
+		if (Settings::IsFullscreen)
+		{
+			Settings::CurrentResolution.width = Settings::g_ResFullscreenWidth.GetInteger();
+			Settings::CurrentResolution.height = Settings::g_ResFullscreenHeight.GetInteger();
+			Settings::CurrentResolution.bits = Settings::g_ResFullscreenBits.GetInteger();
+		}
+		else
+		{
+			Settings::CurrentResolution.width = Settings::g_ResWindowWidth.GetInteger();
+			Settings::CurrentResolution.height = Settings::g_ResWindowHeight.GetInteger();
+			Settings::CurrentResolution.bits = Settings::g_ResWindowBits.GetInteger();
+		}
+		Settings::lastX = Settings::CurrentResolution.width / 2.0f;
+		Settings::lastY = Settings::CurrentResolution.height / 2.0f;
+		// Done initializing global settings...
+
 		loader->createGame();
 		engine->initialize();
 
