@@ -152,7 +152,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <AdditionalDependencies>glad.lib;glfw3.lib;glfw3dll.lib;assimp-vc140-mt.lib;IrrXML.lib;fmodL_vc.lib;fmodstudioL_vc.lib;BulletDynamics_Debug.lib;BulletCollision_Debug.lib;LinearMath_Debug.lib;SDL2.lib;SDL2main.lib;SDL2_image.lib;SDL2_ttf.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(SolutionDir)lib\SDL2_tff;$(SolutionDir)lib\SDL2_image;$(SolutionDir)lib\SDL2;$(SolutionDir)lib\bullet;$(SolutionDir)lib</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)lib\bullet;$(SolutionDir)lib\SDL2_tff;$(SolutionDir)lib\SDL2_image;$(SolutionDir)lib\SDL2;$(SolutionDir)lib\bullet\x86Files;$(SolutionDir)lib</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
       <Command>C:\Windows\System32\xcopy /y /d "$(SolutionDir)lib\*.dll" "$(OutDir)"
@@ -165,12 +165,12 @@ C:\Windows\System32\xcopy /y /d "$(SolutionDir)dll\*.dll" "$(OutDir)"</Command>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>D:\Documents\BigOnion\bullet3-master\src;$(SolutionDir)include;$(SolutionDir)include\FMOD inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)include\SDL2_tff;$(SolutionDir)include\SDL2_image;$(SolutionDir)include\SDL2;$(SolutionDir)include\bullet;$(SolutionDir)include;$(SolutionDir)include\FMOD inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
-      <AdditionalLibraryDirectories>D:\Documents\BigOnion\bullet\lib\Debug;$(SolutionDir)lib</AdditionalLibraryDirectories>
-      <AdditionalDependencies>glad.lib;glfw3.lib;glfw3dll.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)lib\bullet;$(SolutionDir)lib\SDL2_tff;$(SolutionDir)lib\SDL2_image;$(SolutionDir)lib\SDL2;$(SolutionDir)lib\bullet\x64Files;$(SolutionDir)lib</AdditionalLibraryDirectories>
+      <AdditionalDependencies>glad.lib;glfw3.lib;glfw3dll.lib;assimp-vc140-mt.lib;IrrXML.lib;fmodL_vc.lib;fmodstudioL_vc.lib;BulletDynamics_Debug.lib;BulletCollision_Debug.lib;LinearMath_Debug.lib;SDL2.lib;SDL2main.lib;SDL2_image.lib;SDL2_ttf.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
