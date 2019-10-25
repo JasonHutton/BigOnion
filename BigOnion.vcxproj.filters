@@ -269,6 +269,9 @@
     <ClInclude Include="src\engine\ECS\ComponentManager.h">
       <Filter>Header Files\engine\ECS</Filter>
     </ClInclude>
+    <ClInclude Include="src\game\components\TypeTestComponent.h">
+      <Filter>Header Files\game\components</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="src\engine\vertex.glsl">

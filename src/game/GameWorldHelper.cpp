@@ -1,6 +1,7 @@
 #include "GameWorldHelper.h"
 #include "../engine/BOEngine.h"
 #include "../engine/ECS/ComponentManager.h"
+#include "components/TypeTestComponent.h"
 
 /*
 	Loads a test scene into the given BOEngine.
@@ -56,5 +57,8 @@ void GameWorldHelper::initTestScene(BOEngine* engine, Shader* shader)
 	box4->transform.scale = 2.0; // has to be double because dimensions of 1.0 entered above refer to distance from origin to edge
 	box4->addComponent(new RenderComponent(engine, "game/assets/box/cube.obj", shader));
 	box4->addComponent(RigidBodyComponent::createWithCube(1.0, 1.0, 1.0, 1.0));
+	box4->addComponent(new TypeTestComponent("This is a test message!"));
 	engine->gameWorld->addGameObject(box4);
+
+	box4->getComponent<TypeTestComponent>()->talk();
 }
