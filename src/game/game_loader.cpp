@@ -47,7 +47,10 @@ Vector3 vel{ 0,0,0 };
 
 bool show_demo_window = true;
 bool show_another_window = false;
+bool show_GameMenu_window = true;
 ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
+
+BOEngine BOE;
 
 GameLoader::GameLoader()
 {
@@ -104,7 +107,7 @@ void GameLoader::startGame() {
 	
 	engine->preRender();
 
-
+	
 	// render loop
 	// -----------
 	while (!glfwWindowShouldClose(window))
@@ -129,12 +132,70 @@ void GameLoader::startGame() {
 		glfwPollEvents();
 
 		ImGui_ImplGlfwGL3_NewFrame();
-		ImGui::SetNextWindowSize(ImVec2(200, 100));        //window size
-		ImGui::SetNextWindowPos(ImVec2(0, 0));             //window position
 		
-		ImGui::Begin("Score");
-		ImGui::Text("Score:");
+
+		ImGui::SetNextWindowSize(ImVec2(200, 100));        //window size
+		ImGui::SetNextWindowPos(ImVec2(0, 700));     
+		//window position
+		//ImGuiWindowFlags flags = ImGuiWindowFlags_Tooltip | ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoMove |
+		//ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_AlwaysAutoResize;
+		ImGuiWindowFlags flags =  ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoResize;
+		ImGui::Begin("Score",0,flags);
+
+		int score1 = 100;	
+		
+		ImGui::TextColored(ImVec4(0.0f, 1.0f, 1.0f, 1.0f), "Score: %.d:",score1 );
+		//ImGui::StyleColorsDark();
 		ImGui::End();
+
+		//*******************************************
+
+
+		ImGui::SetNextWindowSize(ImVec2(200, 100));        //window size
+		ImGui::SetNextWindowPos(ImVec2(800, 700));             //window position
+		ImGui::Begin("Speed",0, flags);
+
+		int speed1 = 100;
+		
+		ImGui::TextColored(ImVec4(1.0f, 0.0f, 0.0f, 1.0f), "Speed:%.d",speed1);
+
+		//ImGui::StyleColorsDark();
+		ImGui::End();
+
+		//*******************************************
+		
+		if (show_GameMenu_window)
+		{
+
+			ImGui::SetNextWindowSize(ImVec2(1000, 800));       
+			ImGui::SetNextWindowPos(ImVec2(0, 0));             
+			ImGui::StyleColorsDark();
+			ImGui::Begin("Big Onion", &show_GameMenu_window, flags);
+			
+			ImGui::SetCursorPos(ImVec2(250.0f, 100.0f));
+			//if (ImGui::Button("Play Game", ImVec2(-1.0f, 0.0f)))
+			if (ImGui::Button("Play Game", ImVec2(500.0f, 50.0f))) {
+				show_GameMenu_window = false;
+			 }
+
+			ImGui::SetCursorPos(ImVec2(250.0f, 200.0f));
+			ImGui::Button("Load Game", ImVec2(500.0f, 50.0f));
+
+			ImGui::SetCursorPos(ImVec2(250.0f, 300.0f));
+			ImGui::Button("High Score", ImVec2(500.0f, 50.0f));
+
+			ImGui::SetCursorPos(ImVec2(250.0f, 400.0f));
+			if (ImGui::Button("Quit", ImVec2(500.0f, 50.0f))) 
+				break;
+			
+				
+			//SetCursorPos* ()
+			
+			ImGui::End();
+		}
+		
+		
+
 
 		ImGui::Render();
 		ImGui_ImplGlfwGL3_RenderDrawData(ImGui::GetDrawData());

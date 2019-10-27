@@ -37,14 +37,15 @@ void BOEngine::initialize()
 
 	glfwMakeContextCurrent(window);
 
-
 	ImGui::CreateContext();
 	ImGuiIO& io = ImGui::GetIO(); (void)io;
 	
 	ImGui_ImplGlfwGL3_Init(window, true);
+	ImFont* pFont = io.Fonts->AddFontFromFileTTF("Roboto-Black.ttf", 30.0f);
+	
 
-	ImGui::StyleColorsDark();
-
+	//ImGui::StyleColorsDark();
+	ImGui::PushStyleColor(ImGuiCol_WindowBg, (0, 0, 0, 0));
 
 
 	// glad: load all OpenGL function pointers
