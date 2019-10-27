@@ -45,23 +45,18 @@ void BOEngine::initialize()
 
 	// Shader loading
 	// TODO: some models may want different shaders. cross that bridge when we meet it
-	modelShader = new Shader("engine/graphic/shader/model_loading.vs", "engine/graphic/shader/model_loading.fs");
+
+
 
 	// Game World initialization
 	currentTime = std::chrono::high_resolution_clock::now();
 
-	GameWorldHelper::initTestScene(this, modelShader);
+	GameWorldHelper::initTestScene(this);
 }
 
 void BOEngine::preRender()
 {
 	glEnable(GL_DEPTH_TEST);
-	//TODO comment: shader test
-	Shader ourShader("engine/graphic/shader/vertex.glsl", "engine/graphic/shader/fragment.glsl"); // you can name your shader files however you like
-	Shader lightShader("engine/graphic/shader/vertex.glsl", "engine/graphic/shader/light.fs.glsl");
-
-
-
 }
 
 /*
@@ -114,13 +109,17 @@ void BOEngine::render()
 	glm::mat4 view = camera.GetViewMatrix();
 
 	// don't forget to enable shader before setting uniforms
-	modelShader->use();
 
-	modelShader->setMat4("projection", projection);
-	modelShader->setMat4("view", view);
+	Shader* shader = NULL;
 
 	for (RenderComponent* rc : renderComponents)
 	{
+		shader = rc->model.shader;
+		shader->use();
+		shader->setVec3("viewPos", camera.Position);
+		shader->setMat4("view", view);
+		shader->setMat4("projection", projection);
+
 		rc->model.Draw();
 	}
 }
