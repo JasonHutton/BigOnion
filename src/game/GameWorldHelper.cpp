@@ -6,12 +6,54 @@
 /*
 	Loads a test scene into the given BOEngine.
 */
-void GameWorldHelper::initTestScene(BOEngine* engine, Shader* shader)
+void GameWorldHelper::initTestScene(BOEngine* engine)
 {
-	std::cout << "Game init" << std::endl;
+	// std::cout << "Game init" << std::endl;
+
+	Shader * shader = new Shader("engine/graphic/shader/model_loading.vs", "engine/graphic/shader/model_loading.fs");
+
+	Shader* lightshader = new Shader("engine/graphic/shader/model_loading.vs", "engine/graphic/shader/light.fs.glsl");
+
+	shader->use();
+	shader->setVec3("dirLight.direction", -0.2f, -1.0f, -0.3f); //obj to light
+	shader->setVec3("dirLight.ambient", 0.05f, 0.05f, 0.05f);
+	shader->setVec3("dirLight.diffuse", 1.0f, 1.0f, 1.0f);
+	shader->setVec3("dirLight.specular", 1.0f, 1.0f, 1.0f);
+
+	glm::vec3 pointLightPositions[] = {
+		glm::vec3(16.0f,  5.0f,  0.0f),
+		glm::vec3(12.3f, 5.3f, 5.0f),
+		glm::vec3(-4.0f,  2.0f, -12.0f),
+		glm::vec3(0.0f,  0.0f, -3.0f)
+	};
+
+	// point light 1
+	shader->setVec3("pointLights[0].position", pointLightPositions[0]);
+	shader->setVec3("pointLights[0].ambient", 0.05f, 0.05f, 0.05f);
+	shader->setVec3("pointLights[0].diffuse", 1.0f, 1.0f, 1.0f);
+	shader->setVec3("pointLights[0].specular", 1.0f, 1.0f, 1.0f);
+	shader->setFloat("pointLights[0].constant", 1.0f);
+	shader->setFloat("pointLights[0].linear", 0.09);
+	shader->setFloat("pointLights[0].quadratic", 0.032);
+
+	// point light 2
+	shader->setVec3("pointLights[1].position", pointLightPositions[1]);
+	shader->setVec3("pointLights[1].ambient", 0.05f, 0.05f, 0.05f);
+	shader->setVec3("pointLights[1].diffuse", 1.0f, 1.0f, 1.0f);
+	shader->setVec3("pointLights[1].specular", 1.0f, 1.0f, 1.0f);
+	shader->setFloat("pointLights[1].constant", 1.0f);
+	shader->setFloat("pointLights[1].linear", 0.09);
+	shader->setFloat("pointLights[1].quadratic", 0.032);
 
 	std::string strategy[] = {RigidBodyComponent::typeID, RenderComponent::typeID};
 	engine->gameWorld = new GameWorld(strategy, 2);
+
+	GameObject* player_car = new  GameObject("PlayerCar");
+	player_car->transform.position = Vector3f(15.0, 5.0, 0);
+	player_car->transform.scale = 1;
+	player_car->addComponent(new RenderComponent(engine, "game/assets/avent/Avent_red.obj", shader));
+	player_car->addComponent(RigidBodyComponent::createWithCube(1.0, 0.3, 1.0, 1.0));
+	engine->gameWorld->addGameObject(player_car);
 
 	// create suit man
 	GameObject* suitMan = new GameObject("SuitMan");
@@ -21,6 +63,22 @@ void GameWorldHelper::initTestScene(BOEngine* engine, Shader* shader)
 	suitMan->addComponent(new RenderComponent(engine, "game/assets/nanosuit/nanosuit.obj", shader)); // connect object - model
 	suitMan->addComponent(RigidBodyComponent::createWithCylinder(0.75, 1.5, 0.25, 1.0)); // connect object - rigibody
 	engine->gameWorld->addGameObject(suitMan); // maybe auto register?
+
+		// Light
+	GameObject* light = new  GameObject("Light");
+	light->transform.position = Vector3f(pointLightPositions[0].x, pointLightPositions[0].y, pointLightPositions[0].z);
+	light->transform.scale = 1.0; // has to be double because dimensions of 1.0 entered above refer to distance from origin to edge
+	light->addComponent(new RenderComponent(engine, "game/assets/box/cube.obj", lightshader));
+	// box->addComponent(RigidBodyComponent::createWithCube(1.0, 1.0, 1.0, 1.0));
+	engine->gameWorld->addGameObject(light);
+
+	// Light
+	GameObject* light2 = new  GameObject("Light1");
+	light2->transform.position = Vector3f(pointLightPositions[1].x, pointLightPositions[1].y, pointLightPositions[1].z);
+	light2->transform.scale = 1.0; // has to be double because dimensions of 1.0 entered above refer to distance from origin to edge
+	light2->addComponent(new RenderComponent(engine, "game/assets/box/cube.obj", lightshader));
+	// box->addComponent(RigidBodyComponent::createWithCube(1.0, 1.0, 1.0, 1.0));
+	engine->gameWorld->addGameObject(light2);
 
 	// create ground
 	GameObject* ground = new GameObject("Ground");

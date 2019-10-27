@@ -5,5 +5,5 @@
 
 namespace GameWorldHelper
 {
-	void initTestScene(BOEngine* engine, Shader* shader);
+	void initTestScene(BOEngine* engine);
 };

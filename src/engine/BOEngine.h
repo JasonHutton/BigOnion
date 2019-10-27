@@ -46,6 +46,5 @@ private:
 	
 	int exitCode;
 
-	Shader* modelShader;
 	std::vector<RenderComponent*> renderComponents;
 };
