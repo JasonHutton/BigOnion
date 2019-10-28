@@ -1,7 +1,7 @@
 #include "BOEngine.h"
 #include "ECS/GameObject.h"
-#include "../game/components/TestComponent.h"
 #include "../game/GameWorldHelper.h"
+#include "../../Settings.h"
 
 #include "imgui.h"
 #include "imgui/imgui_impl_glfw_gl3.h"
@@ -26,7 +26,7 @@ void BOEngine::initialize()
 
 	// glfw window creation
 	// --------------------
-	this->window = glfwCreateWindow(SCR_WIDTH, SCR_HEIGHT, "Big Onion", NULL, NULL);
+	this->window = glfwCreateWindow(Settings::CurrentResolution.width, Settings::CurrentResolution.height, "Big Onion", NULL, NULL);
 	this->camera = Camera(glm::vec3(0.0f, 0.0f, 3.0f));
 	if (window == NULL)
 	{
@@ -58,22 +58,21 @@ void BOEngine::initialize()
 
 	// Shader loading
 	// TODO: some models may want different shaders. cross that bridge when we meet it
-	modelShader = new Shader("engine/graphic/shader/model_loading.vs", "engine/graphic/shader/model_loading.fs");
+
+
 
 	// Game World initialization
 	currentTime = std::chrono::high_resolution_clock::now();
-	gameWorld = GameWorld();
-	GameWorldHelper::initTestScene(this, modelShader);
 
+
+	GameWorldHelper::initTestScene(this);
 
 }
 
 void BOEngine::preRender()
 {
 	glEnable(GL_DEPTH_TEST);
-	//TODO comment: shader test
-	Shader ourShader("engine/graphic/shader/vertex.glsl", "engine/graphic/shader/fragment.glsl"); // you can name your shader files however you like
-	Shader lightShader("engine/graphic/shader/vertex.glsl", "engine/graphic/shader/light.fs.glsl");
+
 }
 
 /*
@@ -95,13 +94,13 @@ void BOEngine::updateEngine(float deltaTime)
 	// do fixed updates until the accumulator is near empty
 	while (accumulator >= FIXED_DELTA_TIME_DURATION)
 	{
-		gameWorld.fixedUpdateGameObjects(FIXED_DELTA_TIME);
+		gameWorld->fixedUpdateGameObjects(FIXED_DELTA_TIME);
 		accumulator -= FIXED_DELTA_TIME_DURATION;
 	}
 
 	// this value is currently unused. it could be useful in the future for interpolating between fixed game states on higher framerates
 	// double alpha = accumulator / FIXED_DELTA_TIME_DURATION;
-	gameWorld.updateGameObjects(deltaTime);
+	gameWorld->updateGameObjects(deltaTime);
 
 	render();
 }
@@ -127,13 +126,17 @@ void BOEngine::render()
 	glm::mat4 view = camera.GetViewMatrix();
 
 	// don't forget to enable shader before setting uniforms
-	modelShader->use();
 
-	modelShader->setMat4("projection", projection);
-	modelShader->setMat4("view", view);
+	Shader* shader = NULL;
 
 	for (RenderComponent* rc : renderComponents)
 	{
+		shader = rc->model.shader;
+		shader->use();
+		shader->setVec3("viewPos", camera.Position);
+		shader->setMat4("view", view);
+		shader->setMat4("projection", projection);
+
 		rc->model.Draw();
 	}
 }
@@ -148,5 +151,5 @@ void BOEngine::addRenderComponent(RenderComponent* renderComponent)
 
 void BOEngine::exitInError(const std::string& error)
 {
-	std::cout << "\n\nUnknown unhandled exception." << error << std::endl;
+	std::cout << "\n\nUnknown unhandled exception. " << error << std::endl;
 }
