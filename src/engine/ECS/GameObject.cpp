@@ -1,6 +1,5 @@
 #include "GameObject.h"
 #include "Component.h"
-#include "GameWorld.h"
 
 /*
 	Initializes this Game Object.
@@ -12,6 +11,7 @@ GameObject::GameObject(std::string id)
 	, world(nullptr)
 
 {
+	// components.push_back(&transform); // this line will cause program terminate....why? dead lopp?
 }
 
 /*
@@ -21,7 +21,6 @@ GameObject::~GameObject()
 {
 	for (Component* c : components)
 	{
-		world->componentManager.remove(c);
 		delete c;
 	}
 }
@@ -33,43 +32,39 @@ void GameObject::addComponent(Component* component)
 {
 	component->gameObject = this;
 	components.push_back(component);
+}
 
-	if (world != nullptr)
+/*
+	Calls the update() function of all components owned by this Game Object.
+*/
+void GameObject::updateComponents(float deltaTime)
+{
+	for (Component* component : components)
 	{
-		world->componentManager.add(component);
+		component->update(deltaTime);
 	}
 }
 
 /*
-	Removes a component from this Game Object's component collection and deletes it.
+	Calls the lateUpdate() function of all components owned by this Game Object.
 */
-bool GameObject::removeComponent(Component* component)
+void GameObject::lateUpdateComponents(float deltaTime)
 {
-	for (auto iter = components.begin(); iter != components.end(); ++iter)
+	for (Component* component : components)
 	{
-		if (*iter == component)
-		{
-			components.erase(iter);
-			delete component;
-			return true;
-		}
+		component->lateUpdate(deltaTime);
 	}
-
-	return false;
 }
 
 /*
-	Removes a component from this Game Object's component collection and deletes it.
+	Calls the fixedUpdate() function of all components owned by this Game Object.
 */
-bool GameObject::removeComponent(int index)
+void GameObject::fixedUpdateComponents(float deltaTime)
 {
-	if (components.size() <= index)
+	for (Component* component : components)
 	{
-		return false;
+		component->fixedUpdate(deltaTime);
 	}
-
-	components.erase(components.begin() + index);
-	return true;
 }
 
 /*
@@ -81,16 +76,5 @@ void GameObject::addToGameWorld(GameWorld* world)
 	for (Component* component : components)
 	{
 		component->onAddToGameWorld();
-		this->world->componentManager.add(component);
 	}
-}
-
-void* GameObject::operator new(size_t i)
-{
-	return _mm_malloc(i, 16);
-}
-
-void GameObject::operator delete(void* p)
-{
-	_mm_free(p);
 }
