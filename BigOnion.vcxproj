@@ -162,12 +162,12 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)include\glew;$(SolutionDir)include\imgui;$(SolutionDir)include\gl3w\GL;$(SolutionDir)include\bullet;$(SolutionDir)include;$(SolutionDir)include\FMOD inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)include\glew;$(SolutionDir)include\imgui;$(SolutionDir)include\gl3w\GL;$(SolutionDir)include\SDL2_tff;$(SolutionDir)include\SDL2_image;$(SolutionDir)include\SDL2;$(SolutionDir)include\bullet;$(SolutionDir)include;$(SolutionDir)include\FMOD inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
-      <AdditionalDependencies>glad.lib;glfw3.lib;glfw3dll.lib;assimp-vc140-mt.lib;IrrXML.lib;fmodL_vc.lib;fmodstudioL_vc.lib;BulletDynamics_Debug.lib;BulletCollision_Debug.lib;LinearMath_Debug.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(SolutionDir)lib\glew;$(SolutionDir)lib\bullet;$(SolutionDir)lib</AdditionalLibraryDirectories>
+      <AdditionalDependencies>glad.lib;glfw3.lib;glfw3dll.lib;assimp-vc140-mt.lib;IrrXML.lib;fmodL_vc.lib;fmodstudioL_vc.lib;BulletDynamics_Debug.lib;BulletCollision_Debug.lib;LinearMath_Debug.lib;SDL2.lib;SDL2main.lib;SDL2_image.lib;SDL2_ttf.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)lib\glew;$(SolutionDir)lib\SDL2_tff;$(SolutionDir)lib\SDL2_image;$(SolutionDir)lib\SDL2;$(SolutionDir)lib\bullet;$(SolutionDir)lib</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
       <Command>C:\Windows\System32\xcopy /y /d "$(SolutionDir)lib\*.dll" "$(OutDir)"
