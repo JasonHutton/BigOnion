@@ -1,6 +1,5 @@
 #pragma once
 
-#include <string>
 #include "GameObject.fwd.h"
 
 /*
@@ -16,6 +15,10 @@ public:
 	*/
 	virtual void update(float deltaTime) {};
 	/*
+		Used to apply behaviour every frame, after update.
+	*/
+	virtual void lateUpdate(float deltaTime) {};
+	/*
 		Used to apply behaviour on a fixed timestep.
 	*/
 	virtual void fixedUpdate(float deltaTime) {};
@@ -23,8 +26,5 @@ public:
 		Used to initialize a component once it is added to the GameWorld.
 	*/
 	virtual void onAddToGameWorld() {};
-	/*
-		Pure virtual component type id function, this MUST be implemented in subclasses.
-	*/
-	virtual std::string componentTypeID() = 0;
+	
 };

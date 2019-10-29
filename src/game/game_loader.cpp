@@ -5,7 +5,8 @@
 
 
 #include "../engine/BOEngine.h"
-#include "../../Settings.h"
+
+#include "../SoundFile.h"
 
 #include <GLFW/glfw3.h>
 
@@ -21,8 +22,14 @@ void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
 void processInput(GLFWwindow* window);
 void updateListener();
 
+// settings
+const unsigned int SCR_WIDTH = 1000;
+const unsigned int SCR_HEIGHT = 800;
+
 // camera
 Camera* camera;
+double lastX = SCR_WIDTH / 2.0f;
+double lastY = SCR_HEIGHT / 2.0f;
 bool firstMouse = true;
 
 // timing
@@ -52,7 +59,7 @@ GameLoader::GameLoader()
 void GameLoader::createGame() {
 
 	std::cout << "createGame" << std::endl;
-
+	FileSystem::Init("./src");
 	audio.Init();
 	
 	audio.PlaySounds("game/assets/sounds/test.wav", Vector3{ 0, 0, -10 }, audio.VolumeTodB(1.0f));
@@ -275,16 +282,16 @@ void mouse_callback(GLFWwindow* window, double xpos, double ypos)
 {
 	if (firstMouse)
 	{
-		Settings::lastX = xpos;
-		Settings::lastY = ypos;
+		lastX = xpos;
+		lastY = ypos;
 		firstMouse = false;
 	}
 
-	double xoffset = xpos - Settings::lastX;
-	double yoffset = Settings::lastY - ypos; // reversed since y-coordinates go from bottom to top
+	double xoffset = xpos - lastX;
+	double yoffset = lastY - ypos; // reversed since y-coordinates go from bottom to top
 
-	Settings::lastX = xpos;
-	Settings::lastY = ypos;
+	lastX = xpos;
+	lastY = ypos;
 
 	camera->ProcessMouseMovement((float)xoffset, (float)yoffset); // We should probably be using double instead of float, but that's spawning off a LOT of required changes...
 	

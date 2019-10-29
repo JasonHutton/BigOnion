@@ -3,8 +3,6 @@
 #include "../../engine/ECS/GameWorld.h"
 #include <iostream>
 
-const std::string RigidBodyComponent::typeID = "RigidBody";
-
 RigidBodyComponent::RigidBodyComponent(btRigidBody* _body)
 	: rigidBody(_body)
 {
