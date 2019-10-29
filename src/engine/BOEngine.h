@@ -24,10 +24,7 @@ class BOEngine
 public: 
 	GLFWwindow* window;
 	Camera camera;
-	GameWorld gameWorld;
-
-	const unsigned int SCR_WIDTH = 1000;
-	const unsigned int SCR_HEIGHT = 800;
+	GameWorld* gameWorld = nullptr;
 
 	BOEngine();
 
@@ -49,6 +46,5 @@ private:
 	
 	int exitCode;
 
-	Shader* modelShader;
 	std::vector<RenderComponent*> renderComponents;
 };

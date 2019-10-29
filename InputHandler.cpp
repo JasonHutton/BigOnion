@@ -1,10 +1,11 @@
 #include "InputHandler.h"
 #include <stdexcept>
 #include <GLFW/glfw3.h>
+#include <iostream>
 
 InputHandler::InputHandler()
 {
-	
+
 	for (map<int, keyState>::iterator it = keys.begin(); it != keys.end(); it++)
 	{
 		UnBind(it->second);
@@ -25,20 +26,6 @@ InputHandler::InputHandler()
 	ResetBindings(); // Set the default controls.
 
 }
-
-void InputHandler::KeyEvent(const int& scankey, const bool& status, const int& repeats)
-{
-	int mappedKey = MapKey(scankey);
-
-	keys[mappedKey].prevKeyDown = keys[mappedKey].keyDown;
-	keys[mappedKey].keyDown = status;
-	keys[mappedKey].repeats = repeats;
-}
-
-/*const keyState& InputHandler::GetKey(const int& scankey) const
-{
-	return keys[MapKey(scankey)];
-}*/
 
 void InputHandler::Bind(const int& key, const usercmdButton_t& button, const string& context)
 {
