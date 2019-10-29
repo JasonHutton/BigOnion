@@ -132,14 +132,13 @@ void GameLoader::startGame() {
 		glfwPollEvents();
 
 		ImGui_ImplGlfwGL3_NewFrame();
-		
-
+		//new Imgui frame
 		ImGui::SetNextWindowSize(ImVec2(200, 100));        //window size
-		ImGui::SetNextWindowPos(ImVec2(0, 700));     
-		//window position
+		ImGui::SetNextWindowPos(ImVec2(0, 700));     //window position
+		
 		//ImGuiWindowFlags flags = ImGuiWindowFlags_Tooltip | ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoMove |
 		//ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_AlwaysAutoResize;
-		ImGuiWindowFlags flags =  ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoResize;
+		ImGuiWindowFlags flags =  ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoResize;//no title bar and fixed window size  
 		ImGui::Begin("Score",0,flags);
 
 		int score1 = 100;	
@@ -194,16 +193,10 @@ void GameLoader::startGame() {
 			ImGui::End();
 		}
 		
-		
-
-
 		ImGui::Render();
 		ImGui_ImplGlfwGL3_RenderDrawData(ImGui::GetDrawData());
 		
-
 		glfwSwapBuffers(window);
-
-		
 	}
 
 	// glfw: terminate, clearing all previously allocated GLFW resources.
