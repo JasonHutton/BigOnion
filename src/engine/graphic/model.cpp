@@ -83,6 +83,7 @@ Mesh Model::processMesh(aiMesh* mesh, const aiScene* scene)
 	vector<Vertex> vertices;
 	vector<unsigned int> indices;
 	vector<Texture> textures;
+	Material mesh_material;
 
 	// Walk through each of the mesh's vertices
 	for (unsigned int i = 0; i < mesh->mNumVertices; i++)
@@ -112,15 +113,25 @@ Mesh Model::processMesh(aiMesh* mesh, const aiScene* scene)
 			vertex.TexCoords = glm::vec2(0.0f, 0.0f);
 		}
 		// tangent
-		vector.x = mesh->mTangents[i].x;
-		vector.y = mesh->mTangents[i].y;
-		vector.z = mesh->mTangents[i].z;
-		vertex.Tangent = vector;
+		if(mesh->mTangents !=nullptr){
+			vector.x = mesh->mTangents[i].x;
+			vector.y = mesh->mTangents[i].y;
+			vector.z = mesh->mTangents[i].z;
+			vertex.Tangent = vector;
+		}
+		else {
+			vertex.Tangent = glm::vec3(0.0f);
+		}
 		// bitangent
-		vector.x = mesh->mBitangents[i].x;
-		vector.y = mesh->mBitangents[i].y;
-		vector.z = mesh->mBitangents[i].z;
-		vertex.Bitangent = vector;
+		if (mesh->mBitangents != nullptr) {
+			vector.x = mesh->mBitangents[i].x;
+			vector.y = mesh->mBitangents[i].y;
+			vector.z = mesh->mBitangents[i].z;
+			vertex.Bitangent = vector;
+		}
+		else {
+			vertex.Bitangent = glm::vec3(0.0f);
+		}
 		vertices.push_back(vertex);
 	}
 	// now wak through each of the mesh's faces (a face is a mesh its triangle) and retrieve the corresponding vertex indices.
@@ -133,13 +144,6 @@ Mesh Model::processMesh(aiMesh* mesh, const aiScene* scene)
 	}
 	// process materials
 	aiMaterial* material = scene->mMaterials[mesh->mMaterialIndex];
-	// we assume a convention for sampler names in the shaders. Each diffuse texture should be named
-	// as 'texture_diffuseN' where N is a sequential number ranging from 1 to MAX_SAMPLER_NUMBER. 
-	// Same applies to other texture as the following list summarizes:
-	// diffuse: texture_diffuseN
-	// specular: texture_specularN
-	// normal: texture_normalN
-
 	// 1. diffuse maps
 	vector<Texture> diffuseMaps = loadMaterialTextures(material, aiTextureType_DIFFUSE, "texture_diffuse");
 	textures.insert(textures.end(), diffuseMaps.begin(), diffuseMaps.end());
@@ -153,8 +157,45 @@ Mesh Model::processMesh(aiMesh* mesh, const aiScene* scene)
 	std::vector<Texture> heightMaps = loadMaterialTextures(material, aiTextureType_AMBIENT, "texture_height");
 	textures.insert(textures.end(), heightMaps.begin(), heightMaps.end());
 
+	mesh_material = loadMaterial(material);
+
 	// return a mesh object created from the extracted mesh data
-	return Mesh(vertices, indices, textures);
+	return Mesh(vertices, indices, textures, mesh_material);
+}
+
+Material Model::loadMaterial(aiMaterial* mat)
+{
+	Material material;
+	aiColor3D color(0.f, 0.f, 0.f);
+	float flt;
+	aiString str;
+
+	mat->Get(AI_MATKEY_NAME, str);
+	// mtl  name for debug;
+	const char* name = str.C_Str();
+
+	mat->Get(AI_MATKEY_COLOR_AMBIENT, color);
+	material.AmbientColor = glm::vec3(color.r, color.b, color.g);
+
+	mat->Get(AI_MATKEY_COLOR_DIFFUSE, color);
+	material.DiffuseColor = glm::vec3(color.r, color.b, color.g);
+
+	mat->Get(AI_MATKEY_COLOR_SPECULAR, color);
+	material.SpecularColor = glm::vec3(color.r, color.b, color.g);
+
+	mat->Get(AI_MATKEY_SHININESS, flt);
+	material.Shininess = flt;
+
+	//mat->Get(AI_MATKEY_OPACITY, flt);
+	//material.OpticalDensity = flt;
+
+	//mat->Get(AI_MATKEY_OPACITY, flt);
+	//material.Dissolve = flt;
+
+	//mat->Get(AI_MATKEY_OPACITY, flt);
+	//material.Illumination = flt;
+
+	return material;
 }
 
 // checks all material textures of a given type and loads the textures if they're not loaded yet.

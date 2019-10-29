@@ -8,9 +8,11 @@ class RenderComponent
 	: public Component
 {
 public:
+	static const std::string typeID;
 	Model model;
 	RenderComponent(BOEngine* engine, std::string modelPath, Shader* shader);
-	void lateUpdate(float deltaTime) override;
+	void update(float deltaTime) override;
+	std::string componentTypeID() override { return typeID; }
 
 };
 

@@ -5,7 +5,6 @@
 
 struct Transform
 {
-public:
 	Transform();
 
 	Vector3f position;
