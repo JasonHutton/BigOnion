@@ -274,11 +274,21 @@
     </ClInclude>
     <ClInclude Include="src\game\components\AudioPlayerComponent.h">
       <Filter>Header Files\game\components</Filter>
+      </ClInclude>
+    <ClInclude Include="src\game\components\TypeTestComponent.h">
+      <Filter>Header Files\game\components</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="src\engine\vertex.glsl">
       <Filter>Resource Files</Filter>
     </None>
+    <None Include="src\engine\graphic\shader\model_loading.vs">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="src\engine\graphic\shader\model_loading.fs">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="src\engine\graphic\shader\model_frag_normal_t2.fs" />
   </ItemGroup>
 </Project>

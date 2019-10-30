@@ -17,15 +17,10 @@
 using namespace std;
 
 struct Vertex {
-	// position
 	glm::vec3 Position;
-	// normal
 	glm::vec3 Normal;
-	// texCoords
 	glm::vec2 TexCoords;
-	// tangent
 	glm::vec3 Tangent;
-	// bitangent
 	glm::vec3 Bitangent;
 };
 
@@ -35,21 +30,45 @@ struct Texture {
 	string path;
 };
 
+// mtl file data
+//Ns 255.999998 // Specular Exponent
+//Ka 1.000000 1.000000 1.000000 // Ambient Color
+//Kd 0.435294 0.435294 0.435294 // Diffuse Color
+//Ks 0.330000 0.330000 0.330000 // Specular Color
+//Ke 0.0 0.0 0.0 // Emissive Color
+//Ni 1.450000 // Optical Density
+//d 1.000000 // Dissolve
+//illum 2 // Illumination
+
+struct Material {
+	// const char* Name; // mtl  name for debug;
+	glm::vec3 AmbientColor;
+	glm::vec3 DiffuseColor;
+	glm::vec3 SpecularColor;
+	float Shininess;
+	//float OpticalDensity;
+	//float Dissolve;
+	//float Illumination;
+};
+
+
 class Mesh {
 public:
 	/*  Mesh Data  */
 	vector<Vertex> vertices;
 	vector<unsigned int> indices;
 	vector<Texture> textures;
-	unsigned int VAO;
+	Material mat;
+	GLuint VAO;
 
 	/*  Functions  */
 	// constructor
-	Mesh(vector<Vertex> vertices, vector<unsigned int> indices, vector<Texture> textures)
+	Mesh(vector<Vertex> vertices, vector<unsigned int> indices, vector<Texture> textures, Material mat)
 	{
 		this->vertices = vertices;
 		this->indices = indices;
 		this->textures = textures;
+		this->mat = mat;
 
 		// now that we have all the required data, set the vertex buffers and its attribute pointers.
 		setupMesh();
@@ -86,6 +105,15 @@ public:
 
 		// draw mesh
 		glBindVertexArray(VAO);
+
+		shader.use();
+		shader.setInt("diffuseMapCount", diffuseNr - 1);
+		shader.setVec3("material.ambient", mat.AmbientColor);
+		shader.setVec3("material.diffuse", mat.DiffuseColor);
+		shader.setVec3("material.specular", mat.SpecularColor);
+		float s = min(mat.Shininess / 4.0f, 512.0f);
+		shader.setFloat("material.shininess", s); // Ns 0-1000,  shininess power 0-256/512, Ns from Blender 0-4000.....
+
 		glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_INT, 0);
 		glBindVertexArray(0);
 
@@ -109,9 +137,6 @@ private:
 		glBindVertexArray(VAO);
 		// load data into vertex buffers
 		glBindBuffer(GL_ARRAY_BUFFER, VBO);
-		// A great thing about structs is that their memory layout is sequential for all its items.
-		// The effect is that we can simply pass a pointer to the struct and it translates perfectly to a glm::vec3/2 array which
-		// again translates to 3/2 floats which translates to a byte array.
 		glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(Vertex), &vertices[0], GL_STATIC_DRAW);
 
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
