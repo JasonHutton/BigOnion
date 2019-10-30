@@ -101,7 +101,7 @@ void GameLoader::startGame() {
 		// -----
 		processInput(window);
 		
-		//engine->updateEngine(deltaTime);
+		engine->updateEngine(deltaTime);
 
 		//updateListener();
 		//audio.Set3dListenerAndOrientation(position, vel, up, front);
