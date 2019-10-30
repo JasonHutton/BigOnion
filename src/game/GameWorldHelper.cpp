@@ -64,7 +64,7 @@ void GameWorldHelper::initTestScene(BOEngine* engine)
 	suitMan->addComponent(new RenderComponent(engine, "game/assets/nanosuit/nanosuit.obj", shader)); // connect object - model
 	suitMan->addComponent(RigidBodyComponent::createWithCylinder(0.75, 1.5, 0.25, 1.0)); // connect object - rigibody
 	engine->gameWorld->addGameObject(suitMan); // maybe auto register?
-	suitMan->addComponent(new AudioPlayerComponent("game/assets/sounds/test.wav"));
+	
 
 		// Light
 	GameObject* light = new  GameObject("Light");
@@ -104,6 +104,7 @@ void GameWorldHelper::initTestScene(BOEngine* engine)
 	box2->addComponent(new RenderComponent(engine, "game/assets/box/cube.obj", shader));
 	box2->addComponent(RigidBodyComponent::createWithCube(1.0, 1.0, 1.0, 1.0));
 	engine->gameWorld->addGameObject(box2);
+	suitMan->addComponent(new AudioPlayerComponent("game/assets/sounds/test.wav", box2->transform.position, true, false, false));
 
 	GameObject* box3 = new  GameObject("Box3");
 	box3->transform.position = Vector3f(5.0, 20.0, 0);

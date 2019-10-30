@@ -20,7 +20,7 @@ const void SoundFile::SetPosition(Vector3 v3Pos)
 
 const void SoundFile::load(bool b3d, bool bLooping, bool bStream)
 {
-	audioEngine->LoadSound(this->GetOSPath(), b3d, bLooping, bStream);
+	//audioEngine->LoadSound(this->GetOSPath(), b3d, bLooping, bStream);
 }
 
 const void SoundFile::play() const
@@ -35,5 +35,5 @@ const void SoundFile::play(bool volumeTodB) const
 
 const void SoundFile::play(Vector3 v3Pos, bool volumeTodB) const
 {
-	audioEngine->PlaySounds(this->GetOSPath(), v3Pos, volumeTodB);
+	//audioEngine->PlaySounds(this->GetOSPath(), v3Pos, volumeTodB);
 }

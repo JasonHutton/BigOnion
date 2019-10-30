@@ -12,6 +12,7 @@
 #include "graphic/model.h"
 #include "graphic/ShaderAttribute.h"
 #include "../game/components/RenderComponent.h"
+#include "../src/engine/audio/AudioEngine.h"
 
 #include "ECS/GameWorld.h"
 #include "../game/components/RigidbodyComponent.h"
@@ -25,6 +26,7 @@ public:
 	GLFWwindow* window;
 	Camera camera;
 	GameWorld* gameWorld = nullptr;
+	AudioEngine audio;
 
 	BOEngine();
 
