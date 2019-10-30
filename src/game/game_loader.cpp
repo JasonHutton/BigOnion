@@ -43,13 +43,13 @@ void GameLoader::createGame() {
 
 	audio.Init();
 	
-	audio.PlaySounds("game/assets/sounds/test.wav", Vector3{ 0, 0, -10 }, audio.VolumeTodB(1.0f));
+	//audio.PlaySounds("game/assets/sounds/test.wav", Vector3{ 0, 0, -10 }, audio.VolumeTodB(1.0f));
 	//test gun sound on the right
-	audio.PlaySounds("game/assets/sounds/gun.wav", Vector3{ 3, 0, 0}, audio.VolumeTodB(1.0f));
+	//audio.PlaySounds("game/assets/sounds/gun.wav", Vector3{ 3, 0, 0}, audio.VolumeTodB(1.0f));
 	//test siren sounds on the left
-	audio.PlaySounds("game/assets/sounds/siren.wav", Vector3{ -3, 0, 0}, audio.VolumeTodB(1.0f));
+	//audio.PlaySounds("game/assets/sounds/siren.wav", Vector3{ -3, 0, 0}, audio.VolumeTodB(1.0f));
 	//test bomb sounds center
-	audio.PlaySounds("game/assets/sounds/bomb.wav", Vector3{ 0, 0, 0}, audio.VolumeTodB(1.0f));
+	//audio.PlaySounds("game/assets/sounds/bomb.wav", Vector3{ 0, 0, 0}, audio.VolumeTodB(1.0f));
 
 }
 
@@ -101,10 +101,10 @@ void GameLoader::startGame() {
 		// -----
 		processInput(window);
 		
-		engine->updateEngine(deltaTime);
+		//engine->updateEngine(deltaTime);
 
-		updateListener();
-		audio.Set3dListenerAndOrientation(position, vel, up, front);
+		//updateListener();
+		//audio.Set3dListenerAndOrientation(position, vel, up, front);
 		audio.Update();
 		// glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
 		// -------------------------------------------------------------------------------

@@ -26,6 +26,7 @@
     <ClCompile Include="KeyInput.cpp" />
     <ClCompile Include="Setting.cpp" />
     <ClCompile Include="Settings.cpp" />
+    <ClCompile Include="src\game\components\AudioPlayerComponent.cpp" />
     <ClCompile Include="src\engine\ECS\ComponentManager.cpp" />
     <ClCompile Include="src\game\components\RigidBodyComponent.cpp" />
     <ClCompile Include="src\game\components\RenderComponent.cpp" />
@@ -56,6 +57,7 @@
     <ClInclude Include="KeyInput.h" />
     <ClInclude Include="Setting.h" />
     <ClInclude Include="Settings.h" />
+    <ClInclude Include="src\game\components\AudioPlayerComponent.h" />
     <ClInclude Include="src\engine\BOEngine.fwd.h" />
     <ClInclude Include="src\engine\ECS\ComponentManager.h" />
     <ClInclude Include="src\game\components\RigidBodyComponent.h" />

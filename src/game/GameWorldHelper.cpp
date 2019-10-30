@@ -1,6 +1,7 @@
 #include "GameWorldHelper.h"
 #include "../engine/BOEngine.h"
 #include "../engine/ECS/ComponentManager.h"
+#include "../src/game/components/AudioPlayerComponent.h"
 
 /*
 	Loads a test scene into the given BOEngine.
@@ -20,6 +21,7 @@ void GameWorldHelper::initTestScene(BOEngine* engine, Shader* shader)
 	suitMan->addComponent(new RenderComponent(engine, "game/assets/nanosuit/nanosuit.obj", shader)); // connect object - model
 	suitMan->addComponent(RigidBodyComponent::createWithCylinder(0.75, 1.5, 0.25, 1.0)); // connect object - rigibody
 	engine->gameWorld->addGameObject(suitMan); // maybe auto register?
+	suitMan->addComponent(new AudioPlayerComponent("game/assets/sounds/test.wav"));
 
 	// create ground
 	GameObject* ground = new GameObject("Ground");
