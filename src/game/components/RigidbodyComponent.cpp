@@ -16,7 +16,7 @@ void RigidBodyComponent::fixedUpdate(float deltaTime)
 	// position
 	btTransform bTransform;
 
-	if (rigidBody->getCollisionShape()->getShapeType() == STATIC_PLANE_PROXYTYPE) {
+	if (rigidBody->getCollisionShape()->getShapeType() == STATIC_PLANE_PROXYTYPE || rigidBody->getMass() == 0) {
 		bTransform = rigidBody->getWorldTransform();
 	}
 	else {
@@ -95,6 +95,29 @@ RigidBodyComponent* RigidBodyComponent::createWithCylinder(float width, float he
 
 	btMotionState* motion = new btDefaultMotionState(t);	//set the position (and motion)
 	btRigidBody::btRigidBodyConstructionInfo info(mass, motion, cylinder, inertia);	//create the constructioninfo, you can create multiple bodies with the same info
+	btRigidBody* body = new btRigidBody(info);	//let's create the body itself
+
+	return new RigidBodyComponent(body);
+}
+
+RigidBodyComponent* RigidBodyComponent::createWithMesh(Model* model, float mass)
+{
+	btTransform t;	//position and rotation
+	t.setIdentity();
+	btConvexHullShape* convexHullShape = new btConvexHullShape(); // not sure if this is the best choice, there might be a more performant option
+
+	for (Mesh& mesh : model->getMeshes()) {
+		for (Vertex& vertex : mesh.vertices) {
+			convexHullShape->addPoint(btVector3(vertex.Position.x, vertex.Position.y, vertex.Position.z));
+		}
+	}
+
+	btVector3 inertia(0, 0, 0);	//inertia is 0,0,0 for static object, else
+	if (mass != 0.0)
+		convexHullShape->calculateLocalInertia(mass, inertia);	//it can be determined by this function (for all kind of shapes)
+
+	btMotionState* motion = new btDefaultMotionState(t);	//set the position (and motion)
+	btRigidBody::btRigidBodyConstructionInfo info(mass, motion, convexHullShape, inertia);	//create the constructioninfo, you can create multiple bodies with the same info
 	btRigidBody* body = new btRigidBody(info);	//let's create the body itself
 
 	return new RigidBodyComponent(body);

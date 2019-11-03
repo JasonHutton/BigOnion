@@ -41,10 +41,12 @@ public:
 	// draws the model with shader and attribute
 	void Draw(Shader* shader, ShaderAttribute* shaderAttribute);
 
+	vector<Mesh>& getMeshes();
+
 private:
 
-	vector<Texture> textures_loaded;	// stores all the textures loaded so far, optimization to make sure textures aren't loaded more than once.
 	vector<Mesh> meshes;
+	vector<Texture> textures_loaded;	// stores all the textures loaded so far, optimization to make sure textures aren't loaded more than once.
 	string directory;
 
 	// loads a model with supported ASSIMP extensions from file and stores the resulting meshes in the meshes vector.
@@ -61,7 +63,6 @@ private:
 	vector<Texture> loadMaterialTextures(aiMaterial* mat, aiTextureType type, string typeName);
 
 	unsigned int TextureFromFile(const char* path, const string& directory, bool gamma = false);
-
 };
 
 #endif
