@@ -45,6 +45,18 @@ void RigidBodyComponent::onAddToGameWorld()
 	gameObject->world->physicsWorld->addRigidBody(rigidBody);
 }
 
+void RigidBodyComponent::applyForwardForce()
+{
+	rigidBody->applyCentralForce(btVector3(10,0,0));
+	cout << rigidBody->getWorldTransform().getOrigin().getX() << '\n';
+}
+
+void RigidBodyComponent::applyBackwardForce()
+{
+	rigidBody->applyCentralForce(btVector3(-10, 0, 0));
+	cout << rigidBody->getWorldTransform().getOrigin().getX() << '\n';
+}
+
 /*
 	Returns a RigidBodyComponent with an attached Cube collider.
 */

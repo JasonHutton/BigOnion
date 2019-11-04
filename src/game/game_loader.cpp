@@ -34,6 +34,8 @@ Vector3 front{ 0,0,0 };
 Vector3 up{ 0,0,0 };
 Vector3 vel{ 0,0,0 };
 
+GameObject* playerCar;
+
 GameLoader::GameLoader()
 {
 }
@@ -87,7 +89,7 @@ void GameLoader::startGame() {
 	glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 	
 	engine->preRender();
-
+	playerCar = engine->gameWorld->getGameObjectById("PlayerCar");
 
 	// render loop
 	// -----------
@@ -143,6 +145,7 @@ void GameLoader::processInput(GLFWwindow* window)
 		{
 			// See if a bound control has a User Button associated with it.
 			ContextControl cc = input.GetControl(it->first);
+			RigidBodyComponent* rigidBody = playerCar->getComponent<RigidBodyComponent>();
 			// Do what the context control->User Button says to do.
 			switch(cc.GetControl("")) // Default context.
 			{
@@ -151,9 +154,11 @@ void GameLoader::processInput(GLFWwindow* window)
 				break;
 			case UB_MOVE_FORWARD:
 				camera->ProcessKeyboard(FORWARD, deltaTime);
+				rigidBody->applyForwardForce();
 				break;
 			case UB_MOVE_BACKWARD:
 				camera->ProcessKeyboard(BACKWARD, deltaTime);
+				rigidBody->applyBackwardForce();
 				break;
 			case UB_MOVE_LEFT:
 				camera->ProcessKeyboard(LEFT, deltaTime);

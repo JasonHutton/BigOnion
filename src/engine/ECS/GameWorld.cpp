@@ -71,3 +71,7 @@ void GameWorld::fixedUpdateGameObjects(float deltaTime)
 	//physicsWorld->debugDrawWorld();
 	componentManager.fixedUpdate(deltaTime);
 }
+
+GameObject* GameWorld::getGameObjectById(std::string id) {
+	return gameObjects.at(id);
+}
