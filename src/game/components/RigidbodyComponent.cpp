@@ -104,20 +104,26 @@ RigidBodyComponent* RigidBodyComponent::createWithMesh(Model* model, float mass)
 {
 	btTransform t;	//position and rotation
 	t.setIdentity();
-	btConvexHullShape* convexHullShape = new btConvexHullShape(); // not sure if this is the best choice, there might be a more performant option
+
+	btTriangleMesh* triangleMesh = new btTriangleMesh();
 
 	for (Mesh& mesh : model->getMeshes()) {
-		for (Vertex& vertex : mesh.vertices) {
-			convexHullShape->addPoint(btVector3(vertex.Position.x, vertex.Position.y, vertex.Position.z));
+		for (int i = 0; i < mesh.indices.size() - 2; i += 3) {
+			btVector3 point1 = btVector3(mesh.vertices[i].Position.x, mesh.vertices[i].Position.y, mesh.vertices[i].Position.z);
+			btVector3 point2 = btVector3(mesh.vertices[i+1].Position.x, mesh.vertices[i + 1].Position.y, mesh.vertices[i + 1].Position.z);
+			btVector3 point3 = btVector3(mesh.vertices[i+2].Position.x, mesh.vertices[i + 2].Position.y, mesh.vertices[i + 2].Position.z);
+			triangleMesh->addTriangle(point1, point2, point3);
 		}
 	}
 
+	btBvhTriangleMeshShape* bvhTriangleMeshShae = new btBvhTriangleMeshShape(triangleMesh, false);
+
 	btVector3 inertia(0, 0, 0);	//inertia is 0,0,0 for static object, else
 	if (mass != 0.0)
-		convexHullShape->calculateLocalInertia(mass, inertia);	//it can be determined by this function (for all kind of shapes)
+		bvhTriangleMeshShae->calculateLocalInertia(mass, inertia);	//it can be determined by this function (for all kind of shapes)
 
 	btMotionState* motion = new btDefaultMotionState(t);	//set the position (and motion)
-	btRigidBody::btRigidBodyConstructionInfo info(mass, motion, convexHullShape, inertia);	//create the constructioninfo, you can create multiple bodies with the same info
+	btRigidBody::btRigidBodyConstructionInfo info(mass, motion, bvhTriangleMeshShae, inertia);	//create the constructioninfo, you can create multiple bodies with the same info
 	btRigidBody* body = new btRigidBody(info);	//let's create the body itself
 
 	return new RigidBodyComponent(body);
