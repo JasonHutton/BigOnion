@@ -42,16 +42,16 @@ void Model::loadModel(string const& path)
 	Assimp::Importer importer;
 	string osPath;
 	FileSystem::BuildOSPath(FileSystem::FindFile(path), path, osPath);
-	
+
 	const aiScene* scene = importer.ReadFile(osPath, aiProcess_Triangulate | aiProcess_FlipUVs | aiProcess_CalcTangentSpace);
-	
+
 	// check for errors
 	if (!scene || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode) // if is Not Zero
 	{
 		cout << "ERROR::ASSIMP:: " << importer.GetErrorString() << endl;
 		return;
 	}
-	
+
 	// retrieve the directory path of the filepath
 	directory = path.substr(0, path.find_last_of('/'));
 
@@ -113,7 +113,7 @@ Mesh Model::processMesh(aiMesh* mesh, const aiScene* scene)
 			vertex.TexCoords = glm::vec2(0.0f, 0.0f);
 		}
 		// tangent
-		if(mesh->mTangents !=nullptr){
+		if (mesh->mTangents != nullptr) {
 			vector.x = mesh->mTangents[i].x;
 			vector.y = mesh->mTangents[i].y;
 			vector.z = mesh->mTangents[i].z;
@@ -273,3 +273,9 @@ unsigned int Model::TextureFromFile(const char* path, const string& directory, b
 
 	return textureID;
 }
+
+vector<Mesh>& Model::getMeshes()
+{
+	return meshes;
+}
+

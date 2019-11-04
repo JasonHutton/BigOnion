@@ -14,6 +14,8 @@ GameWorld::GameWorld(std::string updateStrategy[], size_t n)
 	solver = new btSequentialImpulseConstraintSolver();
 	physicsWorld = new btDiscreteDynamicsWorld(dispatcher, broadphase, solver, collisionConfig);
 	physicsWorld->setGravity(btVector3(0, -9.8, 0));	//gravity on Earth
+	//physicsWorld->setDebugDrawer();
+	//physicsWorld->getDebugDrawer()->setDebugMode(btIDebugDraw::DBG_DrawWireframe);
 }
 
 /*
@@ -66,6 +68,6 @@ void GameWorld::updateGameObjects(float deltaTime)
 void GameWorld::fixedUpdateGameObjects(float deltaTime)
 {
 	physicsWorld->stepSimulation(deltaTime);
-
+	//physicsWorld->debugDrawWorld();
 	componentManager.fixedUpdate(deltaTime);
 }

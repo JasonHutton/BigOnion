@@ -66,7 +66,16 @@ void GameWorldHelper::initTestScene(BOEngine* engine)
 	engine->gameWorld->addGameObject(suitMan); // maybe auto register?
 	
 
-		// Light
+	// create race track
+	GameObject* raceTrack = new GameObject("RaceTrack");
+	raceTrack->transform.position = Vector3f(0, -3.2, 0);
+	raceTrack->transform.rotation = Vector3f(0, 0, 0);
+	raceTrack->transform.scale = Vector3f(1.0, 1.0, 1.0);
+	raceTrack->addComponent(new RenderComponent(engine, "game/assets/racetrack/racetrack.obj", shader)); // connect object - model
+	raceTrack->addComponent(RigidBodyComponent::createWithMesh(&raceTrack->getComponent<RenderComponent>()->model, 0.0)); // connect object - rigibody
+	engine->gameWorld->addGameObject(raceTrack); // maybe auto register?
+
+	// Light
 	GameObject* light = new  GameObject("Light");
 	light->transform.position = Vector3f(pointLightPositions[0].x, pointLightPositions[0].y, pointLightPositions[0].z);
 	light->transform.scale = 1.0; // has to be double because dimensions of 1.0 entered above refer to distance from origin to edge
