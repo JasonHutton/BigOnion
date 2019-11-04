@@ -162,6 +162,9 @@
     <ClCompile Include="src\game\components\AudioPlayerComponent.cpp">
       <Filter>Source Files\game\components</Filter>
     </ClCompile>
+    <ClCompile Include="DebugDraw.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\engine\BOEngine.h">
@@ -274,9 +277,12 @@
     </ClInclude>
     <ClInclude Include="src\game\components\AudioPlayerComponent.h">
       <Filter>Header Files\game\components</Filter>
-      </ClInclude>
+    </ClInclude>
     <ClInclude Include="src\game\components\TypeTestComponent.h">
       <Filter>Header Files\game\components</Filter>
+    </ClInclude>
+    <ClInclude Include="DebugDraw.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

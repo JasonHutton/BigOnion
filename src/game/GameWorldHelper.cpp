@@ -75,7 +75,7 @@ void GameWorldHelper::initTestScene(BOEngine* engine)
 	raceTrack->addComponent(RigidBodyComponent::createWithMesh(&raceTrack->getComponent<RenderComponent>()->model, 0.0)); // connect object - rigibody
 	engine->gameWorld->addGameObject(raceTrack); // maybe auto register?
 
-		// Light
+	// Light
 	GameObject* light = new  GameObject("Light");
 	light->transform.position = Vector3f(pointLightPositions[0].x, pointLightPositions[0].y, pointLightPositions[0].z);
 	light->transform.scale = 1.0; // has to be double because dimensions of 1.0 entered above refer to distance from origin to edge

@@ -112,7 +112,7 @@ RigidBodyComponent* RigidBodyComponent::createWithMesh(Model* model, float mass)
 			btVector3 point1 = btVector3(mesh.vertices[i].Position.x, mesh.vertices[i].Position.y, mesh.vertices[i].Position.z);
 			btVector3 point2 = btVector3(mesh.vertices[i+1].Position.x, mesh.vertices[i + 1].Position.y, mesh.vertices[i + 1].Position.z);
 			btVector3 point3 = btVector3(mesh.vertices[i+2].Position.x, mesh.vertices[i + 2].Position.y, mesh.vertices[i + 2].Position.z);
-			triangleMesh->addTriangle(point1, point2, point3);
+			triangleMesh->addTriangle(point1, point2, point3, true);
 		}
 	}
 
