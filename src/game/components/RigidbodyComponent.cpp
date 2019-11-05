@@ -47,14 +47,14 @@ void RigidBodyComponent::onAddToGameWorld()
 
 void RigidBodyComponent::applyForwardForce()
 {
+	rigidBody->activate();
 	rigidBody->applyCentralForce(btVector3(10,0,0));
-	cout << rigidBody->getWorldTransform().getOrigin().getX() << '\n';
 }
 
 void RigidBodyComponent::applyBackwardForce()
 {
+	rigidBody->activate();
 	rigidBody->applyCentralForce(btVector3(-10, 0, 0));
-	cout << rigidBody->getWorldTransform().getOrigin().getX() << '\n';
 }
 
 /*

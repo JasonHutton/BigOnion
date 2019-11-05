@@ -137,6 +137,8 @@ void updateListener()
 // ---------------------------------------------------------------------------------------------------------
 void GameLoader::processInput(GLFWwindow* window)
 {
+
+	RigidBodyComponent* rigidBody = playerCar->getComponent<RigidBodyComponent>();
 	// Check all bound controls
 	for (map<int, keyState>::iterator it = input.GetAllKeyStates().begin(); it != input.GetAllKeyStates().end(); it++)
 	{
@@ -145,7 +147,6 @@ void GameLoader::processInput(GLFWwindow* window)
 		{
 			// See if a bound control has a User Button associated with it.
 			ContextControl cc = input.GetControl(it->first);
-			RigidBodyComponent* rigidBody = playerCar->getComponent<RigidBodyComponent>();
 			// Do what the context control->User Button says to do.
 			switch(cc.GetControl("")) // Default context.
 			{
