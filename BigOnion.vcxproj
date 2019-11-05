@@ -22,14 +22,19 @@
     <ClCompile Include="Command.cpp" />
     <ClCompile Include="CommandSystem.cpp" />
     <ClCompile Include="ContextControl.cpp" />
+
     <ClCompile Include="include\imgui\imgui.cpp" />
     <ClCompile Include="include\imgui\imgui_demo.cpp" />
     <ClCompile Include="include\imgui\imgui_draw.cpp" />
     <ClCompile Include="include\imgui\imgui_impl_glfw_gl3.cpp" />
+
+    <ClCompile Include="DebugDraw.cpp" />
+
     <ClCompile Include="InputHandler.cpp" />
     <ClCompile Include="KeyInput.cpp" />
     <ClCompile Include="Setting.cpp" />
     <ClCompile Include="Settings.cpp" />
+    <ClCompile Include="src\game\components\AudioPlayerComponent.cpp" />
     <ClCompile Include="src\engine\ECS\ComponentManager.cpp" />
     <ClCompile Include="src\game\components\RigidBodyComponent.cpp" />
     <ClCompile Include="src\game\components\RenderComponent.cpp" />
@@ -56,6 +61,7 @@
     <ClInclude Include="Command.h" />
     <ClInclude Include="CommandSystem.h" />
     <ClInclude Include="ContextControl.h" />
+
     <ClInclude Include="include\imgui\imconfig.h" />
     <ClInclude Include="include\imgui\imgui.h" />
     <ClInclude Include="include\imgui\imgui_impl_glfw_gl3.h" />
@@ -63,10 +69,14 @@
     <ClInclude Include="include\imgui\stb_rect_pack.h" />
     <ClInclude Include="include\imgui\stb_textedit.h" />
     <ClInclude Include="include\imgui\stb_truetype.h" />
+
+    <ClInclude Include="DebugDraw.h" />
+
     <ClInclude Include="InputHandler.h" />
     <ClInclude Include="KeyInput.h" />
     <ClInclude Include="Setting.h" />
     <ClInclude Include="Settings.h" />
+    <ClInclude Include="src\game\components\AudioPlayerComponent.h" />
     <ClInclude Include="src\engine\BOEngine.fwd.h" />
     <ClInclude Include="src\engine\ECS\ComponentManager.h" />
     <ClInclude Include="src\game\components\RigidBodyComponent.h" />

@@ -1,7 +1,6 @@
 #pragma once
 
 #include "../engine/BOEngine.h"
-#include "../src/engine/audio/AudioEngine.h"
 #include "../FileSystem.h"
 #include "../InputHandler.h"
 class GameLoader
@@ -13,7 +12,7 @@ class GameLoader
 
 	public:
 		GameLoader();
-		AudioEngine audio;
+		
 		InputHandler input;
 
 		void createGame();

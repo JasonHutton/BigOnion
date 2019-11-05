@@ -63,6 +63,7 @@ void BOEngine::initialize()
 	// Game World initialization
 	currentTime = std::chrono::high_resolution_clock::now();
 
+	audio.Init();
 
 	GameWorldHelper::initTestScene(this);
 
@@ -99,8 +100,9 @@ void BOEngine::updateEngine(float deltaTime)
 
 	// this value is currently unused. it could be useful in the future for interpolating between fixed game states on higher framerates
 	// double alpha = accumulator / FIXED_DELTA_TIME_DURATION;
+	
 	gameWorld->updateGameObjects(deltaTime);
-
+	audio.Update();
 	render();
 }
 

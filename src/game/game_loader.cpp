@@ -3,7 +3,7 @@
 #define STB_IMAGE_IMPLEMENTATION
 #include <stb/stb_image.h> // stb_image can only be included in cpp instead of header.
 
-
+#include "../src/engine/audio/AudioEngine.h"
 #include "../engine/BOEngine.h"
 #include "../../Settings.h"
 
@@ -23,6 +23,7 @@ void updateListener();
 
 // camera
 Camera* camera;
+AudioEngine audio;
 bool firstMouse = true;
 
 // timing
@@ -53,15 +54,14 @@ void GameLoader::createGame() {
 
 	std::cout << "createGame" << std::endl;
 
-	audio.Init();
 	
-	audio.PlaySounds("game/assets/sounds/test.wav", Vector3{ 0, 0, -10 }, audio.VolumeTodB(1.0f));
+	//audio.PlaySounds("game/assets/sounds/test.wav", Vector3{ 0, 0, -10 }, audio.VolumeTodB(1.0f));
 	//test gun sound on the right
-	audio.PlaySounds("game/assets/sounds/gun.wav", Vector3{ 3, 0, 0}, audio.VolumeTodB(1.0f));
+	//audio.PlaySounds("game/assets/sounds/gun.wav", Vector3{ 3, 0, 0}, audio.VolumeTodB(1.0f));
 	//test siren sounds on the left
-	audio.PlaySounds("game/assets/sounds/siren.wav", Vector3{ -3, 0, 0}, audio.VolumeTodB(1.0f));
+	//audio.PlaySounds("game/assets/sounds/siren.wav", Vector3{ -3, 0, 0}, audio.VolumeTodB(1.0f));
 	//test bomb sounds center
-	audio.PlaySounds("game/assets/sounds/bomb.wav", Vector3{ 0, 0, 0}, audio.VolumeTodB(1.0f));
+	//audio.PlaySounds("game/assets/sounds/bomb.wav", Vector3{ 0, 0, 0}, audio.VolumeTodB(1.0f));
 
 }
 
@@ -118,7 +118,6 @@ void GameLoader::startGame() {
 
 		updateListener();
 		audio.Set3dListenerAndOrientation(position, vel, up, front);
-		audio.Update();
 		// glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
 		// -------------------------------------------------------------------------------
 

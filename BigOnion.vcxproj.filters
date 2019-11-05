@@ -172,6 +172,12 @@
     <ClCompile Include="src\engine\ECS\ComponentManager.cpp">
       <Filter>Source Files\engine\ECS</Filter>
     </ClCompile>
+    <ClCompile Include="src\game\components\AudioPlayerComponent.cpp">
+      <Filter>Source Files\game\components</Filter>
+    </ClCompile>
+    <ClCompile Include="DebugDraw.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\engine\BOEngine.h">
@@ -303,8 +309,14 @@
     <ClInclude Include="src\engine\ECS\ComponentManager.h">
       <Filter>Header Files\engine\ECS</Filter>
     </ClInclude>
+    <ClInclude Include="src\game\components\AudioPlayerComponent.h">
+      <Filter>Header Files\game\components</Filter>
+    </ClInclude>
     <ClInclude Include="src\game\components\TypeTestComponent.h">
       <Filter>Header Files\game\components</Filter>
+    </ClInclude>
+    <ClInclude Include="DebugDraw.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
