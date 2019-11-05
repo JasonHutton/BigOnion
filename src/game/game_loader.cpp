@@ -176,7 +176,7 @@ void GameLoader::startGame() {
 			ImGui::Button("High Score", ImVec2(500.0f, 50.0f));
 
 			ImGui::SetCursorPos(ImVec2(250.0f, 400.0f));
-			if (ImGui::Button("Quit", ImVec2(500.0f, 50.0f))) 
+			if (ImGui::Button("Exit", ImVec2(500.0f, 50.0f))) 
 				break;
 			
 				
