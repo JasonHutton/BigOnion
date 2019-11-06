@@ -23,6 +23,7 @@
     <ClCompile Include="CommandSystem.cpp" />
     <ClCompile Include="src\engine\input\ContextControl.cpp" />
     <ClCompile Include="DebugDraw.cpp" />
+    <ClCompile Include="src\engine\input\GameInput.cpp" />
     <ClCompile Include="src\engine\input\InputHandler.cpp" />
     <ClCompile Include="src\engine\input\KeyInput.cpp" />
     <ClCompile Include="Setting.cpp" />
@@ -56,6 +57,7 @@
     <ClInclude Include="CommandSystem.h" />
     <ClInclude Include="src\engine\input\ContextControl.h" />
     <ClInclude Include="DebugDraw.h" />
+    <ClInclude Include="src\engine\input\GameInput.h" />
     <ClInclude Include="src\engine\input\InputHandler.h" />
     <ClInclude Include="src\engine\input\KeyInput.h" />
     <ClInclude Include="Setting.h" />

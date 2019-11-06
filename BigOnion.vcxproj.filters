@@ -168,6 +168,9 @@
     <ClCompile Include="src\engine\input\KeyInput.cpp">
       <Filter>Source Files\engine\input</Filter>
     </ClCompile>
+    <ClCompile Include="src\engine\input\GameInput.cpp">
+      <Filter>Source Files\engine\input</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\engine\BOEngine.h">
@@ -288,6 +291,9 @@
       <Filter>Header Files\engine\input</Filter>
     </ClInclude>
     <ClInclude Include="src\engine\input\KeyInput.h">
+      <Filter>Header Files\engine\input</Filter>
+    </ClInclude>
+    <ClInclude Include="src\engine\input\GameInput.h">
       <Filter>Header Files\engine\input</Filter>
     </ClInclude>
   </ItemGroup>

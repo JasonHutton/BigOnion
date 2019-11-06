@@ -3,6 +3,7 @@
 #include <btBulletDynamicsCommon.h>
 #include <glm\gtc\type_ptr.hpp>
 #include "../../engine/graphic/model.h"
+#include "../../engine/utils/vector3.h"
 
 class RigidBodyComponent :
 	public Component
@@ -14,8 +15,7 @@ public:
 	void update(float deltaTime) override;
 	void onAddToGameWorld() override;
 	std::string componentTypeID() override { return "RigidBody"; }
-	void applyForwardForce();
-	void applyBackwardForce();
+	void applyForce(Vector3f force);
 
 	static RigidBodyComponent* createWithCube(float width, float height, float depth, float mass);
 	static RigidBodyComponent* createWithPlane();

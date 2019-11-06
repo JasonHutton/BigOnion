@@ -6,6 +6,7 @@
 #include "../src/engine/audio/AudioEngine.h"
 #include "../engine/BOEngine.h"
 #include "../../Settings.h"
+#include "../engine/input/GameInput.h"
 
 #include <GLFW/glfw3.h>
 
@@ -33,8 +34,6 @@ Vector3 position{ 0,0,0 };
 Vector3 front{ 0,0,0 };
 Vector3 up{ 0,0,0 };
 Vector3 vel{ 0,0,0 };
-
-GameObject* playerCar;
 
 GameLoader::GameLoader()
 {
@@ -89,7 +88,6 @@ void GameLoader::startGame() {
 	glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 	
 	engine->preRender();
-	playerCar = engine->gameWorld->getGameObjectById("PlayerCar");
 
 	// render loop
 	// -----------
@@ -137,8 +135,8 @@ void updateListener()
 // ---------------------------------------------------------------------------------------------------------
 void GameLoader::processInput(GLFWwindow* window)
 {
-
-	RigidBodyComponent* rigidBody = playerCar->getComponent<RigidBodyComponent>();
+	// clear last gameinput state
+	GameInput::clearState();
 	// Check all bound controls
 	for (map<int, keyState>::iterator it = input.GetAllKeyStates().begin(); it != input.GetAllKeyStates().end(); it++)
 	{
@@ -154,18 +152,20 @@ void GameLoader::processInput(GLFWwindow* window)
 				glfwSetWindowShouldClose(window, true);
 				break;
 			case UB_MOVE_FORWARD:
-				camera->ProcessKeyboard(FORWARD, deltaTime);
-				rigidBody->applyForwardForce();
+				//camera->ProcessKeyboard(FORWARD, deltaTime);
+				GameInput::setVerticalAxis(-1.0);
 				break;
 			case UB_MOVE_BACKWARD:
-				camera->ProcessKeyboard(BACKWARD, deltaTime);
-				rigidBody->applyBackwardForce();
+				//camera->ProcessKeyboard(BACKWARD, deltaTime);
+				GameInput::setVerticalAxis(1.0);
 				break;
 			case UB_MOVE_LEFT:
-				camera->ProcessKeyboard(LEFT, deltaTime);
+				//camera->ProcessKeyboard(LEFT, deltaTime);
+				GameInput::setHorizontalAxis(-1.0);
 				break;
 			case UB_MOVE_RIGHT:
-				camera->ProcessKeyboard(RIGHT, deltaTime);
+				//camera->ProcessKeyboard(RIGHT, deltaTime);
+				GameInput::setHorizontalAxis(1.0);
 				break;
 			case UB_NONE:
 			default:

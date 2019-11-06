@@ -3,6 +3,7 @@
 #include "../engine/ECS/ComponentManager.h"
 #include "../src/game/components/AudioPlayerComponent.h"
 #include "components/TypeTestComponent.h"
+#include "components/CarControlComponent.h"
 
 /*
 	Loads a test scene into the given BOEngine.
@@ -46,14 +47,15 @@ void GameWorldHelper::initTestScene(BOEngine* engine)
 	shader->setFloat("pointLights[1].linear", 0.09);
 	shader->setFloat("pointLights[1].quadratic", 0.032);
 
-	std::string strategy[] = {RigidBodyComponent::typeID, RenderComponent::typeID};
-	engine->gameWorld = new GameWorld(strategy, 2);
+	std::string strategy[] = {CarControlComponent::typeID, RigidBodyComponent::typeID, RenderComponent::typeID};
+	engine->gameWorld = new GameWorld(strategy, 3);
 
 	GameObject* player_car = new  GameObject("PlayerCar");
 	player_car->transform.position = Vector3f(15.0, 5.0, 0);
 	player_car->transform.scale = 1;
 	player_car->addComponent(new RenderComponent(engine, "game/assets/avent/Avent_red.obj", shader));
 	player_car->addComponent(RigidBodyComponent::createWithCube(1.0, 0.3, 1.0, 1.0));
+	player_car->addComponent(new CarControlComponent());
 	engine->gameWorld->addGameObject(player_car);
 
 	// create suit man

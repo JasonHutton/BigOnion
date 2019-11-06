@@ -45,14 +45,9 @@ void RigidBodyComponent::onAddToGameWorld()
 	gameObject->world->physicsWorld->addRigidBody(rigidBody);
 }
 
-void RigidBodyComponent::applyForwardForce()
+void RigidBodyComponent::applyForce(Vector3f force)
 {
-	rigidBody->applyCentralForce(btVector3(10,0,0));
-}
-
-void RigidBodyComponent::applyBackwardForce()
-{
-	rigidBody->applyCentralForce(btVector3(-10, 0, 0));
+	rigidBody->applyCentralForce(btVector3(force.x, force.y, force.z));
 }
 
 /*
