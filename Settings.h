@@ -4,7 +4,7 @@
 #include "src/engine//utils/utils.h"
 #include "CommandSystem.h"
 //#include "GameLogic.h"
-#include "InputHandler.h"
+#include "src/engine/input/InputHandler.h"
 
 //using std::string;
 using namespace std;

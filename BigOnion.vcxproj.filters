@@ -132,15 +132,6 @@
     <ClCompile Include="src\game\GameWorldHelper.cpp">
       <Filter>Source Files\game</Filter>
     </ClCompile>
-    <ClCompile Include="KeyInput.cpp">
-      <Filter>Source Files\engine\input</Filter>
-    </ClCompile>
-    <ClCompile Include="InputHandler.cpp">
-      <Filter>Source Files\engine\input</Filter>
-    </ClCompile>
-    <ClCompile Include="ContextControl.cpp">
-      <Filter>Source Files\engine\input</Filter>
-    </ClCompile>
     <ClCompile Include="Setting.cpp">
       <Filter>Source Files\engine\Settings</Filter>
     </ClCompile>
@@ -167,6 +158,15 @@
     </ClCompile>
     <ClCompile Include="src\game\components\CarControlComponent.cpp">
       <Filter>Source Files\game\components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\engine\input\ContextControl.cpp">
+      <Filter>Source Files\engine\input</Filter>
+    </ClCompile>
+    <ClCompile Include="src\engine\input\InputHandler.cpp">
+      <Filter>Source Files\engine\input</Filter>
+    </ClCompile>
+    <ClCompile Include="src\engine\input\KeyInput.cpp">
+      <Filter>Source Files\engine\input</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -254,15 +254,6 @@
     <ClInclude Include="src\game\GameWorldHelper.h">
       <Filter>Header Files\game</Filter>
     </ClInclude>
-    <ClInclude Include="InputHandler.h">
-      <Filter>Header Files\engine\input</Filter>
-    </ClInclude>
-    <ClInclude Include="KeyInput.h">
-      <Filter>Header Files\engine\input</Filter>
-    </ClInclude>
-    <ClInclude Include="ContextControl.h">
-      <Filter>Header Files\engine\input</Filter>
-    </ClInclude>
     <ClInclude Include="Setting.h">
       <Filter>Header Files\engine\Settings</Filter>
     </ClInclude>
@@ -289,6 +280,15 @@
     </ClInclude>
     <ClInclude Include="src\game\components\CarControlComponent.h">
       <Filter>Header Files\game\components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\engine\input\ContextControl.h">
+      <Filter>Header Files\engine\input</Filter>
+    </ClInclude>
+    <ClInclude Include="src\engine\input\InputHandler.h">
+      <Filter>Header Files\engine\input</Filter>
+    </ClInclude>
+    <ClInclude Include="src\engine\input\KeyInput.h">
+      <Filter>Header Files\engine\input</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

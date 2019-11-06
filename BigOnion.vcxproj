@@ -21,10 +21,10 @@
   <ItemGroup>
     <ClCompile Include="Command.cpp" />
     <ClCompile Include="CommandSystem.cpp" />
-    <ClCompile Include="ContextControl.cpp" />
+    <ClCompile Include="src\engine\input\ContextControl.cpp" />
     <ClCompile Include="DebugDraw.cpp" />
-    <ClCompile Include="InputHandler.cpp" />
-    <ClCompile Include="KeyInput.cpp" />
+    <ClCompile Include="src\engine\input\InputHandler.cpp" />
+    <ClCompile Include="src\engine\input\KeyInput.cpp" />
     <ClCompile Include="Setting.cpp" />
     <ClCompile Include="Settings.cpp" />
     <ClCompile Include="src\game\components\AudioPlayerComponent.cpp" />
@@ -54,10 +54,10 @@
   <ItemGroup>
     <ClInclude Include="Command.h" />
     <ClInclude Include="CommandSystem.h" />
-    <ClInclude Include="ContextControl.h" />
+    <ClInclude Include="src\engine\input\ContextControl.h" />
     <ClInclude Include="DebugDraw.h" />
-    <ClInclude Include="InputHandler.h" />
-    <ClInclude Include="KeyInput.h" />
+    <ClInclude Include="src\engine\input\InputHandler.h" />
+    <ClInclude Include="src\engine\input\KeyInput.h" />
     <ClInclude Include="Setting.h" />
     <ClInclude Include="Settings.h" />
     <ClInclude Include="src\game\components\AudioPlayerComponent.h" />

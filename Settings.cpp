@@ -2,7 +2,7 @@
 #include <fstream>
 #include <sstream>
 #include <algorithm>
-#include "KeyInput.h"
+#include "src/engine/input/KeyInput.h"
 
 Setting Settings::g_ResWindowWidth("g_ResWindowWidth", "Width of program window in Windowed mode.", "1000");
 Setting Settings::g_ResWindowHeight("g_ResWindowHeight", "Height of program window in Windowed mode.", "800");
