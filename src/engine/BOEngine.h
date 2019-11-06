@@ -40,9 +40,6 @@ public:
 	int exit() const { return exitCode; }
 
 private:
-	const std::chrono::duration<double> MAX_FRAMETIME = std::chrono::duration<double>(0.25);
-	const double FIXED_DELTA_TIME = 1.0 / 60.0;
-	const std::chrono::duration<double> FIXED_DELTA_TIME_DURATION = std::chrono::duration<double>(FIXED_DELTA_TIME);
 	std::chrono::time_point<std::chrono::high_resolution_clock> currentTime;
 	std::chrono::duration<double> accumulator;
 	

@@ -16,7 +16,6 @@ public:
 	void addGameObject(GameObject* gameObject);
 	bool removeGameObject(std::string id);
 	void updateGameObjects(float deltaTime);
-	void fixedUpdateGameObjects(float deltaTime);
 	GameObject* getGameObjectById(std::string id);
 private:
 	std::unordered_map<std::string, GameObject*> gameObjects;

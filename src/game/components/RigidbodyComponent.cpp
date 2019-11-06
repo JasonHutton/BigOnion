@@ -11,7 +11,7 @@ RigidBodyComponent::RigidBodyComponent(btRigidBody* _body)
 }
 
 
-void RigidBodyComponent::fixedUpdate(float deltaTime)
+void RigidBodyComponent::update(float deltaTime)
 {
 	// position
 	btTransform bTransform;

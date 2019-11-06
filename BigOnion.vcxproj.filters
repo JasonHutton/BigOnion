@@ -165,6 +165,9 @@
     <ClCompile Include="DebugDraw.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\game\components\CarControlComponent.cpp">
+      <Filter>Source Files\game\components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\engine\BOEngine.h">
@@ -283,6 +286,9 @@
     </ClInclude>
     <ClInclude Include="DebugDraw.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\game\components\CarControlComponent.h">
+      <Filter>Header Files\game\components</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

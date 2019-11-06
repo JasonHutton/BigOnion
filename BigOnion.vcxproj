@@ -29,6 +29,7 @@
     <ClCompile Include="Settings.cpp" />
     <ClCompile Include="src\game\components\AudioPlayerComponent.cpp" />
     <ClCompile Include="src\engine\ECS\ComponentManager.cpp" />
+    <ClCompile Include="src\game\components\CarControlComponent.cpp" />
     <ClCompile Include="src\game\components\RigidBodyComponent.cpp" />
     <ClCompile Include="src\game\components\RenderComponent.cpp" />
     <ClCompile Include="File.cpp" />
@@ -62,6 +63,7 @@
     <ClInclude Include="src\game\components\AudioPlayerComponent.h" />
     <ClInclude Include="src\engine\BOEngine.fwd.h" />
     <ClInclude Include="src\engine\ECS\ComponentManager.h" />
+    <ClInclude Include="src\game\components\CarControlComponent.h" />
     <ClInclude Include="src\game\components\RigidBodyComponent.h" />
     <ClInclude Include="src\game\components\RenderComponent.h" />
     <ClInclude Include="AccessibleFileI.h" />

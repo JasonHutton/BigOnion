@@ -55,21 +55,18 @@ bool GameWorld::removeGameObject(std::string id)
 }
 
 /*
-	Calls the updateComponents() and lateUpdateComponents() functions of all Game Objects owned by this Game World.
+	Calls the updateComponents() and fixedUpdate() functions of all Game Objects owned by this Game World, and steps the physics simulation.
 */
 void GameWorld::updateGameObjects(float deltaTime)
 {
-	componentManager.update(deltaTime);
-}
+	int iterations = physicsWorld->stepSimulation(deltaTime);
 
-/*
-	Calls the fixedUpdateComponents() function of all Game Objects owned by this Game World.
-*/
-void GameWorld::fixedUpdateGameObjects(float deltaTime)
-{
-	physicsWorld->stepSimulation(deltaTime);
-	//physicsWorld->debugDrawWorld();
-	componentManager.fixedUpdate(deltaTime);
+	for (int i = 0; i < iterations; ++i)
+	{
+		componentManager.fixedUpdate(deltaTime);
+	}
+
+	componentManager.update(deltaTime);
 }
 
 GameObject* GameWorld::getGameObjectById(std::string id) {

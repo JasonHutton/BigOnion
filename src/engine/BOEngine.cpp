@@ -64,27 +64,6 @@ void BOEngine::preRender()
 */
 void BOEngine::updateEngine(float deltaTime)
 {
-	// figure out how much time has elapsed since the last frame, capping at the min fps frametime
-	auto newTime = std::chrono::high_resolution_clock::now();
-	std::chrono::duration<double> frameTime = newTime - currentTime;
-	if (frameTime > MAX_FRAMETIME)
-	{
-		frameTime = MAX_FRAMETIME;
-	}
-	currentTime = newTime;
-
-	// add the frametime to the accumulator
-	accumulator += frameTime;
-	// do fixed updates until the accumulator is near empty
-	while (accumulator >= FIXED_DELTA_TIME_DURATION)
-	{
-		gameWorld->fixedUpdateGameObjects(FIXED_DELTA_TIME);
-		accumulator -= FIXED_DELTA_TIME_DURATION;
-	}
-
-	// this value is currently unused. it could be useful in the future for interpolating between fixed game states on higher framerates
-	// double alpha = accumulator / FIXED_DELTA_TIME_DURATION;
-	
 	gameWorld->updateGameObjects(deltaTime);
 	audio.Update();
 	render();
