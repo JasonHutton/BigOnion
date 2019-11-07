@@ -47,8 +47,12 @@ void RigidBodyComponent::onAddToGameWorld()
 
 void RigidBodyComponent::applyForce(Vector3f force)
 {
-	//rigidBody->getWorldTransform().getRotation();
-	rigidBody->applyCentralForce(btVector3(force.x, 0, force.z));
+	//for moving forward and back, code taken from https://pybullet.org/Bullet/phpBB3/viewtopic.php?t=2366
+	btVector3 relativeForce = btVector3(force.x, 0, 0);
+	btMatrix3x3& boxRot = rigidBody->getWorldTransform().getBasis();
+	btVector3 correctedForce = boxRot * relativeForce;
+	rigidBody->applyCentralForce(correctedForce);
+	//for turning
 	rigidBody->applyTorque(btVector3(0, force.y, 0));
 }
 

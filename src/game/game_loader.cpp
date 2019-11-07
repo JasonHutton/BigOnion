@@ -161,11 +161,11 @@ void GameLoader::processInput(GLFWwindow* window)
 				break;
 			case UB_MOVE_LEFT:
 				//camera->ProcessKeyboard(LEFT, deltaTime);
-				GameInput::setTurningAxis(-1.0);
+				GameInput::setTurningAxis(1.0);
 				break;
 			case UB_MOVE_RIGHT:
 				//camera->ProcessKeyboard(RIGHT, deltaTime);
-				GameInput::setTurningAxis(1.0);
+				GameInput::setTurningAxis(-1.0);
 				break;
 			case UB_NONE:
 			default:
