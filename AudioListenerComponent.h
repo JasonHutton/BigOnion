@@ -1,22 +1,16 @@
 #pragma once
 #include "../src/engine/audio/AudioEngine.h"
 #include "../src/engine/ECS/Component.h"
-#include "../../engine/utils/Vector3.h"
+#include "../src/engine/utils/Vector3.h"
 
-class AudioPlayerComponent:
+class AudioListenerComponent :
 	public Component
 {
 public:
 	static const std::string typeID;
-	static int soundChannel;
-	AudioPlayerComponent(const string& strSoundName, bool is3D, bool isLooping, bool isStreaming);
+	AudioListenerComponent();
 
-	void play();
-	void stop();
-	void pause();
-	void onAddToGameWorld() override;
 	void update(float deltaTime) override;
-	void volume(float volume);
 	std::string componentTypeID() override { return typeID; }
 
 private:

@@ -19,17 +19,15 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="AudioListenerComponent.cpp" />
     <ClCompile Include="Command.cpp" />
     <ClCompile Include="CommandSystem.cpp" />
     <ClCompile Include="ContextControl.cpp" />
-
     <ClCompile Include="include\imgui\imgui.cpp" />
     <ClCompile Include="include\imgui\imgui_demo.cpp" />
     <ClCompile Include="include\imgui\imgui_draw.cpp" />
     <ClCompile Include="include\imgui\imgui_impl_glfw_gl3.cpp" />
-
     <ClCompile Include="DebugDraw.cpp" />
-
     <ClCompile Include="InputHandler.cpp" />
     <ClCompile Include="KeyInput.cpp" />
     <ClCompile Include="Setting.cpp" />
@@ -58,10 +56,10 @@
     <ClCompile Include="utils.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AudioListenerComponent.h" />
     <ClInclude Include="Command.h" />
     <ClInclude Include="CommandSystem.h" />
     <ClInclude Include="ContextControl.h" />
-
     <ClInclude Include="include\imgui\imconfig.h" />
     <ClInclude Include="include\imgui\imgui.h" />
     <ClInclude Include="include\imgui\imgui_impl_glfw_gl3.h" />
@@ -69,9 +67,7 @@
     <ClInclude Include="include\imgui\stb_rect_pack.h" />
     <ClInclude Include="include\imgui\stb_textedit.h" />
     <ClInclude Include="include\imgui\stb_truetype.h" />
-
     <ClInclude Include="DebugDraw.h" />
-
     <ClInclude Include="InputHandler.h" />
     <ClInclude Include="KeyInput.h" />
     <ClInclude Include="Setting.h" />

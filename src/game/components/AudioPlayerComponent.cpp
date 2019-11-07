@@ -4,12 +4,20 @@
 
 const std::string AudioPlayerComponent::typeID = "Audio";
 int AudioPlayerComponent::soundChannel = 0;
+bool surround, looping, streaming;
+string soundName;
 
-AudioPlayerComponent::AudioPlayerComponent(const string& strSoundName, Vector3f vPos, bool is3D, bool isLooping, bool isStreaming)
+AudioPlayerComponent::AudioPlayerComponent(const string& strSoundName, bool is3D, bool isLooping, bool isStreaming)
 {
-	soundChannel = audio.LoadSound(strSoundName, convert(vPos), audio.VolumeTodB(1.0f), is3D, isLooping, isStreaming);
-	audio.PlaySounds(soundChannel);
-	//cout << convert(vPos).x << convert(vPos).y << convert(vPos).z;
+	soundName = strSoundName;
+	surround = is3D;
+	looping = isLooping;
+	streaming = isStreaming;
+}
+
+void AudioPlayerComponent::onAddToGameWorld()
+{
+	soundChannel = audio.LoadSound(soundName, convert(gameObject->transform.position), audio.VolumeTodB(1.0f), surround, looping, streaming);
 }
 
 Vector3 AudioPlayerComponent::convert(Vector3f vPos)
@@ -18,27 +26,27 @@ Vector3 AudioPlayerComponent::convert(Vector3f vPos)
 	return vector;
 }
 
-void AudioPlayerComponent::play(int channelID)
+void AudioPlayerComponent::play()
 {
-	audio.PlaySounds(channelID);
+	audio.PlaySounds(soundChannel);
 }
 
-void AudioPlayerComponent::stop(int channelID)
+void AudioPlayerComponent::stop()
 {
-	audio.StopSounds(channelID);
+	audio.StopSounds(soundChannel);
 }
 
-void AudioPlayerComponent::pause(int channelID)
+void AudioPlayerComponent::pause()
 {
-	audio.PauseSounds(channelID);
+	audio.PauseSounds(soundChannel);
 }
 
-void AudioPlayerComponent::volume(float volumedB)
+void AudioPlayerComponent::volume(float volume)
 {
-	audio.SetVolume(soundChannel, audio.VolumeTodB(volumedB));
+	audio.SetVolume(soundChannel, audio.VolumeTodB(volume));
 }
 
 void AudioPlayerComponent::update(float deltaTime)
 {
-	//audio.SetChannel3dPosition(soundChannel,position);
+	audio.SetChannel3dPosition(soundChannel, convert(gameObject->transform.position));
 }

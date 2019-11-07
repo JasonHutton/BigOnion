@@ -113,7 +113,8 @@ void GameWorldHelper::initTestScene(BOEngine* engine)
 	box2->addComponent(new RenderComponent(engine, "game/assets/box/cube.obj", shader));
 	box2->addComponent(RigidBodyComponent::createWithCube(1.0, 1.0, 1.0, 1.0));
 	engine->gameWorld->addGameObject(box2);
-	suitMan->addComponent(new AudioPlayerComponent("game/assets/sounds/test.wav", box2->transform.position, true, false, false));
+	suitMan->addComponent(new AudioPlayerComponent("game/assets/sounds/test.wav", true, false, false));
+	suitMan->getComponent<AudioPlayerComponent>()->play();
 
 	GameObject* box3 = new  GameObject("Box3");
 	box3->transform.position = Vector3f(5.0, 20.0, 0);
