@@ -144,7 +144,21 @@ void GameLoader::startGame() {
 		//ImGuiWindowFlags flags = ImGuiWindowFlags_Tooltip | ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoMove |
 		//ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_AlwaysAutoResize;
 		ImGuiWindowFlags flags = ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoResize;//no title bar and fixed window size
+		//************ Show Mouse*********************
+		if (ImGui::IsKeyPressed(ImGui::GetKeyIndex(ImGuiKey_Tab))) {
+			switch (mousecase)
+			{
+			case 0:
+				showmouse = false;
+				mousecase = 1;
+				break;
+			case 1:
+				showmouse = true;
+				mousecase = 0;
+				break;
+			}
 
+		}
 		//************HUD: Score*********************
 		ImGui::SetNextWindowSize(ImVec2(200, 100));        //window size
 		ImGui::SetNextWindowPos(ImVec2(0, 700));     //window position
@@ -155,26 +169,13 @@ void GameLoader::startGame() {
 		ImGui::TextColored(ImVec4(0.0f, 1.0f, 1.0f, 1.0f), "Score: %.d",score1 );
 		//ImGui::StyleColorsDark();
 		ImGui::End();
-
+	
 		//***************HUD: Speed******************
 
 		ImGui::SetNextWindowSize(ImVec2(200, 100));        
 		ImGui::SetNextWindowPos(ImVec2(800, 700));             
 		ImGui::Begin("Speed",0, flags);
-		if (ImGui::IsKeyPressed(ImGui::GetKeyIndex(ImGuiKey_Tab))) {
-			switch (mousecase)
-			{
-			case 0:
-				showmouse = false;
-				mousecase = 1;
-				break;
-			case 1: 
-				showmouse = true;
-				mousecase = 0;
-				break;
-			}
-			
-		}
+		
 
 		int speed1 = 100;
 		
