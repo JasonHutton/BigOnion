@@ -128,6 +128,7 @@ void GameLoader::startGame() {
 		ImGui::SetNextWindowSize(ImVec2(200, 100));        //window size
 		ImGui::SetNextWindowPos(ImVec2(0, 700));     //window position
 		
+		
 		//ImGuiWindowFlags flags = ImGuiWindowFlags_Tooltip | ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoMove |
 		//ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_AlwaysAutoResize;
 		ImGuiWindowFlags flags =  ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoResize;//no title bar and fixed window size  
@@ -135,7 +136,8 @@ void GameLoader::startGame() {
 
 		int score1 = 100;	
 		
-		ImGui::TextColored(ImVec4(0.0f, 1.0f, 1.0f, 1.0f), "Score: %.d:",score1 );
+		ImGui::TextColored(ImVec4(0.0f, 1.0f, 1.0f, 1.0f), "Score: %.d",score1 );
+		ImGui::StyleColorsLight();
 		//ImGui::StyleColorsDark();
 		ImGui::End();
 
@@ -144,6 +146,7 @@ void GameLoader::startGame() {
 
 		ImGui::SetNextWindowSize(ImVec2(200, 100));        //window size
 		ImGui::SetNextWindowPos(ImVec2(800, 700));             //window position
+
 		ImGui::Begin("Speed",0, flags);
 
 		int speed1 = 100;
@@ -162,7 +165,7 @@ void GameLoader::startGame() {
 			ImGui::SetNextWindowPos(ImVec2(0, 0));             
 			ImGui::StyleColorsDark();
 			ImGui::Begin("Big Onion", &show_GameMenu_window, flags);
-			
+			ImGui::Text("Big Minion", 500, 100);
 			ImGui::SetCursorPos(ImVec2(250.0f, 100.0f));
 			//if (ImGui::Button("Play Game", ImVec2(-1.0f, 0.0f)))
 			if (ImGui::Button("Play Game", ImVec2(500.0f, 50.0f))) {
