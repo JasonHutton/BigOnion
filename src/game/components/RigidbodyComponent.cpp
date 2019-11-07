@@ -47,7 +47,9 @@ void RigidBodyComponent::onAddToGameWorld()
 
 void RigidBodyComponent::applyForce(Vector3f force)
 {
-	rigidBody->applyCentralForce(btVector3(force.x, force.y, force.z));
+	//rigidBody->getWorldTransform().getRotation();
+	rigidBody->applyCentralForce(btVector3(force.x, 0, force.z));
+	rigidBody->applyTorque(btVector3(0, force.y, 0));
 }
 
 /*
@@ -57,7 +59,7 @@ RigidBodyComponent* RigidBodyComponent::createWithCube(float width, float height
 {
 	btTransform t;	//position and rotation
 	t.setIdentity();
-	
+
 	btBoxShape* box = new btBoxShape(btVector3(width, height, depth)); // note cube's dimensions will be twice the input values as these refer to distance from the origin to the edge
 	btVector3 inertia(0, 0, 0);	//inertia is 0,0,0 for static object, else
 	if (mass != 0.0)
@@ -115,8 +117,8 @@ RigidBodyComponent* RigidBodyComponent::createWithMesh(Model* model, float mass)
 	for (Mesh& mesh : model->getMeshes()) {
 		for (int i = 0; i < mesh.indices.size() - 2; i += 3) {
 			btVector3 point1 = btVector3(mesh.vertices[i].Position.x, mesh.vertices[i].Position.y, mesh.vertices[i].Position.z);
-			btVector3 point2 = btVector3(mesh.vertices[i+1].Position.x, mesh.vertices[i + 1].Position.y, mesh.vertices[i + 1].Position.z);
-			btVector3 point3 = btVector3(mesh.vertices[i+2].Position.x, mesh.vertices[i + 2].Position.y, mesh.vertices[i + 2].Position.z);
+			btVector3 point2 = btVector3(mesh.vertices[i + 1].Position.x, mesh.vertices[i + 1].Position.y, mesh.vertices[i + 1].Position.z);
+			btVector3 point3 = btVector3(mesh.vertices[i + 2].Position.x, mesh.vertices[i + 2].Position.y, mesh.vertices[i + 2].Position.z);
 			triangleMesh->addTriangle(point1, point2, point3, true);
 		}
 	}

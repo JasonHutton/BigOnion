@@ -6,13 +6,13 @@ namespace GameInput
 {
 	namespace
 	{
-		float horizontal;
-		float vertical;
+		float forward;
+		float turn;
 	}
 
 	Vector3f getAxes();
 
-	void setHorizontalAxis(float horizontal);
-	void setVerticalAxis(float vertical);
+	void setForwardAxis(float forward);
+	void setTurningAxis(float turn);
 	void clearState();
 };
