@@ -153,19 +153,19 @@ void GameLoader::processInput(GLFWwindow* window)
 				break;
 			case UB_MOVE_FORWARD:
 				//camera->ProcessKeyboard(FORWARD, deltaTime);
-				GameInput::setForwardAxis(-1.0);
+				GameInput::setVerticalAxis(-1.0);
 				break;
 			case UB_MOVE_BACKWARD:
 				//camera->ProcessKeyboard(BACKWARD, deltaTime);
-				GameInput::setForwardAxis(1.0);
+				GameInput::setVerticalAxis(1.0);
 				break;
 			case UB_MOVE_LEFT:
 				//camera->ProcessKeyboard(LEFT, deltaTime);
-				GameInput::setTurningAxis(1.0);
+				GameInput::setHorizontalAxis(1.0);
 				break;
 			case UB_MOVE_RIGHT:
 				//camera->ProcessKeyboard(RIGHT, deltaTime);
-				GameInput::setTurningAxis(-1.0);
+				GameInput::setHorizontalAxis(-1.0);
 				break;
 			case UB_NONE:
 			default:

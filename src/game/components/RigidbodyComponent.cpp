@@ -52,8 +52,11 @@ void RigidBodyComponent::applyForce(Vector3f force)
 	btMatrix3x3& boxRot = rigidBody->getWorldTransform().getBasis();
 	btVector3 correctedForce = boxRot * relativeForce;
 	rigidBody->applyCentralForce(correctedForce);
+}
+
+void RigidBodyComponent::applyTorque(Vector3f torque) {
 	//for turning
-	rigidBody->applyTorque(btVector3(0, force.y, 0));
+	rigidBody->applyTorque(btVector3(0, torque.y, 0));
 }
 
 /*

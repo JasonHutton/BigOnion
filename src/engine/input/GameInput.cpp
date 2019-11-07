@@ -2,20 +2,20 @@
 
 Vector3f GameInput::getAxes()
 {
-	return Vector3f(forward, turn, forward);
+	return Vector3f(vertical, horizontal, 0);
 }
 
-void GameInput::setForwardAxis(float forward)
+void GameInput::setVerticalAxis(float vertical)
 {
-	GameInput::forward = forward;
+	GameInput::vertical = vertical;
 }
 
-void GameInput::setTurningAxis(float turn)
+void GameInput::setHorizontalAxis(float horizontal)
 {
-	GameInput::turn = turn;
+	GameInput::horizontal = horizontal;
 }
 
 void GameInput::clearState()
 {
-	forward = turn = 0;
+	vertical = horizontal = 0;
 }

@@ -7,6 +7,7 @@ const std::string CarControlComponent::typeID = "CarControl";
 void CarControlComponent::update(float deltaTime)
 {
 	rb->applyForce(GameInput::getAxes() * 10);
+	rb->applyTorque(GameInput::getAxes() * 10);
 }
 
 void CarControlComponent::onAddToGameWorld()
