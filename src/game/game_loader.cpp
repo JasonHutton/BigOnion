@@ -42,6 +42,11 @@ Vector3 vel{ 0,0,0 };
 bool show_demo_window = true;
 bool show_another_window = false;
 bool show_GameMenu_window = true;
+bool show_HighScore_window = false;
+bool stopgame = false;
+int stopcase = 0;
+bool showmouse = true;
+int mousecase = 0;
 ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
 
 BOEngine BOE;
@@ -108,64 +113,119 @@ void GameLoader::startGame() {
 		float currentFrame = (float)glfwGetTime(); // We should probably be using double instead of float, but that's spawning off a LOT of required changes...
 		deltaTime = currentFrame - lastFrame;
 		lastFrame = currentFrame;
-
+		
 
 		// input
 		// -----
-		processInput(window);
-		
+		if (!stopgame) {
+			processInput(window);
+		}
+
 		engine->updateEngine(deltaTime);
 
 		updateListener();
 		audio.Set3dListenerAndOrientation(position, vel, up, front);
 		// glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
 		// -------------------------------------------------------------------------------
+		if (showmouse) {
+			glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);                         // show mouse
+		}
+		else
+		{
+			glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+		}
+		
 
 		glfwPollEvents();
 
-		ImGui_ImplGlfwGL3_NewFrame();
 		//new Imgui frame
-		ImGui::SetNextWindowSize(ImVec2(200, 100));        //window size
-		ImGui::SetNextWindowPos(ImVec2(0, 700));     //window position
+		ImGui_ImplGlfwGL3_NewFrame();
 		
 		
 		//ImGuiWindowFlags flags = ImGuiWindowFlags_Tooltip | ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoMove |
 		//ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_AlwaysAutoResize;
-		ImGuiWindowFlags flags =  ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoResize;//no title bar and fixed window size  
+		ImGuiWindowFlags flags = ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoResize;//no title bar and fixed window size
+		//************ Show Mouse*********************
+		if (ImGui::IsKeyPressed(ImGui::GetKeyIndex(ImGuiKey_Tab))) {
+			switch (mousecase)
+			{
+			case 0:
+				showmouse = false;
+				mousecase = 1;
+				break;
+			case 1:
+				showmouse = true;
+				mousecase = 0;
+				break;
+			}
+
+		}
+		//************HUD: Score*********************
+		ImGui::SetNextWindowSize(ImVec2(200, 100));        //window size
+		ImGui::SetNextWindowPos(ImVec2(0, 700));     //window position
 		ImGui::Begin("Score",0,flags);
 
 		int score1 = 100;	
 		
 		ImGui::TextColored(ImVec4(0.0f, 1.0f, 1.0f, 1.0f), "Score: %.d",score1 );
-		ImGui::StyleColorsLight();
 		//ImGui::StyleColorsDark();
 		ImGui::End();
+	
+		//***************HUD: Speed******************
 
-		//*******************************************
 
-
-		ImGui::SetNextWindowSize(ImVec2(200, 100));        //window size
-		ImGui::SetNextWindowPos(ImVec2(800, 700));             //window position
-
+		ImGui::SetNextWindowSize(ImVec2(200, 100));        
+		ImGui::SetNextWindowPos(ImVec2(800, 700));             
 		ImGui::Begin("Speed",0, flags);
+		
 
 		int speed1 = 100;
 		
 		ImGui::TextColored(ImVec4(1.0f, 0.0f, 0.0f, 1.0f), "Speed:%.d",speed1);
-
-		//ImGui::StyleColorsDark();
 		ImGui::End();
 
-		//*******************************************
+		//***************HUD: stop game***************
+
+		ImGui::SetNextWindowSize(ImVec2(200, 80));        
+		ImGui::SetNextWindowPos(ImVec2(0,0));             
+		ImGui::Begin("Stop", 0, flags);
+
+		if (ImGui::Button("Stop", ImVec2(200.0f, 60.0f))) // press stop ¡ú stop player movement
+		{
+			switch (stopcase) {
+			case 0:
+				stopgame = true;
+				stopcase = 1;
+				break;
+			case 1:
+				stopgame = false;
+				stopcase = 0;
+				break;
+			}
+		}
+		ImGui::End();
+
+		//*************Back Game Menu*****************
+
+		ImGui::SetNextWindowSize(ImVec2(200, 80));       
+		ImGui::SetNextWindowPos(ImVec2(800, 0));            
+		ImGui::Begin("menu", 0, flags);
+
+			if (ImGui::Button("Menu", ImVec2(200.0f, 60.0f)))
+			{
+				show_GameMenu_window = true;
+			}
+
+		ImGui::End();
+
+		//***************Game Main Menu****************
 		
 		if (show_GameMenu_window)
 		{
-
 			ImGui::SetNextWindowSize(ImVec2(1000, 800));       
 			ImGui::SetNextWindowPos(ImVec2(0, 0));             
 			ImGui::StyleColorsDark();
 			ImGui::Begin("Big Onion", &show_GameMenu_window, flags);
-			ImGui::Text("Big Minion", 500, 100);
 			ImGui::SetCursorPos(ImVec2(250.0f, 100.0f));
 			//if (ImGui::Button("Play Game", ImVec2(-1.0f, 0.0f)))
 			if (ImGui::Button("Play Game", ImVec2(500.0f, 50.0f))) {
@@ -176,15 +236,41 @@ void GameLoader::startGame() {
 			ImGui::Button("Load Game", ImVec2(500.0f, 50.0f));
 
 			ImGui::SetCursorPos(ImVec2(250.0f, 300.0f));
-			ImGui::Button("High Score", ImVec2(500.0f, 50.0f));
+			if (ImGui::Button("High Score", ImVec2(500.0f, 50.0f)))
+			{
+				show_GameMenu_window = false;
+				show_HighScore_window = true;
+			}
 
 			ImGui::SetCursorPos(ImVec2(250.0f, 400.0f));
 			if (ImGui::Button("Exit", ImVec2(500.0f, 50.0f))) 
-				break;
+				break;	
+
+			ImGui::End();	
+
+		}
+		//**********High score list Window************
+		static const char* scores[]{ "1","2","3","4","5","6","7","8","9","10" };//high score list
+		static int selectscore = 0;
+
+		if (show_HighScore_window)
+		{
+			ImGui::SetNextWindowSize(ImVec2(1000, 800));
+			ImGui::SetNextWindowPos(ImVec2(0, 0));
+			ImGui::Begin("Big Onion", &show_HighScore_window, flags);
+			ImGui::SetCursorPos(ImVec2(0.0f, 0.0f));
+			if (ImGui::Button("Back", ImVec2(200.0f, 60.0f)))
+			{
+				show_HighScore_window = false;
+				show_GameMenu_window = true;
+			}
+			ImGui::End();
 			
-				
-			//SetCursorPos* ()
-			
+			ImGui::SetNextWindowSize(ImVec2(500, 400));
+			ImGui::SetNextWindowPos(ImVec2(180, 200));
+			ImGui::Begin("Big Onion", &show_HighScore_window, flags);
+			ImGui::TextColored(ImVec4(1.0f, 0.0f, 0.0f, 1.0f), "                                         High Score");
+			ImGui::ListBox("", &selectscore, scores, IM_ARRAYSIZE(scores));
 			ImGui::End();
 		}
 		
