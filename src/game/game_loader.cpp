@@ -190,7 +190,7 @@ void GameLoader::startGame() {
 		ImGui::SetNextWindowPos(ImVec2(0,0));             
 		ImGui::Begin("Stop", 0, flags);
 
-		if (ImGui::Button("Stop", ImVec2(200.0f, 60.0f))) // press stop ¡ú stop player movement
+		if (ImGui::Button("Stop", ImVec2(200.0f, 60.0f))) //stop player movement
 		{
 			switch (stopcase) {
 			case 0:
