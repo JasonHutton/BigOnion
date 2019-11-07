@@ -141,7 +141,6 @@ void GameLoader::startGame() {
 		//new Imgui frame
 		ImGui_ImplGlfwGL3_NewFrame();
 		
-		
 		//ImGuiWindowFlags flags = ImGuiWindowFlags_Tooltip | ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoMove |
 		//ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_AlwaysAutoResize;
 		ImGuiWindowFlags flags = ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoResize;//no title bar and fixed window size
@@ -173,7 +172,6 @@ void GameLoader::startGame() {
 	
 		//***************HUD: Speed******************
 
-
 		ImGui::SetNextWindowSize(ImVec2(200, 100));        
 		ImGui::SetNextWindowPos(ImVec2(800, 700));             
 		ImGui::Begin("Speed",0, flags);
@@ -190,7 +188,7 @@ void GameLoader::startGame() {
 		ImGui::SetNextWindowPos(ImVec2(0,0));             
 		ImGui::Begin("Stop", 0, flags);
 
-		if (ImGui::Button("Stop", ImVec2(200.0f, 60.0f))) //stop player movement
+		if (ImGui::Button("Stop", ImVec2(200.0f, 60.0f))) // press stop ¡ú stop player movement
 		{
 			switch (stopcase) {
 			case 0:
@@ -226,6 +224,7 @@ void GameLoader::startGame() {
 			ImGui::SetNextWindowPos(ImVec2(0, 0));             
 			ImGui::StyleColorsDark();
 			ImGui::Begin("Big Onion", &show_GameMenu_window, flags);
+	
 			ImGui::SetCursorPos(ImVec2(250.0f, 100.0f));
 			//if (ImGui::Button("Play Game", ImVec2(-1.0f, 0.0f)))
 			if (ImGui::Button("Play Game", ImVec2(500.0f, 50.0f))) {
