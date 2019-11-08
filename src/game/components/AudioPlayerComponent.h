@@ -9,7 +9,7 @@ class AudioPlayerComponent:
 public:
 	static const std::string typeID;
 	static int soundChannel;
-	AudioPlayerComponent(const string& strSoundName, bool is3D, bool isLooping, bool isStreaming);
+	AudioPlayerComponent(const string& strSoundName,float volumeDb, bool is3D, bool isLooping, bool isStreaming);
 
 	void play();
 	void stop();

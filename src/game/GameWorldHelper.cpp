@@ -56,6 +56,15 @@ void GameWorldHelper::initTestScene(BOEngine* engine)
 	player_car->addComponent(RigidBodyComponent::createWithCube(1.0, 0.3, 1.0, 1.0));
 	engine->gameWorld->addGameObject(player_car);
 
+	//background music
+	GameObject* background_music = new  GameObject("BackGroundMusic");
+	engine->gameWorld->addGameObject(background_music);
+	background_music->addComponent(new AudioPlayerComponent("game/assets/sounds/start.mp3", 1, false, true, false));
+	background_music->getComponent<AudioPlayerComponent>()->onAddToGameWorld();
+	background_music->getComponent<AudioPlayerComponent>()->volume(0.5);
+	background_music->getComponent<AudioPlayerComponent>()->play();
+
+
 	// create suit man
 	GameObject* suitMan = new GameObject("SuitMan");
 	suitMan->transform.position = Vector3f(0, 20, 0);
@@ -64,6 +73,15 @@ void GameWorldHelper::initTestScene(BOEngine* engine)
 	suitMan->addComponent(new RenderComponent(engine, "game/assets/nanosuit/nanosuit.obj", shader)); // connect object - model
 	suitMan->addComponent(RigidBodyComponent::createWithCylinder(0.75, 1.5, 0.25, 1.0)); // connect object - rigibody
 	engine->gameWorld->addGameObject(suitMan); // maybe auto register?
+	
+	suitMan->addComponent(new AudioPlayerComponent("game/assets/sounds/startup.wav", 30, true, false, false));
+	suitMan->getComponent<AudioPlayerComponent>()->onAddToGameWorld();
+	suitMan->getComponent<AudioPlayerComponent>()->play();
+	Sleep(2000);
+	suitMan->addComponent(new AudioPlayerComponent("game/assets/sounds/idle.wav", 20, true, true, false));
+	suitMan->getComponent<AudioPlayerComponent>()->onAddToGameWorld();
+	suitMan->getComponent<AudioPlayerComponent>()->setSpeed(0);
+	suitMan->getComponent<AudioPlayerComponent>()->play();
 	
 
 	// create race track
@@ -113,8 +131,7 @@ void GameWorldHelper::initTestScene(BOEngine* engine)
 	box2->addComponent(new RenderComponent(engine, "game/assets/box/cube.obj", shader));
 	box2->addComponent(RigidBodyComponent::createWithCube(1.0, 1.0, 1.0, 1.0));
 	engine->gameWorld->addGameObject(box2);
-	suitMan->addComponent(new AudioPlayerComponent("game/assets/sounds/test.wav", true, false, false));
-	suitMan->getComponent<AudioPlayerComponent>()->play();
+	
 
 	GameObject* box3 = new  GameObject("Box3");
 	box3->transform.position = Vector3f(5.0, 20.0, 0);

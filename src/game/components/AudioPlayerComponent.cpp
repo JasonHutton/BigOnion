@@ -4,20 +4,23 @@
 
 const std::string AudioPlayerComponent::typeID = "Audio";
 int AudioPlayerComponent::soundChannel = 0;
+float fVolume;
 bool surround, looping, streaming;
 string soundName;
 
-AudioPlayerComponent::AudioPlayerComponent(const string& strSoundName, bool is3D, bool isLooping, bool isStreaming)
+AudioPlayerComponent::AudioPlayerComponent(const string& strSoundName,float volumeDb, bool is3D, bool isLooping, bool isStreaming)
 {
 	soundName = strSoundName;
 	surround = is3D;
 	looping = isLooping;
 	streaming = isStreaming;
+	fVolume = volumeDb;
 }
 
 void AudioPlayerComponent::onAddToGameWorld()
 {
-	soundChannel = audio.LoadSound(soundName, convert(gameObject->transform.position), audio.VolumeTodB(1.0f), surround, looping, streaming);
+	soundChannel = audio.LoadSound(soundName, convert(gameObject->transform.position), fVolume, surround, looping, streaming);
+	audio.PlaySounds(soundChannel);
 }
 
 Vector3 AudioPlayerComponent::convert(Vector3f vPos)
@@ -48,7 +51,8 @@ void AudioPlayerComponent::volume(float volume)
 
 void AudioPlayerComponent::setSpeed(float speed)
 {
-	audio.SetSpeed(soundChannel, speed / 100);
+	audio.SetSpeed(soundChannel, speed / 50 + 1);
+	audio.SetVolume(soundChannel, audio.VolumeTodB(speed / 50 + fVolume));
 }
 
 void AudioPlayerComponent::update(float deltaTime)
