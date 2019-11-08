@@ -14,6 +14,7 @@ public:
 	void play();
 	void stop();
 	void pause();
+	void setSpeed(float speed);
 	void onAddToGameWorld() override;
 	void update(float deltaTime) override;
 	void volume(float volume);

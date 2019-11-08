@@ -46,6 +46,11 @@ void AudioPlayerComponent::volume(float volume)
 	audio.SetVolume(soundChannel, audio.VolumeTodB(volume));
 }
 
+void AudioPlayerComponent::setSpeed(float speed)
+{
+	audio.SetSpeed(soundChannel, speed / 100);
+}
+
 void AudioPlayerComponent::update(float deltaTime)
 {
 	audio.SetChannel3dPosition(soundChannel, convert(gameObject->transform.position));
