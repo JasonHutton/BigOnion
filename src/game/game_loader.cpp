@@ -105,7 +105,7 @@ void GameLoader::startGame() {
 	
 	engine->preRender();
 
-	
+	glfwSetTime(0);
 	// render loop
 	// -----------
 	while (!glfwWindowShouldClose(window))
@@ -159,6 +159,55 @@ void GameLoader::startGame() {
 			}
 
 		}
+		//************HUD: Time*********************
+		
+		ImGui::SetNextWindowSize(ImVec2(500, 500));        //window size
+		ImGui::SetNextWindowPos(ImVec2(250, 100));     //window position
+		ImGui::StyleColorsLight();
+		ImGui::Begin("Time", 0, flags);
+		
+		int time;
+		if (show_GameMenu_window == false && show_HighScore_window == false) {
+			
+		
+			time =int( glfwGetTime());
+			if(time <= 6) {
+				
+				ImGui::TextColored(ImVec4(1.0f, 0.0f, 1.0f, 1.0f), "               The game starts in %.d second",7-time);
+				switch (time) {
+				case 1:
+					
+					ImGui::TextColored(ImVec4(1.0f, 0.0f, 1.0f, 1.0f),"                             Hi BIG Onion");
+					break;
+				case 2:
+					
+					ImGui::TextColored(ImVec4(1.0f, 0.0f, 1.0f, 1.0f),"                             Hi BIG Onion");
+					break;
+				case 3:
+					
+					ImGui::TextColored(ImVec4(1.0f, 0.0f, 1.0f, 1.0f),"            Are you ready for tonight's game?");
+					break;
+				case 4:
+					
+					ImGui::TextColored(ImVec4(1.0f, 0.0f, 1.0f, 1.0f),"            Are you ready for tonight's game?");
+					break;
+				case 5:
+					
+					ImGui::TextColored(ImVec4(1.0f, 0.0f, 1.0f, 1.0f), "                                 Let's GO.");
+					break;
+				case 6:
+					
+					ImGui::TextColored(ImVec4(1.0f, 0.0f, 1.0f, 1.0f), "                                 Let's GO.");
+					break;
+
+				}
+
+			}
+			
+		}
+			
+		ImGui::End();
+
 		//************HUD: Score*********************
 		ImGui::SetNextWindowSize(ImVec2(200, 100));        //window size
 		ImGui::SetNextWindowPos(ImVec2(0, 700));     //window position
