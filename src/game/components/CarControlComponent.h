@@ -12,6 +12,11 @@ public:
 
 	void update(float deltaTime) override;
 	void onAddToGameWorld() override;
+
+	std::vector<GameObject*> tires;
 private:
 	RigidBodyComponent* rb;
+
+	void rotateTiresAnima(float speed);
+	void steerTiresAnima(float angle);
 };
