@@ -75,9 +75,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\Launcher.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\game\game_loader.cpp">
       <Filter>Source Files\game</Filter>
     </ClCompile>
@@ -132,6 +129,30 @@
     <ClCompile Include="src\game\GameWorldHelper.cpp">
       <Filter>Source Files\game</Filter>
     </ClCompile>
+    <ClCompile Include="KeyInput.cpp">
+      <Filter>Source Files\engine\input</Filter>
+    </ClCompile>
+    <ClCompile Include="InputHandler.cpp">
+      <Filter>Source Files\engine\input</Filter>
+    </ClCompile>
+    <ClCompile Include="ContextControl.cpp">
+      <Filter>Source Files\engine\input</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Launcher.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="include\imgui\imgui.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="include\imgui\imgui_demo.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="include\imgui\imgui_draw.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="include\imgui\imgui_impl_glfw_gl3.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="Setting.cpp">
       <Filter>Source Files\engine\Settings</Filter>
     </ClCompile>
@@ -170,6 +191,9 @@
     </ClCompile>
     <ClCompile Include="src\engine\input\GameInput.cpp">
       <Filter>Source Files\engine\input</Filter>
+    </ClCompile>
+    <ClCompile Include="AudioListenerComponent.cpp">
+      <Filter>Source Files\game\components</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -257,6 +281,36 @@
     <ClInclude Include="src\game\GameWorldHelper.h">
       <Filter>Header Files\game</Filter>
     </ClInclude>
+    <ClInclude Include="InputHandler.h">
+      <Filter>Header Files\engine\input</Filter>
+    </ClInclude>
+    <ClInclude Include="KeyInput.h">
+      <Filter>Header Files\engine\input</Filter>
+    </ClInclude>
+    <ClInclude Include="ContextControl.h">
+      <Filter>Header Files\engine\input</Filter>
+    </ClInclude>
+    <ClInclude Include="include\imgui\imconfig.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\imgui\imgui.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\imgui\imgui_impl_glfw_gl3.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\imgui\imgui_internal.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\imgui\stb_rect_pack.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\imgui\stb_textedit.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\imgui\stb_truetype.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="Setting.h">
       <Filter>Header Files\engine\Settings</Filter>
     </ClInclude>
@@ -295,6 +349,9 @@
     </ClInclude>
     <ClInclude Include="src\engine\input\GameInput.h">
       <Filter>Header Files\engine\input</Filter>
+    </ClInclude>
+    <ClInclude Include="AudioListenerComponent.h">
+      <Filter>Header Files\game\components</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

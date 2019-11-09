@@ -3,21 +3,15 @@
 #include "../src/engine/ECS/Component.h"
 #include "../../engine/utils/Vector3.h"
 
-class AudioPlayerComponent:
+class AudioListenerComponent :
 	public Component
 {
 public:
 	static const std::string typeID;
 	static int soundChannel;
-	AudioPlayerComponent(const string& strSoundName,float volumeDb, bool is3D, bool isLooping, bool isStreaming);
+	AudioListenerComponent(const string& strSoundName, Vector3f vPos, bool is3D, bool isLooping, bool isStreaming);
 
-	void play();
-	void stop();
-	void pause();
-	void setSpeed(float speed);
-	void onAddToGameWorld() override;
 	void update(float deltaTime) override;
-	void volume(float volume);
 	std::string componentTypeID() override { return typeID; }
 
 private:

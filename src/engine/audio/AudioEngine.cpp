@@ -161,6 +161,26 @@ void AudioEngine::StopSounds(int nChannelId)
 	AudioEngine::ErrorCheck(tFoundIt->second->stop());
 }
 
+bool AudioEngine::IsPlaying(int nChannelId)
+{
+	bool isplaying;
+	auto tFoundIt = sgpImplementation->mChannels.find(nChannelId);
+	if (tFoundIt == sgpImplementation->mChannels.end())
+		return false;
+	AudioEngine::ErrorCheck(tFoundIt->second->isPlaying(&isplaying));
+	
+	return isplaying;
+}
+
+void AudioEngine::SetSpeed(int nChannelId,float speed)
+{
+	auto tFoundIt = sgpImplementation->mChannels.find(nChannelId);
+	if (tFoundIt == sgpImplementation->mChannels.end())
+		return;
+	AudioEngine::ErrorCheck(tFoundIt->second->setPitch(speed));
+	//AudioEngine::ErrorCheck(tFoundIt->second->setFrequency(speed));
+}
+
 FMOD_VECTOR AudioEngine::VectorToFmod(const Vector3& vPosition) {
 	FMOD_VECTOR fVec;
 	fVec.x = vPosition.x;

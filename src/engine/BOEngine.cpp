@@ -3,6 +3,8 @@
 #include "../game/GameWorldHelper.h"
 #include "../../Settings.h"
 
+#include "imgui.h"
+#include "imgui/imgui_impl_glfw_gl3.h"
 
 BOEngine::BOEngine()
 {
@@ -35,6 +37,16 @@ void BOEngine::initialize()
 
 	glfwMakeContextCurrent(window);
 
+	//Imgui
+	ImGui::CreateContext();
+	ImGuiIO& io = ImGui::GetIO(); (void)io;
+	
+	ImGui_ImplGlfwGL3_Init(window, true);
+	ImFont* pFont = io.Fonts->AddFontFromFileTTF("Roboto-Black.ttf", 30.0f);
+	
+	ImGui::PushStyleColor(ImGuiCol_WindowBg, (0, 0, 0, 0));
+
+
 	// glad: load all OpenGL function pointers
 	// ---------------------------------------
 	if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
@@ -50,13 +62,17 @@ void BOEngine::initialize()
 
 	// Game World initialization
 	currentTime = std::chrono::high_resolution_clock::now();
+
 	audio.Init();
+
 	GameWorldHelper::initTestScene(this);
+
 }
 
 void BOEngine::preRender()
 {
 	glEnable(GL_DEPTH_TEST);
+
 }
 
 /*
@@ -78,6 +94,7 @@ void BOEngine::render()
 	// ------
 	glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
 
 	int scrWidth = 10; //TODO get from window
 	int scrHeight = 8; //TODO get from window
