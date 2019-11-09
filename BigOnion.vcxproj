@@ -109,7 +109,6 @@
     <ClInclude Include="TextFile.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="src\engine\graphic\shader\model_frag_normal_t2.fs" />
     <None Include="src\engine\graphic\shader\model_loading.fs" />
     <None Include="src\engine\graphic\shader\model_loading.vs" />
     <None Include="src\engine\vertex.glsl" />

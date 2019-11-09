@@ -372,30 +372,59 @@ void GameLoader::processInput(GLFWwindow* window)
 			// See if a bound control has a User Button associated with it.
 			ContextControl cc = input.GetControl(it->first);
 			// Do what the context control->User Button says to do.
-			switch(cc.GetControl("")) // Default context.
-			{
-			case UB_FORCE_QUIT:
-				glfwSetWindowShouldClose(window, true);
-				break;
-			case UB_MOVE_FORWARD:
-				//camera->ProcessKeyboard(FORWARD, deltaTime);
-				GameInput::setVerticalAxis(-1.0);
-				break;
-			case UB_MOVE_BACKWARD:
-				//camera->ProcessKeyboard(BACKWARD, deltaTime);
-				GameInput::setVerticalAxis(1.0);
-				break;
-			case UB_MOVE_LEFT:
-				//camera->ProcessKeyboard(LEFT, deltaTime);
-				GameInput::setHorizontalAxis(1.0);
-				break;
-			case UB_MOVE_RIGHT:
-				//camera->ProcessKeyboard(RIGHT, deltaTime);
-				GameInput::setHorizontalAxis(-1.0);
-				break;
-			case UB_NONE:
-			default:
-				break;
+			bool free_camera = 0; // for debug;
+			if (free_camera) {
+				switch (cc.GetControl("")) // Default context.
+				{
+				case UB_FORCE_QUIT:
+					glfwSetWindowShouldClose(window, true);
+					break;
+				case UB_MOVE_FORWARD:
+					camera->ProcessKeyboard(FORWARD, deltaTime);
+					//GameInput::setVerticalAxis(-1.0);
+					break;
+				case UB_MOVE_BACKWARD:
+					camera->ProcessKeyboard(BACKWARD, deltaTime);
+					//GameInput::setVerticalAxis(1.0);
+					break;
+				case UB_MOVE_LEFT:
+					camera->ProcessKeyboard(LEFT, deltaTime);
+					//GameInput::setHorizontalAxis(1.0);
+					break;
+				case UB_MOVE_RIGHT:
+					camera->ProcessKeyboard(RIGHT, deltaTime);
+					//GameInput::setHorizontalAxis(-1.0);
+					break;
+				case UB_NONE:
+				default:
+					break;
+				}
+			} else {
+				switch(cc.GetControl("")) // Default context.
+				{
+					case UB_FORCE_QUIT:
+						glfwSetWindowShouldClose(window, true);
+						break;
+					case UB_MOVE_FORWARD:
+						//camera->ProcessKeyboard(FORWARD, deltaTime);
+						GameInput::setVerticalAxis(-1.0);
+						break;
+					case UB_MOVE_BACKWARD:
+						//camera->ProcessKeyboard(BACKWARD, deltaTime);
+						GameInput::setVerticalAxis(1.0);
+						break;
+					case UB_MOVE_LEFT:
+						//camera->ProcessKeyboard(LEFT, deltaTime);
+						GameInput::setHorizontalAxis(1.0);
+						break;
+					case UB_MOVE_RIGHT:
+						//camera->ProcessKeyboard(RIGHT, deltaTime);
+						GameInput::setHorizontalAxis(-1.0);
+						break;
+					case UB_NONE:
+					default:
+						break;
+				}
 			}
 
 			/*switch (cc.GetControl("Menu")) // Some other context.
