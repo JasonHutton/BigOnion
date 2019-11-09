@@ -14,6 +14,8 @@ GameWorld::GameWorld(std::string updateStrategy[], size_t n)
 	solver = new btSequentialImpulseConstraintSolver();
 	physicsWorld = new btDiscreteDynamicsWorld(dispatcher, broadphase, solver, collisionConfig);
 	physicsWorld->setGravity(btVector3(0, -9.8, 0));	//gravity on Earth
+	//physicsWorld->setDebugDrawer();
+	//physicsWorld->getDebugDrawer()->setDebugMode(btIDebugDraw::DBG_DrawWireframe);
 }
 
 /*
@@ -53,19 +55,20 @@ bool GameWorld::removeGameObject(std::string id)
 }
 
 /*
-	Calls the updateComponents() and lateUpdateComponents() functions of all Game Objects owned by this Game World.
+	Calls the updateComponents() and fixedUpdate() functions of all Game Objects owned by this Game World, and steps the physics simulation.
 */
 void GameWorld::updateGameObjects(float deltaTime)
 {
+	int iterations = physicsWorld->stepSimulation(deltaTime);
+
+	for (int i = 0; i < iterations; ++i)
+	{
+		componentManager.fixedUpdate(deltaTime);
+	}
+
 	componentManager.update(deltaTime);
 }
 
-/*
-	Calls the fixedUpdateComponents() function of all Game Objects owned by this Game World.
-*/
-void GameWorld::fixedUpdateGameObjects(float deltaTime)
-{
-	physicsWorld->stepSimulation(deltaTime);
-
-	componentManager.fixedUpdate(deltaTime);
+GameObject* GameWorld::getGameObjectById(std::string id) {
+	return gameObjects.at(id);
 }

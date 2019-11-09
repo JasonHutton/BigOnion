@@ -44,7 +44,7 @@ void AudioEngine::Update() {
 	sgpImplementation->Update();
 }
 
-void AudioEngine::LoadSound(const std::string& strSoundName, bool b3d, bool bLooping, bool bStream)
+void AudioEngine::ConfigSound(const std::string& strSoundName, bool b3d, bool bLooping, bool bStream)
 {
 	auto tFoundIt = sgpImplementation->mSounds.find(strSoundName);
 	if (tFoundIt != sgpImplementation->mSounds.end())
@@ -73,13 +73,13 @@ void AudioEngine::UnLoadSound(const std::string& strSoundName)
 	sgpImplementation->mSounds.erase(tFoundIt);
 }
 
-int AudioEngine::PlaySounds(const string& strSoundName, const Vector3& vPosition, float fVolumedB)
+int AudioEngine::LoadSound(const string& strSoundName, const Vector3& vPosition, float fVolumedB, bool b3d, bool bLooping, bool bStream)
 {
 	int nChannelId = sgpImplementation->mnNextChannelId++;
 	auto tFoundIt = sgpImplementation->mSounds.find(strSoundName);
 	if (tFoundIt == sgpImplementation->mSounds.end())
 	{
-		LoadSound(strSoundName);
+		ConfigSound(strSoundName, b3d, bLooping, bStream);
 		tFoundIt = sgpImplementation->mSounds.find(strSoundName);
 		if (tFoundIt == sgpImplementation->mSounds.end())
 		{
@@ -97,7 +97,7 @@ int AudioEngine::PlaySounds(const string& strSoundName, const Vector3& vPosition
 			AudioEngine::ErrorCheck(pChannel->set3DAttributes(&position, nullptr));
 		}
 		AudioEngine::ErrorCheck(pChannel->setVolume(dbToVolume(fVolumedB)));
-		AudioEngine::ErrorCheck(pChannel->setPaused(false));
+		AudioEngine::ErrorCheck(pChannel->setPaused(true));
 		sgpImplementation->mChannels[nChannelId] = pChannel;
 	}
 	return nChannelId;
@@ -128,7 +128,7 @@ void AudioEngine::SetChannel3dPosition(int nChannelId, const Vector3& vPosition)
 	AudioEngine::ErrorCheck(tFoundIt->second->set3DAttributes(&position, NULL));
 }
 
-void AudioEngine::SetChannelVolume(int nChannelId, float fVolumedB)
+void AudioEngine::SetVolume(int nChannelId, float fVolumedB)
 {
 	auto tFoundIt = sgpImplementation->mChannels.find(nChannelId);
 	if (tFoundIt == sgpImplementation->mChannels.end())
@@ -137,12 +137,48 @@ void AudioEngine::SetChannelVolume(int nChannelId, float fVolumedB)
 	AudioEngine::ErrorCheck(tFoundIt->second->setVolume(dbToVolume(fVolumedB)));
 }
 
-void AudioEngine::StopChannel(int nChannelId)
+void AudioEngine::PauseSounds(int nChannelId)
+{
+	auto tFoundIt = sgpImplementation->mChannels.find(nChannelId);
+	if (tFoundIt == sgpImplementation->mChannels.end())
+		return;
+	AudioEngine::ErrorCheck(sgpImplementation->mChannels[nChannelId]->setPaused(true));
+}
+
+void AudioEngine::PlaySounds(int nChannelId)
+{
+	auto tFoundIt = sgpImplementation->mChannels.find(nChannelId);
+	if (tFoundIt == sgpImplementation->mChannels.end())
+		return;
+	AudioEngine::ErrorCheck(sgpImplementation->mChannels[nChannelId]->setPaused(false));
+}
+
+void AudioEngine::StopSounds(int nChannelId)
 {
 	auto tFoundIt = sgpImplementation->mChannels.find(nChannelId);
 	if (tFoundIt == sgpImplementation->mChannels.end())
 		return;
 	AudioEngine::ErrorCheck(tFoundIt->second->stop());
+}
+
+bool AudioEngine::IsPlaying(int nChannelId)
+{
+	bool isplaying;
+	auto tFoundIt = sgpImplementation->mChannels.find(nChannelId);
+	if (tFoundIt == sgpImplementation->mChannels.end())
+		return false;
+	AudioEngine::ErrorCheck(tFoundIt->second->isPlaying(&isplaying));
+	
+	return isplaying;
+}
+
+void AudioEngine::SetSpeed(int nChannelId,float speed)
+{
+	auto tFoundIt = sgpImplementation->mChannels.find(nChannelId);
+	if (tFoundIt == sgpImplementation->mChannels.end())
+		return;
+	AudioEngine::ErrorCheck(tFoundIt->second->setPitch(speed));
+	//AudioEngine::ErrorCheck(tFoundIt->second->setFrequency(speed));
 }
 
 FMOD_VECTOR AudioEngine::VectorToFmod(const Vector3& vPosition) {

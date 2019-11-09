@@ -1,7 +1,9 @@
 #include "GameWorldHelper.h"
 #include "../engine/BOEngine.h"
 #include "../engine/ECS/ComponentManager.h"
+#include "../src/game/components/AudioPlayerComponent.h"
 #include "components/TypeTestComponent.h"
+#include "components/CarControlComponent.h"
 
 /*
 	Loads a test scene into the given BOEngine.
@@ -45,15 +47,43 @@ void GameWorldHelper::initTestScene(BOEngine* engine)
 	shader->setFloat("pointLights[1].linear", 0.09);
 	shader->setFloat("pointLights[1].quadratic", 0.032);
 
-	std::string strategy[] = {RigidBodyComponent::typeID, RenderComponent::typeID};
-	engine->gameWorld = new GameWorld(strategy, 2);
+	std::string strategy[] = {CarControlComponent::typeID, RigidBodyComponent::typeID, RenderComponent::typeID};
+	engine->gameWorld = new GameWorld(strategy, 3);
 
+	Vector3f carPos = Vector3f(15.0, 5.0, 0);
 	GameObject* player_car = new  GameObject("PlayerCar");
-	player_car->transform.position = Vector3f(15.0, 5.0, 0);
+	player_car->transform.position = carPos;
 	player_car->transform.scale = 1;
-	player_car->addComponent(new RenderComponent(engine, "game/assets/avent/Avent_red.obj", shader));
+	player_car->addComponent(new RenderComponent(engine, "game/assets/avent/Avent_red_notires.obj", shader)); // no tires
+	// player_car->addComponent(new RenderComponent(engine, "game/assets/avent/Avent_red.obj", shader));
 	player_car->addComponent(RigidBodyComponent::createWithCube(1.0, 0.3, 1.0, 1.0));
+	CarControlComponent* carControl = new CarControlComponent();
+	player_car->addComponent(carControl);
 	engine->gameWorld->addGameObject(player_car);
+
+	std::vector<GameObject*> tires(4);
+	for (int i = 0; i < 4; i++) {
+		tires[i] = new GameObject("PlayerCarTire" + i);
+		tires[i]->parent = player_car;
+		tires[i]->transform.position = Vector3f(1.55 * (i > 1 ? 1 : -1), 0.43, 1.02 * (i % 2 ? 1 : -1)); // relative local position, (back, up, left)
+		if (!i % 2) { // right tires
+			tires[i]->transform.rotation = Vector3f(0.0f, 3.1416, 0.0f);
+		}
+		tires[i]->transform.scale = 1;
+		tires[i]->addComponent(new RenderComponent(engine, "game/assets/avent/Tires.obj", shader));
+		((RenderComponent*)tires[i]->getComponent<RenderComponent>())->isSelfRotation = true;
+		engine->gameWorld->addGameObject(tires[i]);
+	}
+	carControl->tires = tires;
+
+	//background music
+	GameObject* background_music = new  GameObject("BackGroundMusic");
+	engine->gameWorld->addGameObject(background_music);
+	background_music->addComponent(new AudioPlayerComponent("game/assets/sounds/start.mp3", 1, false, true, false));
+	background_music->getComponent<AudioPlayerComponent>()->onAddToGameWorld();
+	background_music->getComponent<AudioPlayerComponent>()->volume(0.5);
+	background_music->getComponent<AudioPlayerComponent>()->play();
+
 
 	// create suit man
 	GameObject* suitMan = new GameObject("SuitMan");
@@ -64,7 +94,26 @@ void GameWorldHelper::initTestScene(BOEngine* engine)
 	suitMan->addComponent(RigidBodyComponent::createWithCylinder(0.75, 1.5, 0.25, 1.0)); // connect object - rigibody
 	engine->gameWorld->addGameObject(suitMan); // maybe auto register?
 
-		// Light
+	suitMan->addComponent(new AudioPlayerComponent("game/assets/sounds/startup.wav", 30, true, false, false));
+	suitMan->getComponent<AudioPlayerComponent>()->onAddToGameWorld();
+	suitMan->getComponent<AudioPlayerComponent>()->play();
+	Sleep(2000);
+	suitMan->addComponent(new AudioPlayerComponent("game/assets/sounds/idle.wav", 20, true, true, false));
+	suitMan->getComponent<AudioPlayerComponent>()->onAddToGameWorld();
+	suitMan->getComponent<AudioPlayerComponent>()->setSpeed(0);
+	suitMan->getComponent<AudioPlayerComponent>()->play();
+
+
+	// create race track
+	GameObject* raceTrack = new GameObject("RaceTrack");
+	raceTrack->transform.position = Vector3f(0, -3.2, 0);
+	raceTrack->transform.rotation = Vector3f(0, 0, 0);
+	raceTrack->transform.scale = Vector3f(1.0, 1.0, 1.0);
+	raceTrack->addComponent(new RenderComponent(engine, "game/assets/racetrack/racetrack.obj", shader)); // connect object - model
+	raceTrack->addComponent(RigidBodyComponent::createWithMesh(&raceTrack->getComponent<RenderComponent>()->model, 0.0)); // connect object - rigibody
+	engine->gameWorld->addGameObject(raceTrack); // maybe auto register?
+
+	// Light
 	GameObject* light = new  GameObject("Light");
 	light->transform.position = Vector3f(pointLightPositions[0].x, pointLightPositions[0].y, pointLightPositions[0].z);
 	light->transform.scale = 1.0; // has to be double because dimensions of 1.0 entered above refer to distance from origin to edge
@@ -102,6 +151,7 @@ void GameWorldHelper::initTestScene(BOEngine* engine)
 	box2->addComponent(new RenderComponent(engine, "game/assets/box/cube.obj", shader));
 	box2->addComponent(RigidBodyComponent::createWithCube(1.0, 1.0, 1.0, 1.0));
 	engine->gameWorld->addGameObject(box2);
+
 
 	GameObject* box3 = new  GameObject("Box3");
 	box3->transform.position = Vector3f(5.0, 20.0, 0);

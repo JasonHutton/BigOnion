@@ -45,18 +45,25 @@ public:
 	static void Shutdown();
 	static int ErrorCheck(FMOD_RESULT result);
 
-	void LoadSound(const string& strSoundName, bool b3d = true, bool bLooping = false, bool bStream = false);
+	
 	void UnLoadSound(const string& strSoundName);
 	void Set3dListenerAndOrientation(const Vector3& vPosition, const Vector3& vVel, const Vector3& vLook, const Vector3& vUp);
-	int PlaySounds(const string& strSoundName, const Vector3& vPos = Vector3{ 0, 0, 0 }, float fVolumedB = 0.0f);
-	void StopChannel(int nChannelId);
+	int LoadSound(const string& strSoundName, const Vector3& vPosition, float fVolumedB, bool b3d, bool bLooping, bool bStream);
+	void PlaySounds(int nChannelId);
+	void StopSounds(int nChannelId);
+	void PauseSounds(int nChannelId);
 	//void StopAllChannels();
 	void SetChannel3dPosition(int nChannelId, const Vector3& vPosition);
-	void SetChannelVolume(int nChannelId, float fVolumedB);
-	//bool IsPlaying(int nChannelId) const;
+	void SetVolume(int nChannelId, float fVolumedB);
+	void SetSpeed(int nChannelId, float speed);
+	bool IsPlaying(int nChannelId);
 	float dbToVolume(float dB);
 	float VolumeTodB(float volume);
+	
+private:
+	void ConfigSound(const string& strSoundName, bool b3d, bool bLooping, bool bStream);
 	FMOD_VECTOR VectorToFmod(const Vector3& vPosition);
+	
 };
 
 #endif

@@ -12,6 +12,7 @@
 #include "graphic/model.h"
 #include "graphic/ShaderAttribute.h"
 #include "../game/components/RenderComponent.h"
+#include "../src/engine/audio/AudioEngine.h"
 
 #include "ECS/GameWorld.h"
 #include "../game/components/RigidbodyComponent.h"
@@ -25,6 +26,7 @@ public:
 	GLFWwindow* window;
 	Camera camera;
 	GameWorld* gameWorld = nullptr;
+	AudioEngine audio;
 
 	BOEngine();
 
@@ -38,9 +40,6 @@ public:
 	int exit() const { return exitCode; }
 
 private:
-	const std::chrono::duration<double> MAX_FRAMETIME = std::chrono::duration<double>(0.25);
-	const double FIXED_DELTA_TIME = 1.0 / 60.0;
-	const std::chrono::duration<double> FIXED_DELTA_TIME_DURATION = std::chrono::duration<double>(FIXED_DELTA_TIME);
 	std::chrono::time_point<std::chrono::high_resolution_clock> currentTime;
 	std::chrono::duration<double> accumulator;
 	
