@@ -16,7 +16,6 @@ public:
 	void onAddToGameWorld() override;
 	std::string componentTypeID() override { return "RigidBody"; }
 	void applyForce(Vector3f force);
-	void applyTorque(Vector3f torque);
 
 	static RigidBodyComponent* createWithCube(float width, float height, float depth, float mass);
 	static RigidBodyComponent* createWithPlane();

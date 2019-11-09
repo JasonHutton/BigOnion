@@ -8,8 +8,7 @@ void CarControlComponent::update(float deltaTime)
 {
 	float inputX = GameInput::getVerticalAxis() * 10;
 	float inputY = GameInput::getHorizontalAxis() * 10;
-	rb->applyForce(Vector3f(inputX, 0, 0));
-	rb->applyTorque(Vector3f(0, inputY, 0));
+	rb->applyForce(Vector3f(inputX, 0, inputX/10 * inputY));
 
 	rotateTiresAnima(1); 
 	steerTiresAnima(inputY);
