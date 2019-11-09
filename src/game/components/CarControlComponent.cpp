@@ -6,8 +6,10 @@ const std::string CarControlComponent::typeID = "CarControl";
 
 void CarControlComponent::update(float deltaTime)
 {
-	rb->applyForce(GameInput::getAxes() * 10);
-	rb->applyTorque(GameInput::getAxes() * 10);
+	float inputX = GameInput::getVerticalAxis() * 10;
+	float inputY = GameInput::getHorizontalAxis() * 10;
+	rb->applyForce(Vector3f(inputX, 0, 0));
+	rb->applyTorque(Vector3f(0, inputY, 0));
 }
 
 void CarControlComponent::onAddToGameWorld()

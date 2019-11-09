@@ -1,8 +1,13 @@
 #include "GameInput.h"
 
-Vector3f GameInput::getAxes()
+float GameInput::getVerticalAxis()
 {
-	return Vector3f(vertical, horizontal, 0);
+	return GameInput::vertical;
+}
+
+float GameInput::getHorizontalAxis()
+{
+	return GameInput::horizontal;
 }
 
 void GameInput::setVerticalAxis(float vertical)
@@ -17,5 +22,5 @@ void GameInput::setHorizontalAxis(float horizontal)
 
 void GameInput::clearState()
 {
-	vertical = horizontal = 0;
+	GameInput::vertical = GameInput::horizontal = 0;
 }
