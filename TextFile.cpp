@@ -67,6 +67,34 @@ const vector<string>& TextFile::GetData() const
 	return m_data;
 }
 
+const char* TextFile::c_str()
+{
+	if(m_data_c != NULL)
+		free(m_data_c);
+
+	int dataSize = 0;
+	vector<string>::const_iterator it;
+	for (it = m_data.begin(); it != m_data.end(); it++)
+	{
+		dataSize += sizeof(char) * (it->length() + 1);
+	}
+	dataSize += sizeof(char) * m_data.size(); // Allocate space for newlines as well.
+	m_data_c = static_cast<char*>(malloc(dataSize));
+	m_data_c[0] = '\0'; // Ensure there's a null terminator at the end of the (blank) string in the allocated memory.
+
+	int numWritten = 0;
+	for (it = m_data.begin(); it != m_data.end(); it++)
+	{
+		if (strncat_s(m_data_c, dataSize, it->c_str(), (sizeof(char) * it->length() + 1)) != 0)
+		{
+			// Do some error handling...
+		}
+		strncat_s(m_data_c, dataSize, "\n", 1 * sizeof(char));
+	}
+
+	return m_data_c;
+}
+
 void TextFile::SetData(const vector<string>& data)
 {
 	m_data = data;

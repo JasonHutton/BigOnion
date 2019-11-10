@@ -14,6 +14,7 @@ public:
 	virtual bool Write(const bool overwrite = true) const;
 
 	const vector<string>& GetData() const;
+	const char* c_str();
 	void SetData(const vector<string>& data);
 	void SetData(const string& data);
 	virtual void ClearData();
@@ -21,4 +22,5 @@ public:
 
 private:
 	vector<string> m_data;
+	char* m_data_c;
 };

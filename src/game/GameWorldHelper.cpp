@@ -5,6 +5,10 @@
 #include "components/TypeTestComponent.h"
 #include "components/CarControlComponent.h"
 #include "../../Settings.h"
+#include "ryml.hpp"
+#include "ryml_std.hpp"
+#include "c4/substr.hpp"
+#include "../TextFile.h"
 
 /*
 	Loads a test scene into the given BOEngine.
@@ -140,6 +144,21 @@ void GameWorldHelper::initTestScene(BOEngine* engine)
 	ground->addComponent(RigidBodyComponent::createWithPlane());
 	engine->gameWorld->addGameObject(ground);
 
+	TextFile* box = new TextFile("game/assets/objects/box.yaml");
+	box->Read();
+	box->c_str();
+	ryml::Tree tree = ryml::parse(c4::to_csubstr(box->c_str()));
+	ryml::NodeRef node = tree[0];
+	//string line0 = node[0].key;
+	//string line0x = node[0].key;
+	string line1 = node[0].val;
+	string line2 = node[1].val;
+	string line3 = node[2].val;
+	string line4 = node[3].val;
+	string line5 = node[4].val;
+	delete box;
+
+	/*
 	// create box
 	GameObject* box = new  GameObject("Box");
 	box->transform.position = Vector3f(5.0, 10.0, 0);
@@ -162,6 +181,7 @@ void GameWorldHelper::initTestScene(BOEngine* engine)
 	box3->addComponent(new RenderComponent(engine, "game/assets/box/cube.obj", shader));
 	box3->addComponent(RigidBodyComponent::createWithCube(1.0, 1.0, 1.0, 1.0));
 	engine->gameWorld->addGameObject(box3);
+	*/
 
 	GameObject* box4 = new  GameObject("Box4");
 	box4->transform.position = Vector3f(5.0, 25.0, 0);
