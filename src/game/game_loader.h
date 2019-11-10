@@ -2,7 +2,8 @@
 
 #include "../engine/BOEngine.h"
 #include "../FileSystem.h"
-#include "../InputHandler.h"
+#include "../engine/input/InputHandler.h"
+
 class GameLoader
 {
 	private:

@@ -11,13 +11,13 @@ public:
 	btDynamicsWorld* physicsWorld;	//every physical object go to the world
 	ComponentManager componentManager;
 	
-	GameWorld(std::string updateStrategy[], size_t n);
+	GameWorld(std::string updateStrategy[], size_t n, float fixedDeltaTime);
 	~GameWorld();
 	void addGameObject(GameObject* gameObject);
 	bool removeGameObject(std::string id);
 	void updateGameObjects(float deltaTime);
-	void fixedUpdateGameObjects(float deltaTime);
-
+	GameObject* getGameObjectById(std::string id);
+	const float fixedDeltaTime;
 private:
 	std::unordered_map<std::string, GameObject*> gameObjects;
 

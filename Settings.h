@@ -4,7 +4,7 @@
 #include "src/engine//utils/utils.h"
 #include "CommandSystem.h"
 //#include "GameLogic.h"
-#include "InputHandler.h"
+#include "src/engine/input/InputHandler.h"
 
 //using std::string;
 using namespace std;
@@ -27,6 +27,9 @@ namespace Settings
 	extern Setting g_ResFullscreenHeight;
 	extern Setting g_ResFullscreenBits;
 	extern Setting g_StartFullscreen;
+
+	extern Setting g_MusicVolume;
+	extern Setting g_SoundVolume;
 
 	extern struct Resolution
 	{

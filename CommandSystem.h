@@ -1,10 +1,9 @@
 #pragma once
 
 #include "Command.h"
-#include "../src/engine/utils/utils.h"
+#include "src/engine/utils/utils.h"
 #include "Setting.h"
-#include "KeyInput.h"
-#include "InputHandler.h"
+#include "src/engine/input/InputHandler.h"
 
 namespace CommandSystem
 {

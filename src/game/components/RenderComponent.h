@@ -10,9 +10,12 @@ class RenderComponent
 public:
 	static const std::string typeID;
 	Model model;
+	bool isSelfRotation = false; // rotate axis, world is defualt,
+
 	RenderComponent(BOEngine* engine, std::string modelPath, Shader* shader);
 	void update(float deltaTime) override;
 	std::string componentTypeID() override { return typeID; }
+	glm::mat4 toModelMatrix();
 
 };
 

@@ -11,15 +11,15 @@ RigidBodyComponent::RigidBodyComponent(btRigidBody* _body)
 }
 
 
-void RigidBodyComponent::fixedUpdate(float deltaTime)
+void RigidBodyComponent::update(float deltaTime)
 {
 	// position
 	btTransform bTransform;
 
-	if (rigidBody->getCollisionShape()->getShapeType() == STATIC_PLANE_PROXYTYPE || rigidBody->getMass() == 0) {
+	if (rigidBody->getMass() == 0) { // if object is static
 		bTransform = rigidBody->getWorldTransform();
 	}
-	else {
+	else { // if it is dynamic
 		rigidBody->getMotionState()->getWorldTransform(bTransform);
 	}
 
@@ -45,14 +45,46 @@ void RigidBodyComponent::onAddToGameWorld()
 	gameObject->world->physicsWorld->addRigidBody(rigidBody);
 }
 
+void RigidBodyComponent::applyForceRelativeToDirection(Vector3f force)
+{
+	//for moving forward and back, code taken from https://pybullet.org/Bullet/phpBB3/viewtopic.php?t=2366
+	btVector3 relativeForce = btVector3(force.x, force.y, force.z);
+	btMatrix3x3& boxRot = rigidBody->getWorldTransform().getBasis();
+	btVector3 correctedForce = boxRot * relativeForce;
+	rigidBody->applyCentralForce(correctedForce);
+}
+
+void RigidBodyComponent::applyTorque(Vector3f torque)
+{
+	//for turning
+	rigidBody->applyTorque(btVector3(torque.x, torque.y, torque.z));
+}
+
+void RigidBodyComponent::applyAngularVelocity(Vector3f velocity)
+{
+	rigidBody->setAngularVelocity(btVector3(velocity.x, velocity.y, velocity.z));
+}
+
+Vector3f RigidBodyComponent::getVelocityRelativeToDirection()
+{
+	btMatrix3x3& boxRot = rigidBody->getWorldTransform().getBasis();
+	btVector3 relativeVelocity = boxRot * rigidBody->getLinearVelocity();
+	return Vector3f(relativeVelocity.x(), relativeVelocity.y(), relativeVelocity.z());
+}
+
+void RigidBodyComponent::printInfo()
+{
+	std::cout << "total: " << rigidBody->getTotalForce().length() << std::endl;
+}
+
 /*
 	Returns a RigidBodyComponent with an attached Cube collider.
 */
-RigidBodyComponent* RigidBodyComponent::createWithCube(float width, float height, float depth, float mass)
+RigidBodyComponent* RigidBodyComponent::createWithCube(float width, float height, float depth, float mass, float bounciness)
 {
 	btTransform t;	//position and rotation
 	t.setIdentity();
-	
+
 	btBoxShape* box = new btBoxShape(btVector3(width, height, depth)); // note cube's dimensions will be twice the input values as these refer to distance from the origin to the edge
 	btVector3 inertia(0, 0, 0);	//inertia is 0,0,0 for static object, else
 	if (mass != 0.0)
@@ -61,7 +93,8 @@ RigidBodyComponent* RigidBodyComponent::createWithCube(float width, float height
 	btMotionState* motion = new btDefaultMotionState(t);	//set the position (and motion)
 	btRigidBody::btRigidBodyConstructionInfo info(mass, motion, box, inertia);	//create the constructioninfo, you can create multiple bodies with the same info
 	btRigidBody* body = new btRigidBody(info);	//let's create the body itself
-
+	body->setActivationState(DISABLE_DEACTIVATION);
+	body->setRestitution(bounciness);
 	return new RigidBodyComponent(body);
 }
 
@@ -100,7 +133,7 @@ RigidBodyComponent* RigidBodyComponent::createWithCylinder(float width, float he
 	return new RigidBodyComponent(body);
 }
 
-RigidBodyComponent* RigidBodyComponent::createWithMesh(Model* model, float mass)
+RigidBodyComponent* RigidBodyComponent::createWithMesh(Model* model, float bounciness)
 {
 	btTransform t;	//position and rotation
 	t.setIdentity();
@@ -110,21 +143,18 @@ RigidBodyComponent* RigidBodyComponent::createWithMesh(Model* model, float mass)
 	for (Mesh& mesh : model->getMeshes()) {
 		for (int i = 0; i < mesh.indices.size() - 2; i += 3) {
 			btVector3 point1 = btVector3(mesh.vertices[i].Position.x, mesh.vertices[i].Position.y, mesh.vertices[i].Position.z);
-			btVector3 point2 = btVector3(mesh.vertices[i+1].Position.x, mesh.vertices[i + 1].Position.y, mesh.vertices[i + 1].Position.z);
-			btVector3 point3 = btVector3(mesh.vertices[i+2].Position.x, mesh.vertices[i + 2].Position.y, mesh.vertices[i + 2].Position.z);
+			btVector3 point2 = btVector3(mesh.vertices[i + 1].Position.x, mesh.vertices[i + 1].Position.y, mesh.vertices[i + 1].Position.z);
+			btVector3 point3 = btVector3(mesh.vertices[i + 2].Position.x, mesh.vertices[i + 2].Position.y, mesh.vertices[i + 2].Position.z);
 			triangleMesh->addTriangle(point1, point2, point3, true);
 		}
 	}
 
-	btBvhTriangleMeshShape* bvhTriangleMeshShae = new btBvhTriangleMeshShape(triangleMesh, false);
-
-	btVector3 inertia(0, 0, 0);	//inertia is 0,0,0 for static object, else
-	if (mass != 0.0)
-		bvhTriangleMeshShae->calculateLocalInertia(mass, inertia);	//it can be determined by this function (for all kind of shapes)
+	btBvhTriangleMeshShape* bvhTriangleMeshShape = new btBvhTriangleMeshShape(triangleMesh, false);
 
 	btMotionState* motion = new btDefaultMotionState(t);	//set the position (and motion)
-	btRigidBody::btRigidBodyConstructionInfo info(mass, motion, bvhTriangleMeshShae, inertia);	//create the constructioninfo, you can create multiple bodies with the same info
+	btRigidBody::btRigidBodyConstructionInfo info(0.0, motion, bvhTriangleMeshShape);	//create the constructioninfo, you can create multiple bodies with the same info
 	btRigidBody* body = new btRigidBody(info);	//let's create the body itself
+	body->setRestitution(1.0);
 
 	return new RigidBodyComponent(body);
 }

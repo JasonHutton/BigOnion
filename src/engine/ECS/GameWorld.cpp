@@ -4,9 +4,10 @@
 /*
 	Initializes this Game World.
 */
-GameWorld::GameWorld(std::string updateStrategy[], size_t n)
+GameWorld::GameWorld(std::string updateStrategy[], size_t n, float fixedDeltaTime)
 	: gameObjects()
 	, componentManager(updateStrategy, n)
+	, fixedDeltaTime(fixedDeltaTime)
 {
 	collisionConfig = new btDefaultCollisionConfiguration();
 	dispatcher = new btCollisionDispatcher(collisionConfig);
@@ -55,19 +56,20 @@ bool GameWorld::removeGameObject(std::string id)
 }
 
 /*
-	Calls the updateComponents() and lateUpdateComponents() functions of all Game Objects owned by this Game World.
+	Calls the updateComponents() and fixedUpdate() functions of all Game Objects owned by this Game World, and steps the physics simulation.
 */
 void GameWorld::updateGameObjects(float deltaTime)
 {
+	int iterations = physicsWorld->stepSimulation(deltaTime, 1, fixedDeltaTime);
+
+	for (int i = 0; i < iterations; ++i)
+	{
+		componentManager.fixedUpdate(fixedDeltaTime);
+	}
+
 	componentManager.update(deltaTime);
 }
 
-/*
-	Calls the fixedUpdateComponents() function of all Game Objects owned by this Game World.
-*/
-void GameWorld::fixedUpdateGameObjects(float deltaTime)
-{
-	physicsWorld->stepSimulation(deltaTime);
-	//physicsWorld->debugDrawWorld();
-	componentManager.fixedUpdate(deltaTime);
+GameObject* GameWorld::getGameObjectById(std::string id) {
+	return gameObjects.at(id);
 }
