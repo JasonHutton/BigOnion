@@ -8,7 +8,10 @@ void CarControlComponent::update(float deltaTime)
 {
 	rotateTiresAnima(GameInput::getVerticalAxis());
 	steerTiresAnima(GameInput::getHorizontalAxis());
+}
 
+void CarControlComponent::fixedUpdate(float deltaTime)
+{
 	// magic numbers ahoy!
 	float fullControlVel = 15;
 	float accelForce = 10;
@@ -25,7 +28,6 @@ void CarControlComponent::update(float deltaTime)
 	Vector3f velocityVec = rb->getVelocityRelativeToDirection();
 	velocityVec = Vector3f(velocityVec.x, 0, velocityVec.z);
 	float velocity = abs(velocityVec.length());
-	std::cout << velocity << std::endl;
 	float turnPercent = velocity / fullControlVel;
 	if (turnPercent > 1)
 	{
@@ -38,11 +40,6 @@ void CarControlComponent::update(float deltaTime)
 
 	// apply turning
 	rb->applyAngularVelocity(Vector3f(0, turnPercent * inputX * turnVel, 0));
-}
-
-void CarControlComponent::fixedUpdate(float deltaTime)
-{
-	
 }
 
 void CarControlComponent::rotateTiresAnima(float speed)
