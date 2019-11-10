@@ -11,7 +11,7 @@ void CarControlComponent::update(float deltaTime)
 	rb->applyForce(Vector3f(inputX, 0, inputX/10 * inputY));
 
 	rotateTiresAnima(1); 
-	steerTiresAnima(inputY);
+	steerTiresAnima(-inputY);
 }
 
 void CarControlComponent::rotateTiresAnima(float speed)

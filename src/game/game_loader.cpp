@@ -123,6 +123,13 @@ void GameLoader::startGame() {
 			processInput(window);
 		}
 
+		GameObject* lookTarget = engine->gameWorld->getGameObjectById("PlayerCar");
+		if (lookTarget) {
+			glm::vec3 rot = lookTarget->transform.rotation.getGlmVec3();
+			glm::vec3 pos = lookTarget->transform.position.getGlmVec3() + glm::vec3(0.0f, 1.15f, 0.0f); // look a few upper
+			engine->tpCamera.update(deltaTime, lookTarget->transform.position.getGlmVec3(), rot);
+		}
+
 		engine->updateEngine(deltaTime);
 
 		updateListener();

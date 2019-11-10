@@ -55,6 +55,7 @@
     <ClCompile Include="src\game\GameWorldHelper.cpp" />
     <ClCompile Include="src\Launcher.cpp" />
     <ClCompile Include="TextFile.cpp" />
+    <ClCompile Include="src\engine\graphic\ThirdPersonCamera.cpp" />
     <ClCompile Include="utils.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -107,6 +108,7 @@
     <ClInclude Include="src\game\game_loader.h" />
     <ClInclude Include="src\game\GameWorldHelper.h" />
     <ClInclude Include="TextFile.h" />
+    <ClInclude Include="src\engine\graphic\ThirdPersonCamera.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="src\engine\graphic\shader\model_loading.fs" />
