@@ -16,10 +16,10 @@ void RigidBodyComponent::update(float deltaTime)
 	// position
 	btTransform bTransform;
 
-	if (rigidBody->getMass() == 0) {
+	if (rigidBody->getMass() == 0) { // if object is static
 		bTransform = rigidBody->getWorldTransform();
 	}
-	else {
+	else { // if it is dynamic
 		rigidBody->getMotionState()->getWorldTransform(bTransform);
 	}
 
@@ -80,7 +80,7 @@ void RigidBodyComponent::printInfo()
 /*
 	Returns a RigidBodyComponent with an attached Cube collider.
 */
-RigidBodyComponent* RigidBodyComponent::createWithCube(float width, float height, float depth, float mass)
+RigidBodyComponent* RigidBodyComponent::createWithCube(float width, float height, float depth, float mass, float bounciness)
 {
 	btTransform t;	//position and rotation
 	t.setIdentity();
@@ -94,6 +94,7 @@ RigidBodyComponent* RigidBodyComponent::createWithCube(float width, float height
 	btRigidBody::btRigidBodyConstructionInfo info(mass, motion, box, inertia);	//create the constructioninfo, you can create multiple bodies with the same info
 	btRigidBody* body = new btRigidBody(info);	//let's create the body itself
 	body->setActivationState(DISABLE_DEACTIVATION);
+	body->setRestitution(bounciness);
 	return new RigidBodyComponent(body);
 }
 
@@ -132,7 +133,7 @@ RigidBodyComponent* RigidBodyComponent::createWithCylinder(float width, float he
 	return new RigidBodyComponent(body);
 }
 
-RigidBodyComponent* RigidBodyComponent::createWithMesh(Model* model)
+RigidBodyComponent* RigidBodyComponent::createWithMesh(Model* model, float bounciness)
 {
 	btTransform t;	//position and rotation
 	t.setIdentity();
@@ -153,6 +154,7 @@ RigidBodyComponent* RigidBodyComponent::createWithMesh(Model* model)
 	btMotionState* motion = new btDefaultMotionState(t);	//set the position (and motion)
 	btRigidBody::btRigidBodyConstructionInfo info(0.0, motion, bvhTriangleMeshShape);	//create the constructioninfo, you can create multiple bodies with the same info
 	btRigidBody* body = new btRigidBody(info);	//let's create the body itself
+	body->setRestitution(1.0);
 
 	return new RigidBodyComponent(body);
 }
