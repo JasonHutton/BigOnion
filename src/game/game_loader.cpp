@@ -12,6 +12,7 @@
 
 #include "imgui.h"
 #include "imgui/imgui_impl_glfw_gl3.h"
+#include "components/RaceGameComponent.h"
 
 
 
@@ -108,6 +109,7 @@ void GameLoader::startGame() {
 
 	glfwSetTime(0);
 
+	float racePercentage = 0, lastRacePercentage = 0;
 	// render loop
 	// -----------
 	while (!glfwWindowShouldClose(window))
@@ -123,14 +125,23 @@ void GameLoader::startGame() {
 			processInput(window);
 		}
 
-		GameObject* lookTarget = engine->gameWorld->getGameObjectById("PlayerCar");
-		if (lookTarget) {
-			glm::vec3 rot = lookTarget->transform.rotation.getGlmVec3();
-			glm::vec3 pos = lookTarget->transform.position.getGlmVec3() + glm::vec3(0.0f, 1.15f, 0.0f); // look a few upper
-			engine->tpCamera.update(deltaTime, lookTarget->transform.position.getGlmVec3(), rot);
+		GameObject* playerCar = engine->gameWorld->getGameObjectById("PlayerCar");
+		if (playerCar) {
+			glm::vec3 rot = playerCar->transform.rotation.getGlmVec3();
+			glm::vec3 pos = playerCar->transform.position.getGlmVec3() + glm::vec3(0.0f, 1.15f, 0.0f); // look a few upper
+			engine->tpCamera.update(deltaTime, playerCar->transform.position.getGlmVec3(), rot);
 		}
 
 		engine->updateEngine(deltaTime);
+
+		if (playerCar) {
+			racePercentage = playerCar->getComponent<RaceGameComponent>()->GetPercentage();
+			if (lastRacePercentage != racePercentage)
+			{
+				printf("Game finished %f percent \n", racePercentage * 100.0f);
+				lastRacePercentage = racePercentage;
+			}
+		}
 
 		updateListener();
 		audio.Set3dListenerAndOrientation(position, vel, up, front);
