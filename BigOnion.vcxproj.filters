@@ -73,6 +73,15 @@
     <Filter Include="Source Files\engine\Utils">
       <UniqueIdentifier>{fcd7d97c-296e-4167-9fff-03a50e0c9738}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\engine\FileSystem\c4">
+      <UniqueIdentifier>{8e60fc5e-b3e6-4a97-9804-6a09d13d565e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\engine\FileSystem\c4\YAML">
+      <UniqueIdentifier>{db668365-36f6-46df-ab6c-4f05aa8f6faa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\engine\FileSystem\c4\YAML\detail">
+      <UniqueIdentifier>{a6cf5463-4ab7-4ef5-91db-f8ccb9a20a2c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\game\game_loader.cpp">
@@ -188,6 +197,42 @@
     </ClCompile>
     <ClCompile Include="src\engine\graphic\ThirdPersonCamera.cpp">
       <Filter>Source Files\engine\graphic</Filter>
+    </ClCompile>
+    <ClCompile Include="include\c4\yml\common.cpp">
+      <Filter>Source Files\engine\FileSystem\c4\YAML</Filter>
+    </ClCompile>
+    <ClCompile Include="include\c4\yml\parse.cpp">
+      <Filter>Source Files\engine\FileSystem\c4\YAML</Filter>
+    </ClCompile>
+    <ClCompile Include="include\c4\yml\tree.cpp">
+      <Filter>Source Files\engine\FileSystem\c4\YAML</Filter>
+    </ClCompile>
+    <ClCompile Include="include\c4\yml\detail\atof.c">
+      <Filter>Source Files\engine\FileSystem\c4\YAML\detail</Filter>
+    </ClCompile>
+    <ClCompile Include="include\c4\base64.cpp">
+      <Filter>Source Files\engine\FileSystem\c4</Filter>
+    </ClCompile>
+    <ClCompile Include="include\c4\char_traits.cpp">
+      <Filter>Source Files\engine\FileSystem\c4</Filter>
+    </ClCompile>
+    <ClCompile Include="include\c4\error.cpp">
+      <Filter>Source Files\engine\FileSystem\c4</Filter>
+    </ClCompile>
+    <ClCompile Include="include\c4\format.cpp">
+      <Filter>Source Files\engine\FileSystem\c4</Filter>
+    </ClCompile>
+    <ClCompile Include="include\c4\language.cpp">
+      <Filter>Source Files\engine\FileSystem\c4</Filter>
+    </ClCompile>
+    <ClCompile Include="include\c4\memory_resource.cpp">
+      <Filter>Source Files\engine\FileSystem\c4</Filter>
+    </ClCompile>
+    <ClCompile Include="include\c4\memory_util.cpp">
+      <Filter>Source Files\engine\FileSystem\c4</Filter>
+    </ClCompile>
+    <ClCompile Include="include\c4\time.cpp">
+      <Filter>Source Files\engine\FileSystem\c4</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
