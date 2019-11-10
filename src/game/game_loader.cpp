@@ -6,6 +6,7 @@
 #include "../src/engine/audio/AudioEngine.h"
 #include "../engine/BOEngine.h"
 #include "../../Settings.h"
+#include "../engine/input/GameInput.h"
 
 #include <GLFW/glfw3.h>
 
@@ -18,7 +19,6 @@
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void mouse_callback(GLFWwindow* window, double xpos, double ypos);
 void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
-void processInput(GLFWwindow* window);
 void updateListener();
 
 // camera
@@ -105,7 +105,9 @@ void GameLoader::startGame() {
 	
 	engine->preRender();
 
+
 	glfwSetTime(0);
+
 	// render loop
 	// -----------
 	while (!glfwWindowShouldClose(window))
@@ -119,6 +121,13 @@ void GameLoader::startGame() {
 		// -----
 		if (!stopgame) {
 			processInput(window);
+		}
+
+		GameObject* lookTarget = engine->gameWorld->getGameObjectById("PlayerCar");
+		if (lookTarget) {
+			glm::vec3 rot = lookTarget->transform.rotation.getGlmVec3();
+			glm::vec3 pos = lookTarget->transform.position.getGlmVec3() + glm::vec3(0.0f, 1.15f, 0.0f); // look a few upper
+			engine->tpCamera.update(deltaTime, lookTarget->transform.position.getGlmVec3(), rot);
 		}
 
 		engine->updateEngine(deltaTime);
@@ -359,6 +368,8 @@ void updateListener()
 // ---------------------------------------------------------------------------------------------------------
 void GameLoader::processInput(GLFWwindow* window)
 {
+	// clear last gameinput state
+	GameInput::clearState();
 	// Check all bound controls
 	for (map<int, keyState>::iterator it = input.GetAllKeyStates().begin(); it != input.GetAllKeyStates().end(); it++)
 	{
@@ -374,16 +385,20 @@ void GameLoader::processInput(GLFWwindow* window)
 				glfwSetWindowShouldClose(window, true);
 				break;
 			case UB_MOVE_FORWARD:
-				camera->ProcessKeyboard(FORWARD, deltaTime);
+				//camera->ProcessKeyboard(FORWARD, deltaTime);
+				GameInput::setVerticalAxis(-1.0);
 				break;
 			case UB_MOVE_BACKWARD:
-				camera->ProcessKeyboard(BACKWARD, deltaTime);
+				//camera->ProcessKeyboard(BACKWARD, deltaTime);
+				GameInput::setVerticalAxis(1.0);
 				break;
 			case UB_MOVE_LEFT:
-				camera->ProcessKeyboard(LEFT, deltaTime);
+				//camera->ProcessKeyboard(LEFT, deltaTime);
+				GameInput::setHorizontalAxis(1.0);
 				break;
 			case UB_MOVE_RIGHT:
-				camera->ProcessKeyboard(RIGHT, deltaTime);
+				//camera->ProcessKeyboard(RIGHT, deltaTime);
+				GameInput::setHorizontalAxis(-1.0);
 				break;
 			case UB_NONE:
 			default:

@@ -3,6 +3,7 @@
 #include "../engine/ECS/ComponentManager.h"
 #include "../src/game/components/AudioPlayerComponent.h"
 #include "components/TypeTestComponent.h"
+#include "components/CarControlComponent.h"
 
 /*
 	Loads a test scene into the given BOEngine.
@@ -46,15 +47,34 @@ void GameWorldHelper::initTestScene(BOEngine* engine)
 	shader->setFloat("pointLights[1].linear", 0.09);
 	shader->setFloat("pointLights[1].quadratic", 0.032);
 
-	std::string strategy[] = {RigidBodyComponent::typeID, RenderComponent::typeID};
-	engine->gameWorld = new GameWorld(strategy, 2);
+	std::string strategy[] = {CarControlComponent::typeID, RigidBodyComponent::typeID, RenderComponent::typeID};
+	engine->gameWorld = new GameWorld(strategy, 3);
 
+	Vector3f carPos = Vector3f(15.0, 5.0, 0);
 	GameObject* player_car = new  GameObject("PlayerCar");
-	player_car->transform.position = Vector3f(15.0, 5.0, 0);
+	player_car->transform.position = carPos;
 	player_car->transform.scale = 1;
-	player_car->addComponent(new RenderComponent(engine, "game/assets/avent/Avent_red.obj", shader));
+	player_car->addComponent(new RenderComponent(engine, "game/assets/avent/Avent_red_notires.obj", shader)); // no tires
+	// player_car->addComponent(new RenderComponent(engine, "game/assets/avent/Avent_red.obj", shader));
 	player_car->addComponent(RigidBodyComponent::createWithCube(1.0, 0.3, 1.0, 1.0));
+	CarControlComponent* carControl = new CarControlComponent();
+	player_car->addComponent(carControl);
 	engine->gameWorld->addGameObject(player_car);
+
+	std::vector<GameObject*> tires(4);
+	for (int i = 0; i < 4; i++) {
+		tires[i] = new GameObject("PlayerCarTire" + i);
+		tires[i]->parent = player_car;
+		tires[i]->transform.position = Vector3f(1.55 * (i > 1 ? 1 : -1), 0.43, 1.02 * (i % 2 ? 1 : -1)); // relative local position, (back, up, left)
+		if (!i % 2) { // right tires
+			tires[i]->transform.rotation = Vector3f(0.0f, 3.1416, 0.0f);
+		}
+		tires[i]->transform.scale = 1;
+		tires[i]->addComponent(new RenderComponent(engine, "game/assets/avent/Tires.obj", shader));
+		((RenderComponent*)tires[i]->getComponent<RenderComponent>())->isSelfRotation = true;
+		engine->gameWorld->addGameObject(tires[i]);
+	}
+	carControl->tires = tires;
 
 	//background music
 	GameObject* background_music = new  GameObject("BackgroundMusic");
@@ -73,7 +93,9 @@ void GameWorldHelper::initTestScene(BOEngine* engine)
 	suitMan->addComponent(new RenderComponent(engine, "game/assets/nanosuit/nanosuit.obj", shader)); // connect object - model
 	suitMan->addComponent(RigidBodyComponent::createWithCylinder(0.75, 1.5, 0.25, 1.0)); // connect object - rigibody
 	engine->gameWorld->addGameObject(suitMan); // maybe auto register?
+
 	//test car engine sounds
+
 	suitMan->addComponent(new AudioPlayerComponent("game/assets/sounds/startup.wav", 30, true, false, false));
 	suitMan->getComponent<AudioPlayerComponent>()->onAddToGameWorld();
 	suitMan->getComponent<AudioPlayerComponent>()->play();
@@ -82,7 +104,7 @@ void GameWorldHelper::initTestScene(BOEngine* engine)
 	suitMan->getComponent<AudioPlayerComponent>()->onAddToGameWorld();
 	suitMan->getComponent<AudioPlayerComponent>()->setSpeed(0);
 	suitMan->getComponent<AudioPlayerComponent>()->play();
-	
+
 
 	// create race track
 	GameObject* raceTrack = new GameObject("RaceTrack");
@@ -131,7 +153,7 @@ void GameWorldHelper::initTestScene(BOEngine* engine)
 	box2->addComponent(new RenderComponent(engine, "game/assets/box/cube.obj", shader));
 	box2->addComponent(RigidBodyComponent::createWithCube(1.0, 1.0, 1.0, 1.0));
 	engine->gameWorld->addGameObject(box2);
-	
+
 
 	GameObject* box3 = new  GameObject("Box3");
 	box3->transform.position = Vector3f(5.0, 20.0, 0);

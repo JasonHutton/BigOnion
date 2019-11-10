@@ -14,6 +14,7 @@ public:
 	std::string id;
 	Transform transform;
 	GameWorld* world;
+	GameObject* parent = nullptr;
 
 	GameObject(std::string id);
 	~GameObject();

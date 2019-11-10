@@ -22,18 +22,20 @@
     <ClCompile Include="AudioListenerComponent.cpp" />
     <ClCompile Include="Command.cpp" />
     <ClCompile Include="CommandSystem.cpp" />
-    <ClCompile Include="ContextControl.cpp" />
+    <ClCompile Include="src\engine\input\ContextControl.cpp" />
     <ClCompile Include="include\imgui\imgui.cpp" />
     <ClCompile Include="include\imgui\imgui_demo.cpp" />
     <ClCompile Include="include\imgui\imgui_draw.cpp" />
     <ClCompile Include="include\imgui\imgui_impl_glfw_gl3.cpp" />
     <ClCompile Include="DebugDraw.cpp" />
-    <ClCompile Include="InputHandler.cpp" />
-    <ClCompile Include="KeyInput.cpp" />
+    <ClCompile Include="src\engine\input\GameInput.cpp" />
+    <ClCompile Include="src\engine\input\InputHandler.cpp" />
+    <ClCompile Include="src\engine\input\KeyInput.cpp" />
     <ClCompile Include="Setting.cpp" />
     <ClCompile Include="Settings.cpp" />
     <ClCompile Include="src\game\components\AudioPlayerComponent.cpp" />
     <ClCompile Include="src\engine\ECS\ComponentManager.cpp" />
+    <ClCompile Include="src\game\components\CarControlComponent.cpp" />
     <ClCompile Include="src\game\components\RigidBodyComponent.cpp" />
     <ClCompile Include="src\game\components\RenderComponent.cpp" />
     <ClCompile Include="File.cpp" />
@@ -53,13 +55,14 @@
     <ClCompile Include="src\game\GameWorldHelper.cpp" />
     <ClCompile Include="src\Launcher.cpp" />
     <ClCompile Include="TextFile.cpp" />
+    <ClCompile Include="src\engine\graphic\ThirdPersonCamera.cpp" />
     <ClCompile Include="utils.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AudioListenerComponent.h" />
     <ClInclude Include="Command.h" />
     <ClInclude Include="CommandSystem.h" />
-    <ClInclude Include="ContextControl.h" />
+    <ClInclude Include="src\engine\input\ContextControl.h" />
     <ClInclude Include="include\imgui\imconfig.h" />
     <ClInclude Include="include\imgui\imgui.h" />
     <ClInclude Include="include\imgui\imgui_impl_glfw_gl3.h" />
@@ -68,13 +71,15 @@
     <ClInclude Include="include\imgui\stb_textedit.h" />
     <ClInclude Include="include\imgui\stb_truetype.h" />
     <ClInclude Include="DebugDraw.h" />
-    <ClInclude Include="InputHandler.h" />
-    <ClInclude Include="KeyInput.h" />
+    <ClInclude Include="src\engine\input\GameInput.h" />
+    <ClInclude Include="src\engine\input\InputHandler.h" />
+    <ClInclude Include="src\engine\input\KeyInput.h" />
     <ClInclude Include="Setting.h" />
     <ClInclude Include="Settings.h" />
     <ClInclude Include="src\game\components\AudioPlayerComponent.h" />
     <ClInclude Include="src\engine\BOEngine.fwd.h" />
     <ClInclude Include="src\engine\ECS\ComponentManager.h" />
+    <ClInclude Include="src\game\components\CarControlComponent.h" />
     <ClInclude Include="src\game\components\RigidBodyComponent.h" />
     <ClInclude Include="src\game\components\RenderComponent.h" />
     <ClInclude Include="AccessibleFileI.h" />
@@ -103,9 +108,9 @@
     <ClInclude Include="src\game\game_loader.h" />
     <ClInclude Include="src\game\GameWorldHelper.h" />
     <ClInclude Include="TextFile.h" />
+    <ClInclude Include="src\engine\graphic\ThirdPersonCamera.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="src\engine\graphic\shader\model_frag_normal_t2.fs" />
     <None Include="src\engine\graphic\shader\model_loading.fs" />
     <None Include="src\engine\graphic\shader\model_loading.vs" />
     <None Include="src\engine\vertex.glsl" />
