@@ -151,13 +151,14 @@ void GameWorldHelper::initTestScene(BOEngine* engine)
 	box->c_str();
 	ryml::Tree tree = ryml::parse(c4::to_csubstr(box->c_str()));
 	ryml::NodeRef node = tree[0];
-	//string line0 = node[0].key;
-	//string line0x = node[0].key;
-	string line1 = node[0].val;
-	string line2 = node[1].val;
-	string line3 = node[2].val;
-	string line4 = node[3].val;
-	string line5 = node[4].val;
+	cout << node.key();
+	/*string line0 = c4::fromnode[0].key();
+	string line0x = node[0].key();
+	string line1 = node[0].val();
+	string line2 = node[1].val();
+	string line3 = node[2].val();
+	string line4 = node[3].val();
+	string line5 = node[4].val();*/
 	delete box;
 
 	/*
