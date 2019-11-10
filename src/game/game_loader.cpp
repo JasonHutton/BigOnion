@@ -188,7 +188,7 @@ void GameLoader::startGame() {
 		}
 		//************HUD: Time*********************
 		
-		ImGui::SetNextWindowSize(ImVec2(500, 500));        //window size
+		ImGui::SetNextWindowSize(ImVec2(800, 600));        //window size
 		ImGui::SetNextWindowPos(ImVec2(250, 100));     //window position
 		ImGui::StyleColorsLight();
 		ImGui::Begin("Time", 0, flags);
@@ -212,11 +212,11 @@ void GameLoader::startGame() {
 					break;
 				case 3:
 					
-					ImGui::TextColored(ImVec4(1.0f, 0.0f, 1.0f, 1.0f),"            Are you ready for tonight's game?");
+					ImGui::TextColored(ImVec4(1.0f, 0.0f, 1.0f, 1.0f),"            Are you ready?");
 					break;
 				case 4:
 					
-					ImGui::TextColored(ImVec4(1.0f, 0.0f, 1.0f, 1.0f),"            Are you ready for tonight's game?");
+					ImGui::TextColored(ImVec4(1.0f, 0.0f, 1.0f, 1.0f),"            Are you ready?");
 					break;
 				case 5:
 					
@@ -237,8 +237,8 @@ void GameLoader::startGame() {
 
 		//************HUD: Score*********************
 		ImGui::SetNextWindowSize(ImVec2(200, 100));        //window size
-		ImGui::SetNextWindowPos(ImVec2(0, 700));     //window position
-		ImGui::StyleColorsDark();
+		ImGui::SetNextWindowPos(ImVec2(800, 650));     //window position
+		ImGui::StyleColorsLight();
 		ImGui::Begin("Score",0,flags);
 
 		int score1 = 100;	
@@ -250,12 +250,12 @@ void GameLoader::startGame() {
 
 		ImGui::SetNextWindowSize(ImVec2(200, 100));        
 		ImGui::SetNextWindowPos(ImVec2(800, 700)); 
-		ImGui::StyleColorsDark();
+		ImGui::StyleColorsLight();
 		ImGui::Begin("Speed",0, flags);
 
 		int speed1 = 100;
 		
-		ImGui::TextColored(ImVec4(1.0f, 0.0f, 0.0f, 1.0f), "Speed:%.d",speed1);
+		ImGui::TextColored(ImVec4(1.0f, 0.0f, 0.0f, 1.0f), "Speed:%.d km/h",speed1);
 		ImGui::End();
 
 		//***************HUD: stop game***************
@@ -265,7 +265,7 @@ void GameLoader::startGame() {
 		ImGui::StyleColorsLight();
 		ImGui::Begin("Stop", 0, flags);
 
-		if (ImGui::Button("Stop", ImVec2(200.0f, 60.0f))) // press stop ¡ú stop player movement
+		if (ImGui::Button("Stop", ImVec2(200.0f, 60.0f))) // press stop to stop player movement
 		{
 			switch (stopcase) {
 			case 0:
@@ -298,28 +298,32 @@ void GameLoader::startGame() {
 		
 		if (show_GameMenu_window)
 		{
-			ImGui::SetNextWindowSize(ImVec2(1000, 800));       
+		
+			ImGui::SetNextWindowSize(ImVec2(1024,800));       
 			ImGui::SetNextWindowPos(ImVec2(0, 0));             
 			ImGui::StyleColorsDark();
 			ImGui::Begin("Big Onion", &show_GameMenu_window, flags);
-	
-			ImGui::SetCursorPos(ImVec2(250.0f, 100.0f));
+
+			ImGui::SetCursorPos(ImVec2(450.0f, 100.0f));
+			ImGui::Text("Big Onion", ImVec2(500.0f, 50.0f));
+
+			ImGui::SetCursorPos(ImVec2(250.0f, 300.0f));
 			//if (ImGui::Button("Play Game", ImVec2(-1.0f, 0.0f)))
 			if (ImGui::Button("Play Game", ImVec2(500.0f, 50.0f))) {
 				show_GameMenu_window = false;
 			 }
 
-			ImGui::SetCursorPos(ImVec2(250.0f, 200.0f));
+			ImGui::SetCursorPos(ImVec2(250.0f, 400.0f));
 			ImGui::Button("Load Game", ImVec2(500.0f, 50.0f));
 
-			ImGui::SetCursorPos(ImVec2(250.0f, 300.0f));
+			ImGui::SetCursorPos(ImVec2(250.0f, 500.0f));
 			if (ImGui::Button("High Score", ImVec2(500.0f, 50.0f)))
 			{
 				show_GameMenu_window = false;
 				show_HighScore_window = true;
 			}
 
-			ImGui::SetCursorPos(ImVec2(250.0f, 400.0f));
+			ImGui::SetCursorPos(ImVec2(250.0f, 600.0f));
 			if (ImGui::Button("Exit", ImVec2(500.0f, 50.0f))) 
 				break;	
 
