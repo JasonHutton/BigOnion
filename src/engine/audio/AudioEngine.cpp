@@ -123,9 +123,12 @@ void AudioEngine::SetChannel3dPosition(int nChannelId, const Vector3& vPosition)
 	auto tFoundIt = sgpImplementation->mChannels.find(nChannelId);
 	if (tFoundIt == sgpImplementation->mChannels.end())
 		return;
-
-	FMOD_VECTOR position = VectorToFmod(vPosition);
-	AudioEngine::ErrorCheck(tFoundIt->second->set3DAttributes(&position, NULL));
+	FMOD_MODE currMode;
+	tFoundIt->second->getMode(&currMode);
+	if (currMode & FMOD_3D) {
+		FMOD_VECTOR position = VectorToFmod(vPosition);
+		AudioEngine::ErrorCheck(tFoundIt->second->set3DAttributes(&position, nullptr));
+	}
 }
 
 void AudioEngine::SetVolume(int nChannelId, float fVolumedB)

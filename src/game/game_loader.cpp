@@ -12,6 +12,7 @@
 
 #include "imgui.h"
 #include "imgui/imgui_impl_glfw_gl3.h"
+#include "components/RaceGameComponent.h"
 
 
 
@@ -19,7 +20,9 @@
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void mouse_callback(GLFWwindow* window, double xpos, double ypos);
 void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
-void updateListener();
+void updateListener(Vector3f pos, Vector3f rot);
+void calculateSpeed(float deltaTime);
+void accelSound(GameObject* player);
 
 // camera
 Camera* camera;
@@ -35,7 +38,7 @@ glm::vec3 lightPos(1.2f, 1.0f, 2.0f);
 
 //listener
 Vector3 position{ 0,0,0 };
-Vector3 front{ 0,0,0 };
+Vector3 rotation{ 0,0,0 };
 Vector3 up{ 0,0,0 };
 Vector3 vel{ 0,0,0 };
 
@@ -44,12 +47,15 @@ bool show_another_window = false;
 bool show_GameMenu_window = true;
 bool show_HighScore_window = false;
 bool stopgame = false;
+bool isPressing = false;
 int stopcase = 0;
 bool showmouse = true;
 int mousecase = 0;
+float speed = 0;
 ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
 
 BOEngine BOE;
+
 
 GameLoader::GameLoader()
 {
@@ -105,9 +111,9 @@ void GameLoader::startGame() {
 	
 	engine->preRender();
 
-
 	glfwSetTime(0);
 
+	float racePercentage = 0, lastRacePercentage = 0;
 	// render loop
 	// -----------
 	while (!glfwWindowShouldClose(window))
@@ -123,17 +129,31 @@ void GameLoader::startGame() {
 			processInput(window);
 		}
 
-		GameObject* lookTarget = engine->gameWorld->getGameObjectById("PlayerCar");
-		if (lookTarget) {
-			glm::vec3 rot = lookTarget->transform.rotation.getGlmVec3();
-			glm::vec3 pos = lookTarget->transform.position.getGlmVec3() + glm::vec3(0.0f, 1.15f, 0.0f); // look a few upper
-			engine->tpCamera.update(deltaTime, lookTarget->transform.position.getGlmVec3(), rot);
+		
+
+		GameObject* playerCar = engine->gameWorld->getGameObjectById("PlayerCar");
+		if (playerCar) {
+			glm::vec3 rot = playerCar->transform.rotation.getGlmVec3();
+			glm::vec3 pos = playerCar->transform.position.getGlmVec3() + glm::vec3(0.0f, 1.15f, 0.0f); // look a few upper
+			engine->tpCamera.update(deltaTime, playerCar->transform.position.getGlmVec3(), rot);
 		}
 
-		engine->updateEngine(deltaTime);
 
-		updateListener();
-		audio.Set3dListenerAndOrientation(position, vel, up, front);
+		engine->updateEngine(deltaTime);
+		calculateSpeed(-deltaTime);
+		accelSound(playerCar);
+		updateListener(playerCar->transform.position, playerCar->transform.rotation);
+		audio.Set3dListenerAndOrientation(position, { 0 }, rotation, { 0 });
+
+		if (playerCar) {
+			racePercentage = playerCar->getComponent<RaceGameComponent>()->GetPercentage();
+			if (lastRacePercentage != racePercentage)
+			{
+				printf("Game finished %f percent \n", racePercentage * 100.0f);
+				lastRacePercentage = racePercentage;
+			}
+		}
+
 		// glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
 		// -------------------------------------------------------------------------------
 		if (showmouse) {
@@ -355,19 +375,50 @@ void GameLoader::startGame() {
 }
 
 //Update Listener Position and Orientation
-void updateListener()
+void updateListener(Vector3f pos, Vector3f rot)
 {
-		position.x = camera->Position.x;
-		position.y = camera->Position.y;
-		position.z = camera->Position.z;
-		front.x = camera->Front.x;
-		front.y = camera->Front.y;
-		front.z = camera->Front.z;
-		up.x = camera->Up.x;
-		up.y = camera->Up.y;
-		up.z = camera->Up.z;
+		position.x = pos.x;
+		position.y = pos.y;
+		position.z = pos.z;
+		rotation.x = rot.x;
+		rotation.y = rot.y;
+		rotation.z = rot.z;
 }
 
+void calculateSpeed(float deltaTime)
+{
+	if (deltaTime >= 0 )
+	{
+		if (speed < 200)
+		{
+			speed = speed + deltaTime * 10;
+		}
+	}
+	else
+	{
+		if (speed < 10)
+		{
+			speed = speed + deltaTime * 5;
+		}
+		else if (speed < 100)
+		{
+			speed = speed + deltaTime * 40;
+		}
+		else if (speed < 250)
+		{
+			speed = speed + deltaTime * 60;
+		}
+	}
+}
+
+void accelSound(GameObject* player)
+{
+	if (speed >= 0)
+	{
+		player->getComponent<AudioPlayerComponent>()->setSpeed(speed);
+		//printf("Speed: %f\n", speed);
+	}
+}
 // process all input: query GLFW whether relevant keys are pressed/released this frame and react accordingly
 // ---------------------------------------------------------------------------------------------------------
 void GameLoader::processInput(GLFWwindow* window)
@@ -391,10 +442,12 @@ void GameLoader::processInput(GLFWwindow* window)
 			case UB_MOVE_FORWARD:
 				//camera->ProcessKeyboard(FORWARD, deltaTime);
 				GameInput::setVerticalAxis(-1.0);
+				calculateSpeed(0.04);
 				break;
 			case UB_MOVE_BACKWARD:
 				//camera->ProcessKeyboard(BACKWARD, deltaTime);
 				GameInput::setVerticalAxis(1.0);
+			
 				break;
 			case UB_MOVE_LEFT:
 				//camera->ProcessKeyboard(LEFT, deltaTime);
