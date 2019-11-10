@@ -63,7 +63,14 @@ GameLoader::GameLoader()
 
 bool callbackFunc(btManifoldPoint& cp, const btCollisionObjectWrapper* colObj0Wrap, int partId0, int index0, const btCollisionObjectWrapper* colObj1Wrap, int partId1, int index1)
 {
-	cout << "collision" << endl;
+	int id1 = colObj0Wrap->getCollisionObject()->getUserIndex();
+	int id2 = colObj1Wrap->getCollisionObject()->getUserIndex();
+	if (id1 == 100 && id2 == 200) {
+		cout << "collision" << endl;
+	}
+	else {
+		cout << "no collision" << endl;
+	}
 	return false;
 }
 

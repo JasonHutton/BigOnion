@@ -97,6 +97,7 @@ RigidBodyComponent* RigidBodyComponent::createWithCube(float width, float height
 	body->setActivationState(DISABLE_DEACTIVATION);
 	body->setRestitution(bounciness);
 	body->setCollisionFlags(body->getCollisionFlags() | btCollisionObject::CF_CUSTOM_MATERIAL_CALLBACK);
+	body->setUserIndex(100);
 	return new RigidBodyComponent(body);
 }
 
@@ -157,6 +158,7 @@ RigidBodyComponent* RigidBodyComponent::createWithMesh(Model* model, float bounc
 	btRigidBody::btRigidBodyConstructionInfo info(0.0, motion, bvhTriangleMeshShape);	//create the constructioninfo, you can create multiple bodies with the same info
 	btRigidBody* body = new btRigidBody(info);	//let's create the body itself
 	body->setRestitution(1.0);
+	body->setUserIndex(200);
 
 	return new RigidBodyComponent(body);
 }
