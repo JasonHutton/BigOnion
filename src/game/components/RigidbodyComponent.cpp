@@ -51,8 +51,13 @@ void RigidBodyComponent::applyForce(Vector3f force)
 	btVector3 relativeForce = btVector3(force.x, force.y, force.z);
 	btMatrix3x3& boxRot = rigidBody->getWorldTransform().getBasis();
 	btVector3 correctedForce = boxRot * relativeForce;
-	btVector3 frontWheels = boxRot * btVector3(-1, 0, 0); // find the front of the car
-	rigidBody->applyForce(correctedForce, frontWheels);
+	rigidBody->applyCentralForce(correctedForce);
+}
+
+void RigidBodyComponent::applyTorque(Vector3f torque)
+{
+	//for turning
+	rigidBody->applyTorque(btVector3(torque.x, torque.y, torque.z));
 }
 
 /*
