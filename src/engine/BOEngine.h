@@ -14,6 +14,7 @@
 #include "graphic/ThirdPersonCamera.h"
 #include "../game/components/RenderComponent.h"
 #include "../src/engine/audio/AudioEngine.h"
+#include "../game/components/AudioPlayerComponent.h"
 
 #include "ECS/GameWorld.h"
 #include "../game/components/RigidbodyComponent.h"
@@ -40,12 +41,16 @@ public:
 
 	void exitInError(const std::string& error);
 	int exit() const { return exitCode; }
+	
+	static int gwidth;
+	static int gHeight;
 
 private:
 	std::chrono::time_point<std::chrono::high_resolution_clock> currentTime;
 	std::chrono::duration<double> accumulator;
 	
 	int exitCode;
+	
 
 	std::vector<RenderComponent*> renderComponents;
 };
