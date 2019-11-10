@@ -91,7 +91,7 @@ const string& FileSystem::FindFile(const string& iFile)
 	if (FileExistsInPath(detail::m_basePath.c_str(), iFile.c_str()))
 		return detail::m_basePath;
 
-	throw exception("File not found.");
+	throw exception(iFile.c_str());
 }
 
 bool FileSystem::FileExistsInPath(const string& path, const string& iFile)

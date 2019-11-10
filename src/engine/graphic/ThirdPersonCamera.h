@@ -9,7 +9,7 @@ public:
 	float cameraDistance = 12.0f;
 	float cameraHeight = 1.3f;
 	float pitch = glm::radians(90.0f);
-	float rotateSpeed = glm::radians(50.0f); // 50 degress per second
+	float rotateSpeed = glm::radians(60.0f); // 60 degress per second
 
 	ThirdPersonCamera();
 	~ThirdPersonCamera();

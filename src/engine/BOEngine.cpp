@@ -119,6 +119,14 @@ void BOEngine::render()
 
 		rc->model.Draw();
 	}
+
+	// draw skybox as last
+	this->skybox.skyboxShader->use();
+	view = glm::mat4(glm::mat3(tpCamera.GetViewMatrix())); // remove translation from the view matrix
+	this->skybox.skyboxShader->setMat4("view", view);
+	this->skybox.skyboxShader->setMat4("projection", projection);
+	// skybox cube
+	this->skybox.draw();
 }
 
 /*
