@@ -14,8 +14,6 @@
 #include "imgui/imgui_impl_glfw_gl3.h"
 #include "components/RaceGameComponent.h"
 
-
-
 // functions
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void mouse_callback(GLFWwindow* window, double xpos, double ypos);
