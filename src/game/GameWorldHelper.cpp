@@ -5,6 +5,8 @@
 #include "components/TypeTestComponent.h"
 #include "components/CarControlComponent.h"
 
+#include "../../Settings.h"
+
 /*
 	Loads a test scene into the given BOEngine.
 */
@@ -79,9 +81,9 @@ void GameWorldHelper::initTestScene(BOEngine* engine)
 	//background music
 	GameObject* background_music = new  GameObject("BackgroundMusic");
 	engine->gameWorld->addGameObject(background_music);
-	background_music->addComponent(new AudioPlayerComponent("game/assets/sounds/start.mp3", 1, false, true, false));
+	background_music->addComponent(new AudioPlayerComponent("game/assets/sounds/start.mp3", 0.5, false, true, false));
 	background_music->getComponent<AudioPlayerComponent>()->onAddToGameWorld();
-	background_music->getComponent<AudioPlayerComponent>()->volume(0.5);
+	background_music->getComponent<AudioPlayerComponent>()->volume(Settings::g_MusicVolume.GetDouble());
 	background_music->getComponent<AudioPlayerComponent>()->play();
 
 
@@ -96,13 +98,15 @@ void GameWorldHelper::initTestScene(BOEngine* engine)
 
 	//test car engine sounds
 
-	suitMan->addComponent(new AudioPlayerComponent("game/assets/sounds/startup.wav", 30, true, false, false));
+	suitMan->addComponent(new AudioPlayerComponent("game/assets/sounds/startup.wav", 30.0, true, false, false));
 	suitMan->getComponent<AudioPlayerComponent>()->onAddToGameWorld();
+	suitMan->getComponent<AudioPlayerComponent>()->volume(Settings::g_SoundVolume.GetDouble());;
 	suitMan->getComponent<AudioPlayerComponent>()->play();
 	Sleep(2000);
-	suitMan->addComponent(new AudioPlayerComponent("game/assets/sounds/idle.wav", 20, true, true, false));
+	suitMan->addComponent(new AudioPlayerComponent("game/assets/sounds/idle.wav", 20.0, true, true, false));
 	suitMan->getComponent<AudioPlayerComponent>()->onAddToGameWorld();
 	suitMan->getComponent<AudioPlayerComponent>()->setSpeed(0);
+	suitMan->getComponent<AudioPlayerComponent>()->volume(Settings::g_SoundVolume.GetDouble());;
 	suitMan->getComponent<AudioPlayerComponent>()->play();
 
 
