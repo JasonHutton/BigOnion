@@ -36,6 +36,7 @@
     <ClCompile Include="src\game\components\AudioPlayerComponent.cpp" />
     <ClCompile Include="src\engine\ECS\ComponentManager.cpp" />
     <ClCompile Include="src\game\components\CarControlComponent.cpp" />
+    <ClCompile Include="src\game\components\RaceGameComponent.cpp" />
     <ClCompile Include="src\game\components\RigidBodyComponent.cpp" />
     <ClCompile Include="src\game\components\RenderComponent.cpp" />
     <ClCompile Include="File.cpp" />
@@ -62,6 +63,7 @@
     <ClInclude Include="AudioListenerComponent.h" />
     <ClInclude Include="Command.h" />
     <ClInclude Include="CommandSystem.h" />
+    <ClInclude Include="src\game\components\RaceGameComponent.h" />
     <ClInclude Include="src\engine\input\ContextControl.h" />
     <ClInclude Include="include\imgui\imconfig.h" />
     <ClInclude Include="include\imgui\imgui.h" />

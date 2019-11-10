@@ -14,6 +14,7 @@
 #include "graphic/ThirdPersonCamera.h"
 #include "../game/components/RenderComponent.h"
 #include "../src/engine/audio/AudioEngine.h"
+#include "../game/components/AudioPlayerComponent.h"
 
 #include "ECS/GameWorld.h"
 #include "../game/components/RigidbodyComponent.h"
