@@ -77,7 +77,7 @@ void GameWorldHelper::initTestScene(BOEngine* engine)
 	carControl->tires = tires;
 
 	//background music
-	GameObject* background_music = new  GameObject("BackGroundMusic");
+	GameObject* background_music = new  GameObject("BackgroundMusic");
 	engine->gameWorld->addGameObject(background_music);
 	background_music->addComponent(new AudioPlayerComponent("game/assets/sounds/start.mp3", 1, false, true, false));
 	background_music->getComponent<AudioPlayerComponent>()->onAddToGameWorld();
@@ -93,6 +93,8 @@ void GameWorldHelper::initTestScene(BOEngine* engine)
 	suitMan->addComponent(new RenderComponent(engine, "game/assets/nanosuit/nanosuit.obj", shader)); // connect object - model
 	suitMan->addComponent(RigidBodyComponent::createWithCylinder(0.75, 1.5, 0.25, 1.0)); // connect object - rigibody
 	engine->gameWorld->addGameObject(suitMan); // maybe auto register?
+
+	//test car engine sounds
 
 	suitMan->addComponent(new AudioPlayerComponent("game/assets/sounds/startup.wav", 30, true, false, false));
 	suitMan->getComponent<AudioPlayerComponent>()->onAddToGameWorld();
