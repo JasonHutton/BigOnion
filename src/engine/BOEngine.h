@@ -43,12 +43,16 @@ public:
 
 	void exitInError(const std::string& error);
 	int exit() const { return exitCode; }
+	
+	static int gwidth;
+	static int gHeight;
 
 private:
 	std::chrono::time_point<std::chrono::high_resolution_clock> currentTime;
 	std::chrono::duration<double> accumulator;
 	
 	int exitCode;
+	
 
 	std::vector<RenderComponent*> renderComponents;
 };

@@ -9,14 +9,12 @@
 BOEngine::BOEngine()
 {
 }
-
 /*
 	Initializes the OpenGL context and some important local variables.
 */
 void BOEngine::initialize()
 {
 	std::cout << "BOEngine::initialize" << std::endl;
-
 	// glfw: initialize and configure
 	// ------------------------------
 	glfwInit();
@@ -96,11 +94,16 @@ void BOEngine::render()
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 
-	int scrWidth = 10;
-	int scrHeight = 8;
+
+	 int scrWidth = 10; //TODO get from window
+	 int scrHeight = 8; //TODO get from window
+
 
 	glfwGetWindowSize(window, &scrWidth, &scrHeight);
 
+	gwidth = scrWidth;
+	gHeight = scrHeight;
+	
 	// view/projection transformations
 	glm::mat4 projection = glm::perspective(glm::radians(ZOOM), (float)scrWidth / (float)scrHeight, 0.1f, 100.0f);
 	glm::mat4 view = tpCamera.GetViewMatrix();
@@ -128,6 +131,9 @@ void BOEngine::render()
 	// skybox cube
 	this->skybox.draw();
 }
+
+
+
 
 /*
 	Adds a RenderComponent to the scene.
