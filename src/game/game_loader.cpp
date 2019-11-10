@@ -41,9 +41,11 @@ Vector3 vel{ 0,0,0 };
 
 bool show_demo_window = true;
 bool show_another_window = false;
-bool show_GameMenu_window = true;
+bool show_GameMenu_window = true;//
 bool show_HighScore_window = false;
 bool stopgame = false;
+bool gamewin = false;
+bool gamelost = false;
 int stopcase = 0;
 bool showmouse = true;
 int mousecase = 0;
@@ -284,7 +286,6 @@ void GameLoader::startGame() {
 		
 		if (show_GameMenu_window)
 		{
-			
 			ImGui::SetNextWindowSize(ImVec2(windowW, windowH));
 			ImGui::SetNextWindowPos(ImVec2(0, 0));             
 			ImGui::StyleColorsDark();
@@ -322,7 +323,7 @@ void GameLoader::startGame() {
 			ImGui::SetNextWindowSize(ImVec2(windowW, windowH));
 			ImGui::SetNextWindowPos(ImVec2(0, 0));
 			ImGui::StyleColorsDark();
-			ImGui::Begin("Big Onion", &show_HighScore_window, flags);
+			ImGui::Begin("highscore", &show_HighScore_window, flags);
 			ImGui::SetCursorPos(ImVec2(0.0f, 0.0f));
 			if (ImGui::Button("Back", ImVec2(200.0f, 60.0f)))
 			{
@@ -333,13 +334,56 @@ void GameLoader::startGame() {
 			
 			ImGui::SetNextWindowSize(ImVec2(windowW/2, windowH/2));
 			ImGui::SetNextWindowPos(ImVec2(windowW / 2- windowW / 3.3, windowH / 2- windowH / 3.3));
-			ImGui::Begin("Big Onion", &show_HighScore_window, flags);
+			ImGui::Begin("highscore", &show_HighScore_window, flags);
 
 			ImVec2 scoreW = ImGui::CalcTextSize("High Score", NULL, true);
 			ImGui::SetCursorPos(ImVec2((windowW / 3.3) - (scoreW.x / 2), 0.0f));
 			ImGui::TextColored(ImVec4(1.0f, 0.0f, 0.0f, 1.0f), "High Score");
 
 			ImGui::ListBox("", &selectscore, scores, IM_ARRAYSIZE(scores));
+			ImGui::End();
+		}
+		//***********win window******************
+		if (gamewin)
+		{
+			ImGui::SetNextWindowSize(ImVec2(windowW, windowH));
+			ImGui::SetNextWindowPos(ImVec2(0, 0));
+			ImGui::StyleColorsDark();
+			ImGui::Begin("win", &gamewin, flags);
+
+			ImVec2 scoreW = ImGui::CalcTextSize("Your score:   ", NULL, true);
+			ImGui::SetCursorPos(ImVec2((windowW / 2) - (scoreW.x / 2), 100.0f));
+			ImGui::TextColored(ImVec4(1.0f, 0.0f, 1.0f, 1.0f), "Score: %.d", score1);
+
+			ImGui::SetCursorPos(ImVec2((windowW / 2) - (windowW / 4), 200.0f));
+			if (ImGui::Button("Try Again", ImVec2(windowW / 2, 50.0f))) {
+				gamewin = false;
+			}
+			ImGui::SetCursorPos(ImVec2((windowW / 2) - (windowW / 4), 300.0f));
+			if (ImGui::Button("Back Menu", ImVec2(windowW / 2, 50.0f))) {
+				gamewin = false;
+				show_GameMenu_window = true;
+			}
+			ImGui::End();
+		}
+
+		//***********lost window******************
+		if (gamelost)
+		{
+			ImGui::SetNextWindowSize(ImVec2(windowW, windowH));
+			ImGui::SetNextWindowPos(ImVec2(0, 0));
+			ImGui::StyleColorsDark();
+			ImGui::Begin("lost", &gamelost, flags);
+
+			ImGui::SetCursorPos(ImVec2((windowW / 2) - (windowW / 4), 100.0f));
+			if (ImGui::Button("Restar Game", ImVec2(windowW / 2, 50.0f))) {
+				gamelost = false;
+			}
+			ImGui::SetCursorPos(ImVec2((windowW / 2) - (windowW / 4), 200.0f));
+			if (ImGui::Button("Back Menu", ImVec2(windowW / 2, 50.0f))) {
+				gamelost = false;
+				show_GameMenu_window = true;
+			}
 			ImGui::End();
 		}
 		
