@@ -403,6 +403,7 @@ void GameLoader::startGame() {
 			ImGui::SetCursorPos(ImVec2((windowW / 2) - (windowW / 4), 200.0f));
 			if (ImGui::Button("Try Again", ImVec2(windowW / 2, 50.0f))) {
 				gamewin = false;
+				reload();
 			}
 			ImGui::SetCursorPos(ImVec2((windowW / 2) - (windowW / 4), 300.0f));
 			if (ImGui::Button("Back Menu", ImVec2(windowW / 2, 50.0f))) {
