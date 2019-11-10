@@ -28,6 +28,9 @@ namespace Settings
 	extern Setting g_ResFullscreenBits;
 	extern Setting g_StartFullscreen;
 
+	extern Setting g_MusicVolume;
+	extern Setting g_SoundVolume;
+
 	extern struct Resolution
 	{
 		int width;
