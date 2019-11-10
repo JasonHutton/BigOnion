@@ -72,6 +72,11 @@ Vector3f RigidBodyComponent::getVelocityRelativeToDirection()
 	return Vector3f(relativeVelocity.x(), relativeVelocity.y(), relativeVelocity.z());
 }
 
+void RigidBodyComponent::printInfo()
+{
+	std::cout << "total: " << rigidBody->getTotalForce().length() << std::endl;
+}
+
 /*
 	Returns a RigidBodyComponent with an attached Cube collider.
 */

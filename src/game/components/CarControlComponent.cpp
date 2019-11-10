@@ -6,23 +6,29 @@ const std::string CarControlComponent::typeID = "CarControl";
 
 void CarControlComponent::update(float deltaTime)
 {
-	rotateTiresAnima(GameInput::getVerticalAxis());
-	steerTiresAnima(GameInput::getHorizontalAxis());
+	// magic numbers ahoy!
+	float accelForce = 10;
+
+	// grab inputs
+	float forward = GameInput::getVerticalAxis();
+	float turn = GameInput::getHorizontalAxis();
+
+	// apply animations to tires
+	rotateTiresAnima(forward);
+	steerTiresAnima(turn);
+
+	// apply acceleration force
+	rb->applyForceRelativeToDirection(Vector3f(forward * accelForce, 0, 0));
 }
 
 void CarControlComponent::fixedUpdate(float deltaTime)
 {
 	// magic numbers ahoy!
 	float fullControlVel = 15;
-	float accelForce = 10;
 	float turnVel = 2.5;
 
 	// grab inputs
-	float inputY = GameInput::getVerticalAxis();
-	float inputX = GameInput::getHorizontalAxis();
-
-	// apply acceleration force
-	rb->applyForceRelativeToDirection(Vector3f(inputY * accelForce, 0, 0));
+	float turn = GameInput::getHorizontalAxis() * turnVel;
 
 	// get percentage of required speed for turning
 	Vector3f velocityVec = rb->getVelocityRelativeToDirection();
@@ -39,7 +45,7 @@ void CarControlComponent::fixedUpdate(float deltaTime)
 	}
 
 	// apply turning
-	rb->applyAngularVelocity(Vector3f(0, turnPercent * inputX * turnVel, 0));
+	rb->applyAngularVelocity(Vector3f(0, turnPercent * turn, 0));
 }
 
 void CarControlComponent::rotateTiresAnima(float speed)

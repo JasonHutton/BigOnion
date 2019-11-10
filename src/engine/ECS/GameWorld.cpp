@@ -60,7 +60,7 @@ bool GameWorld::removeGameObject(std::string id)
 */
 void GameWorld::updateGameObjects(float deltaTime)
 {
-	int iterations = physicsWorld->stepSimulation(deltaTime);
+	int iterations = physicsWorld->stepSimulation(deltaTime, 1, fixedDeltaTime);
 
 	for (int i = 0; i < iterations; ++i)
 	{
