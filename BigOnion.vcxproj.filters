@@ -186,6 +186,9 @@
     <ClCompile Include="AudioListenerComponent.cpp">
       <Filter>Source Files\game\components</Filter>
     </ClCompile>
+    <ClCompile Include="src\engine\graphic\ThirdPersonCamera.cpp">
+      <Filter>Source Files\engine\graphic</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\engine\BOEngine.h">
@@ -334,6 +337,9 @@
     </ClInclude>
     <ClInclude Include="AudioListenerComponent.h">
       <Filter>Header Files\game\components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\engine\graphic\ThirdPersonCamera.h">
+      <Filter>Header Files\engine\graphic</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

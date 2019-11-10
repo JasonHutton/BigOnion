@@ -11,6 +11,7 @@
 #include "graphic/camera.h"
 #include "graphic/model.h"
 #include "graphic/ShaderAttribute.h"
+#include "graphic/ThirdPersonCamera.h"
 #include "../game/components/RenderComponent.h"
 #include "../src/engine/audio/AudioEngine.h"
 
@@ -24,7 +25,8 @@ class BOEngine
 
 public: 
 	GLFWwindow* window;
-	Camera camera;
+	Camera camera; // free camera
+	ThirdPersonCamera tpCamera;
 	GameWorld* gameWorld = nullptr;
 	AudioEngine audio;
 

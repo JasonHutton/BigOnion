@@ -4,6 +4,7 @@
 #include "../src/game/components/AudioPlayerComponent.h"
 #include "components/TypeTestComponent.h"
 #include "components/CarControlComponent.h"
+#include "../../Settings.h"
 
 /*
 	Loads a test scene into the given BOEngine.
@@ -48,7 +49,7 @@ void GameWorldHelper::initTestScene(BOEngine* engine)
 	shader->setFloat("pointLights[1].quadratic", 0.032);
 
 	std::string strategy[] = {CarControlComponent::typeID, RigidBodyComponent::typeID, RenderComponent::typeID};
-	engine->gameWorld = new GameWorld(strategy, 3);
+	engine->gameWorld = new GameWorld(strategy, 3, 1.0/60.0);
 
 	Vector3f carPos = Vector3f(15.0, 5.0, 0);
 	GameObject* player_car = new  GameObject("PlayerCar");
@@ -57,7 +58,7 @@ void GameWorldHelper::initTestScene(BOEngine* engine)
 	player_car->addComponent(new RenderComponent(engine, "game/assets/avent/Avent_red_notires.obj", shader)); // no tires
 	// player_car->addComponent(new RenderComponent(engine, "game/assets/avent/Avent_red.obj", shader));
 	player_car->addComponent(RigidBodyComponent::createWithCube(1.0, 0.3, 1.0, 1.0));
-	CarControlComponent* carControl = new CarControlComponent();
+	CarControlComponent* carControl = new CarControlComponent(10, 15, 2.5);
 	player_car->addComponent(carControl);
 	engine->gameWorld->addGameObject(player_car);
 
@@ -77,11 +78,11 @@ void GameWorldHelper::initTestScene(BOEngine* engine)
 	carControl->tires = tires;
 
 	//background music
-	GameObject* background_music = new  GameObject("BackGroundMusic");
+	GameObject* background_music = new  GameObject("BackgroundMusic");
 	engine->gameWorld->addGameObject(background_music);
 	background_music->addComponent(new AudioPlayerComponent("game/assets/sounds/start.mp3", 1, false, true, false));
 	background_music->getComponent<AudioPlayerComponent>()->onAddToGameWorld();
-	background_music->getComponent<AudioPlayerComponent>()->volume(0.5);
+	background_music->getComponent<AudioPlayerComponent>()->volume(0.5 * Settings::g_MusicVolume.GetDouble());
 	background_music->getComponent<AudioPlayerComponent>()->play();
 
 
@@ -94,11 +95,13 @@ void GameWorldHelper::initTestScene(BOEngine* engine)
 	suitMan->addComponent(RigidBodyComponent::createWithCylinder(0.75, 1.5, 0.25, 1.0)); // connect object - rigibody
 	engine->gameWorld->addGameObject(suitMan); // maybe auto register?
 
-	suitMan->addComponent(new AudioPlayerComponent("game/assets/sounds/startup.wav", 30, true, false, false));
+	//test car engine sounds
+
+	suitMan->addComponent(new AudioPlayerComponent("game/assets/sounds/startup.wav", 30 * Settings::g_SoundVolume.GetDouble(), true, false, false));
 	suitMan->getComponent<AudioPlayerComponent>()->onAddToGameWorld();
 	suitMan->getComponent<AudioPlayerComponent>()->play();
 	Sleep(2000);
-	suitMan->addComponent(new AudioPlayerComponent("game/assets/sounds/idle.wav", 20, true, true, false));
+	suitMan->addComponent(new AudioPlayerComponent("game/assets/sounds/idle.wav", 20 * Settings::g_SoundVolume.GetDouble(), true, true, false));
 	suitMan->getComponent<AudioPlayerComponent>()->onAddToGameWorld();
 	suitMan->getComponent<AudioPlayerComponent>()->setSpeed(0);
 	suitMan->getComponent<AudioPlayerComponent>()->play();

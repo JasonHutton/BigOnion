@@ -123,6 +123,13 @@ void GameLoader::startGame() {
 			processInput(window);
 		}
 
+		GameObject* lookTarget = engine->gameWorld->getGameObjectById("PlayerCar");
+		if (lookTarget) {
+			glm::vec3 rot = lookTarget->transform.rotation.getGlmVec3();
+			glm::vec3 pos = lookTarget->transform.position.getGlmVec3() + glm::vec3(0.0f, 1.15f, 0.0f); // look a few upper
+			engine->tpCamera.update(deltaTime, lookTarget->transform.position.getGlmVec3(), rot);
+		}
+
 		engine->updateEngine(deltaTime);
 
 		updateListener();
@@ -387,13 +394,11 @@ void GameLoader::processInput(GLFWwindow* window)
 				break;
 			case UB_MOVE_LEFT:
 				//camera->ProcessKeyboard(LEFT, deltaTime);
-				GameInput::setVerticalAxis(GameInput::getVerticalAxis() * 0.866);
-				GameInput::setHorizontalAxis(-0.5);
+				GameInput::setHorizontalAxis(1.0);
 				break;
 			case UB_MOVE_RIGHT:
 				//camera->ProcessKeyboard(RIGHT, deltaTime);
-				GameInput::setVerticalAxis(GameInput::getVerticalAxis() * 0.866);
-				GameInput::setHorizontalAxis(0.5);
+				GameInput::setHorizontalAxis(-1.0);
 				break;
 			case UB_NONE:
 			default:
