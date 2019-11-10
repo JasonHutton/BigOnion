@@ -60,6 +60,11 @@ void RigidBodyComponent::applyTorque(Vector3f torque)
 	rigidBody->applyTorque(btVector3(torque.x, torque.y, torque.z));
 }
 
+void RigidBodyComponent::applyAngularVelocity(Vector3f velocity)
+{
+	rigidBody->setAngularVelocity(btVector3(velocity.x, velocity.y, velocity.z));
+}
+
 /*
 	Returns a RigidBodyComponent with an attached Cube collider.
 */
