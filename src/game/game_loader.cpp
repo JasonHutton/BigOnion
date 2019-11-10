@@ -255,7 +255,7 @@ void GameLoader::startGame() {
 
 		int speed1 = 100;
 		
-		ImGui::TextColored(ImVec4(1.0f, 0.0f, 0.0f, 1.0f), "Speed:%.d km/h",speed1);
+		ImGui::TextColored(ImVec4(1.0f, 0.0f, 0.0f, 1.0f), "Speed:%d km/h",(int)speed);
 		ImGui::End();
 
 		//***************HUD: stop game***************
@@ -394,17 +394,29 @@ void calculateSpeed(float deltaTime)
 	}
 	else
 	{
-		if (speed < 10)
+		if (speed < 0)
 		{
-			speed = speed + deltaTime * 5;
+			speed = 0;
 		}
-		else if (speed < 100)
+		else if (speed < 10)
+		{
+			speed = speed + deltaTime * 10;
+		}
+		else if (speed < 50)
 		{
 			speed = speed + deltaTime * 40;
 		}
-		else if (speed < 250)
+		else if (speed < 100)
 		{
-			speed = speed + deltaTime * 60;
+			speed = speed + deltaTime *80;
+		}
+		else if (speed < 150)
+		{
+			speed = speed + deltaTime * 100;
+		}
+		else if (speed < 201)
+		{
+			speed = speed + deltaTime * 120;
 		}
 	}
 }
