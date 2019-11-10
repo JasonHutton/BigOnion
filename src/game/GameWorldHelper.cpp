@@ -48,7 +48,7 @@ void GameWorldHelper::initTestScene(BOEngine* engine)
 	shader->setFloat("pointLights[1].quadratic", 0.032);
 
 	std::string strategy[] = {CarControlComponent::typeID, RigidBodyComponent::typeID, RenderComponent::typeID, RaceGameComponent::typeID };
-	engine->gameWorld = new GameWorld(strategy, 4);
+	engine->gameWorld = new GameWorld(strategy, 4, 1.0 / 60.0);
 
 	Vector3f carPos = Vector3f(0.0f, -3.0f, -43.0f);
 	GameObject* player_car = new  GameObject("PlayerCar");
@@ -58,7 +58,7 @@ void GameWorldHelper::initTestScene(BOEngine* engine)
 	player_car->addComponent(new RenderComponent(engine, "game/assets/avent/Avent_red_notires.obj", shader)); // no tires
 	// player_car->addComponent(new RenderComponent(engine, "game/assets/avent/Avent_red.obj", shader));
 	player_car->addComponent(RigidBodyComponent::createWithCube(1.0, 0.3, 1.0, 1.0));
-	CarControlComponent* carControl = new CarControlComponent();
+	CarControlComponent* carControl = new CarControlComponent(10, 15, 2.5);
 	player_car->addComponent(carControl);
 	player_car->addComponent(new RaceGameComponent());
 	engine->gameWorld->addGameObject(player_car);
@@ -79,12 +79,22 @@ void GameWorldHelper::initTestScene(BOEngine* engine)
 	carControl->tires = tires;
 
 	//background music
-	GameObject* background_music = new  GameObject("BackGroundMusic");
+	GameObject* background_music = new  GameObject("BackgroundMusic");
 	engine->gameWorld->addGameObject(background_music);
 	background_music->addComponent(new AudioPlayerComponent("game/assets/sounds/start.mp3", 1, false, true, false));
 	background_music->getComponent<AudioPlayerComponent>()->onAddToGameWorld();
 	background_music->getComponent<AudioPlayerComponent>()->volume(0.5);
 	background_music->getComponent<AudioPlayerComponent>()->play();
+
+
+	// create race track walls
+	GameObject* trackWall = new GameObject("RaceTrackWalls");
+	trackWall->transform.position = Vector3f(0, -3.1, 0);
+	trackWall->transform.rotation = Vector3f(0, 0, 0);
+	trackWall->transform.scale = Vector3f(1.0, 1.0, 1.0);
+	trackWall->addComponent(new RenderComponent(engine, "game/assets/track2/track_walls.obj", shader)); // connect object - model
+	trackWall->addComponent(RigidBodyComponent::createWithMesh(&trackWall->getComponent<RenderComponent>()->model, 0.0)); // connect object - rigibody
+	engine->gameWorld->addGameObject(trackWall);
 
 	// create race track
 	GameObject* raceTrack = new GameObject("RaceTrack");
@@ -95,15 +105,6 @@ void GameWorldHelper::initTestScene(BOEngine* engine)
 	//raceTrack->addComponent(new RenderComponent(engine, "game/assets/racetrack/racetrack.obj", shader)); // connect object - model
 	// raceTrack->addComponent(RigidBodyComponent::createWithMesh(&raceTrack->getComponent<RenderComponent>()->model, 0.0)); // connect object - rigibody
 	engine->gameWorld->addGameObject(raceTrack); // maybe auto register?
-
-		// create race track
-	GameObject* trackWall = new GameObject("RaceTrackWalls");
-	trackWall->transform.position = Vector3f(0, -3.1, 0);
-	trackWall->transform.rotation = Vector3f(0, 0, 0);
-	trackWall->transform.scale = Vector3f(1.0, 1.0, 1.0);
-	trackWall->addComponent(new RenderComponent(engine, "game/assets/track2/track_walls.obj", shader)); // connect object - model
-	trackWall->addComponent(RigidBodyComponent::createWithMesh(&trackWall->getComponent<RenderComponent>()->model, 0.0)); // connect object - rigibody
-	engine->gameWorld->addGameObject(trackWall);
 
 	// Light
 	GameObject* light = new  GameObject("Light");
