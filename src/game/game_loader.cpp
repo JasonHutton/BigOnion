@@ -53,7 +53,7 @@ bool showmouse = true;
 int mousecase = 0;
 float speed = 0;
 ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
-
+bool again = false;
 
 
 
@@ -381,7 +381,8 @@ void GameLoader::startGame() {
 			ImGui::End();
 		}
 		//***********win window******************
-		if (racePercentage * 100.0f >= 100) {
+		
+		if (racePercentage * 100.0f >= 100 && !again) {
 			gamewin = true;
 		}
 		if (gamewin)
@@ -402,8 +403,10 @@ void GameLoader::startGame() {
 
 			ImGui::SetCursorPos(ImVec2((windowW / 2) - (windowW / 4), 200.0f));
 			if (ImGui::Button("Try Again", ImVec2(windowW / 2, 50.0f))) {
-				gamewin = false;
 				reload();
+				again = true;
+				gamewin = false;
+				
 			}
 			ImGui::SetCursorPos(ImVec2((windowW / 2) - (windowW / 4), 300.0f));
 			if (ImGui::Button("Back Menu", ImVec2(windowW / 2, 50.0f))) {
