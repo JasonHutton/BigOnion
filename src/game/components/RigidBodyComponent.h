@@ -15,9 +15,10 @@ public:
 	void update(float deltaTime) override;
 	void onAddToGameWorld() override;
 	std::string componentTypeID() override { return "RigidBody"; }
-	void applyForce(Vector3f force);
+	void applyForceRelativeToDirection(Vector3f force);
 	void applyTorque(Vector3f torque);
 	void applyAngularVelocity(Vector3f velocity);
+	Vector3f getVelocityRelativeToDirection();
 
 	static RigidBodyComponent* createWithCube(float width, float height, float depth, float mass);
 	static RigidBodyComponent* createWithPlane();

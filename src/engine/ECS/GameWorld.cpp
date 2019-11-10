@@ -4,9 +4,10 @@
 /*
 	Initializes this Game World.
 */
-GameWorld::GameWorld(std::string updateStrategy[], size_t n)
+GameWorld::GameWorld(std::string updateStrategy[], size_t n, float fixedDeltaTime)
 	: gameObjects()
 	, componentManager(updateStrategy, n)
+	, fixedDeltaTime(fixedDeltaTime)
 {
 	collisionConfig = new btDefaultCollisionConfiguration();
 	dispatcher = new btCollisionDispatcher(collisionConfig);
@@ -63,7 +64,7 @@ void GameWorld::updateGameObjects(float deltaTime)
 
 	for (int i = 0; i < iterations; ++i)
 	{
-		componentManager.fixedUpdate(deltaTime);
+		componentManager.fixedUpdate(fixedDeltaTime);
 	}
 
 	componentManager.update(deltaTime);

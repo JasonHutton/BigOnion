@@ -48,7 +48,7 @@ void GameWorldHelper::initTestScene(BOEngine* engine)
 	shader->setFloat("pointLights[1].quadratic", 0.032);
 
 	std::string strategy[] = {CarControlComponent::typeID, RigidBodyComponent::typeID, RenderComponent::typeID};
-	engine->gameWorld = new GameWorld(strategy, 3);
+	engine->gameWorld = new GameWorld(strategy, 3, 1.0/60.0);
 
 	Vector3f carPos = Vector3f(15.0, 5.0, 0);
 	GameObject* player_car = new  GameObject("PlayerCar");
