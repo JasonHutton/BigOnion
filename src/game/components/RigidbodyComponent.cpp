@@ -16,7 +16,7 @@ void RigidBodyComponent::update(float deltaTime)
 	// position
 	btTransform bTransform;
 
-	if (rigidBody->getCollisionShape()->getShapeType() == STATIC_PLANE_PROXYTYPE || rigidBody->getMass() == 0) {
+	if (rigidBody->getMass() == 0) {
 		bTransform = rigidBody->getWorldTransform();
 	}
 	else {
@@ -132,7 +132,7 @@ RigidBodyComponent* RigidBodyComponent::createWithCylinder(float width, float he
 	return new RigidBodyComponent(body);
 }
 
-RigidBodyComponent* RigidBodyComponent::createWithMesh(Model* model, float mass)
+RigidBodyComponent* RigidBodyComponent::createWithMesh(Model* model)
 {
 	btTransform t;	//position and rotation
 	t.setIdentity();
@@ -148,14 +148,10 @@ RigidBodyComponent* RigidBodyComponent::createWithMesh(Model* model, float mass)
 		}
 	}
 
-	btBvhTriangleMeshShape* bvhTriangleMeshShae = new btBvhTriangleMeshShape(triangleMesh, false);
-
-	btVector3 inertia(0, 0, 0);	//inertia is 0,0,0 for static object, else
-	if (mass != 0.0)
-		bvhTriangleMeshShae->calculateLocalInertia(mass, inertia);	//it can be determined by this function (for all kind of shapes)
+	btBvhTriangleMeshShape* bvhTriangleMeshShape = new btBvhTriangleMeshShape(triangleMesh, false);
 
 	btMotionState* motion = new btDefaultMotionState(t);	//set the position (and motion)
-	btRigidBody::btRigidBodyConstructionInfo info(mass, motion, bvhTriangleMeshShae, inertia);	//create the constructioninfo, you can create multiple bodies with the same info
+	btRigidBody::btRigidBodyConstructionInfo info(0.0, motion, bvhTriangleMeshShape);	//create the constructioninfo, you can create multiple bodies with the same info
 	btRigidBody* body = new btRigidBody(info);	//let's create the body itself
 
 	return new RigidBodyComponent(body);

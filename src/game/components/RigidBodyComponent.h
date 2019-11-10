@@ -24,7 +24,7 @@ public:
 	static RigidBodyComponent* createWithCube(float width, float height, float depth, float mass);
 	static RigidBodyComponent* createWithPlane();
 	static RigidBodyComponent* createWithCylinder(float width, float height, float depth, float mass);
-	static RigidBodyComponent* createWithMesh(Model* model, float mass);
+	static RigidBodyComponent* createWithMesh(Model* model);
 
 private:
 	btRigidBody* rigidBody;
