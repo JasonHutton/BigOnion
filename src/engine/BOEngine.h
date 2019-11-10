@@ -38,6 +38,9 @@ public:
 
 	void exitInError(const std::string& error);
 	int exit() const { return exitCode; }
+	
+	static int gwidth;
+	static int gHeight;
 
 private:
 	const std::chrono::duration<double> MAX_FRAMETIME = std::chrono::duration<double>(0.25);
@@ -47,6 +50,7 @@ private:
 	std::chrono::duration<double> accumulator;
 	
 	int exitCode;
+	
 
 	std::vector<RenderComponent*> renderComponents;
 };
