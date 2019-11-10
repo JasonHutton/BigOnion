@@ -61,11 +61,17 @@ GameLoader::GameLoader()
 {
 }
 
+bool callbackFunc(btManifoldPoint& cp, const btCollisionObjectWrapper* colObj0Wrap, int partId0, int index0, const btCollisionObjectWrapper* colObj1Wrap, int partId1, int index1)
+{
+	cout << "collision" << endl;
+	return false;
+}
+
 void GameLoader::createGame() {
 
 	std::cout << "createGame" << std::endl;
 
-	
+	gContactAddedCallback = callbackFunc;
 	//audio.PlaySounds("game/assets/sounds/test.wav", Vector3{ 0, 0, -10 }, audio.VolumeTodB(1.0f));
 	//test gun sound on the right
 	//audio.PlaySounds("game/assets/sounds/gun.wav", Vector3{ 3, 0, 0}, audio.VolumeTodB(1.0f));

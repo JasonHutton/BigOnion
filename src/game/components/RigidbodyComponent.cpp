@@ -93,8 +93,10 @@ RigidBodyComponent* RigidBodyComponent::createWithCube(float width, float height
 	btMotionState* motion = new btDefaultMotionState(t);	//set the position (and motion)
 	btRigidBody::btRigidBodyConstructionInfo info(mass, motion, box, inertia);	//create the constructioninfo, you can create multiple bodies with the same info
 	btRigidBody* body = new btRigidBody(info);	//let's create the body itself
+
 	body->setActivationState(DISABLE_DEACTIVATION);
 	body->setRestitution(bounciness);
+	body->setCollisionFlags(body->getCollisionFlags() | btCollisionObject::CF_CUSTOM_MATERIAL_CALLBACK);
 	return new RigidBodyComponent(body);
 }
 
