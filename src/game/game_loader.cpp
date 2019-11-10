@@ -412,7 +412,7 @@ void accelSound(GameObject* player)
 	if (speed >= 0)
 	{
 		player->getComponent<AudioPlayerComponent>()->setSpeed(speed);
-		printf("Speed: %f\n", speed);
+		//printf("Speed: %f\n", speed);
 	}
 }
 // process all input: query GLFW whether relevant keys are pressed/released this frame and react accordingly

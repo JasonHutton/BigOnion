@@ -140,24 +140,6 @@ void GameWorldHelper::initTestScene(BOEngine* engine)
 	ground->addComponent(RigidBodyComponent::createWithPlane());
 	engine->gameWorld->addGameObject(ground);
 
-	// create suit man
-	GameObject* suitMan = new GameObject("SuitMan");
-	suitMan->transform.position = Vector3f(0, 20, 0);
-	suitMan->transform.rotation = Vector3f(45, 45, 45);
-	suitMan->transform.scale = Vector3f(0.2f, 0.2f, 0.2f);
-	suitMan->addComponent(new RenderComponent(engine, "game/assets/nanosuit/nanosuit.obj", shader)); // connect object - model
-	suitMan->addComponent(RigidBodyComponent::createWithCylinder(0.75, 1.5, 0.25, 1.0)); // connect object - rigibody
-	engine->gameWorld->addGameObject(suitMan); // maybe auto register?
-
-	suitMan->addComponent(new AudioPlayerComponent("game/assets/sounds/startup.wav", 30, true, false, false));
-	suitMan->getComponent<AudioPlayerComponent>()->onAddToGameWorld();
-	suitMan->getComponent<AudioPlayerComponent>()->play();
-	//Sleep(2000);
-	suitMan->addComponent(new AudioPlayerComponent("game/assets/sounds/idle.wav", 20, true, true, false));
-	suitMan->getComponent<AudioPlayerComponent>()->onAddToGameWorld();
-	suitMan->getComponent<AudioPlayerComponent>()->setSpeed(0);
-	suitMan->getComponent<AudioPlayerComponent>()->play();
-
 	// create box
 	GameObject* box = new  GameObject("Box");
 	box->transform.position = Vector3f(5.0, 10.0, 0);
