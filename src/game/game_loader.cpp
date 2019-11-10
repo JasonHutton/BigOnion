@@ -44,7 +44,7 @@ bool show_demo_window = true;
 bool show_another_window = false;
 bool show_GameMenu_window = true;//
 bool show_HighScore_window = false;
-bool stopgame = false;
+bool stopgame = true;
 bool gamewin = false;
 bool gamelost = false;
 bool isPressing = false;
@@ -245,6 +245,9 @@ void GameLoader::startGame() {
 				}
 
 			}
+			if (time>6) {
+				stopgame = false;
+			}
 			
 		}
 			
@@ -378,12 +381,20 @@ void GameLoader::startGame() {
 			ImGui::End();
 		}
 		//***********win window******************
+		if (racePercentage * 100.0f >= 100) {
+			gamewin = true;
+		}
 		if (gamewin)
 		{
+			stopgame = true;
 			ImGui::SetNextWindowSize(ImVec2(windowW, windowH));
 			ImGui::SetNextWindowPos(ImVec2(0, 0));
 			ImGui::StyleColorsDark();
 			ImGui::Begin("win", &gamewin, flags);
+
+			ImVec2 winW = ImGui::CalcTextSize("Your Win", NULL, true);
+			ImGui::SetCursorPos(ImVec2((windowW / 2) - (winW.x / 2), 50.0f));
+			ImGui::TextColored(ImVec4(1.0f, 0.0f, 1.0f, 1.0f), "You Win");
 
 			ImVec2 scoreW = ImGui::CalcTextSize("Your score:   ", NULL, true);
 			ImGui::SetCursorPos(ImVec2((windowW / 2) - (scoreW.x / 2), 100.0f));
@@ -398,6 +409,7 @@ void GameLoader::startGame() {
 				gamewin = false;
 				show_GameMenu_window = true;
 			}
+			
 			ImGui::End();
 		}
 
