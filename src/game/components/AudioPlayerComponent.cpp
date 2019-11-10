@@ -8,7 +8,7 @@ float fVolume;
 bool surround, looping, streaming;
 string soundName;
 
-AudioPlayerComponent::AudioPlayerComponent(AudioEngine audio, const string& strSoundName,float volumeDb, bool is3D, bool isLooping, bool isStreaming)
+AudioPlayerComponent::AudioPlayerComponent(const string& strSoundName,float volumeDb, bool is3D, bool isLooping, bool isStreaming)
 {
 	soundName = strSoundName;
 	surround = is3D;
