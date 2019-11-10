@@ -7,6 +7,7 @@ class CarControlComponent :
 	public Component
 {
 public:
+	CarControlComponent(float accelForce, float fullControlVel, float turnVel);
 
 	static const std::string typeID;
 	std::string componentTypeID() override { return typeID; }
@@ -21,4 +22,8 @@ private:
 
 	void rotateTiresAnima(float speed);
 	void steerTiresAnima(float angle);
+
+	const float accelForce;
+	const float fullControlVel;
+	const float turnVel;
 };

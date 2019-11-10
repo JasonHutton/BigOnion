@@ -57,7 +57,7 @@ void GameWorldHelper::initTestScene(BOEngine* engine)
 	player_car->addComponent(new RenderComponent(engine, "game/assets/avent/Avent_red_notires.obj", shader)); // no tires
 	// player_car->addComponent(new RenderComponent(engine, "game/assets/avent/Avent_red.obj", shader));
 	player_car->addComponent(RigidBodyComponent::createWithCube(1.0, 0.3, 1.0, 1.0));
-	CarControlComponent* carControl = new CarControlComponent();
+	CarControlComponent* carControl = new CarControlComponent(10, 15, 2.5);
 	player_car->addComponent(carControl);
 	engine->gameWorld->addGameObject(player_car);
 

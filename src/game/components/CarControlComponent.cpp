@@ -4,11 +4,16 @@
 
 const std::string CarControlComponent::typeID = "CarControl";
 
+CarControlComponent::CarControlComponent(float accelForce, float fullControlVel, float turnVel)
+	: accelForce(accelForce)
+	, fullControlVel(fullControlVel)
+	, turnVel(turnVel)
+	, rb(nullptr)
+{
+}
+
 void CarControlComponent::update(float deltaTime)
 {
-	// magic numbers ahoy!
-	float accelForce = 10;
-
 	// grab inputs
 	float forward = GameInput::getVerticalAxis();
 	float turn = GameInput::getHorizontalAxis();
@@ -23,10 +28,6 @@ void CarControlComponent::update(float deltaTime)
 
 void CarControlComponent::fixedUpdate(float deltaTime)
 {
-	// magic numbers ahoy!
-	float fullControlVel = 15;
-	float turnVel = 2.5;
-
 	// grab inputs
 	float turn = GameInput::getHorizontalAxis() * turnVel;
 
