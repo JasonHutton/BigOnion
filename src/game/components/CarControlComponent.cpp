@@ -22,8 +22,12 @@ void CarControlComponent::update(float deltaTime)
 	rotateTiresAnima(forward);
 	steerTiresAnima(turn);
 
-	// apply acceleration force
-	rb->applyForceRelativeToDirection(Vector3f(forward * accelForce, 0, 0));
+	// find z velocity for sliding
+	float velocityZ = rb->getVelocityRelativeToDirection().z;
+	cout << "velocity z" << velocityZ << endl;
+
+	// apply acceleration and anti sliding force
+	rb->applyForceRelativeToDirection(Vector3f(forward * accelForce, 0, -velocityZ));
 }
 
 void CarControlComponent::fixedUpdate(float deltaTime)
@@ -47,6 +51,10 @@ void CarControlComponent::fixedUpdate(float deltaTime)
 
 	// apply turning
 	rb->applyAngularVelocity(Vector3f(0, turnPercent * turn, 0));
+
+	// apply force opposite to sliding
+//	rb->applyForceRelativeToDirection(Vector3f(0, 0, -velocityVec.z));
+//	cout << "velocity z" << velocityVec.z << endl;
 }
 
 void CarControlComponent::rotateTiresAnima(float speed)

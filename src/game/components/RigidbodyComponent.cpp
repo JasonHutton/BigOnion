@@ -49,8 +49,10 @@ void RigidBodyComponent::applyForceRelativeToDirection(Vector3f force)
 {
 	//for moving forward and back, code taken from https://pybullet.org/Bullet/phpBB3/viewtopic.php?t=2366
 	btVector3 relativeForce = btVector3(force.x, force.y, force.z);
+	cout << "force z" << force.z << endl;
 	btMatrix3x3& boxRot = rigidBody->getWorldTransform().getBasis();
 	btVector3 correctedForce = boxRot * relativeForce;
+	cout << "corrected force z" << correctedForce.getZ() << endl;
 	rigidBody->applyCentralForce(correctedForce);
 }
 
@@ -72,6 +74,12 @@ Vector3f RigidBodyComponent::getVelocityRelativeToDirection()
 	return Vector3f(relativeVelocity.x(), relativeVelocity.y(), relativeVelocity.z());
 }
 
+Vector3f RigidBodyComponent::getVelocity()
+{
+	btVector3 velocity = rigidBody->getLinearVelocity();
+	return Vector3f(velocity.x(), velocity.y(), velocity.z());
+}
+
 void RigidBodyComponent::printInfo()
 {
 	std::cout << "total: " << rigidBody->getTotalForce().length() << std::endl;
@@ -80,7 +88,7 @@ void RigidBodyComponent::printInfo()
 /*
 	Returns a RigidBodyComponent with an attached Cube collider.
 */
-RigidBodyComponent* RigidBodyComponent::createWithCube(float width, float height, float depth, float mass, float bounciness)
+RigidBodyComponent* RigidBodyComponent::createWithCube(float width, float height, float depth, float mass, float bounciness, float friction)
 {
 	btTransform t;	//position and rotation
 	t.setIdentity();
@@ -95,13 +103,14 @@ RigidBodyComponent* RigidBodyComponent::createWithCube(float width, float height
 	btRigidBody* body = new btRigidBody(info);	//let's create the body itself
 	body->setActivationState(DISABLE_DEACTIVATION);
 	body->setRestitution(bounciness);
+	body->setFriction(friction);
 	return new RigidBodyComponent(body);
 }
 
 /*
 	Returns a RigidBodyComponent with an attached Plane collider.
 */
-RigidBodyComponent* RigidBodyComponent::createWithPlane()
+RigidBodyComponent* RigidBodyComponent::createWithPlane(float friction)
 {
 	btTransform t;
 	t.setIdentity();
@@ -110,7 +119,7 @@ RigidBodyComponent* RigidBodyComponent::createWithPlane()
 	btMotionState* motion = new btDefaultMotionState(t);
 	btRigidBody::btRigidBodyConstructionInfo info(0.0, motion, plane);
 	btRigidBody* body = new btRigidBody(info);
-
+	body->setFriction(friction);
 	return new RigidBodyComponent(body);
 }
 

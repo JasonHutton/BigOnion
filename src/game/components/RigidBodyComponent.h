@@ -19,10 +19,11 @@ public:
 	void applyTorque(Vector3f torque);
 	void applyAngularVelocity(Vector3f velocity);
 	Vector3f getVelocityRelativeToDirection();
+	Vector3f getVelocity();
 	void printInfo();
 
-	static RigidBodyComponent* createWithCube(float width, float height, float depth, float mass, float bounciness);
-	static RigidBodyComponent* createWithPlane();
+	static RigidBodyComponent* createWithCube(float width, float height, float depth, float mass, float bounciness, float friction);
+	static RigidBodyComponent* createWithPlane(float friction);
 	static RigidBodyComponent* createWithCylinder(float width, float height, float depth, float mass);
 	static RigidBodyComponent* createWithMesh(Model* model, float bounciness);
 
