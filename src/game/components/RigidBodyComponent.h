@@ -19,7 +19,6 @@ public:
 	void applyTorque(Vector3f torque);
 	void applyAngularVelocity(Vector3f velocity);
 	Vector3f getVelocityRelativeToDirection();
-	Vector3f getVelocity();
 	void printInfo();
 
 	static RigidBodyComponent* createWithCube(float width, float height, float depth, float mass, float bounciness, float friction);

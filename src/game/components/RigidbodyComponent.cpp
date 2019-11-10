@@ -52,7 +52,6 @@ void RigidBodyComponent::applyForceRelativeToDirection(Vector3f force)
 	cout << "force z" << force.z << endl;
 	btMatrix3x3& boxRot = rigidBody->getWorldTransform().getBasis();
 	btVector3 correctedForce = boxRot * relativeForce;
-	cout << "corrected force z" << correctedForce.getZ() << endl;
 	rigidBody->applyCentralForce(correctedForce);
 }
 
@@ -72,12 +71,6 @@ Vector3f RigidBodyComponent::getVelocityRelativeToDirection()
 	btMatrix3x3& boxRot = rigidBody->getWorldTransform().getBasis();
 	btVector3 relativeVelocity = boxRot * rigidBody->getLinearVelocity();
 	return Vector3f(relativeVelocity.x(), relativeVelocity.y(), relativeVelocity.z());
-}
-
-Vector3f RigidBodyComponent::getVelocity()
-{
-	btVector3 velocity = rigidBody->getLinearVelocity();
-	return Vector3f(velocity.x(), velocity.y(), velocity.z());
 }
 
 void RigidBodyComponent::printInfo()
