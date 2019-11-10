@@ -1,0 +1,24 @@
+# Blender MTL File: 'track.blend'
+# Material Count: 2
+
+newmtl None_bricks.jpg
+Ns 0.000000
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 0.800000 0.800000 0.800000
+Ke 0.0 0.0 0.0
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd 107310598-background-pattern-gray-concrete-floor-texture-or-cement-road-with-copy-space-for-text-decorated-.jpg
+
+newmtl None_bricks.jpg.001
+Ns 0.000000
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 0.800000 0.800000 0.800000
+Ke 0.0 0.0 0.0
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd 107310598-background-pattern-gray-concrete-floor-texture-or-cement-road-with-copy-space-for-text-decorated-.jpg

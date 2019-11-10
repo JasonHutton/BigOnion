@@ -4,7 +4,7 @@
 #include "../src/game/components/AudioPlayerComponent.h"
 #include "components/TypeTestComponent.h"
 #include "components/CarControlComponent.h"
-
+#include "components/RaceGameComponent.h"
 /*
 	Loads a test scene into the given BOEngine.
 */
@@ -18,9 +18,9 @@ void GameWorldHelper::initTestScene(BOEngine* engine)
 
 	shader->use();
 	shader->setVec3("dirLight.direction", -0.2f, -1.0f, -0.3f); //obj to light
-	shader->setVec3("dirLight.ambient", 0.05f, 0.05f, 0.05f);
+	shader->setVec3("dirLight.ambient", 0.15f, 0.15f, 0.15f);
 	shader->setVec3("dirLight.diffuse", 1.0f, 1.0f, 1.0f);
-	shader->setVec3("dirLight.specular", 1.0f, 1.0f, 1.0f);
+	shader->setVec3("dirLight.specular", 0.8f, 0.8f, 0.8f);
 
 	glm::vec3 pointLightPositions[] = {
 		glm::vec3(16.0f,  5.0f,  0.0f),
@@ -47,18 +47,20 @@ void GameWorldHelper::initTestScene(BOEngine* engine)
 	shader->setFloat("pointLights[1].linear", 0.09);
 	shader->setFloat("pointLights[1].quadratic", 0.032);
 
-	std::string strategy[] = {CarControlComponent::typeID, RigidBodyComponent::typeID, RenderComponent::typeID};
-	engine->gameWorld = new GameWorld(strategy, 3);
+	std::string strategy[] = {CarControlComponent::typeID, RigidBodyComponent::typeID, RenderComponent::typeID, RaceGameComponent::typeID };
+	engine->gameWorld = new GameWorld(strategy, 4, 1.0 / 60.0);
 
-	Vector3f carPos = Vector3f(15.0, 5.0, 0);
+	Vector3f carPos = Vector3f(0.0f, -3.0f, -43.0f);
 	GameObject* player_car = new  GameObject("PlayerCar");
 	player_car->transform.position = carPos;
+	player_car->transform.rotation = Vector3f(0.0f, 0.0f, 0.0f);
 	player_car->transform.scale = 1;
 	player_car->addComponent(new RenderComponent(engine, "game/assets/avent/Avent_red_notires.obj", shader)); // no tires
 	// player_car->addComponent(new RenderComponent(engine, "game/assets/avent/Avent_red.obj", shader));
 	player_car->addComponent(RigidBodyComponent::createWithCube(1.0, 0.3, 1.0, 1.0));
-	CarControlComponent* carControl = new CarControlComponent();
+	CarControlComponent* carControl = new CarControlComponent(10, 15, 2.5);
 	player_car->addComponent(carControl);
+	player_car->addComponent(new RaceGameComponent());
 	engine->gameWorld->addGameObject(player_car);
 	player_car->addComponent(new AudioPlayerComponent(audio,"game/assets/sounds/startup.wav", 1, false, false, false));
 	player_car->getComponent<AudioPlayerComponent>()->onAddToGameWorld();
@@ -95,24 +97,23 @@ void GameWorldHelper::initTestScene(BOEngine* engine)
 	background_music->getComponent<AudioPlayerComponent>()->volume(0.1);
 	background_music->getComponent<AudioPlayerComponent>()->play();*/
 
+	// create race track walls
+	GameObject* trackWall = new GameObject("RaceTrackWalls");
+	trackWall->transform.position = Vector3f(0, -3.1, 0);
+	trackWall->transform.rotation = Vector3f(0, 0, 0);
+	trackWall->transform.scale = Vector3f(1.0, 1.0, 1.0);
+	trackWall->addComponent(new RenderComponent(engine, "game/assets/track2/track_walls.obj", shader)); // connect object - model
+	trackWall->addComponent(RigidBodyComponent::createWithMesh(&trackWall->getComponent<RenderComponent>()->model, 0.0)); // connect object - rigibody
+	engine->gameWorld->addGameObject(trackWall);
 
-	// create suit man
-	GameObject* suitMan = new GameObject("SuitMan");
-	suitMan->transform.position = Vector3f(0, 20, 0);
-	suitMan->transform.rotation = Vector3f(45, 45, 45);
-	suitMan->transform.scale = Vector3f(0.2f, 0.2f, 0.2f);
-	suitMan->addComponent(new RenderComponent(engine, "game/assets/nanosuit/nanosuit.obj", shader)); // connect object - model
-	suitMan->addComponent(RigidBodyComponent::createWithCylinder(0.75, 1.5, 0.25, 1.0)); // connect object - rigibody
-	engine->gameWorld->addGameObject(suitMan); // maybe auto register?
-
-	
 	// create race track
 	GameObject* raceTrack = new GameObject("RaceTrack");
-	raceTrack->transform.position = Vector3f(0, -3.2, 0);
+	raceTrack->transform.position = Vector3f(0, -3.1, 0);
 	raceTrack->transform.rotation = Vector3f(0, 0, 0);
 	raceTrack->transform.scale = Vector3f(1.0, 1.0, 1.0);
-	raceTrack->addComponent(new RenderComponent(engine, "game/assets/racetrack/racetrack.obj", shader)); // connect object - model
-	raceTrack->addComponent(RigidBodyComponent::createWithMesh(&raceTrack->getComponent<RenderComponent>()->model, 0.0)); // connect object - rigibody
+	raceTrack->addComponent(new RenderComponent(engine, "game/assets/track2/track_only.obj", shader)); // connect object - model
+	//raceTrack->addComponent(new RenderComponent(engine, "game/assets/racetrack/racetrack.obj", shader)); // connect object - model
+	// raceTrack->addComponent(RigidBodyComponent::createWithMesh(&raceTrack->getComponent<RenderComponent>()->model, 0.0)); // connect object - rigibody
 	engine->gameWorld->addGameObject(raceTrack); // maybe auto register?
 
 	// Light
@@ -138,6 +139,24 @@ void GameWorldHelper::initTestScene(BOEngine* engine)
 	ground->addComponent(new RenderComponent(engine, "game/assets/ground/plane.obj", shader));
 	ground->addComponent(RigidBodyComponent::createWithPlane());
 	engine->gameWorld->addGameObject(ground);
+
+	// create suit man
+	GameObject* suitMan = new GameObject("SuitMan");
+	suitMan->transform.position = Vector3f(0, 20, 0);
+	suitMan->transform.rotation = Vector3f(45, 45, 45);
+	suitMan->transform.scale = Vector3f(0.2f, 0.2f, 0.2f);
+	suitMan->addComponent(new RenderComponent(engine, "game/assets/nanosuit/nanosuit.obj", shader)); // connect object - model
+	suitMan->addComponent(RigidBodyComponent::createWithCylinder(0.75, 1.5, 0.25, 1.0)); // connect object - rigibody
+	engine->gameWorld->addGameObject(suitMan); // maybe auto register?
+
+	suitMan->addComponent(new AudioPlayerComponent("game/assets/sounds/startup.wav", 30, true, false, false));
+	suitMan->getComponent<AudioPlayerComponent>()->onAddToGameWorld();
+	suitMan->getComponent<AudioPlayerComponent>()->play();
+	//Sleep(2000);
+	suitMan->addComponent(new AudioPlayerComponent("game/assets/sounds/idle.wav", 20, true, true, false));
+	suitMan->getComponent<AudioPlayerComponent>()->onAddToGameWorld();
+	suitMan->getComponent<AudioPlayerComponent>()->setSpeed(0);
+	suitMan->getComponent<AudioPlayerComponent>()->play();
 
 	// create box
 	GameObject* box = new  GameObject("Box");

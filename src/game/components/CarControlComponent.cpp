@@ -4,15 +4,49 @@
 
 const std::string CarControlComponent::typeID = "CarControl";
 
+CarControlComponent::CarControlComponent(float accelForce, float fullControlVel, float turnVel)
+	: accelForce(accelForce)
+	, fullControlVel(fullControlVel)
+	, turnVel(turnVel)
+	, rb(nullptr)
+{
+}
+
 void CarControlComponent::update(float deltaTime)
 {
-	float inputX = GameInput::getVerticalAxis() * 10;
-	float inputY = GameInput::getHorizontalAxis() * 10;
-	rb->applyForce(Vector3f(inputX, 0, 0));
-	rb->applyTorque(Vector3f(0, inputY, 0));
+	// grab inputs
+	float forward = GameInput::getVerticalAxis();
+	float turn = GameInput::getHorizontalAxis();
 
-	rotateTiresAnima(1); 
-	steerTiresAnima(-inputY);
+	// apply animations to tires
+	rotateTiresAnima(forward);
+	steerTiresAnima(turn);
+
+	// apply acceleration force
+	rb->applyForceRelativeToDirection(Vector3f(forward * accelForce, 0, 0));
+}
+
+void CarControlComponent::fixedUpdate(float deltaTime)
+{
+	// grab inputs
+	float turn = GameInput::getHorizontalAxis() * turnVel;
+
+	// get percentage of required speed for turning
+	Vector3f velocityVec = rb->getVelocityRelativeToDirection();
+	velocityVec = Vector3f(velocityVec.x, 0, velocityVec.z);
+	float velocity = abs(velocityVec.length());
+	float turnPercent = velocity / fullControlVel;
+	if (turnPercent > 1)
+	{
+		turnPercent = 1;
+	}
+	else if (turnPercent < 0)
+	{
+		turnPercent = 0;
+	}
+
+	// apply turning
+	rb->applyAngularVelocity(Vector3f(0, turnPercent * turn, 0));
 }
 
 void CarControlComponent::rotateTiresAnima(float speed)
