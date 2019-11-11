@@ -65,7 +65,7 @@ bool callbackFunc(btManifoldPoint& cp, const btCollisionObjectWrapper* colObj0Wr
 {
 	int id1 = colObj0Wrap->getCollisionObject()->getUserIndex();
 	int id2 = colObj1Wrap->getCollisionObject()->getUserIndex();
-	if (id1 == 100 && id2 == 200) {
+	if ((id1 == 0 && id2 == 1) || (id1 == 1 && id2 == 0)) {
 		cout << "collision" << endl;
 	}
 	else {
