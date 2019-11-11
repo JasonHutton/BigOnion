@@ -22,8 +22,10 @@ void CarControlComponent::update(float deltaTime)
 	rotateTiresAnima(forward);
 	steerTiresAnima(turn);
 
-	// apply acceleration force
-	rb->applyForceRelativeToDirection(Vector3f(forward * accelForce, 0, 0));
+	float slideForce = rb->getSlideVelocity();
+
+	// apply acceleration and anti sliding force
+	rb->applyForceRelativeToDirection(Vector3f(forward * accelForce, 0, slideForce));
 
 	// get percentage of required speed for turning
 	Vector3f vectorVel = rb->getVelocityRelativeToDirection();

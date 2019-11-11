@@ -19,6 +19,7 @@ public:
 	void applyTorque(Vector3f torque);
 	void applyAngularVelocity(Vector3f velocity);
 	Vector3f getVelocityRelativeToDirection();
+	float getSlideVelocity();
 	void printInfo();
 	void isHit(RigidBodyComponent* rbc);
 	void setIdentity(int id) {

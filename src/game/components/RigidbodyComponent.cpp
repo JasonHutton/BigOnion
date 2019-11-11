@@ -54,15 +54,22 @@ void RigidBodyComponent::applyForceRelativeToDirection(Vector3f force)
 	rigidBody->applyCentralForce(correctedForce);
 }
 
-void RigidBodyComponent::applyTorque(Vector3f torque)
+// NOT USED, can we get rid of this?
+void RigidBodyComponent::applyTorque(Vector3f torque) 
 {
-	//for turning
 	rigidBody->applyTorque(btVector3(torque.x, torque.y, torque.z));
 }
 
 void RigidBodyComponent::applyAngularVelocity(Vector3f velocity)
 {
 	rigidBody->setAngularVelocity(btVector3(velocity.x, velocity.y, velocity.z));
+}
+
+float RigidBodyComponent::getSlideVelocity()
+{
+	btMatrix3x3& boxRot = rigidBody->getWorldTransform().getBasis();
+	btVector3 relativeVelocity = boxRot * btVector3(rigidBody->getLinearVelocity().x(), rigidBody->getLinearVelocity().y(), -rigidBody->getLinearVelocity().z());
+	return relativeVelocity.z();
 }
 
 Vector3f RigidBodyComponent::getVelocityRelativeToDirection()
