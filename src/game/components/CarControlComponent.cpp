@@ -27,8 +27,8 @@ void CarControlComponent::update(float deltaTime)
 
 	// get percentage of required speed for turning
 	Vector3f vectorVel = rb->getVelocityRelativeToDirection();
-	Vector3f horizontalVel = Vector3f(vectorVel.x, 0, vectorVel.z);
-	float velocity = abs(horizontalVel.length());
+	vectorVel = Vector3f(vectorVel.x, 0, vectorVel.z);
+	float velocity = abs(vectorVel.length());
 	float turnPercent = velocity / fullControlVel;
 	if (turnPercent > 1)
 	{
@@ -41,9 +41,9 @@ void CarControlComponent::update(float deltaTime)
 
 	// reverse turning if car goes backward
 	float direction = 1;
-	if (vectorVel.x != 0)
+	if (forward != 0)
 	{
-		direction = -vectorVel.x / abs(vectorVel.x);
+		direction = -forward / abs(forward);
 	}
 
 	// apply turning
