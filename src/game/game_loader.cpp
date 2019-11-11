@@ -83,9 +83,7 @@ bool callbackFunc(btManifoldPoint& cp, void* body0, void* body1)
 	if ((id1 == 0 && id2 == 1) || (id1 == 1 && id2 == 0)) { // id of the car is 0 and id of the walls is 1
 		cout << "collision" << endl;
 	}
-	else {
-		cout << "no collision" << endl;
-	}
+
 	return false;
 }
 
