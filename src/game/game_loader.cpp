@@ -40,6 +40,11 @@ Vector3 rotation{ 0,0,0 };
 Vector3 up{ 0,0,0 };
 Vector3 vel{ 0,0,0 };
 
+// Music Toggle
+
+bool MusicToggle;
+int MusicSlider;
+
 bool show_demo_window = true;
 bool show_another_window = false;
 bool show_GameMenu_window = true;//
@@ -376,9 +381,14 @@ void GameLoader::startGame() {
 				show_GameMenu_window = false;
 				show_HighScore_window = true;
 			}
+			
+			ImGui::SetCursorPos(ImVec2((windowW / 2) - (windowW / 20), 600.0f));
+			ImGui::Checkbox("Music Toggle", &MusicToggle);
 
+			ImGui::SetCursorPos(ImVec2((windowW / 6), 650.0f));
+			ImGui::SliderInt("Volume", &MusicSlider,1,5);
 
-			ImGui::SetCursorPos(ImVec2((windowW / 2) - (windowW / 4), 600.0f));
+			ImGui::SetCursorPos(ImVec2((windowW / 2) - (windowW / 4), 750.0f));
 			if (ImGui::Button("Exit", ImVec2(windowW / 2, 50.0f)))
 				break;
 			ImGui::End();
