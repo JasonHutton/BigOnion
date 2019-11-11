@@ -8,6 +8,7 @@ GameWorld::GameWorld(std::string updateStrategy[], size_t n, float fixedDeltaTim
 	: gameObjects()
 	, componentManager(updateStrategy, n)
 	, fixedDeltaTime(fixedDeltaTime)
+	, isPaused(false)
 {
 	collisionConfig = new btDefaultCollisionConfiguration();
 	dispatcher = new btCollisionDispatcher(collisionConfig);
@@ -60,16 +61,53 @@ bool GameWorld::removeGameObject(std::string id)
 */
 void GameWorld::updateGameObjects(float deltaTime)
 {
-	int iterations = physicsWorld->stepSimulation(deltaTime, 1, fixedDeltaTime);
-
-	for (int i = 0; i < iterations; ++i)
+	if (!isPaused)
 	{
-		componentManager.fixedUpdate(fixedDeltaTime);
+		int iterations = physicsWorld->stepSimulation(deltaTime, 1, fixedDeltaTime);
+
+		for (int i = 0; i < iterations; ++i)
+		{
+			componentManager.fixedUpdate(fixedDeltaTime);
+		}
 	}
 
 	componentManager.update(deltaTime);
 }
 
-GameObject* GameWorld::getGameObjectById(std::string id) {
+/*
+	Returns the GameObject associated to the given id.
+*/
+GameObject* GameWorld::getGameObjectById(std::string id)
+{
 	return gameObjects.at(id);
+}
+
+/*
+	Stops the execution of updates.
+*/
+void GameWorld::pause()
+{
+	componentManager.pause();
+	isPaused = true;
+
+	for (auto& pair : gameObjects)
+	{
+		GameObject* obj = pair.second;
+		obj->pause();
+	}
+}
+
+/*
+	Continues the execution of updates.
+*/
+void GameWorld::unpause()
+{
+	componentManager.unpause();
+	isPaused = false;
+
+	for (auto& pair : gameObjects)
+	{
+		GameObject* obj = pair.second;
+		obj->unpause();
+	}
 }

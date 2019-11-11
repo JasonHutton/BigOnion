@@ -24,6 +24,8 @@ public:
 	template<typename T>
 	T* getComponent();
 	void addToGameWorld(GameWorld* world);
+	void pause();
+	void unpause();
 	void* operator new(size_t i);
 	void operator delete(void* p);
 

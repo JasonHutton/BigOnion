@@ -17,6 +17,8 @@ public:
 	void setSpeed(float speed);
 	void onAddToGameWorld() override;
 	void update(float deltaTime) override;
+	void pauseExec() override;
+	void unpauseExec() override;
 	void volume(float volume);
 	std::string componentTypeID() override { return typeID; }
 
