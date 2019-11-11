@@ -24,17 +24,11 @@ void CarControlComponent::update(float deltaTime)
 
 	// apply acceleration force
 	rb->applyForceRelativeToDirection(Vector3f(forward * accelForce, 0, 0));
-}
-
-void CarControlComponent::fixedUpdate(float deltaTime)
-{
-	// grab inputs
-	float turn = GameInput::getHorizontalAxis() * turnVel;
 
 	// get percentage of required speed for turning
-	Vector3f velocityVec = rb->getVelocityRelativeToDirection();
-	velocityVec = Vector3f(velocityVec.x, 0, velocityVec.z);
-	float velocity = abs(velocityVec.length());
+	Vector3f vectorVel = rb->getVelocityRelativeToDirection();
+	Vector3f horizontalVel = Vector3f(vectorVel.x, 0, vectorVel.z);
+	float velocity = abs(horizontalVel.length());
 	float turnPercent = velocity / fullControlVel;
 	if (turnPercent > 1)
 	{
@@ -45,8 +39,15 @@ void CarControlComponent::fixedUpdate(float deltaTime)
 		turnPercent = 0;
 	}
 
+	// reverse turning if car goes backward
+	float direction = 1;
+	if (vectorVel.x != 0)
+	{
+		direction = -vectorVel.x / abs(vectorVel.x);
+	}
+
 	// apply turning
-	rb->applyAngularVelocity(Vector3f(0, turnPercent * turn, 0));
+	rb->applyAngularVelocity(Vector3f(0, direction * turnPercent * turn * turnVel, 0));
 }
 
 void CarControlComponent::rotateTiresAnima(float speed)

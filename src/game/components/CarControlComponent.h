@@ -13,7 +13,6 @@ public:
 	std::string componentTypeID() override { return typeID; }
 
 	void update(float deltaTime) override;
-	void fixedUpdate(float deltaTime) override;
 	void onAddToGameWorld() override;
 
 	std::vector<GameObject*> tires;
