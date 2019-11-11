@@ -64,7 +64,6 @@
     <ClInclude Include="AudioListenerComponent.h" />
     <ClInclude Include="Command.h" />
     <ClInclude Include="CommandSystem.h" />
-    <ClInclude Include="resource.h" />
     <ClInclude Include="src\engine\graphic\Skybox.h" />
     <ClInclude Include="src\game\components\RaceGameComponent.h" />
     <ClInclude Include="src\engine\input\ContextControl.h" />
@@ -119,13 +118,6 @@
     <None Include="src\engine\graphic\shader\model_loading.fs" />
     <None Include="src\engine\graphic\shader\model_loading.vs" />
     <None Include="src\engine\vertex.glsl" />
-  </ItemGroup>
-  <ItemGroup>
-    <ResourceCompile Include="BigOnion.rc" />
-  </ItemGroup>
-  <ItemGroup>
-    <Image Include="..\..\racing.jpg" />
-    <Image Include="img\Mainbg.jpg" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

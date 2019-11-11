@@ -66,36 +66,6 @@ GameLoader::GameLoader()
 {
 }
 
-bool LoadTextureFromFile(const char* filename, GLuint* out_texture, int* out_width, int* out_height)
-{
-	// Load from file
-	int image_width = 0;
-	int image_height = 0;
-	unsigned char* image_data = stbi_load(filename, &image_width, &image_height, NULL, 4);
-	if (image_data == NULL)
-		return false;
-
-	// Create a OpenGL texture identifier
-	GLuint image_texture;
-	glGenTextures(1, &image_texture);
-	glBindTexture(GL_TEXTURE_2D, image_texture);
-
-	// Setup filtering parameters for display
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-
-	// Upload pixels into texture
-	glPixelStorei(GL_UNPACK_ROW_LENGTH, 0);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, image_width, image_height, 0, GL_RGBA, GL_UNSIGNED_BYTE, image_data);
-	stbi_image_free(image_data);
-
-	*out_texture = image_texture;
-	*out_width = image_width;
-	*out_height = image_height;
-
-	return true;
-}
-
 /*bool callbackFunc(btManifoldPoint& cp, const btCollisionObjectWrapper* colObj0Wrap, int partId0, int index0, const btCollisionObjectWrapper* colObj1Wrap, int partId1, int index1)
 {
 	int id1 = colObj0Wrap->getCollisionObject()->getUserIndex();
@@ -168,14 +138,6 @@ void GameLoader::startGame() {
 	// --------------------
 	GLFWwindow* window = engine->window;
 	camera = &engine->camera;
-
-
-
-	int my_image_width = 404;
-	int my_image_height = 404;
-	GLuint my_image_texture = 0;
-	bool ret = LoadTextureFromFile("..\\..\\racing.jpg", &my_image_texture, &my_image_width, &my_image_height);
-	IM_ASSERT(ret);
 
 	// inputs
 
@@ -395,14 +357,10 @@ void GameLoader::startGame() {
 		if (show_GameMenu_window)
 		{
 
-
 			ImGui::SetNextWindowSize(ImVec2(windowW, windowH));
 			ImGui::SetNextWindowPos(ImVec2(0, 0));
 			ImGui::StyleColorsDark();
 			ImGui::Begin("Big Onion", &show_GameMenu_window, flags);
-			my_image_width = windowW;
-			my_image_height = windowH;
-			ImGui::Image((void*)(intptr_t)my_image_texture, ImVec2(my_image_width, my_image_height));
 
 			ImGui::SetCursorPos(ImVec2((windowW / 1)- (windowW / 1.85), 200.0f));
 			ImGui::Text("Big Onion", ImVec2(windowW / 2, 50.0f));
