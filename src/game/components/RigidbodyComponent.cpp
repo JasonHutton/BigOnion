@@ -6,7 +6,7 @@
 const std::string RigidBodyComponent::typeID = "RigidBody";
 
 RigidBodyComponent::RigidBodyComponent(btRigidBody* _body)
-	: rigidBody(_body)
+	: rigidBody(_body), identity(-1)
 {
 }
 
@@ -41,7 +41,7 @@ void RigidBodyComponent::onAddToGameWorld()
 	bTransform.setRotation(quat);
 
 	rigidBody->setWorldTransform(bTransform);
-
+	rigidBody->setUserPointer(this);
 	gameObject->world->physicsWorld->addRigidBody(rigidBody);
 }
 
@@ -77,6 +77,15 @@ void RigidBodyComponent::printInfo()
 	std::cout << "total: " << rigidBody->getTotalForce().length() << std::endl;
 }
 
+void RigidBodyComponent::isHit(RigidBodyComponent* rbc) {
+	if (identity == 0 && rbc->identity == 1) { //check if this is the care and we are colliding with the wall
+		cout << "collision" << endl;
+	}
+	/*else {
+		cout << "no collision" << endl;
+	}*/
+}
+
 /*
 	Returns a RigidBodyComponent with an attached Cube collider.
 */
@@ -97,8 +106,10 @@ RigidBodyComponent* RigidBodyComponent::createWithCube(float width, float height
 	body->setActivationState(DISABLE_DEACTIVATION);
 	body->setRestitution(bounciness);
 	body->setCollisionFlags(body->getCollisionFlags() | btCollisionObject::CF_CUSTOM_MATERIAL_CALLBACK);
-	body->setUserIndex(id);
-	return new RigidBodyComponent(body);
+
+	RigidBodyComponent* rbc = new RigidBodyComponent(body);
+	rbc->setIdentity(id);
+	return rbc;
 }
 
 /*
@@ -158,7 +169,9 @@ RigidBodyComponent* RigidBodyComponent::createWithMesh(Model* model, float bounc
 	btRigidBody::btRigidBodyConstructionInfo info(0.0, motion, bvhTriangleMeshShape);	//create the constructioninfo, you can create multiple bodies with the same info
 	btRigidBody* body = new btRigidBody(info);	//let's create the body itself
 	body->setRestitution(1.0);
-	body->setUserIndex(id);
 
-	return new RigidBodyComponent(body);
+	RigidBodyComponent* rbc = new RigidBodyComponent(body);
+	rbc->setIdentity(id);
+
+	return rbc;
 }
