@@ -6,6 +6,8 @@
 #include "components/CarControlComponent.h"
 #include "../../Settings.h"
 #include "components/RaceGameComponent.h"
+
+#include "../../Settings.h"
 /*
 	Loads a test scene into the given BOEngine.
 */
@@ -107,7 +109,7 @@ void GameWorldHelper::initTestScene(BOEngine* engine)
 	engine->gameWorld->addGameObject(background_music);
 	background_music->addComponent(new AudioPlayerComponent(audio, "game/assets/sounds/start.mp3", 1, false, true, false));
 	background_music->getComponent<AudioPlayerComponent>()->onAddToGameWorld();
-	background_music->getComponent<AudioPlayerComponent>()->volume(0.1);
+	background_music->getComponent<AudioPlayerComponent>()->volume(0.1, true);
 	background_music->getComponent<AudioPlayerComponent>()->play();*/
 
 	// create race track walls

@@ -14,12 +14,12 @@ public:
 	void play();
 	void stop();
 	void pause();
-	void setSpeed(float speed);
+	void setSpeed(float speed, bool isMusic = false);
 	void onAddToGameWorld() override;
 	void update(float deltaTime) override;
 	void pauseExec() override;
 	void unpauseExec() override;
-	void volume(float volume);
+	void volume(float volume, bool isMusic = false);
 	std::string componentTypeID() override { return typeID; }
 
 private:

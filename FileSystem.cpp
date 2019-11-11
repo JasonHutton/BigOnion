@@ -153,6 +153,43 @@ bool FileSystem::CreatePath(const string& path, const bool& bUseHomePath)
 	return false;
 }
 
+bool FileSystem::CreatePathAndSubpaths(const string& path, const bool& bUseHomePath)
+{
+	string sanitizedPath = path;
+	ReplaceSeparators(sanitizedPath);
+	if (sanitizedPath[sanitizedPath.length() - 1] != '/')
+		sanitizedPath += "/";
+	if (bUseHomePath)
+	{
+		string osPath;
+		BuildOSPath(detail::m_homePath, sanitizedPath, osPath);
+		sanitizedPath = osPath;
+	}
+
+	size_t end = sanitizedPath.find_first_of('/');
+	string tempPath;
+
+	while (end != string::npos)
+	{
+		tempPath = sanitizedPath.substr(0, end);
+		if (!PathExists(tempPath, bUseHomePath))
+		{
+			if (!CreateDirectory(tempPath.c_str(), NULL))
+			{
+				DWORD err = GetLastError();
+
+				if (err != ERROR_ALREADY_EXISTS)
+				{
+					// do whatever handling you'd like
+				}
+			}
+		}
+		end = sanitizedPath.find_first_of('/', end+1);
+	}
+
+	return PathExists(path, bUseHomePath);
+}
+
 void FileSystem::ListFilesInPath(vector<File>& files, const string& path, const string& filter)
 {
 	string sanitizedPath = path;

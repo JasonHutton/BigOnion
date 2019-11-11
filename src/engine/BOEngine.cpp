@@ -40,7 +40,7 @@ void BOEngine::initialize()
 	ImGuiIO& io = ImGui::GetIO(); (void)io;
 	
 	ImGui_ImplGlfwGL3_Init(window, true);
-	ImFont* pFont = io.Fonts->AddFontFromFileTTF("Roboto-Black.ttf", 30.0f);
+	ImFont* pFont = io.Fonts->AddFontFromFileTTF("engine/assets/ui/Roboto-Black.ttf", 30.0f);
 	
 	ImGui::PushStyleColor(ImGuiCol_WindowBg, (0, 0, 0, 0));
 
