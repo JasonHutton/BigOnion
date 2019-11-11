@@ -1442,7 +1442,24 @@ void ImGui::ColorConvertHSVtoRGB(float h, float s, float v, float& out_r, float&
 FILE* ImFileOpen(const char* filename, const char* mode)
 {
 	string osPath;
-	FileSystem::BuildOSPath(FileSystem::FindFile(filename), filename, osPath);
+	if (strstr(mode, "w") != NULL || strstr(mode, "a") != NULL) // Are we opening this file for writing or appending?
+	{
+		FileSystem::BuildOSPath(FileSystem::GetHomePath(), filename, osPath);
+		// retrieve the directory path of the filepath
+		string dir = osPath.substr(0, osPath.find_last_of('/'));
+		if (!FileSystem::PathExists(dir, false))
+		{
+			if (!FileSystem::CreatePathAndSubpaths(dir, false))
+			{
+				// We can't create the path. Error
+				return NULL;
+			}
+		}
+	}
+	else
+	{
+		FileSystem::BuildOSPath(FileSystem::FindFile(filename), filename, osPath);
+	}
 
 #if defined(_WIN32) && !defined(__CYGWIN__)
     // We need a fopen() wrapper because MSVC/Windows fopen doesn't handle UTF-8 filenames. Converting both strings from UTF-8 to wchar format (using a single allocation, because we can)
