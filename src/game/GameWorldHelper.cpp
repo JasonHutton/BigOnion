@@ -79,12 +79,12 @@ void GameWorldHelper::initTestScene(BOEngine* engine)
 	engine->gameWorld->addGameObject(player_car);
 	player_car->addComponent(new AudioPlayerComponent(audio,"game/assets/sounds/startup.wav", 1, false, false, false));
 	player_car->getComponent<AudioPlayerComponent>()->onAddToGameWorld();
-	player_car->getComponent<AudioPlayerComponent>()->volume(0.3 * Settings::g_SoundVolume.GetDouble());
+	player_car->getComponent<AudioPlayerComponent>()->volume(0.3);
 	player_car->getComponent<AudioPlayerComponent>()->play();
 	Sleep(2000);
 	player_car->addComponent(new AudioPlayerComponent(audio,"game/assets/sounds/idle.wav", 1, false, true, false));
 	player_car->getComponent<AudioPlayerComponent>()->onAddToGameWorld();
-	player_car->getComponent<AudioPlayerComponent>()->volume(0.05 * Settings::g_SoundVolume.GetDouble());
+	player_car->getComponent<AudioPlayerComponent>()->volume(0.05);
 	player_car->getComponent<AudioPlayerComponent>()->setSpeed(0);
 	player_car->getComponent<AudioPlayerComponent>()->play();
 
@@ -109,7 +109,7 @@ void GameWorldHelper::initTestScene(BOEngine* engine)
 	engine->gameWorld->addGameObject(background_music);
 	background_music->addComponent(new AudioPlayerComponent(audio, "game/assets/sounds/start.mp3", 1, false, true, false));
 	background_music->getComponent<AudioPlayerComponent>()->onAddToGameWorld();
-	background_music->getComponent<AudioPlayerComponent>()->volume(0.1 * Settings::g_MusicVolume.GetDouble());
+	background_music->getComponent<AudioPlayerComponent>()->volume(0.1, true);
 	background_music->getComponent<AudioPlayerComponent>()->play();*/
 
 	// create race track walls
