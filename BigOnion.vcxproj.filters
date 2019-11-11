@@ -73,6 +73,9 @@
     <Filter Include="Source Files\engine\Utils">
       <UniqueIdentifier>{fcd7d97c-296e-4167-9fff-03a50e0c9738}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Images">
+      <UniqueIdentifier>{2250d530-ea05-4219-a6f6-b85af000d01c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\game\game_loader.cpp">
@@ -353,6 +356,9 @@
     <ClInclude Include="src\engine\graphic\Skybox.h">
       <Filter>Header Files\engine\graphic</Filter>
     </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="src\engine\vertex.glsl">
@@ -364,5 +370,18 @@
     <None Include="src\engine\graphic\shader\model_loading.fs">
       <Filter>Resource Files</Filter>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="BigOnion.rc">
+      <Filter>Resource Files</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="img\Mainbg.jpg">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\..\racing.jpg">
+      <Filter>Images</Filter>
+    </Image>
   </ItemGroup>
 </Project>
