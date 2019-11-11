@@ -21,11 +21,12 @@ public:
 	Vector3f getVelocityRelativeToDirection();
 	void printInfo();
 
-	static RigidBodyComponent* createWithCube(float width, float height, float depth, float mass, float bounciness);
+	static RigidBodyComponent* createWithCube(float width, float height, float depth, float mass = 0, float bounciness = 0, int id = -1);
 	static RigidBodyComponent* createWithPlane();
-	static RigidBodyComponent* createWithCylinder(float width, float height, float depth, float mass);
-	static RigidBodyComponent* createWithMesh(Model* model, float bounciness);
+	static RigidBodyComponent* createWithCylinder(float width, float height, float depth, float mass = 0);
+	static RigidBodyComponent* createWithMesh(Model* model, float bounciness = 0, int id = -1);
 
 private:
 	btRigidBody* rigidBody;
+	int identity;
 };

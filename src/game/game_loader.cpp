@@ -61,11 +61,38 @@ GameLoader::GameLoader()
 {
 }
 
+/*bool callbackFunc(btManifoldPoint& cp, const btCollisionObjectWrapper* colObj0Wrap, int partId0, int index0, const btCollisionObjectWrapper* colObj1Wrap, int partId1, int index1)
+{
+	int id1 = colObj0Wrap->getCollisionObject()->getUserIndex();
+	int id2 = colObj1Wrap->getCollisionObject()->getUserIndex();
+	if ((id1 == 0 && id2 == 1) || (id1 == 1 && id2 == 0)) {
+		cout << "collision" << endl;
+	}
+	else {
+		cout << "no collision" << endl;
+	}
+	return false;
+}*/
+
+bool callbackFunc(btManifoldPoint& cp, void* body0, void* body1)
+{
+	btCollisionObject* colObj0Wrap = static_cast<btCollisionObject*>(body0);
+	btCollisionObject* colObj1Wrap = static_cast<btCollisionObject*>(body1);
+	int id1 = colObj0Wrap->getUserIndex();
+	int id2 = colObj1Wrap->getUserIndex();
+	if ((id1 == 0 && id2 == 1) || (id1 == 1 && id2 == 0)) { // id of the car is 0 and id of the walls is 1
+		cout << "collision" << endl;
+	}
+
+	return false;
+}
+
 void GameLoader::createGame() {
 
 	std::cout << "createGame" << std::endl;
 
-	
+	//gContactAddedCallback = callbackFunc;
+	gContactProcessedCallback = callbackFunc;
 	//audio.PlaySounds("game/assets/sounds/test.wav", Vector3{ 0, 0, -10 }, audio.VolumeTodB(1.0f));
 	//test gun sound on the right
 	//audio.PlaySounds("game/assets/sounds/gun.wav", Vector3{ 3, 0, 0}, audio.VolumeTodB(1.0f));
@@ -104,13 +131,13 @@ void GameLoader::startGame() {
 	camera = &engine->camera;
 
 	// inputs
-	
+
 	glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
 	glfwSetCursorPosCallback(window, mouse_callback);
 	glfwSetScrollCallback(window, scroll_callback);
 	// tell GLFW to capture mouse
 	glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
-	
+
 	engine->preRender();
 
 	glfwSetTime(0);
@@ -123,7 +150,7 @@ void GameLoader::startGame() {
 		float currentFrame = (float)glfwGetTime(); // We should probably be using double instead of float, but that's spawning off a LOT of required changes...
 		deltaTime = currentFrame - lastFrame;
 		lastFrame = currentFrame;
-		
+
 
 		// input
 		// -----
@@ -131,7 +158,7 @@ void GameLoader::startGame() {
 			processInput(window);
 		}
 
-		
+
 
 		GameObject* playerCar = engine->gameWorld->getGameObjectById("PlayerCar");
 		if (playerCar) {
@@ -165,13 +192,13 @@ void GameLoader::startGame() {
 		{
 			glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 		}
-		
+
 		glfwPollEvents();
-	
+
 		BOEngine boe;
 		int windowW = boe.gwidth;
 		int windowH = boe.gHeight;
-		
+
 		//new Imgui frame
 		ImGui_ImplGlfwGL3_NewFrame();
 		//ImGuiWindowFlags flags = ImGuiWindowFlags_Tooltip | ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoMove |
@@ -193,19 +220,19 @@ void GameLoader::startGame() {
 
 		}
 		//************HUD: Time*********************
-		
+
 
 		ImGui::SetNextWindowSize(ImVec2(windowW, windowH));        //window size
-		ImGui::SetNextWindowPos(ImVec2(0.0f,0.0f));     //window position
+		ImGui::SetNextWindowPos(ImVec2(0.0f, 0.0f));     //window position
 		ImGui::StyleColorsLight();
 		ImGui::Begin("Time", 0, flags);
-		
+
 		int time;
 		if (show_GameMenu_window == false && show_HighScore_window == false) {
-			
-		
-			time =int( glfwGetTime());
-			if(time <= 6) {
+
+
+			time = int(glfwGetTime());
+			if (time <= 6) {
 
 				//CalcTextSize
 				ImVec2 timeW = ImGui::CalcTextSize("The game starts in % .d second", NULL, true);
@@ -213,25 +240,25 @@ void GameLoader::startGame() {
 				ImVec2 secondW = ImGui::CalcTextSize("Are you ready for tonight's game?", NULL, true);
 				ImVec2 thirdW = ImGui::CalcTextSize("Let's GO.", NULL, true);
 
-				ImGui::SetCursorPos(ImVec2((windowW/2)- (timeW.x/2), 200.0f));
-				ImGui::TextColored(ImVec4(1.0f, 0.0f, 1.0f, 1.0f), "The game starts in %.d second",7-time);
+				ImGui::SetCursorPos(ImVec2((windowW / 2) - (timeW.x / 2), 200.0f));
+				ImGui::TextColored(ImVec4(1.0f, 0.0f, 1.0f, 1.0f), "The game starts in %.d second", 7 - time);
 
 				switch (time) {
 				case 1:
 					ImGui::SetCursorPos(ImVec2((windowW / 2) - (firetW.x / 2), 300.0f));
-					ImGui::TextColored(ImVec4(1.0f, 0.0f, 1.0f, 1.0f),"Hi BIG Onion");
+					ImGui::TextColored(ImVec4(1.0f, 0.0f, 1.0f, 1.0f), "Hi BIG Onion");
 					break;
 				case 2:
 					ImGui::SetCursorPos(ImVec2((windowW / 2) - (firetW.x / 2), 300.0f));
-					ImGui::TextColored(ImVec4(1.0f, 0.0f, 1.0f, 1.0f),"Hi BIG Onion");
+					ImGui::TextColored(ImVec4(1.0f, 0.0f, 1.0f, 1.0f), "Hi BIG Onion");
 					break;
 				case 3:
 					ImGui::SetCursorPos(ImVec2((windowW / 2) - (secondW.x / 2), 300.0f));
-					ImGui::TextColored(ImVec4(1.0f, 0.0f, 1.0f, 1.0f),"Are you ready for tonight's game?");
+					ImGui::TextColored(ImVec4(1.0f, 0.0f, 1.0f, 1.0f), "Are you ready for tonight's game?");
 					break;
 				case 4:
 					ImGui::SetCursorPos(ImVec2((windowW / 2) - (secondW.x / 2), 300.0f));
-					ImGui::TextColored(ImVec4(1.0f, 0.0f, 1.0f, 1.0f),"Are you ready for tonight's game?");
+					ImGui::TextColored(ImVec4(1.0f, 0.0f, 1.0f, 1.0f), "Are you ready for tonight's game?");
 					break;
 				case 5:
 					ImGui::SetCursorPos(ImVec2((windowW / 2) - (thirdW.x / 2), 300.0f));
@@ -250,39 +277,39 @@ void GameLoader::startGame() {
 			}
 			
 		}
-			
+
 		ImGui::End();
 
 		//************HUD: Score*********************
 		ImGui::SetNextWindowSize(ImVec2(200, 100));        //window size
 
-		ImGui::SetNextWindowPos(ImVec2(0, windowH-100));     //window position
+		ImGui::SetNextWindowPos(ImVec2(0, windowH - 100));     //window position
 		ImGui::StyleColorsDark();
 
-		ImGui::Begin("Score",0,flags);
+		ImGui::Begin("Score", 0, flags);
 
-		int score1 = 100;	
-		
-		ImGui::TextColored(ImVec4(0.0f, 1.0f, 1.0f, 1.0f), "Score: %.d",score1 );
+		int score1 = 100;
+
+		ImGui::TextColored(ImVec4(0.0f, 1.0f, 1.0f, 1.0f), "Score: %.d", score1);
 		ImGui::End();
-	
+
 		//***************HUD: Speed******************
 
-		ImGui::SetNextWindowSize(ImVec2(200, 100));        
-		ImGui::SetNextWindowPos(ImVec2(windowW-200, windowH-100));
+		ImGui::SetNextWindowSize(ImVec2(200, 100));
+		ImGui::SetNextWindowPos(ImVec2(windowW - 200, windowH - 100));
 		ImGui::StyleColorsDark();
 
-		ImGui::Begin("Speed",0, flags);
+		ImGui::Begin("Speed", 0, flags);
 
 		int speed1 = 100;
-		
-		ImGui::TextColored(ImVec4(1.0f, 0.0f, 0.0f, 1.0f), "Speed:%d km/h",(int)speed);
+
+		ImGui::TextColored(ImVec4(1.0f, 0.0f, 0.0f, 1.0f), "Speed:%d km/h", (int)speed);
 		ImGui::End();
 
 		//***************HUD: stop game***************
 
-		ImGui::SetNextWindowSize(ImVec2(200, 80));        
-		ImGui::SetNextWindowPos(ImVec2(0,0));     
+		ImGui::SetNextWindowSize(ImVec2(200, 80));
+		ImGui::SetNextWindowPos(ImVec2(0, 0));
 		ImGui::StyleColorsLight();
 		ImGui::Begin("Stop", 0, flags);
 
@@ -303,34 +330,34 @@ void GameLoader::startGame() {
 
 		//*************HUD: Back Game Menu*****************
 
-		ImGui::SetNextWindowSize(ImVec2(200, 80));       
-		ImGui::SetNextWindowPos(ImVec2(windowW-200, 0));
+		ImGui::SetNextWindowSize(ImVec2(200, 80));
+		ImGui::SetNextWindowPos(ImVec2(windowW - 200, 0));
 		ImGui::Begin("menu", 0, flags);
 		ImGui::StyleColorsLight();
 
-			if (ImGui::Button("Menu", ImVec2(200.0f, 60.0f)))
-			{
-				show_GameMenu_window = true;
-			}
-			
+		if (ImGui::Button("Menu", ImVec2(200.0f, 60.0f)))
+		{
+			show_GameMenu_window = true;
+		}
+
 
 		ImGui::End();
 
 		//***************Game Main Menu****************
-		
+
 		if (show_GameMenu_window)
 		{
 
 			ImGui::SetNextWindowSize(ImVec2(windowW, windowH));
-			ImGui::SetNextWindowPos(ImVec2(0, 0));             
+			ImGui::SetNextWindowPos(ImVec2(0, 0));
 			ImGui::StyleColorsDark();
 			ImGui::Begin("Big Onion", &show_GameMenu_window, flags);
-	
-			ImGui::SetCursorPos(ImVec2((windowW/2)-(windowW/4), 100.0f));
+
+			ImGui::SetCursorPos(ImVec2((windowW / 2) - (windowW / 4), 100.0f));
 			//if (ImGui::Button("Play Game", ImVec2(-1.0f, 0.0f)))
 			if (ImGui::Button("Play Game", ImVec2(windowW / 2, 50.0f))) {
 				show_GameMenu_window = false;
-			 }
+			}
 
 
 			ImGui::SetCursorPos(ImVec2((windowW / 2) - (windowW / 4), 200.0f));
@@ -347,8 +374,8 @@ void GameLoader::startGame() {
 
 			ImGui::SetCursorPos(ImVec2((windowW / 2) - (windowW / 4), 400.0f));
 			if (ImGui::Button("Exit", ImVec2(windowW / 2, 50.0f)))
-				break;	
-			ImGui::End();	
+				break;
+			ImGui::End();
 
 		}
 		//**********High score list Window************
@@ -368,9 +395,9 @@ void GameLoader::startGame() {
 				show_GameMenu_window = true;
 			}
 			ImGui::End();
-			
-			ImGui::SetNextWindowSize(ImVec2(windowW/2, windowH/2));
-			ImGui::SetNextWindowPos(ImVec2(windowW / 2- windowW / 3.3, windowH / 2- windowH / 3.3));
+
+			ImGui::SetNextWindowSize(ImVec2(windowW / 2, windowH / 2));
+			ImGui::SetNextWindowPos(ImVec2(windowW / 2 - windowW / 3.3, windowH / 2 - windowH / 3.3));
 			ImGui::Begin("highscore", &show_HighScore_window, flags);
 
 			ImVec2 scoreW = ImGui::CalcTextSize("High Score", NULL, true);
@@ -436,10 +463,10 @@ void GameLoader::startGame() {
 			}
 			ImGui::End();
 		}
-		
+
 		ImGui::Render();
 		ImGui_ImplGlfwGL3_RenderDrawData(ImGui::GetDrawData());
-		
+
 		glfwSwapBuffers(window);
 	}
 
@@ -456,17 +483,17 @@ void GameLoader::startGame() {
 //Update Listener Position and Orientation
 void updateListener(Vector3f pos, Vector3f rot)
 {
-		position.x = pos.x;
-		position.y = pos.y;
-		position.z = pos.z;
-		rotation.x = rot.x;
-		rotation.y = rot.y;
-		rotation.z = rot.z;
+	position.x = pos.x;
+	position.y = pos.y;
+	position.z = pos.z;
+	rotation.x = rot.x;
+	rotation.y = rot.y;
+	rotation.z = rot.z;
 }
 
 void calculateSpeed(float deltaTime)
 {
-	if (deltaTime >= 0 )
+	if (deltaTime >= 0)
 	{
 		if (speed < 200)
 		{
@@ -489,7 +516,7 @@ void calculateSpeed(float deltaTime)
 		}
 		else if (speed < 100)
 		{
-			speed = speed + deltaTime *80;
+			speed = speed + deltaTime * 80;
 		}
 		else if (speed < 150)
 		{
@@ -525,7 +552,7 @@ void GameLoader::processInput(GLFWwindow* window)
 			// See if a bound control has a User Button associated with it.
 			ContextControl cc = input.GetControl(it->first);
 			// Do what the context control->User Button says to do.
-			switch(cc.GetControl("")) // Default context.
+			switch (cc.GetControl("")) // Default context.
 			{
 			case UB_FORCE_QUIT:
 				glfwSetWindowShouldClose(window, true);
@@ -538,7 +565,7 @@ void GameLoader::processInput(GLFWwindow* window)
 			case UB_MOVE_BACKWARD:
 				//camera->ProcessKeyboard(BACKWARD, deltaTime);
 				GameInput::setVerticalAxis(1.0);
-			
+
 				break;
 			case UB_MOVE_LEFT:
 				//camera->ProcessKeyboard(LEFT, deltaTime);
@@ -589,7 +616,7 @@ void mouse_callback(GLFWwindow* window, double xpos, double ypos)
 	Settings::lastY = ypos;
 
 	camera->ProcessMouseMovement((float)xoffset, (float)yoffset); // We should probably be using double instead of float, but that's spawning off a LOT of required changes...
-	
+
 }
 
 // glfw: whenever the mouse scroll wheel scrolls, this callback is called
@@ -600,7 +627,7 @@ void scroll_callback(GLFWwindow* window, double xoffset, double yoffset)
 }
 
 void GameLoader::setEngine(BOEngine& boe) {
-	this->engine = &boe; 
+	this->engine = &boe;
 }
 
 void GameLoader::reload() {
