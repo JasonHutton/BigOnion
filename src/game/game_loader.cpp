@@ -78,11 +78,15 @@ bool callbackFunc(btManifoldPoint& cp, void* body0, void* body1)
 {
 	btCollisionObject* colObj0Wrap = static_cast<btCollisionObject*>(body0);
 	btCollisionObject* colObj1Wrap = static_cast<btCollisionObject*>(body1);
-	int id1 = colObj0Wrap->getUserIndex();
-	int id2 = colObj1Wrap->getUserIndex();
-	if ((id1 == 0 && id2 == 1) || (id1 == 1 && id2 == 0)) { // id of the car is 0 and id of the walls is 1
+	//int id1 = colObj0Wrap->getUserIndex();
+	//int id2 = colObj1Wrap->getUserIndex();
+	RigidBodyComponent* rbc0 = static_cast<RigidBodyComponent*>(colObj0Wrap->getUserPointer());
+	RigidBodyComponent* rbc1 = static_cast<RigidBodyComponent*>(colObj1Wrap->getUserPointer());
+	rbc0->isHit(rbc1);
+	rbc1->isHit(rbc0);
+	/*if ((id1 == 0 && id2 == 1) || (id1 == 1 && id2 == 0)) { // id of the car is 0 and id of the walls is 1
 		cout << "collision" << endl;
-	}
+	}*/
 
 	return false;
 }
