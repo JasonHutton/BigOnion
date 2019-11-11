@@ -54,28 +54,28 @@ void RigidBodyComponent::applyForceRelativeToDirection(Vector3f force)
 	rigidBody->applyCentralForce(correctedForce);
 }
 
-// NOT USED, can we get rid of this?
 void RigidBodyComponent::applyTorque(Vector3f torque) 
 {
 	rigidBody->applyTorque(btVector3(torque.x, torque.y, torque.z));
 }
 
-void RigidBodyComponent::applyAngularVelocity(Vector3f velocity)
+void RigidBodyComponent::setVelocityRelativeToDirection(Vector3f velocity)
 {
-	rigidBody->setAngularVelocity(btVector3(velocity.x, velocity.y, velocity.z));
+	btVector3 relativeVelocity = btVector3(velocity.x, velocity.y, velocity.z);
+	btMatrix3x3& boxRot = rigidBody->getWorldTransform().getBasis();
+	btVector3 correctedVelocity = boxRot * relativeVelocity;
+	rigidBody->setLinearVelocity(correctedVelocity);
 }
 
-float RigidBodyComponent::getSlideVelocity()
+void RigidBodyComponent::setAngularVelocity(Vector3f velocity)
 {
-	btMatrix3x3& boxRot = rigidBody->getWorldTransform().getBasis();
-	btVector3 relativeVelocity = boxRot * btVector3(rigidBody->getLinearVelocity().x(), rigidBody->getLinearVelocity().y(), -rigidBody->getLinearVelocity().z());
-	return relativeVelocity.z();
+	rigidBody->setAngularVelocity(btVector3(velocity.x, velocity.y, velocity.z));
 }
 
 Vector3f RigidBodyComponent::getVelocityRelativeToDirection()
 {
 	btMatrix3x3& boxRot = rigidBody->getWorldTransform().getBasis();
-	btVector3 relativeVelocity = boxRot * rigidBody->getLinearVelocity();
+	btVector3 relativeVelocity = rigidBody->getLinearVelocity() * boxRot;
 	return Vector3f(relativeVelocity.x(), relativeVelocity.y(), relativeVelocity.z());
 }
 
