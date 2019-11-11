@@ -49,8 +49,10 @@ void RigidBodyComponent::applyForceRelativeToDirection(Vector3f force)
 {
 	//for moving forward and back, code taken from https://pybullet.org/Bullet/phpBB3/viewtopic.php?t=2366
 	btVector3 relativeForce = btVector3(force.x, force.y, force.z);
-	cout << "force z" << force.z << endl;
-	btMatrix3x3& boxRot = rigidBody->getWorldTransform().getBasis();
+
+	btTransform bTransform;
+	rigidBody->getMotionState()->getWorldTransform(bTransform);
+	btMatrix3x3& boxRot = bTransform.getBasis();
 	btVector3 correctedForce = boxRot * relativeForce;
 	rigidBody->applyCentralForce(correctedForce);
 }
@@ -68,8 +70,11 @@ void RigidBodyComponent::applyAngularVelocity(Vector3f velocity)
 
 Vector3f RigidBodyComponent::getVelocityRelativeToDirection()
 {
-	btMatrix3x3& boxRot = rigidBody->getWorldTransform().getBasis();
-	btVector3 relativeVelocity = boxRot * rigidBody->getLinearVelocity();
+	btTransform bTransform;
+	rigidBody->getMotionState()->getWorldTransform(bTransform);
+	btMatrix3x3& boxRot = bTransform.getBasis();
+	btVector3 test = btVector3(rigidBody->getLinearVelocity().getX(), rigidBody->getLinearVelocity().getY(), -rigidBody->getLinearVelocity().getZ());
+	btVector3 relativeVelocity = boxRot * test;
 	return Vector3f(relativeVelocity.x(), relativeVelocity.y(), relativeVelocity.z());
 }
 
