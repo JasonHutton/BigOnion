@@ -22,6 +22,7 @@
     <ClCompile Include="AudioListenerComponent.cpp" />
     <ClCompile Include="Command.cpp" />
     <ClCompile Include="CommandSystem.cpp" />
+    <ClCompile Include="src\engine\graphic\Skybox.cpp" />
     <ClCompile Include="src\engine\input\ContextControl.cpp" />
     <ClCompile Include="include\imgui\imgui.cpp" />
     <ClCompile Include="include\imgui\imgui_demo.cpp" />
@@ -63,6 +64,7 @@
     <ClInclude Include="AudioListenerComponent.h" />
     <ClInclude Include="Command.h" />
     <ClInclude Include="CommandSystem.h" />
+    <ClInclude Include="src\engine\graphic\Skybox.h" />
     <ClInclude Include="src\game\components\RaceGameComponent.h" />
     <ClInclude Include="src\engine\input\ContextControl.h" />
     <ClInclude Include="include\imgui\imconfig.h" />

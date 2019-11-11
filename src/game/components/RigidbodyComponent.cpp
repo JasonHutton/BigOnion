@@ -6,7 +6,7 @@
 const std::string RigidBodyComponent::typeID = "RigidBody";
 
 RigidBodyComponent::RigidBodyComponent(btRigidBody* _body)
-	: rigidBody(_body)
+	: rigidBody(_body), identity(-1)
 {
 }
 
@@ -16,10 +16,10 @@ void RigidBodyComponent::update(float deltaTime)
 	// position
 	btTransform bTransform;
 
-	if (rigidBody->getCollisionShape()->getShapeType() == STATIC_PLANE_PROXYTYPE || rigidBody->getMass() == 0) {
+	if (rigidBody->getMass() == 0) { // if object is static
 		bTransform = rigidBody->getWorldTransform();
 	}
-	else {
+	else { // if it is dynamic
 		rigidBody->getMotionState()->getWorldTransform(bTransform);
 	}
 
@@ -41,7 +41,7 @@ void RigidBodyComponent::onAddToGameWorld()
 	bTransform.setRotation(quat);
 
 	rigidBody->setWorldTransform(bTransform);
-
+	rigidBody->setUserPointer(this);
 	gameObject->world->physicsWorld->addRigidBody(rigidBody);
 }
 
@@ -77,10 +77,19 @@ void RigidBodyComponent::printInfo()
 	std::cout << "total: " << rigidBody->getTotalForce().length() << std::endl;
 }
 
+void RigidBodyComponent::isHit(RigidBodyComponent* rbc) {
+	if (identity == 0 && rbc->identity == 1) { //check if this is the care and we are colliding with the wall
+		cout << "collision" << endl;
+	}
+	/*else {
+		cout << "no collision" << endl;
+	}*/
+}
+
 /*
 	Returns a RigidBodyComponent with an attached Cube collider.
 */
-RigidBodyComponent* RigidBodyComponent::createWithCube(float width, float height, float depth, float mass)
+RigidBodyComponent* RigidBodyComponent::createWithCube(float width, float height, float depth, float mass, float bounciness, int id)
 {
 	btTransform t;	//position and rotation
 	t.setIdentity();
@@ -93,8 +102,14 @@ RigidBodyComponent* RigidBodyComponent::createWithCube(float width, float height
 	btMotionState* motion = new btDefaultMotionState(t);	//set the position (and motion)
 	btRigidBody::btRigidBodyConstructionInfo info(mass, motion, box, inertia);	//create the constructioninfo, you can create multiple bodies with the same info
 	btRigidBody* body = new btRigidBody(info);	//let's create the body itself
+
 	body->setActivationState(DISABLE_DEACTIVATION);
-	return new RigidBodyComponent(body);
+	body->setRestitution(bounciness);
+	body->setCollisionFlags(body->getCollisionFlags() | btCollisionObject::CF_CUSTOM_MATERIAL_CALLBACK);
+
+	RigidBodyComponent* rbc = new RigidBodyComponent(body);
+	rbc->setIdentity(id);
+	return rbc;
 }
 
 /*
@@ -132,7 +147,7 @@ RigidBodyComponent* RigidBodyComponent::createWithCylinder(float width, float he
 	return new RigidBodyComponent(body);
 }
 
-RigidBodyComponent* RigidBodyComponent::createWithMesh(Model* model, float mass)
+RigidBodyComponent* RigidBodyComponent::createWithMesh(Model* model, float bounciness, int id)
 {
 	btTransform t;	//position and rotation
 	t.setIdentity();
@@ -148,15 +163,15 @@ RigidBodyComponent* RigidBodyComponent::createWithMesh(Model* model, float mass)
 		}
 	}
 
-	btBvhTriangleMeshShape* bvhTriangleMeshShae = new btBvhTriangleMeshShape(triangleMesh, false);
-
-	btVector3 inertia(0, 0, 0);	//inertia is 0,0,0 for static object, else
-	if (mass != 0.0)
-		bvhTriangleMeshShae->calculateLocalInertia(mass, inertia);	//it can be determined by this function (for all kind of shapes)
+	btBvhTriangleMeshShape* bvhTriangleMeshShape = new btBvhTriangleMeshShape(triangleMesh, false);
 
 	btMotionState* motion = new btDefaultMotionState(t);	//set the position (and motion)
-	btRigidBody::btRigidBodyConstructionInfo info(mass, motion, bvhTriangleMeshShae, inertia);	//create the constructioninfo, you can create multiple bodies with the same info
+	btRigidBody::btRigidBodyConstructionInfo info(0.0, motion, bvhTriangleMeshShape);	//create the constructioninfo, you can create multiple bodies with the same info
 	btRigidBody* body = new btRigidBody(info);	//let's create the body itself
+	body->setRestitution(1.0);
 
-	return new RigidBodyComponent(body);
+	RigidBodyComponent* rbc = new RigidBodyComponent(body);
+	rbc->setIdentity(id);
+
+	return rbc;
 }

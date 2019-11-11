@@ -11,11 +11,14 @@ public:
 	bool remove(Component* component);
 	void update(float deltaTime);
 	void fixedUpdate(float deltaTime);
+	void pause();
+	void unpause();
 
 private:
 	ComponentManager();
 	std::unordered_map<std::string, std::vector<Component*>> componentPools;
 	std::string* strategy;
 	const size_t n;
+	bool isPaused;
 
 };

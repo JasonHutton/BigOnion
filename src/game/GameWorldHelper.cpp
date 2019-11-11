@@ -4,6 +4,7 @@
 #include "../src/game/components/AudioPlayerComponent.h"
 #include "components/TypeTestComponent.h"
 #include "components/CarControlComponent.h"
+#include "../../Settings.h"
 #include "components/RaceGameComponent.h"
 
 #include "../../Settings.h"
@@ -17,6 +18,18 @@ void GameWorldHelper::initTestScene(BOEngine* engine)
 	Shader * shader = new Shader("engine/graphic/shader/model_loading.vs", "engine/graphic/shader/model_loading.fs");
 
 	Shader* lightshader = new Shader("engine/graphic/shader/model_loading.vs", "engine/graphic/shader/light.fs.glsl");
+
+	vector<std::string> faces
+	{
+		"game/assets/cmm_skybox/right.jpg",
+		"game/assets/cmm_skybox/left.jpg",
+		"game/assets/cmm_skybox/top.jpg",
+		"game/assets/cmm_skybox/bottom.jpg",
+		"game/assets/cmm_skybox/front.jpg",
+		"game/assets/cmm_skybox/back.jpg"
+	};
+
+	engine->skybox.load(faces);
 
 	shader->use();
 	shader->setVec3("dirLight.direction", -0.2f, -1.0f, -0.3f); //obj to light
@@ -59,7 +72,7 @@ void GameWorldHelper::initTestScene(BOEngine* engine)
 	player_car->transform.scale = 1;
 	player_car->addComponent(new RenderComponent(engine, "game/assets/avent/Avent_red_notires.obj", shader)); // no tires
 	// player_car->addComponent(new RenderComponent(engine, "game/assets/avent/Avent_red.obj", shader));
-	player_car->addComponent(RigidBodyComponent::createWithCube(1.0, 0.3, 1.0, 1.0));
+	player_car->addComponent(RigidBodyComponent::createWithCube(1.0, 0.3, 1.0, 1.0, 1.0, 0)); //note id is set to 0, DO NOT CHANGE unless you change the id in the isHit()
 	CarControlComponent* carControl = new CarControlComponent(10, 15, 2.5);
 	player_car->addComponent(carControl);
 	player_car->addComponent(new RaceGameComponent());
@@ -101,11 +114,11 @@ void GameWorldHelper::initTestScene(BOEngine* engine)
 
 	// create race track walls
 	GameObject* trackWall = new GameObject("RaceTrackWalls");
-	trackWall->transform.position = Vector3f(0, -3.1, 0);
+	trackWall->transform.position = Vector3f(0, -3.25, 0);
 	trackWall->transform.rotation = Vector3f(0, 0, 0);
-	trackWall->transform.scale = Vector3f(1.0, 1.0, 1.0);
+	trackWall->transform.scale = Vector3f(1.0, 2.0, 1.0);
 	trackWall->addComponent(new RenderComponent(engine, "game/assets/track2/track_walls.obj", shader)); // connect object - model
-	trackWall->addComponent(RigidBodyComponent::createWithMesh(&trackWall->getComponent<RenderComponent>()->model, 0.0)); // connect object - rigibody
+	trackWall->addComponent(RigidBodyComponent::createWithMesh(&trackWall->getComponent<RenderComponent>()->model, 1.0, 1));//note id is set to 1, DO NOT CHANGE unless you change the id in the isHit()
 	engine->gameWorld->addGameObject(trackWall);
 
 	// create race track
@@ -115,7 +128,7 @@ void GameWorldHelper::initTestScene(BOEngine* engine)
 	raceTrack->transform.scale = Vector3f(1.0, 1.0, 1.0);
 	raceTrack->addComponent(new RenderComponent(engine, "game/assets/track2/track_only.obj", shader)); // connect object - model
 	//raceTrack->addComponent(new RenderComponent(engine, "game/assets/racetrack/racetrack.obj", shader)); // connect object - model
-	// raceTrack->addComponent(RigidBodyComponent::createWithMesh(&raceTrack->getComponent<RenderComponent>()->model, 0.0)); // connect object - rigibody
+	// raceTrack->addComponent(RigidBodyComponent::createWithMesh(&raceTrack->getComponent<RenderComponent>()->model)); // connect object - rigibody
 	engine->gameWorld->addGameObject(raceTrack); // maybe auto register?
 
 	// Light

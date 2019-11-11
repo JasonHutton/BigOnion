@@ -59,3 +59,13 @@ void AudioPlayerComponent::update(float deltaTime)
 {
 	audio.SetChannel3dPosition(soundChannel, convert(gameObject->transform.position));
 }
+
+void AudioPlayerComponent::pauseExec()
+{
+	pause();
+}
+
+void AudioPlayerComponent::unpauseExec()
+{
+	play();
+}

@@ -10,6 +10,7 @@ class Component
 {
 public:
 	GameObject* gameObject = nullptr;
+	bool ignorePause = false;
 	virtual ~Component() {};
 	/*
 		Used to apply behaviour every frame.
@@ -27,4 +28,12 @@ public:
 		Pure virtual component type id function, this MUST be implemented in subclasses.
 	*/
 	virtual std::string componentTypeID() = 0;
+	/*
+		Called when the GameWorld is paused.
+	*/
+	virtual void pauseExec() {};
+	/*
+		Called when the GameWorld is unpaused;
+	*/
+	virtual void unpauseExec() {};
 };
