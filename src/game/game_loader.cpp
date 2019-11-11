@@ -357,17 +357,19 @@ void GameLoader::startGame() {
 			ImGui::StyleColorsDark();
 			ImGui::Begin("Big Onion", &show_GameMenu_window, flags);
 
-			ImGui::SetCursorPos(ImVec2((windowW / 2) - (windowW / 4), 100.0f));
+			ImGui::SetCursorPos(ImVec2((windowW / 1)- (windowW / 1.85), 200.0f));
+			ImGui::Text("Big Onion", ImVec2(windowW / 2, 50.0f));
+
+			ImGui::SetCursorPos(ImVec2((windowW / 2) - (windowW / 4), 300.0f));
 			//if (ImGui::Button("Play Game", ImVec2(-1.0f, 0.0f)))
 			if (ImGui::Button("Play Game", ImVec2(windowW / 2, 50.0f))) {
 				show_GameMenu_window = false;
 			}
 
-
-			ImGui::SetCursorPos(ImVec2((windowW / 2) - (windowW / 4), 200.0f));
+			ImGui::SetCursorPos(ImVec2((windowW / 2) - (windowW / 4), 400.0f));
 			ImGui::Button("Load Game", ImVec2(windowW / 2, 50.0f));
 
-			ImGui::SetCursorPos(ImVec2((windowW / 2) - (windowW / 4), 300.0f));
+			ImGui::SetCursorPos(ImVec2((windowW / 2) - (windowW / 4), 500.0f));
 			if (ImGui::Button("High Score", ImVec2(windowW / 2, 50.0f)))
 
 			{
@@ -376,7 +378,7 @@ void GameLoader::startGame() {
 			}
 
 
-			ImGui::SetCursorPos(ImVec2((windowW / 2) - (windowW / 4), 400.0f));
+			ImGui::SetCursorPos(ImVec2((windowW / 2) - (windowW / 4), 600.0f));
 			if (ImGui::Button("Exit", ImVec2(windowW / 2, 50.0f)))
 				break;
 			ImGui::End();
