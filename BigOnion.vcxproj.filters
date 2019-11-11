@@ -201,6 +201,9 @@
     <ClCompile Include="src\game\components\RaceGameComponent.cpp">
       <Filter>Source Files\game\components</Filter>
     </ClCompile>
+    <ClCompile Include="src\engine\graphic\Skybox.cpp">
+      <Filter>Source Files\engine\graphic</Filter>
+    </ClCompile>
     <ClCompile Include="include\c4\yml\common.cpp">
       <Filter>Source Files\engine\FileSystem\c4\YAML</Filter>
     </ClCompile>
@@ -391,6 +394,9 @@
     </ClInclude>
     <ClInclude Include="src\game\components\RaceGameComponent.h">
       <Filter>Header Files\game\components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\engine\graphic\Skybox.h">
+      <Filter>Header Files\engine\graphic</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

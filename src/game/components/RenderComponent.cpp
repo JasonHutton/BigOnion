@@ -10,6 +10,7 @@ RenderComponent::RenderComponent(BOEngine* engine, std::string modelPath, Shader
 	: model(modelPath, shader)
 {
 	engine->addRenderComponent(this);
+	ignorePause = true;
 }
 
 

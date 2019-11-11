@@ -1,5 +1,6 @@
 #include "AudioEngine.h"
 #include "../FileSystem.h"
+#include "../../Settings.h"
 
 Implementation::Implementation() {
 	mpStudioSystem = NULL;
@@ -131,13 +132,13 @@ void AudioEngine::SetChannel3dPosition(int nChannelId, const Vector3& vPosition)
 	}
 }
 
-void AudioEngine::SetVolume(int nChannelId, float fVolumedB)
+void AudioEngine::SetVolume(int nChannelId, float fVolumedB, bool isMusic)
 {
 	auto tFoundIt = sgpImplementation->mChannels.find(nChannelId);
 	if (tFoundIt == sgpImplementation->mChannels.end())
 		return;
 
-	AudioEngine::ErrorCheck(tFoundIt->second->setVolume(dbToVolume(fVolumedB)));
+	AudioEngine::ErrorCheck(tFoundIt->second->setVolume(dbToVolume(fVolumedB) * (isMusic ? Settings::g_MusicVolume.GetDouble() : Settings::g_SoundVolume.GetDouble())));
 }
 
 void AudioEngine::PauseSounds(int nChannelId)

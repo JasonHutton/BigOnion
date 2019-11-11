@@ -17,9 +17,13 @@ public:
 	bool removeGameObject(std::string id);
 	void updateGameObjects(float deltaTime);
 	GameObject* getGameObjectById(std::string id);
+	void pause();
+	void unpause();
 	const float fixedDeltaTime;
 private:
 	std::unordered_map<std::string, GameObject*> gameObjects;
+
+	bool isPaused;
 
 	// physics world stuff
 	btDispatcher* dispatcher;					//what collision algorithm to use?

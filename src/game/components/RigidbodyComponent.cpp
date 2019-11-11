@@ -6,7 +6,7 @@
 const std::string RigidBodyComponent::typeID = "RigidBody";
 
 RigidBodyComponent::RigidBodyComponent(btRigidBody* _body)
-	: rigidBody(_body)
+	: rigidBody(_body), identity(-1)
 {
 }
 
@@ -41,7 +41,7 @@ void RigidBodyComponent::onAddToGameWorld()
 	bTransform.setRotation(quat);
 
 	rigidBody->setWorldTransform(bTransform);
-
+	rigidBody->setUserPointer(this);
 	gameObject->world->physicsWorld->addRigidBody(rigidBody);
 }
 
@@ -77,10 +77,19 @@ void RigidBodyComponent::printInfo()
 	std::cout << "total: " << rigidBody->getTotalForce().length() << std::endl;
 }
 
+void RigidBodyComponent::isHit(RigidBodyComponent* rbc) {
+	if (identity == 0 && rbc->identity == 1) { //check if this is the care and we are colliding with the wall
+		cout << "collision" << endl;
+	}
+	/*else {
+		cout << "no collision" << endl;
+	}*/
+}
+
 /*
 	Returns a RigidBodyComponent with an attached Cube collider.
 */
-RigidBodyComponent* RigidBodyComponent::createWithCube(float width, float height, float depth, float mass, float bounciness)
+RigidBodyComponent* RigidBodyComponent::createWithCube(float width, float height, float depth, float mass, float bounciness, int id)
 {
 	btTransform t;	//position and rotation
 	t.setIdentity();
@@ -93,9 +102,14 @@ RigidBodyComponent* RigidBodyComponent::createWithCube(float width, float height
 	btMotionState* motion = new btDefaultMotionState(t);	//set the position (and motion)
 	btRigidBody::btRigidBodyConstructionInfo info(mass, motion, box, inertia);	//create the constructioninfo, you can create multiple bodies with the same info
 	btRigidBody* body = new btRigidBody(info);	//let's create the body itself
+
 	body->setActivationState(DISABLE_DEACTIVATION);
 	body->setRestitution(bounciness);
-	return new RigidBodyComponent(body);
+	body->setCollisionFlags(body->getCollisionFlags() | btCollisionObject::CF_CUSTOM_MATERIAL_CALLBACK);
+
+	RigidBodyComponent* rbc = new RigidBodyComponent(body);
+	rbc->setIdentity(id);
+	return rbc;
 }
 
 /*
@@ -133,7 +147,7 @@ RigidBodyComponent* RigidBodyComponent::createWithCylinder(float width, float he
 	return new RigidBodyComponent(body);
 }
 
-RigidBodyComponent* RigidBodyComponent::createWithMesh(Model* model, float bounciness)
+RigidBodyComponent* RigidBodyComponent::createWithMesh(Model* model, float bounciness, int id)
 {
 	btTransform t;	//position and rotation
 	t.setIdentity();
@@ -156,5 +170,8 @@ RigidBodyComponent* RigidBodyComponent::createWithMesh(Model* model, float bounc
 	btRigidBody* body = new btRigidBody(info);	//let's create the body itself
 	body->setRestitution(1.0);
 
-	return new RigidBodyComponent(body);
+	RigidBodyComponent* rbc = new RigidBodyComponent(body);
+	rbc->setIdentity(id);
+
+	return rbc;
 }

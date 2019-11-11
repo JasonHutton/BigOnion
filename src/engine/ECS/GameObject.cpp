@@ -85,6 +85,28 @@ void GameObject::addToGameWorld(GameWorld* world)
 	}
 }
 
+/*
+	Stops the execution of updates.
+*/
+void GameObject::pause()
+{
+	for (Component* comp : components)
+	{
+		comp->pauseExec();
+	}
+}
+
+/*
+	Continues the execution of updates.
+*/
+void GameObject::unpause()
+{
+	for (Component* comp : components)
+	{
+		comp->unpauseExec();
+	}
+}
+
 void* GameObject::operator new(size_t i)
 {
 	return _mm_malloc(i, 16);

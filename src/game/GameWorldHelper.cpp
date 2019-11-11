@@ -11,6 +11,8 @@
 #include "c4/substr.hpp"
 #include "../TextFile.h"
 
+
+#include "../../Settings.h"
 /*
 	Loads a test scene into the given BOEngine.
 */
@@ -21,6 +23,18 @@ void GameWorldHelper::initTestScene(BOEngine* engine)
 	Shader * shader = new Shader("engine/graphic/shader/model_loading.vs", "engine/graphic/shader/model_loading.fs");
 
 	Shader* lightshader = new Shader("engine/graphic/shader/model_loading.vs", "engine/graphic/shader/light.fs.glsl");
+
+	vector<std::string> faces
+	{
+		"game/assets/cmm_skybox/right.jpg",
+		"game/assets/cmm_skybox/left.jpg",
+		"game/assets/cmm_skybox/top.jpg",
+		"game/assets/cmm_skybox/bottom.jpg",
+		"game/assets/cmm_skybox/front.jpg",
+		"game/assets/cmm_skybox/back.jpg"
+	};
+
+	engine->skybox.load(faces);
 
 	shader->use();
 	shader->setVec3("dirLight.direction", -0.2f, -1.0f, -0.3f); //obj to light
@@ -63,7 +77,7 @@ void GameWorldHelper::initTestScene(BOEngine* engine)
 	player_car->transform.scale = 1;
 	player_car->addComponent(new RenderComponent(engine, "game/assets/avent/Avent_red_notires.obj", shader)); // no tires
 	// player_car->addComponent(new RenderComponent(engine, "game/assets/avent/Avent_red.obj", shader));
-	player_car->addComponent(RigidBodyComponent::createWithCube(1.0, 0.3, 1.0, 1.0, 1.0));
+	player_car->addComponent(RigidBodyComponent::createWithCube(1.0, 0.3, 1.0, 1.0, 1.0, 0)); //note id is set to 0, DO NOT CHANGE unless you change the id in the isHit()
 	CarControlComponent* carControl = new CarControlComponent(10, 15, 2.5);
 	player_car->addComponent(carControl);
 	player_car->addComponent(new RaceGameComponent());
@@ -100,7 +114,7 @@ void GameWorldHelper::initTestScene(BOEngine* engine)
 	engine->gameWorld->addGameObject(background_music);
 	background_music->addComponent(new AudioPlayerComponent(audio, "game/assets/sounds/start.mp3", 1, false, true, false));
 	background_music->getComponent<AudioPlayerComponent>()->onAddToGameWorld();
-	background_music->getComponent<AudioPlayerComponent>()->volume(0.1);
+	background_music->getComponent<AudioPlayerComponent>()->volume(0.1, true);
 	background_music->getComponent<AudioPlayerComponent>()->play();*/
 
 	// create race track walls
@@ -109,7 +123,7 @@ void GameWorldHelper::initTestScene(BOEngine* engine)
 	trackWall->transform.rotation = Vector3f(0, 0, 0);
 	trackWall->transform.scale = Vector3f(1.0, 2.0, 1.0);
 	trackWall->addComponent(new RenderComponent(engine, "game/assets/track2/track_walls.obj", shader)); // connect object - model
-	trackWall->addComponent(RigidBodyComponent::createWithMesh(&trackWall->getComponent<RenderComponent>()->model, 1.0)); // connect object - rigibody
+	trackWall->addComponent(RigidBodyComponent::createWithMesh(&trackWall->getComponent<RenderComponent>()->model, 1.0, 1));//note id is set to 1, DO NOT CHANGE unless you change the id in the isHit()
 	engine->gameWorld->addGameObject(trackWall);
 
 	// create race track
@@ -167,14 +181,14 @@ void GameWorldHelper::initTestScene(BOEngine* engine)
 	box->transform.position = Vector3f(5.0, 10.0, 0);
 	box->transform.scale = 2.0; // has to be double because dimensions of 1.0 entered above refer to distance from origin to edge
 	box->addComponent(new RenderComponent(engine, "game/assets/box/cube.obj", shader));
-	box->addComponent(RigidBodyComponent::createWithCube(1.0, 1.0, 1.0, 1.0, 0.0));
+	box->addComponent(RigidBodyComponent::createWithCube(1.0, 1.0, 1.0, 1.0));
 	engine->gameWorld->addGameObject(box);
 
 	GameObject* box2 = new  GameObject("Box2");
 	box2->transform.position = Vector3f(5.0, 15.0, 0);
 	box2->transform.scale = 2.0; // has to be double because dimensions of 1.0 entered above refer to distance from origin to edge
 	box2->addComponent(new RenderComponent(engine, "game/assets/box/cube.obj", shader));
-	box2->addComponent(RigidBodyComponent::createWithCube(1.0, 1.0, 1.0, 1.0, 0.0));
+	box2->addComponent(RigidBodyComponent::createWithCube(1.0, 1.0, 1.0, 1.0));
 	engine->gameWorld->addGameObject(box2);
 
 
@@ -182,7 +196,7 @@ void GameWorldHelper::initTestScene(BOEngine* engine)
 	box3->transform.position = Vector3f(5.0, 20.0, 0);
 	box3->transform.scale = 2.0; // has to be double because dimensions of 1.0 entered above refer to distance from origin to edge
 	box3->addComponent(new RenderComponent(engine, "game/assets/box/cube.obj", shader));
-	box3->addComponent(RigidBodyComponent::createWithCube(1.0, 1.0, 1.0, 1.0, 0.0));
+	box3->addComponent(RigidBodyComponent::createWithCube(1.0, 1.0, 1.0, 1.0));
 	engine->gameWorld->addGameObject(box3);
 	*/
 
@@ -190,7 +204,7 @@ void GameWorldHelper::initTestScene(BOEngine* engine)
 	box4->transform.position = Vector3f(5.0, 25.0, 0);
 	box4->transform.scale = 2.0; // has to be double because dimensions of 1.0 entered above refer to distance from origin to edge
 	box4->addComponent(new RenderComponent(engine, "game/assets/box/cube.obj", shader));
-	box4->addComponent(RigidBodyComponent::createWithCube(1.0, 1.0, 1.0, 1.0, 0.0));
+	box4->addComponent(RigidBodyComponent::createWithCube(1.0, 1.0, 1.0, 1.0));
 	box4->addComponent(new TypeTestComponent("This is a test message!"));
 	engine->gameWorld->addGameObject(box4);
 

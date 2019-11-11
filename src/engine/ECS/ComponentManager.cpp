@@ -3,6 +3,7 @@
 
 ComponentManager::ComponentManager(std::string updateStrategy[], size_t n)
 	: n(n)
+	, isPaused(false)
 {
 	strategy = new std::string[n];
 
@@ -51,7 +52,10 @@ void ComponentManager::update(float deltaTime)
 		std::string id = strategy[i];
 		for (Component* component : componentPools[id])
 		{
-			component->update(deltaTime);
+			if (!isPaused || component->ignorePause)
+			{
+				component->update(deltaTime);
+			}
 		}
 	}
 }
@@ -69,4 +73,20 @@ void ComponentManager::fixedUpdate(float deltaTime)
 			component->fixedUpdate(deltaTime);
 		}
 	}
+}
+
+/*
+	Stops the execution of updates.
+*/
+void ComponentManager::pause()
+{
+	isPaused = true;
+}
+
+/*
+	Continues the execution of updates.
+*/
+void ComponentManager::unpause()
+{
+	isPaused = false;
 }

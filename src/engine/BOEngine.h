@@ -12,6 +12,7 @@
 #include "graphic/model.h"
 #include "graphic/ShaderAttribute.h"
 #include "graphic/ThirdPersonCamera.h"
+#include "graphic/Skybox.h"
 #include "../game/components/RenderComponent.h"
 #include "../src/engine/audio/AudioEngine.h"
 #include "../game/components/AudioPlayerComponent.h"
@@ -30,6 +31,7 @@ public:
 	ThirdPersonCamera tpCamera;
 	GameWorld* gameWorld = nullptr;
 	AudioEngine audio;
+	Skybox skybox;
 
 	BOEngine();
 
