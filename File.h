@@ -31,5 +31,6 @@ namespace FileSystem
 {
 	bool PathExists(const string& path, const bool& bUseSearchPaths = true);
 	bool CreatePath(const string& path, const bool& bUseHomePath = true);
+	bool CreatePathAndSubpaths(const string& path, const bool& bUseHomePath = true);
 	void ListFilesInPath(vector<File>& files, const string& path, const string& filter = "*"); // Recursive search, using a specific path.
 }
