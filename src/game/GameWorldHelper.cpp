@@ -16,6 +16,15 @@
 /*
 	Loads a test scene into the given BOEngine.
 */
+
+void print_keyval(ryml::Tree const& t, size_t elm_id)
+{
+	std::cout << (t.has_key(elm_id) ? t.key(elm_id) : "{x}")
+		<< ": "
+		<< (t.has_val(elm_id) ? t.val(elm_id) : "{x}")
+		<< std::endl;
+}
+
 void GameWorldHelper::initTestScene(BOEngine* engine)
 {
 	// std::cout << "Game init" << std::endl;
@@ -164,8 +173,95 @@ void GameWorldHelper::initTestScene(BOEngine* engine)
 	box->Read();
 	box->c_str();
 	ryml::Tree tree = ryml::parse(c4::to_csubstr(box->c_str()));
-	ryml::NodeRef node = tree[0];
-	cout << node.key();
+	//print_keyval(tree)
+
+	size_t root_id = tree.root_id();
+	size_t foo_id = tree.first_child(root_id);
+
+	for (size_t i = tree.first_child(root_id);
+		i != ryml::NONE;
+		i = tree.next_sibling(i))
+	{
+		print_keyval(tree, i);
+		//std::cout << (tree.has_key() ? c.key() : "{X}") << "---" << (c.has_val() ? c.val() : "{x}") << std::endl;
+	}
+
+	// to iterate over the siblings of a node:
+	for (size_t i = tree.first_sibling(foo_id);
+		i != ryml::NONE;
+		i = tree.next_sibling(i))
+	{
+		print_keyval(tree, i);
+	}
+
+	//tree[0].is_map();
+
+#ifdef WTF?
+	/*
+	for (int i = 0; i < tree.size(); i++)
+	{
+		ryml::NodeRef node = tree[i];
+		cout << node.key();
+	}
+	*/
+
+	std::cout << "num_siblings: " << tree[0].num_siblings() << std::endl;
+	std::cout << "num_children: " << tree[0].num_children() << std::endl;
+	emit(tree);
+	std::cout << "===============" << std::endl;
+	for (ryml::NodeRef c : tree.rootref())//[0].siblings())
+	{
+		std::cout << (c.has_key() ? c.key() : "{X}") << "---" << (c.has_val() ? c.val() : "{x}") << std::endl;
+		//std::cout << "num_siblings: " << c.num_siblings() << std::endl;
+		//std::cout << "num_children: " << c.num_children() << std::endl;
+		/*for (int i = 0; i < c.num_children(); i++)
+		{
+			std::cout << (c[i].has_key() ? c[i].key() : "{X}") << "---" << (c[i].has_val() ? c[i].val() : "{x}") << std::endl;
+		}*/
+		//tree[]
+
+		if (c.is_container())
+		{
+			for (ryml::NodeRef ch : c.children())
+			{
+				std::cout << (ch.has_key_tag() ? ch.key_tag() : "{X}") << "---" << (ch.has_val_tag() ? ch.val_tag() : "{x}") << std::endl;
+			}
+		}
+		
+		if (c.has_children())
+		{
+			/*for (int i = 0; i < c.num_children(); i++)
+			{
+				std::cout << "Um?: " << tree[c.key()][i] << std::endl;
+			}*/
+
+			/*for (ryml::NodeRef ch : c[c.key()].children())
+			{
+				std::cout << (ch[c.key()].has_key() ? ch[c.key()].key() : "{X}") << "---" 
+					<< (ch[c.key()].has_val() ? ch[c.key()].val() : "{x}") << std::endl;
+			}*/
+			//int i = 0;
+			for (ryml::NodeRef ch : c.children())
+			{
+				std::cout << (ch.has_key() ? ch.key() : "{X}") << "---" << (ch.has_val() ? ch.val() : "{x}") << std::endl;
+				//std::cout << (ch.has_key() ? ch.key() : "{X}") << "---" << (ch.has_val() ? ch.val() : "{x}") << std::endl;
+				//std::cout << "blarg?: " << (c[i].has_key() ? c[i].key() : "{X}") << std::endl;
+				//std::cout << "num_siblings: " << ch.num_siblings() << std::endl;
+				//std::cout << "num_children: " << ch.num_children() << std::endl;
+			}
+			
+		}
+	}
+
+	/*
+	for (NodeRef c : node.children())
+	{
+		std::cout << c.key() << "---" << c.val() << "\n";
+	}
+*/
+
+#endif
+	
 	/*string line0 = c4::fromnode[0].key();
 	string line0x = node[0].key();
 	string line1 = node[0].val();
