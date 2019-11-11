@@ -44,7 +44,7 @@ bool show_demo_window = true;
 bool show_another_window = false;
 bool show_GameMenu_window = true;//
 bool show_HighScore_window = false;
-bool stopgame = false;
+bool stopgame = true;
 bool gamewin = false;
 bool gamelost = false;
 bool isPressing = false;
@@ -53,7 +53,7 @@ bool showmouse = true;
 int mousecase = 0;
 float speed = 0;
 ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
-
+bool again = false;
 
 
 
@@ -272,7 +272,10 @@ void GameLoader::startGame() {
 				}
 
 			}
-
+			if (time>6) {
+				stopgame = false;
+			}
+			
 		}
 
 		ImGui::End();
@@ -405,12 +408,21 @@ void GameLoader::startGame() {
 			ImGui::End();
 		}
 		//***********win window******************
+		
+		if (racePercentage * 100.0f >= 100 && !again) {
+			gamewin = true;
+		}
 		if (gamewin)
 		{
+			stopgame = true;
 			ImGui::SetNextWindowSize(ImVec2(windowW, windowH));
 			ImGui::SetNextWindowPos(ImVec2(0, 0));
 			ImGui::StyleColorsDark();
 			ImGui::Begin("win", &gamewin, flags);
+
+			ImVec2 winW = ImGui::CalcTextSize("Your Win", NULL, true);
+			ImGui::SetCursorPos(ImVec2((windowW / 2) - (winW.x / 2), 50.0f));
+			ImGui::TextColored(ImVec4(1.0f, 0.0f, 1.0f, 1.0f), "You Win");
 
 			ImVec2 scoreW = ImGui::CalcTextSize("Your score:   ", NULL, true);
 			ImGui::SetCursorPos(ImVec2((windowW / 2) - (scoreW.x / 2), 100.0f));
@@ -418,13 +430,17 @@ void GameLoader::startGame() {
 
 			ImGui::SetCursorPos(ImVec2((windowW / 2) - (windowW / 4), 200.0f));
 			if (ImGui::Button("Try Again", ImVec2(windowW / 2, 50.0f))) {
+				reload();
+				again = true;
 				gamewin = false;
+				
 			}
 			ImGui::SetCursorPos(ImVec2((windowW / 2) - (windowW / 4), 300.0f));
 			if (ImGui::Button("Back Menu", ImVec2(windowW / 2, 50.0f))) {
 				gamewin = false;
 				show_GameMenu_window = true;
 			}
+			
 			ImGui::End();
 		}
 
