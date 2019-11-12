@@ -23,6 +23,7 @@ void calculateSpeed(float deltaTime);
 void accelSound(GameObject* player);
 
 
+
 // camera
 Camera* camera;
 AudioEngine audio;
@@ -60,7 +61,9 @@ int mousecase = 0;
 float speed = 0;
 ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
 bool again = false;
-
+bool recordtime = true;
+int timego;
+int starttime;
 
 
 GameLoader::GameLoader()
@@ -192,6 +195,8 @@ void GameLoader::startGame() {
 	// -----------
 	while (!glfwWindowShouldClose(window))
 	{
+		
+
 		float currentFrame = (float)glfwGetTime(); // We should probably be using double instead of float, but that's spawning off a LOT of required changes...
 		deltaTime = currentFrame - lastFrame;
 		lastFrame = currentFrame;
@@ -272,12 +277,15 @@ void GameLoader::startGame() {
 		ImGui::StyleColorsLight();
 		ImGui::Begin("Time", 0, flags);
 
-		int time;
+		if (recordtime) {
+			starttime = int(glfwGetTime());
+		}
+
 		if (show_GameMenu_window == false && show_HighScore_window == false) {
 
-
-			time = int(glfwGetTime());
-			if (time <= 6) {
+			recordtime = false;
+			timego = currentFrame - starttime;
+			if (timego <= 5) {
 
 				//CalcTextSize
 				ImVec2 timeW = ImGui::CalcTextSize("The game starts in % .d second", NULL, true);
@@ -286,30 +294,30 @@ void GameLoader::startGame() {
 				ImVec2 thirdW = ImGui::CalcTextSize("Let's GO.", NULL, true);
 
 				ImGui::SetCursorPos(ImVec2((windowW / 2) - (timeW.x / 2), 200.0f));
-				ImGui::TextColored(ImVec4(1.0f, 0.0f, 1.0f, 1.0f), "The game starts in %.d second", 7 - time);
+				ImGui::TextColored(ImVec4(1.0f, 0.0f, 1.0f, 1.0f), "The game starts in %.d second", 6 - timego);
 
-				switch (time) {
+				switch (timego) {
+				case 0:
+					ImGui::SetCursorPos(ImVec2((windowW / 2) - (firetW.x / 2), 300.0f));
+					ImGui::TextColored(ImVec4(1.0f, 0.0f, 1.0f, 1.0f), "Hi BIG Onion");
+					break;
 				case 1:
 					ImGui::SetCursorPos(ImVec2((windowW / 2) - (firetW.x / 2), 300.0f));
 					ImGui::TextColored(ImVec4(1.0f, 0.0f, 1.0f, 1.0f), "Hi BIG Onion");
 					break;
 				case 2:
-					ImGui::SetCursorPos(ImVec2((windowW / 2) - (firetW.x / 2), 300.0f));
-					ImGui::TextColored(ImVec4(1.0f, 0.0f, 1.0f, 1.0f), "Hi BIG Onion");
+					ImGui::SetCursorPos(ImVec2((windowW / 2) - (secondW.x / 2), 300.0f));
+					ImGui::TextColored(ImVec4(1.0f, 0.0f, 1.0f, 1.0f), "Are you ready for tonight's game?");
 					break;
 				case 3:
 					ImGui::SetCursorPos(ImVec2((windowW / 2) - (secondW.x / 2), 300.0f));
 					ImGui::TextColored(ImVec4(1.0f, 0.0f, 1.0f, 1.0f), "Are you ready for tonight's game?");
 					break;
 				case 4:
-					ImGui::SetCursorPos(ImVec2((windowW / 2) - (secondW.x / 2), 300.0f));
-					ImGui::TextColored(ImVec4(1.0f, 0.0f, 1.0f, 1.0f), "Are you ready for tonight's game?");
-					break;
-				case 5:
 					ImGui::SetCursorPos(ImVec2((windowW / 2) - (thirdW.x / 2), 300.0f));
 					ImGui::TextColored(ImVec4(1.0f, 0.0f, 1.0f, 1.0f), "Let's GO.");
 					break;
-				case 6:
+				case 5:
 					ImGui::SetCursorPos(ImVec2((windowW / 2) - (thirdW.x / 2), 300.0f));
 					ImGui::TextColored(ImVec4(1.0f, 0.0f, 1.0f, 1.0f), "Let's GO.");
 					break;
@@ -317,7 +325,7 @@ void GameLoader::startGame() {
 				}
 
 			}
-			if (time>6) {
+			if (timego>5) {
 				stopgame = false;
 			}
 			
@@ -424,10 +432,15 @@ void GameLoader::startGame() {
 			}
 			
 			ImGui::SetCursorPos(ImVec2((windowW / 2) - (windowW / 20), 600.0f));
-			ImGui::Checkbox("Music Toggle", &MusicToggle);
+			if (ImGui::Checkbox("Music Toggle", &MusicToggle)) {
+				
+			}
 
 			ImGui::SetCursorPos(ImVec2((windowW / 6), 650.0f));
-			ImGui::SliderInt("Volume", &MusicSlider,1,5);
+			if (ImGui::SliderInt("Volume", &MusicSlider, 1, 5)) {
+				
+				audio.SetVolume(0, MusicSlider, true);
+			}
 
 			ImGui::SetCursorPos(ImVec2((windowW / 2) - (windowW / 4), 750.0f));
 			if (ImGui::Button("Exit", ImVec2(windowW / 2, 50.0f)))
