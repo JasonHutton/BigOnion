@@ -76,19 +76,6 @@ GameLoader::GameLoader()
 {
 }
 
-/*bool callbackFunc(btManifoldPoint& cp, const btCollisionObjectWrapper* colObj0Wrap, int partId0, int index0, const btCollisionObjectWrapper* colObj1Wrap, int partId1, int index1)
-{
-	int id1 = colObj0Wrap->getCollisionObject()->getUserIndex();
-	int id2 = colObj1Wrap->getCollisionObject()->getUserIndex();
-	if ((id1 == 0 && id2 == 1) || (id1 == 1 && id2 == 0)) {
-		cout << "collision" << endl;
-	}
-	else {
-		cout << "no collision" << endl;
-	}
-	return false;
-}*/
-
 bool LoadTextureFromFile(const char* filename, GLuint* out_texture, int* out_width, int* out_height)
 {
 	// Load from file
@@ -122,8 +109,7 @@ bool callbackFunc(btManifoldPoint& cp, void* body0, void* body1)
 {
 	btCollisionObject* colObj0Wrap = static_cast<btCollisionObject*>(body0);
 	btCollisionObject* colObj1Wrap = static_cast<btCollisionObject*>(body1);
-	//int id1 = colObj0Wrap->getUserIndex();
-	//int id2 = colObj1Wrap->getUserIndex();
+
 	RigidBodyComponent* rbc0 = static_cast<RigidBodyComponent*>(colObj0Wrap->getUserPointer());
 	RigidBodyComponent* rbc1 = static_cast<RigidBodyComponent*>(colObj1Wrap->getUserPointer());
 	if (rbc0->isHit(rbc1))
@@ -150,9 +136,6 @@ bool callbackFunc(btManifoldPoint& cp, void* body0, void* body1)
 		}
 		calculateSpeed(-0.08);
 	}
-	/*if ((id1 == 0 && id2 == 1) || (id1 == 1 && id2 == 0)) { // id of the car is 0 and id of the walls is 1
-		cout << "collision" << endl;
-	}*/
 
 	return false;
 }
@@ -161,28 +144,10 @@ void GameLoader::createGame() {
 
 	std::cout << "createGame" << std::endl;
 
-	//gContactAddedCallback = callbackFunc;
 	gContactProcessedCallback = callbackFunc;
 
 }
 
-void renderPlane(btRigidBody* plane)
-{
-	glColor3f(0.8, 0.8, 0.8);
-	btTransform t;
-	plane->getMotionState()->getWorldTransform(t);
-	float mat[16];
-	t.getOpenGLMatrix(mat);
-	glPushMatrix();
-	glMultMatrixf(mat);	//translation,rotation
-	glBegin(GL_QUADS);
-	glVertex3f(-1000, -3, 1000);
-	glVertex3f(-1000, -3, -1000);
-	glVertex3f(1000, -3, -1000);
-	glVertex3f(1000, -3, 1000);
-	glEnd();
-	glPopMatrix();
-}
 int BOEngine::gwidth;
 int BOEngine::gHeight;
 
