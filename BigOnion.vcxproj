@@ -119,6 +119,9 @@
     <None Include="src\engine\graphic\shader\model_loading.vs" />
     <None Include="src\engine\vertex.glsl" />
   </ItemGroup>
+  <ItemGroup>
+    <Image Include="src\game\assets\img\racing.jpg" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <ProjectGuid>{FDCA1553-B520-4D5D-8B2E-B74BD1B074F5}</ProjectGuid>

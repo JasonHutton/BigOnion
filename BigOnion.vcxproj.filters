@@ -368,4 +368,9 @@
       <Filter>Resource Files</Filter>
     </None>
   </ItemGroup>
+  <ItemGroup>
+    <Image Include="src\game\assets\img\racing.jpg">
+      <Filter>Images</Filter>
+    </Image>
+  </ItemGroup>
 </Project>
