@@ -73,6 +73,9 @@
     <Filter Include="Source Files\engine\Utils">
       <UniqueIdentifier>{fcd7d97c-296e-4167-9fff-03a50e0c9738}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Images">
+      <UniqueIdentifier>{497bfef7-58ac-4f1f-82ba-39fcdcb99052}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\game\game_loader.cpp">

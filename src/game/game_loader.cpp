@@ -41,6 +41,11 @@ Vector3 rotation{ 0,0,0 };
 Vector3 up{ 0,0,0 };
 Vector3 vel{ 0,0,0 };
 
+// Music Toggle
+
+bool MusicToggle;
+int MusicSlider;
+
 bool show_demo_window = true;
 bool show_another_window = false;
 bool show_GameMenu_window = true;//
@@ -60,7 +65,9 @@ bool skidSound = false;
 bool impactSound = false;
 float timeImpact = 0;
 float timeSkid = 0;
-
+bool recordtime = true;
+int timego;
+int starttime;
 
 
 GameLoader::GameLoader()
@@ -79,6 +86,35 @@ GameLoader::GameLoader()
 	}
 	return false;
 }*/
+
+bool LoadTextureFromFile(const char* filename, GLuint* out_texture, int* out_width, int* out_height)
+{
+	// Load from file
+	int image_width = 0;
+	int image_height = 0;
+	unsigned char* image_data = stbi_load(filename, &image_width, &image_height, NULL, 4);
+	if (image_data == NULL)
+		return false;
+
+	// Create a OpenGL texture identifier
+	GLuint image_texture;
+	glGenTextures(1, &image_texture);
+	glBindTexture(GL_TEXTURE_2D, image_texture);
+
+	// Setup filtering parameters for display
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+	// Upload pixels into texture
+	glPixelStorei(GL_UNPACK_ROW_LENGTH, 0);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, image_width, image_height, 0, GL_RGBA, GL_UNSIGNED_BYTE, image_data);
+	stbi_image_free(image_data);
+
+	*out_texture = image_texture;
+	*out_width = image_width;
+	*out_height = image_height;
+	return true;
+}
 
 bool callbackFunc(btManifoldPoint& cp, void* body0, void* body1)
 {
@@ -141,6 +177,12 @@ void GameLoader::startGame() {
 	GLFWwindow* window = engine->window;
 	camera = &engine->camera;
 
+	int my_image_width = 404;
+	int my_image_height = 404;
+	GLuint my_image_texture = 0;
+	bool ret = LoadTextureFromFile("src\\game\\assets\\img\\racing.jpg", &my_image_texture, &my_image_width, &my_image_height);
+	IM_ASSERT(ret);
+
 	// inputs
 
 	glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
@@ -158,6 +200,8 @@ void GameLoader::startGame() {
 	// -----------
 	while (!glfwWindowShouldClose(window))
 	{
+		
+
 		float currentFrame = (float)glfwGetTime(); // We should probably be using double instead of float, but that's spawning off a LOT of required changes...
 		deltaTime = currentFrame - lastFrame;
 		lastFrame = currentFrame;
@@ -265,12 +309,15 @@ void GameLoader::startGame() {
 		ImGui::StyleColorsLight();
 		ImGui::Begin("Time", 0, flags);
 
-		int time;
+		if (recordtime) {
+			starttime = int(glfwGetTime());
+		}
+
 		if (show_GameMenu_window == false && show_HighScore_window == false) {
 
-
-			time = int(glfwGetTime());
-			if (time <= 6) {
+			recordtime = false;
+			timego = currentFrame - starttime;
+			if (timego <= 5) {
 
 				//CalcTextSize
 				ImVec2 timeW = ImGui::CalcTextSize("The game starts in % .d second", NULL, true);
@@ -279,30 +326,30 @@ void GameLoader::startGame() {
 				ImVec2 thirdW = ImGui::CalcTextSize("Let's GO.", NULL, true);
 
 				ImGui::SetCursorPos(ImVec2((windowW / 2) - (timeW.x / 2), 200.0f));
-				ImGui::TextColored(ImVec4(1.0f, 0.0f, 1.0f, 1.0f), "The game starts in %.d second", 7 - time);
+				ImGui::TextColored(ImVec4(1.0f, 0.0f, 1.0f, 1.0f), "The game starts in %.d second", 6 - timego);
 
-				switch (time) {
+				switch (timego) {
+				case 0:
+					ImGui::SetCursorPos(ImVec2((windowW / 2) - (firetW.x / 2), 300.0f));
+					ImGui::TextColored(ImVec4(1.0f, 0.0f, 1.0f, 1.0f), "Hi BIG Onion");
+					break;
 				case 1:
 					ImGui::SetCursorPos(ImVec2((windowW / 2) - (firetW.x / 2), 300.0f));
 					ImGui::TextColored(ImVec4(1.0f, 0.0f, 1.0f, 1.0f), "Hi BIG Onion");
 					break;
 				case 2:
-					ImGui::SetCursorPos(ImVec2((windowW / 2) - (firetW.x / 2), 300.0f));
-					ImGui::TextColored(ImVec4(1.0f, 0.0f, 1.0f, 1.0f), "Hi BIG Onion");
+					ImGui::SetCursorPos(ImVec2((windowW / 2) - (secondW.x / 2), 300.0f));
+					ImGui::TextColored(ImVec4(1.0f, 0.0f, 1.0f, 1.0f), "Are you ready for tonight's game?");
 					break;
 				case 3:
 					ImGui::SetCursorPos(ImVec2((windowW / 2) - (secondW.x / 2), 300.0f));
 					ImGui::TextColored(ImVec4(1.0f, 0.0f, 1.0f, 1.0f), "Are you ready for tonight's game?");
 					break;
 				case 4:
-					ImGui::SetCursorPos(ImVec2((windowW / 2) - (secondW.x / 2), 300.0f));
-					ImGui::TextColored(ImVec4(1.0f, 0.0f, 1.0f, 1.0f), "Are you ready for tonight's game?");
-					break;
-				case 5:
 					ImGui::SetCursorPos(ImVec2((windowW / 2) - (thirdW.x / 2), 300.0f));
 					ImGui::TextColored(ImVec4(1.0f, 0.0f, 1.0f, 1.0f), "Let's GO.");
 					break;
-				case 6:
+				case 5:
 					ImGui::SetCursorPos(ImVec2((windowW / 2) - (thirdW.x / 2), 300.0f));
 					ImGui::TextColored(ImVec4(1.0f, 0.0f, 1.0f, 1.0f), "Let's GO.");
 					break;
@@ -310,7 +357,7 @@ void GameLoader::startGame() {
 				}
 
 			}
-			if (time>6) {
+			if (timego>5) {
 				stopgame = false;
 			}
 			
@@ -339,8 +386,10 @@ void GameLoader::startGame() {
 
 		ImGui::Begin("Speed", 0, flags);
 
-		int speed1 = 100;
-
+		if (stopcase == 1) {
+			speed = 0;
+		}
+		
 		ImGui::TextColored(ImVec4(1.0f, 0.0f, 0.0f, 1.0f), "Speed:%d km/h", (int)speed);
 		ImGui::End();
 
@@ -355,11 +404,11 @@ void GameLoader::startGame() {
 		{
 			switch (stopcase) {
 			case 0:
-				stopgame = true;
+				engine->gameWorld->pause();
 				stopcase = 1;
 				break;
 			case 1:
-				stopgame = false;
+				engine->gameWorld->unpause();
 				stopcase = 0;
 				break;
 			}
@@ -390,27 +439,42 @@ void GameLoader::startGame() {
 			ImGui::SetNextWindowPos(ImVec2(0, 0));
 			ImGui::StyleColorsDark();
 			ImGui::Begin("Big Onion", &show_GameMenu_window, flags);
+			my_image_width = windowW;
+			my_image_height = windowH;
+			ImGui::Image((void*)(intptr_t)my_image_texture, ImVec2(my_image_width, my_image_height));
 
-			ImGui::SetCursorPos(ImVec2((windowW / 2) - (windowW / 4), 100.0f));
+			ImGui::SetCursorPos(ImVec2((windowW / 1)- (windowW / 1.85), 200.0f));
+			ImGui::Text("Big Onion", ImVec2(windowW / 2, 50.0f));
+
+			ImGui::SetCursorPos(ImVec2((windowW / 2) - (windowW / 4), 300.0f));
 			//if (ImGui::Button("Play Game", ImVec2(-1.0f, 0.0f)))
 			if (ImGui::Button("Play Game", ImVec2(windowW / 2, 50.0f))) {
 				show_GameMenu_window = false;
 			}
 
-
-			ImGui::SetCursorPos(ImVec2((windowW / 2) - (windowW / 4), 200.0f));
+			ImGui::SetCursorPos(ImVec2((windowW / 2) - (windowW / 4), 400.0f));
 			ImGui::Button("Load Game", ImVec2(windowW / 2, 50.0f));
 
-			ImGui::SetCursorPos(ImVec2((windowW / 2) - (windowW / 4), 300.0f));
+			ImGui::SetCursorPos(ImVec2((windowW / 2) - (windowW / 4), 500.0f));
 			if (ImGui::Button("High Score", ImVec2(windowW / 2, 50.0f)))
 
 			{
 				show_GameMenu_window = false;
 				show_HighScore_window = true;
 			}
+			
+			ImGui::SetCursorPos(ImVec2((windowW / 2) - (windowW / 20), 600.0f));
+			if (ImGui::Checkbox("Music Toggle", &MusicToggle)) {
+				
+			}
 
+			ImGui::SetCursorPos(ImVec2((windowW / 6), 650.0f));
+			if (ImGui::SliderInt("Volume", &MusicSlider, 1, 5)) {
+				
+				audio.SetVolume(0, MusicSlider, true);
+			}
 
-			ImGui::SetCursorPos(ImVec2((windowW / 2) - (windowW / 4), 400.0f));
+			ImGui::SetCursorPos(ImVec2((windowW / 2) - (windowW / 4), 750.0f));
 			if (ImGui::Button("Exit", ImVec2(windowW / 2, 50.0f)))
 				break;
 			ImGui::End();

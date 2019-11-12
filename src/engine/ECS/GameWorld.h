@@ -20,6 +20,7 @@ public:
 	void pause();
 	void unpause();
 	const float fixedDeltaTime;
+	
 private:
 	std::unordered_map<std::string, GameObject*> gameObjects;
 
