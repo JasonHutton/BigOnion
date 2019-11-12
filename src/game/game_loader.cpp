@@ -247,7 +247,7 @@ void GameLoader::startGame() {
 		GameObject* impactBig = engine->gameWorld->getGameObjectById("BigImpact");
 		GameObject* impactSmall = engine->gameWorld->getGameObjectById("SmallImpact");
 		GameObject* background_music = engine->gameWorld->getGameObjectById("BackgroundMusic");
-		if (speed > 50)
+		if (speed > 10)
 		{
 			if (impactB)
 			{
@@ -762,7 +762,7 @@ void GameLoader::processInput(GLFWwindow* window)
 				//camera->ProcessKeyboard(BACKWARD, deltaTime);
 				GameInput::setVerticalAxis(1.0);
 				calculateSpeed(-0.04);
-				if(speed > 50)
+				if(speed > 10)
 					skid->getComponent<AudioPlayerComponent>()->play();
 				skidSound = true;
 				break;
@@ -770,7 +770,7 @@ void GameLoader::processInput(GLFWwindow* window)
 				//camera->ProcessKeyboard(LEFT, deltaTime);
 				GameInput::setHorizontalAxis(1.0);
 				calculateSpeed(-0.01);
-				if (speed > 50)
+				if (speed > 10)
 					skid->getComponent<AudioPlayerComponent>()->play();
 				skidSound = true;
 				break;
@@ -778,7 +778,7 @@ void GameLoader::processInput(GLFWwindow* window)
 				//camera->ProcessKeyboard(RIGHT, deltaTime);
 				GameInput::setHorizontalAxis(-1.0);
 				calculateSpeed(-0.01);
-				if (speed > 50)
+				if (speed > 10)
 					skid->getComponent<AudioPlayerComponent>()->play();
 				skidSound = true;
 				break;
