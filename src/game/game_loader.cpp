@@ -62,8 +62,10 @@ ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
 bool again = false;
 bool isPlaying = false;
 bool skidSound = false;
-bool impactSound = false;
-float timeImpact = 0;
+bool impactS = false;
+bool impactB = false;
+float timeImpactS = 0;
+float timeImpactB = 0;
 float timeSkid = 0;
 bool recordtime = true;
 int timego;
@@ -126,13 +128,27 @@ bool callbackFunc(btManifoldPoint& cp, void* body0, void* body1)
 	RigidBodyComponent* rbc1 = static_cast<RigidBodyComponent*>(colObj1Wrap->getUserPointer());
 	if (rbc0->isHit(rbc1))
 	{
-		impactSound = true;
-		calculateSpeed(-0.04);
+		if (speed > 150)
+		{
+			impactB = true;
+		}
+		else
+		{
+			impactS = true;
+		}
+		calculateSpeed(-0.08);
 	}
 	if (rbc1->isHit(rbc0))
 	{
-		impactSound = true;
-		calculateSpeed(-0.04);
+		if (speed > 150)
+		{
+			impactB = true;
+		}
+		else
+		{
+			impactS = true;
+		}
+		calculateSpeed(-0.08);
 	}
 	/*if ((id1 == 0 && id2 == 1) || (id1 == 1 && id2 == 0)) { // id of the car is 0 and id of the walls is 1
 		cout << "collision" << endl;
@@ -231,29 +247,28 @@ void GameLoader::startGame() {
 		GameObject* impactBig = engine->gameWorld->getGameObjectById("BigImpact");
 		GameObject* impactSmall = engine->gameWorld->getGameObjectById("SmallImpact");
 		GameObject* background_music = engine->gameWorld->getGameObjectById("BackgroundMusic");
-		/*if (speed < 150)
+		if (speed > 50)
 		{
-			if (impactSound)
+			if (impactB)
+			{
+				impactBig->getComponent<AudioPlayerComponent>()->play();
+			}
+			if (impactS)
 			{
 				impactSmall->getComponent<AudioPlayerComponent>()->play();
 			}
 		}
-		else
-		{
-			if (impactSound)
-			{
-				impactBig->getComponent<AudioPlayerComponent>()->play();
-			}
-		}*/
-		if (impactSound)
+
+			
+		/*if (impactSmall)
 		{
 			if (speed > 50)
 			{
 				impactSmall->getComponent<AudioPlayerComponent>()->play();
 			}
-		}
-		Wait(impactSmall, impactSound, deltaTime, 0.3, 1);
-		//Wait(impactBig, impactSound, deltaTime, 1.5, 1);
+		}*/
+		Wait(impactSmall, impactS, deltaTime, 0.3, 1);
+		Wait(impactBig, impactB, deltaTime, 1.6, 2);
 		Wait(skid, skidSound, deltaTime, 1.2, 0);
 		engine->updateEngine(deltaTime);
 		calculateSpeed(-deltaTime);
@@ -632,15 +647,28 @@ void Wait(GameObject* object, bool isPlaying, float deltaTime, float wait, int m
 	}
 	if (mode == 1)
 	{
-		if (timeImpact > wait)
+		if (timeImpactS > wait)
 		{
-			impactSound = false;
-			timeImpact = 0;
+			impactS = false;
+			timeImpactS = 0;
 			object->getComponent<AudioPlayerComponent>()->pause();
 		}
 		if (isPlaying)
 		{
-			timeImpact = timeImpact + deltaTime;
+			timeImpactS = timeImpactS + deltaTime;
+		}
+	}
+	if (mode == 2)
+	{
+		if (timeImpactB > wait)
+		{
+			impactB = false;
+			timeImpactB = 0;
+			object->getComponent<AudioPlayerComponent>()->pause();
+		}
+		if (isPlaying)
+		{
+			timeImpactB = timeImpactB + deltaTime;
 		}
 	}
 }

@@ -105,7 +105,7 @@ void GameWorldHelper::initTestScene(BOEngine* engine)
 	GameObject* skid_sound = new  GameObject("SkidSound");
 	skid_sound->transform.position = { camera.Position.x, camera.Position.y, camera.Position.z };
 	engine->gameWorld->addGameObject(skid_sound);
-	skid_sound->addComponent(new AudioPlayerComponent(audio, "game/assets/sounds/car_break.mp3", 1, true, true, false));
+	skid_sound->addComponent(new AudioPlayerComponent(audio, "game/assets/sounds/car_break.mp3", 0.5, true, true, false));
 	skid_sound->getComponent<AudioPlayerComponent>()->onAddToGameWorld();
 
 	//impact sound
@@ -118,7 +118,7 @@ void GameWorldHelper::initTestScene(BOEngine* engine)
 	GameObject* impact_sound_big = new  GameObject("BigImpact");
 	impact_sound_big->transform.position = { camera.Position.x, camera.Position.y, camera.Position.z };
 	engine->gameWorld->addGameObject(impact_sound_big);
-	impact_sound_big->addComponent(new AudioPlayerComponent(audio, "game/assets/sounds/big_impact.mp3", 1, true, true, false));
+	impact_sound_big->addComponent(new AudioPlayerComponent(audio, "game/assets/sounds/big_impact.mp3", 20, true, true, false));
 	impact_sound_big->getComponent<AudioPlayerComponent>()->onAddToGameWorld();
 
 	//background music
