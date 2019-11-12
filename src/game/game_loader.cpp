@@ -83,8 +83,8 @@ GameLoader::GameLoader()
 bool LoadTextureFromFile(const char* filename, GLuint* out_texture, int* out_width, int* out_height)
 {
 	// Load from file
-	int image_width = 440;
-	int image_height = 440;
+	int image_width = 0;
+	int image_height = 0;
 	unsigned char* image_data = stbi_load(filename, &image_width, &image_height, NULL, 4);
 	if (image_data == NULL)
 		return false;
@@ -164,13 +164,6 @@ int BOEngine::gHeight;
 
 void GameLoader::startGame() {
 	std::cout << "startGame" << std::endl;
-
-	int my_image_width = 440;
-	int my_image_height = 444;
-	GLuint my_image_texture = 0;
-	bool ret = LoadTextureFromFile("src\\game\\assets\\img\\racing.jpg", &my_image_texture, &my_image_width, &my_image_height);
-	IM_ASSERT(ret);
-
 	// glfw window creation
 	// --------------------
 	GLFWwindow* window = engine->window;
@@ -405,14 +398,9 @@ void GameLoader::startGame() {
 			ImGui::SetNextWindowSize(ImVec2(windowW, windowH));
 			ImGui::SetNextWindowPos(ImVec2(0, 0));
 			ImGui::StyleColorsDark();
-			//bg 
-			my_image_height = windowH;
-			my_image_width = windowW;
 			ImGui::Begin("Big Onion", &show_GameMenu_window, flags);
 			my_image_width = windowW;
 			my_image_height = windowH;
-			ImGui::Image((void*)(intptr_t)my_image_texture, ImVec2(my_image_width, my_image_height));
-
 			ImGui::Image((void*)(intptr_t)my_image_texture, ImVec2(my_image_width, my_image_height));
 
 			ImGui::SetCursorPos(ImVec2((windowW / 1)- (windowW / 1.85), 200.0f));
