@@ -8,7 +8,7 @@ class AudioPlayerComponent:
 {
 public:
 	static const std::string typeID;
-	static int soundChannel;
+	int soundChannel;
 	AudioPlayerComponent(AudioEngine audio, const string& strSoundName,float volumeDb, bool is3D, bool isLooping, bool isStreaming);
 
 	void play();
@@ -20,9 +20,11 @@ public:
 	void pauseExec() override;
 	void unpauseExec() override;
 	void volume(float volume, bool isMusic = false);
+	void playEffect();
 	std::string componentTypeID() override { return typeID; }
 
 private:
 	AudioEngine audio;
 	Vector3 convert(Vector3f vPos);
+	void wait(int seconds);
 };

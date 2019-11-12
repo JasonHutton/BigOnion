@@ -17,10 +17,11 @@ public:
 	std::string componentTypeID() override { return "RigidBody"; }
 	void applyForceRelativeToDirection(Vector3f force);
 	void applyTorque(Vector3f torque);
-	void applyAngularVelocity(Vector3f velocity);
+	void setVelocityRelativeToDirection(Vector3f velocity);
+	void setAngularVelocity(Vector3f velocity);
 	Vector3f getVelocityRelativeToDirection();
 	void printInfo();
-	void isHit(RigidBodyComponent* rbc);
+	bool isHit(RigidBodyComponent* rbc);
 	void setIdentity(int id) {
 		identity = id;
 	}

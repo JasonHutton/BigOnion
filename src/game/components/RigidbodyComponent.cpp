@@ -54,13 +54,20 @@ void RigidBodyComponent::applyForceRelativeToDirection(Vector3f force)
 	rigidBody->applyCentralForce(correctedForce);
 }
 
-void RigidBodyComponent::applyTorque(Vector3f torque)
+void RigidBodyComponent::applyTorque(Vector3f torque) 
 {
-	//for turning
 	rigidBody->applyTorque(btVector3(torque.x, torque.y, torque.z));
 }
 
-void RigidBodyComponent::applyAngularVelocity(Vector3f velocity)
+void RigidBodyComponent::setVelocityRelativeToDirection(Vector3f velocity)
+{
+	btVector3 relativeVelocity = btVector3(velocity.x, velocity.y, velocity.z);
+	btMatrix3x3& boxRot = rigidBody->getWorldTransform().getBasis();
+	btVector3 correctedVelocity = boxRot * relativeVelocity;
+	rigidBody->setLinearVelocity(correctedVelocity);
+}
+
+void RigidBodyComponent::setAngularVelocity(Vector3f velocity)
 {
 	rigidBody->setAngularVelocity(btVector3(velocity.x, velocity.y, velocity.z));
 }
@@ -68,7 +75,7 @@ void RigidBodyComponent::applyAngularVelocity(Vector3f velocity)
 Vector3f RigidBodyComponent::getVelocityRelativeToDirection()
 {
 	btMatrix3x3& boxRot = rigidBody->getWorldTransform().getBasis();
-	btVector3 relativeVelocity = boxRot * rigidBody->getLinearVelocity();
+	btVector3 relativeVelocity = rigidBody->getLinearVelocity() * boxRot;
 	return Vector3f(relativeVelocity.x(), relativeVelocity.y(), relativeVelocity.z());
 }
 
@@ -77,13 +84,15 @@ void RigidBodyComponent::printInfo()
 	std::cout << "total: " << rigidBody->getTotalForce().length() << std::endl;
 }
 
-void RigidBodyComponent::isHit(RigidBodyComponent* rbc) {
+bool RigidBodyComponent::isHit(RigidBodyComponent* rbc) {
 	if (identity == 0 && rbc->identity == 1) { //check if this is the care and we are colliding with the wall
 		cout << "collision" << endl;
+		return true;
 	}
 	/*else {
 		cout << "no collision" << endl;
 	}*/
+	return false;
 }
 
 /*

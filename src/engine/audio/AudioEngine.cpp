@@ -149,6 +149,17 @@ void AudioEngine::PauseSounds(int nChannelId)
 	AudioEngine::ErrorCheck(sgpImplementation->mChannels[nChannelId]->setPaused(true));
 }
 
+void AudioEngine::RestartSound(const string& soundName, int nChannelId)
+{
+	auto sound = sgpImplementation->mSounds.find(soundName);
+	if (sound == sgpImplementation->mSounds.end())
+		return;
+	auto tFoundIt = sgpImplementation->mChannels.find(nChannelId);
+	if (tFoundIt == sgpImplementation->mChannels.end())
+		return;
+	AudioEngine::ErrorCheck(sgpImplementation->mpSystem->playSound(sound->second, nullptr, false, &tFoundIt->second));
+}
+
 void AudioEngine::PlaySounds(int nChannelId)
 {
 	auto tFoundIt = sgpImplementation->mChannels.find(nChannelId);
@@ -162,7 +173,7 @@ void AudioEngine::StopSounds(int nChannelId)
 	auto tFoundIt = sgpImplementation->mChannels.find(nChannelId);
 	if (tFoundIt == sgpImplementation->mChannels.end())
 		return;
-	AudioEngine::ErrorCheck(tFoundIt->second->stop());
+	AudioEngine::ErrorCheck(sgpImplementation->mChannels[nChannelId]->stop());
 }
 
 bool AudioEngine::IsPlaying(int nChannelId)
@@ -182,6 +193,7 @@ void AudioEngine::SetSpeed(int nChannelId,float speed)
 	if (tFoundIt == sgpImplementation->mChannels.end())
 		return;
 	AudioEngine::ErrorCheck(tFoundIt->second->setPitch(speed));
+	//printf("Modify Channel: %d\n", nChannelId);
 	//AudioEngine::ErrorCheck(tFoundIt->second->setFrequency(speed));
 }
 

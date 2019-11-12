@@ -79,6 +79,9 @@
     <Filter Include="Source Files\libs\yaml-cpp">
       <UniqueIdentifier>{7018e820-3daf-44c1-b695-85d13ae674f1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Images">
+      <UniqueIdentifier>{497bfef7-58ac-4f1f-82ba-39fcdcb99052}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\game\game_loader.cpp">

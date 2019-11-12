@@ -22,7 +22,7 @@ void CarControlComponent::update(float deltaTime)
 	rotateTiresAnima(forward);
 	steerTiresAnima(turn);
 
-	// apply acceleration force
+	// apply acceleration
 	rb->applyForceRelativeToDirection(Vector3f(forward * accelForce, 0, 0));
 
 	// get percentage of required speed for turning
@@ -47,7 +47,15 @@ void CarControlComponent::update(float deltaTime)
 	}
 
 	// apply turning
-	rb->applyAngularVelocity(Vector3f(0, direction * turnPercent * turn * turnVel, 0));
+	rb->setAngularVelocity(Vector3f(0, direction * turnPercent * turn * turnVel, 0));
+}
+
+void CarControlComponent::fixedUpdate(float deltaTime)
+{
+	// attenuate the horizontal velocity
+	Vector3f v = rb->getVelocityRelativeToDirection();
+	v.z -= v.z * deltaTime;
+	rb->setVelocityRelativeToDirection(v);
 }
 
 void CarControlComponent::rotateTiresAnima(float speed)
