@@ -10,10 +10,11 @@ class GameLoader
 		BOEngine* engine = nullptr;
 
 		void processInput(GLFWwindow* window);
+		
 
 	public:
 		GameLoader();
-		
+		//GameWorld* gworld = nullptr;
 		InputHandler input;
 
 		void createGame();
