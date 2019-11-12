@@ -22,6 +22,7 @@ void updateListener(Vector3f pos, Vector3f rot);
 void calculateSpeed(float deltaTime);
 void accelSound(GameObject* player);
 
+
 // camera
 Camera* camera;
 AudioEngine audio;
@@ -340,8 +341,10 @@ void GameLoader::startGame() {
 
 		ImGui::Begin("Speed", 0, flags);
 
-		int speed1 = 100;
-
+		if (stopcase == 1) {
+			speed = 0;
+		}
+		
 		ImGui::TextColored(ImVec4(1.0f, 0.0f, 0.0f, 1.0f), "Speed:%d km/h", (int)speed);
 		ImGui::End();
 
@@ -356,11 +359,11 @@ void GameLoader::startGame() {
 		{
 			switch (stopcase) {
 			case 0:
-				stopgame = true;
+				engine->gameWorld->pause();
 				stopcase = 1;
 				break;
 			case 1:
-				stopgame = false;
+				engine->gameWorld->unpause();
 				stopcase = 0;
 				break;
 			}
