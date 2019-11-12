@@ -21,7 +21,7 @@ public:
 	Vector3f getVelocityRelativeToDirection();
 	float getSlideVelocity();
 	void printInfo();
-	void isHit(RigidBodyComponent* rbc);
+	bool isHit(RigidBodyComponent* rbc);
 	void setIdentity(int id) {
 		identity = id;
 	}

@@ -53,6 +53,7 @@ public:
 	void StopSounds(int nChannelId);
 	void PauseSounds(int nChannelId);
 	//void StopAllChannels();
+	void RestartSound(const string& soundName, int nChannelId);
 	void SetChannel3dPosition(int nChannelId, const Vector3& vPosition);
 	void SetVolume(int nChannelId, float fVolumedB, bool isMusic = false);
 	void SetSpeed(int nChannelId, float speed);

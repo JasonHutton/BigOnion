@@ -9,6 +9,7 @@
 #include "../engine/input/GameInput.h"
 
 #include <GLFW/glfw3.h>
+#include <ctime>
 
 #include "imgui.h"
 #include "imgui/imgui_impl_glfw_gl3.h"
@@ -18,10 +19,10 @@
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void mouse_callback(GLFWwindow* window, double xpos, double ypos);
 void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
-void updateListener(Vector3f pos, Vector3f rot);
+void updateListener();
 void calculateSpeed(float deltaTime);
-void accelSound(GameObject* player);
-
+void accelSound(GameObject* object);
+void Wait(GameObject* object, bool isPlaying, float deltaTime, float wait, int mode);
 // camera
 Camera* camera;
 AudioEngine audio;
@@ -54,6 +55,11 @@ int mousecase = 0;
 float speed = 0;
 ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
 bool again = false;
+bool isPlaying = false;
+bool skidSound = false;
+bool impactSound = false;
+float timeImpact = 0;
+float timeSkid = 0;
 
 
 
@@ -82,8 +88,16 @@ bool callbackFunc(btManifoldPoint& cp, void* body0, void* body1)
 	//int id2 = colObj1Wrap->getUserIndex();
 	RigidBodyComponent* rbc0 = static_cast<RigidBodyComponent*>(colObj0Wrap->getUserPointer());
 	RigidBodyComponent* rbc1 = static_cast<RigidBodyComponent*>(colObj1Wrap->getUserPointer());
-	rbc0->isHit(rbc1);
-	rbc1->isHit(rbc0);
+	if (rbc0->isHit(rbc1))
+	{
+		impactSound = true;
+		calculateSpeed(-0.04);
+	}
+	if (rbc1->isHit(rbc0))
+	{
+		impactSound = true;
+		calculateSpeed(-0.04);
+	}
 	/*if ((id1 == 0 && id2 == 1) || (id1 == 1 && id2 == 0)) { // id of the car is 0 and id of the walls is 1
 		cout << "collision" << endl;
 	}*/
@@ -97,13 +111,6 @@ void GameLoader::createGame() {
 
 	//gContactAddedCallback = callbackFunc;
 	gContactProcessedCallback = callbackFunc;
-	//audio.PlaySounds("game/assets/sounds/test.wav", Vector3{ 0, 0, -10 }, audio.VolumeTodB(1.0f));
-	//test gun sound on the right
-	//audio.PlaySounds("game/assets/sounds/gun.wav", Vector3{ 3, 0, 0}, audio.VolumeTodB(1.0f));
-	//test siren sounds on the left
-	//audio.PlaySounds("game/assets/sounds/siren.wav", Vector3{ -3, 0, 0}, audio.VolumeTodB(1.0f));
-	//test bomb sounds center
-	//audio.PlaySounds("game/assets/sounds/bomb.wav", Vector3{ 0, 0, 0}, audio.VolumeTodB(1.0f));
 
 }
 
@@ -165,18 +172,45 @@ void GameLoader::startGame() {
 
 
 		GameObject* playerCar = engine->gameWorld->getGameObjectById("PlayerCar");
+		
 		if (playerCar) {
 			glm::vec3 rot = playerCar->transform.rotation.getGlmVec3();
 			glm::vec3 pos = playerCar->transform.position.getGlmVec3() + glm::vec3(0.0f, 1.15f, 0.0f); // look a few upper
 			engine->tpCamera.update(deltaTime, playerCar->transform.position.getGlmVec3(), rot);
 		}
 
-
+		GameObject* engineSound = engine->gameWorld->getGameObjectById("EngineSound");
+		GameObject* skid = engine->gameWorld->getGameObjectById("SkidSound");
+		GameObject* impactBig = engine->gameWorld->getGameObjectById("BigImpact");
+		GameObject* impactSmall = engine->gameWorld->getGameObjectById("SmallImpact");
+		/*if (speed < 150)
+		{
+			if (impactSound)
+			{
+				impactSmall->getComponent<AudioPlayerComponent>()->play();
+			}
+		}
+		else
+		{
+			if (impactSound)
+			{
+				impactBig->getComponent<AudioPlayerComponent>()->play();
+			}
+		}*/
+		if (impactSound)
+		{
+			impactSmall->getComponent<AudioPlayerComponent>()->play();
+		}
+		Wait(impactSmall, impactSound, deltaTime, 0.3, 1);
+		//Wait(impactBig, impactSound, deltaTime, 1.5, 1);
+		Wait(skid, skidSound, deltaTime, 1.2, 0);
 		engine->updateEngine(deltaTime);
 		calculateSpeed(-deltaTime);
-		accelSound(playerCar);
-		updateListener(playerCar->transform.position, playerCar->transform.rotation);
-		audio.Set3dListenerAndOrientation(position, { 0 }, rotation, { 0 });
+		accelSound(engineSound);
+		updateListener();
+		audio.Set3dListenerAndOrientation(position, { 0 }, up, rotation);
+		//printf("Camera Position: %f, %f, %f \n", playerCar->transform.position.x, playerCar->transform.position.y, playerCar->transform.position.z);
+		//playerCar->getComponent<AudioPlayerComponent>()->update(deltaTime);
 
 		if (playerCar) {
 			racePercentage = playerCar->getComponent<RaceGameComponent>()->GetPercentage();
@@ -418,6 +452,24 @@ void GameLoader::startGame() {
 		}
 		if (gamewin)
 		{
+			GameObject* background = engine->gameWorld->getGameObjectById("BackgroundMusic");
+			GameObject* win1 = engine->gameWorld->getGameObjectById("WinMusic1");
+			GameObject* win2 = engine->gameWorld->getGameObjectById("WinMusic2");
+			if (!isPlaying)
+			{
+				if (rand() % 1 == 0)
+				{
+					background->getComponent<AudioPlayerComponent>()->stop();
+					win1->getComponent<AudioPlayerComponent>()->play();
+					isPlaying = true;
+				}
+				else
+				{
+					background->getComponent<AudioPlayerComponent>()->stop();
+					win2->getComponent<AudioPlayerComponent>()->play();
+					isPlaying = true;
+				}
+			}
 			stopgame = true;
 			ImGui::SetNextWindowSize(ImVec2(windowW, windowH));
 			ImGui::SetNextWindowPos(ImVec2(0, 0));
@@ -484,15 +536,48 @@ void GameLoader::startGame() {
 	//            return 0;
 }
 
-//Update Listener Position and Orientation
-void updateListener(Vector3f pos, Vector3f rot)
+void Wait(GameObject* object, bool isPlaying, float deltaTime, float wait, int mode)
 {
-	position.x = pos.x;
-	position.y = pos.y;
-	position.z = pos.z;
-	rotation.x = rot.x;
-	rotation.y = rot.y;
-	rotation.z = rot.z;
+	if (mode == 0)
+	{
+		if (timeSkid > wait)
+		{
+			skidSound = false;
+			timeSkid = 0;
+			object->getComponent<AudioPlayerComponent>()->pause();
+		}
+		if (isPlaying)
+		{
+			timeSkid = timeSkid + deltaTime;
+		}
+	}
+	if (mode == 1)
+	{
+		if (timeImpact > wait)
+		{
+			impactSound = false;
+			timeImpact = 0;
+			object->getComponent<AudioPlayerComponent>()->pause();
+		}
+		if (isPlaying)
+		{
+			timeImpact = timeImpact + deltaTime;
+		}
+	}
+}
+
+//Update Listener Position and Orientation
+void updateListener()
+{
+	position.x = camera->Position.x;
+	position.y = camera->Position.y;
+	position.z = camera->Position.z;
+	rotation.x = camera->Front.x;
+	rotation.y = camera->Front.y;
+	rotation.z = camera->Front.z;
+	up.x = camera->Up.x;
+	up.y = camera->Up.y;
+	up.z = camera->Up.z;
 }
 
 void calculateSpeed(float deltaTime)
@@ -516,29 +601,28 @@ void calculateSpeed(float deltaTime)
 		}
 		else if (speed < 50)
 		{
-			speed = speed + deltaTime * 40;
+			speed = speed + deltaTime * 20;
 		}
 		else if (speed < 100)
 		{
-			speed = speed + deltaTime * 80;
+			speed = speed + deltaTime * 40;
 		}
 		else if (speed < 150)
 		{
-			speed = speed + deltaTime * 100;
+			speed = speed + deltaTime * 60;
 		}
 		else if (speed < 201)
 		{
-			speed = speed + deltaTime * 120;
+			speed = speed + deltaTime * 80;
 		}
 	}
 }
 
-void accelSound(GameObject* player)
+void accelSound(GameObject* object)
 {
 	if (speed >= 0)
 	{
-		player->getComponent<AudioPlayerComponent>()->setSpeed(speed);
-		//printf("Speed: %f\n", speed);
+		object->getComponent<AudioPlayerComponent>()->setSpeed(speed);
 	}
 }
 // process all input: query GLFW whether relevant keys are pressed/released this frame and react accordingly
@@ -547,6 +631,7 @@ void GameLoader::processInput(GLFWwindow* window)
 {
 	// clear last gameinput state
 	GameInput::clearState();
+	GameObject* skid = engine->gameWorld->getGameObjectById("SkidSound");
 	// Check all bound controls
 	for (map<int, keyState>::iterator it = input.GetAllKeyStates().begin(); it != input.GetAllKeyStates().end(); it++)
 	{
@@ -569,15 +654,23 @@ void GameLoader::processInput(GLFWwindow* window)
 			case UB_MOVE_BACKWARD:
 				//camera->ProcessKeyboard(BACKWARD, deltaTime);
 				GameInput::setVerticalAxis(1.0);
-
+				calculateSpeed(-0.04);
+				skid->getComponent<AudioPlayerComponent>()->play();
+				skidSound = true;
 				break;
 			case UB_MOVE_LEFT:
 				//camera->ProcessKeyboard(LEFT, deltaTime);
 				GameInput::setHorizontalAxis(1.0);
+				calculateSpeed(-0.01);
+				skid->getComponent<AudioPlayerComponent>()->play();
+				skidSound = true;
 				break;
 			case UB_MOVE_RIGHT:
 				//camera->ProcessKeyboard(RIGHT, deltaTime);
 				GameInput::setHorizontalAxis(-1.0);
+				calculateSpeed(-0.01);
+				skid->getComponent<AudioPlayerComponent>()->play();
+				skidSound = true;
 				break;
 			case UB_NONE:
 			default:

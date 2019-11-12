@@ -84,13 +84,15 @@ void RigidBodyComponent::printInfo()
 	std::cout << "total: " << rigidBody->getTotalForce().length() << std::endl;
 }
 
-void RigidBodyComponent::isHit(RigidBodyComponent* rbc) {
+bool RigidBodyComponent::isHit(RigidBodyComponent* rbc) {
 	if (identity == 0 && rbc->identity == 1) { //check if this is the care and we are colliding with the wall
 		cout << "collision" << endl;
+		return true;
 	}
 	/*else {
 		cout << "no collision" << endl;
 	}*/
+	return false;
 }
 
 /*
