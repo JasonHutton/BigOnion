@@ -199,7 +199,15 @@ void GameWorldHelper::initTestScene(BOEngine* engine)
 	ground->addComponent(RigidBodyComponent::createWithPlane());
 	engine->gameWorld->addGameObject(ground);
 
-	engine->gameWorld->addGameObject(Object_Load("game/assets/objects/box.yaml", engine, shader));
+	engine->gameWorld->addGameObject(Object_Load("game/assets/objects/onion.yaml", engine, shader));
+
+
+	/*GameObject* onion = new  GameObject("Onion");
+	onion->transform.position = Vector3f(5.0f, 10.0f, 0.0f);
+	onion->transform.scale = 3.0;
+	onion->addComponent(new RenderComponent(engine, "game/assets/onion/Onion.3DS", shader));
+	onion->addComponent(RigidBodyComponent::createWithCube(1.0, 0.3, 1.0, 1.0, 1.0));
+	engine->gameWorld->addGameObject(onion);*/
 
 	// create box
 	/*GameObject* box = new  GameObject("Box");

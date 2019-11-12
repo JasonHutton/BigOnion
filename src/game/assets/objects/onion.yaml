@@ -1,0 +1,12 @@
+onion:
+ name: "Onion"
+ position: [5.0, 10.0, 0.0]
+ scale: 4.0
+ component:
+  - type: "Render"
+  - model: "game/assets/onion/Onion.3DS"
+ component:
+  - type: "RigidBody"
+  - cube:
+  - size: [1.0, 1.0, 1.0]
+  - mass: 1.0
