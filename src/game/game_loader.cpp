@@ -180,8 +180,11 @@ void GameLoader::startGame() {
 	int my_image_width = 404;
 	int my_image_height = 404;
 	GLuint my_image_texture = 0;
+	GLuint my_image_texture1 = 0;
 	bool ret = LoadTextureFromFile("src\\game\\assets\\img\\racing.jpg", &my_image_texture, &my_image_width, &my_image_height);
+	bool ret1 = LoadTextureFromFile("src\\game\\assets\\img\\onion.png", &my_image_texture1, &my_image_width, &my_image_height);
 	IM_ASSERT(ret);
+	IM_ASSERT(ret1);
 
 	// inputs
 
@@ -435,13 +438,13 @@ void GameLoader::startGame() {
 
 		if (show_GameMenu_window)
 		{
-
 			ImGui::SetNextWindowSize(ImVec2(windowW, windowH));
 			ImGui::SetNextWindowPos(ImVec2(0, 0));
 			ImGui::StyleColorsDark();
 			ImGui::Begin("Big Onion", &show_GameMenu_window, flags);
 			my_image_width = windowW;
 			my_image_height = windowH;
+			ImGui::Image((void*)(intptr_t)my_image_texture1, ImVec2(my_image_width * 0.125, my_image_height * 0.125));
 			ImGui::Image((void*)(intptr_t)my_image_texture, ImVec2(my_image_width, my_image_height));
 
 			ImGui::SetCursorPos(ImVec2((windowW / 1)- (windowW / 1.85), 200.0f));
