@@ -8,6 +8,11 @@
 #include "components/RaceGameComponent.h"
 
 #include "../../Settings.h"
+
+#include "yaml-cpp/yaml.h"
+#include "../object_loader.h"
+#include <vector>
+
 /*
 	Loads a test scene into the given BOEngine.
 */
@@ -194,15 +199,25 @@ void GameWorldHelper::initTestScene(BOEngine* engine)
 	ground->addComponent(RigidBodyComponent::createWithPlane());
 	engine->gameWorld->addGameObject(ground);
 
+	engine->gameWorld->addGameObject(Object_Load("game/assets/objects/onion.yaml", engine, shader));
+
+
+	/*GameObject* onion = new  GameObject("Onion");
+	onion->transform.position = Vector3f(5.0f, 10.0f, 0.0f);
+	onion->transform.scale = 3.0;
+	onion->addComponent(new RenderComponent(engine, "game/assets/onion/Onion.3DS", shader));
+	onion->addComponent(RigidBodyComponent::createWithCube(1.0, 0.3, 1.0, 1.0, 1.0));
+	engine->gameWorld->addGameObject(onion);*/
+
 	// create box
-	GameObject* box = new  GameObject("Box");
+	/*GameObject* box = new  GameObject("Box");
 	box->transform.position = Vector3f(5.0, 10.0, 0);
 	box->transform.scale = 2.0; // has to be double because dimensions of 1.0 entered above refer to distance from origin to edge
 	box->addComponent(new RenderComponent(engine, "game/assets/box/cube.obj", shader));
 	box->addComponent(RigidBodyComponent::createWithCube(1.0, 1.0, 1.0, 1.0));
-	engine->gameWorld->addGameObject(box);
+	engine->gameWorld->addGameObject(box);*/
 
-	GameObject* box2 = new  GameObject("Box2");
+	/*GameObject* box2 = new  GameObject("Box2");
 	box2->transform.position = Vector3f(5.0, 15.0, 0);
 	box2->transform.scale = 2.0; // has to be double because dimensions of 1.0 entered above refer to distance from origin to edge
 	box2->addComponent(new RenderComponent(engine, "game/assets/box/cube.obj", shader));
@@ -223,7 +238,7 @@ void GameWorldHelper::initTestScene(BOEngine* engine)
 	box4->addComponent(new RenderComponent(engine, "game/assets/box/cube.obj", shader));
 	box4->addComponent(RigidBodyComponent::createWithCube(1.0, 1.0, 1.0, 1.0));
 	box4->addComponent(new TypeTestComponent("This is a test message!"));
-	engine->gameWorld->addGameObject(box4);
+	engine->gameWorld->addGameObject(box4);*/
 
-	box4->getComponent<TypeTestComponent>()->talk();
+	//box4->getComponent<TypeTestComponent>()->talk();
 }
