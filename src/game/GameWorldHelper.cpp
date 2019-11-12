@@ -39,7 +39,7 @@ void GameWorldHelper::initTestScene(BOEngine* engine)
 
 	shader->use();
 	shader->setVec3("dirLight.direction", -0.2f, -1.0f, -0.3f); //obj to light
-	shader->setVec3("dirLight.ambient", 0.15f, 0.15f, 0.15f);
+	shader->setVec3("dirLight.ambient", 0.35f, 0.35f, 0.35f);
 	shader->setVec3("dirLight.diffuse", 1.0f, 1.0f, 1.0f);
 	shader->setVec3("dirLight.specular", 0.8f, 0.8f, 0.8f);
 
@@ -78,7 +78,7 @@ void GameWorldHelper::initTestScene(BOEngine* engine)
 	player_car->transform.scale = 1;
 	player_car->addComponent(new RenderComponent(engine, "game/assets/avent/Avent_red_notires.obj", shader)); // no tires
 	// player_car->addComponent(new RenderComponent(engine, "game/assets/avent/Avent_red.obj", shader));
-	player_car->addComponent(RigidBodyComponent::createWithCube(1.0, 0.3, 1.0, 1.0, 1.0, 0)); //note id is set to 0, DO NOT CHANGE unless you change the id in the isHit()
+	player_car->addComponent(RigidBodyComponent::createWithCube(1.0, 0.4, 1.0, 1.0, 1.0, 0)); //note id is set to 0, DO NOT CHANGE unless you change the id in the isHit()
 	CarControlComponent* carControl = new CarControlComponent(10, 15, 2.5);
 	player_car->addComponent(carControl);
 	player_car->addComponent(new RaceGameComponent());
@@ -167,7 +167,7 @@ void GameWorldHelper::initTestScene(BOEngine* engine)
 
 	// create race track
 	GameObject* raceTrack = new GameObject("RaceTrack");
-	raceTrack->transform.position = Vector3f(0, -3.1, 0);
+	raceTrack->transform.position = Vector3f(0, -3.23, 0);
 	raceTrack->transform.rotation = Vector3f(0, 0, 0);
 	raceTrack->transform.scale = Vector3f(1.0, 1.0, 1.0);
 	raceTrack->addComponent(new RenderComponent(engine, "game/assets/track2/track_only.obj", shader)); // connect object - model
