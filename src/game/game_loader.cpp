@@ -762,21 +762,24 @@ void GameLoader::processInput(GLFWwindow* window)
 				//camera->ProcessKeyboard(BACKWARD, deltaTime);
 				GameInput::setVerticalAxis(1.0);
 				calculateSpeed(-0.04);
-				skid->getComponent<AudioPlayerComponent>()->play();
+				if(speed > 50)
+					skid->getComponent<AudioPlayerComponent>()->play();
 				skidSound = true;
 				break;
 			case UB_MOVE_LEFT:
 				//camera->ProcessKeyboard(LEFT, deltaTime);
 				GameInput::setHorizontalAxis(1.0);
 				calculateSpeed(-0.01);
-				skid->getComponent<AudioPlayerComponent>()->play();
+				if (speed > 50)
+					skid->getComponent<AudioPlayerComponent>()->play();
 				skidSound = true;
 				break;
 			case UB_MOVE_RIGHT:
 				//camera->ProcessKeyboard(RIGHT, deltaTime);
 				GameInput::setHorizontalAxis(-1.0);
 				calculateSpeed(-0.01);
-				skid->getComponent<AudioPlayerComponent>()->play();
+				if (speed > 50)
+					skid->getComponent<AudioPlayerComponent>()->play();
 				skidSound = true;
 				break;
 			case UB_NONE:
