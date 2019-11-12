@@ -43,8 +43,8 @@ Vector3 vel{ 0,0,0 };
 
 // Music Toggle
 
-bool MusicToggle;
-int MusicSlider;
+bool MusicToggle = true;
+int MusicSlider = 3;
 
 bool show_demo_window = true;
 bool show_another_window = false;
@@ -227,6 +227,7 @@ void GameLoader::startGame() {
 		GameObject* skid = engine->gameWorld->getGameObjectById("SkidSound");
 		GameObject* impactBig = engine->gameWorld->getGameObjectById("BigImpact");
 		GameObject* impactSmall = engine->gameWorld->getGameObjectById("SmallImpact");
+		GameObject* background_music = engine->gameWorld->getGameObjectById("BackgroundMusic");
 		/*if (speed < 150)
 		{
 			if (impactSound)
@@ -464,14 +465,22 @@ void GameLoader::startGame() {
 			}
 			
 			ImGui::SetCursorPos(ImVec2((windowW / 2) - (windowW / 20), 600.0f));
-			if (ImGui::Checkbox("Music Toggle", &MusicToggle)) {
-				
+			if (ImGui::Checkbox("Music Toggle", &MusicToggle)) 
+			{
+				if (!MusicToggle)
+				{
+					background_music->getComponent<AudioPlayerComponent>()->pause();
+				}
+				else
+				{
+					background_music->getComponent<AudioPlayerComponent>()->play();
+				}
 			}
 
 			ImGui::SetCursorPos(ImVec2((windowW / 6), 650.0f));
-			if (ImGui::SliderInt("Volume", &MusicSlider, 1, 5)) {
-				
-				audio.SetVolume(0, MusicSlider, true);
+			if (ImGui::SliderInt("Volume", &MusicSlider, 1, 5)) 
+			{
+				background_music->getComponent<AudioPlayerComponent>()->volume((float)MusicSlider * 0.1);
 			}
 
 			ImGui::SetCursorPos(ImVec2((windowW / 2) - (windowW / 4), 750.0f));
