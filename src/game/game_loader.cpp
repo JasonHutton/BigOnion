@@ -172,7 +172,7 @@ void GameLoader::startGame() {
 	int my_image_width = 404;
 	int my_image_height = 404;
 	GLuint my_image_texture = 0;
-	bool ret = LoadTextureFromFile("racing.jpg", &my_image_texture, &my_image_width, &my_image_height);
+	bool ret = LoadTextureFromFile("src\\game\\assets\\img\\racing.jpg", &my_image_texture, &my_image_width, &my_image_height);
 	IM_ASSERT(ret);
 
 	// inputs
