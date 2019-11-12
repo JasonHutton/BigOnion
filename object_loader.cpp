@@ -216,6 +216,16 @@ GameObject* Object_Load(YAML::Node node, BOEngine* engine, Shader* shader)
 
 			gObj->transform.position = Vector3f(pos[0], pos[1], pos[2]);
 		}
+		else if (it->first.as<std::string>().compare("rotation") == 0)
+		{
+			std::vector<float> pos;
+			for (auto pit = it->second.begin(); pit != it->second.end(); ++pit)
+			{
+				pos.push_back(atof(pit->Scalar().c_str())); // Kinda questionable, clean up later...
+			}
+
+			gObj->transform.rotation = Vector3f(pos[0], pos[1], pos[2]);
+		}
 		else if (it->first.as<std::string>().compare("component") == 0)
 		{
 			Component_Load(it->second, gObj, engine, shader); // There may be purposes to walking through it->first, but for the uses so far, this just results in "component" which we already know.

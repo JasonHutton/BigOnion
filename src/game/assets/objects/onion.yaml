@@ -1,7 +1,8 @@
 onion:
  name: "Onion"
  position: [5.0, 10.0, 0.0]
- scale: 4.0
+ scale: 3.5
+ rotation: [0.0, 1.5707, 0.0]
  component:
   - type: "Render"
   - model: "game/assets/onion/Onion.3DS"
