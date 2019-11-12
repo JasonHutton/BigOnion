@@ -247,7 +247,10 @@ void GameLoader::startGame() {
 		}*/
 		if (impactSound)
 		{
-			impactSmall->getComponent<AudioPlayerComponent>()->play();
+			if (speed > 50)
+			{
+				impactSmall->getComponent<AudioPlayerComponent>()->play();
+			}
 		}
 		Wait(impactSmall, impactSound, deltaTime, 0.3, 1);
 		//Wait(impactBig, impactSound, deltaTime, 1.5, 1);
