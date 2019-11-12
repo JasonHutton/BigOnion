@@ -50,6 +50,7 @@
     <ClCompile Include="include\yaml-cpp\singledocparser.cpp" />
     <ClCompile Include="include\yaml-cpp\stream.cpp" />
     <ClCompile Include="include\yaml-cpp\tag.cpp" />
+    <ClCompile Include="object_loader.cpp" />
     <ClCompile Include="src\engine\graphic\Skybox.cpp" />
     <ClCompile Include="src\engine\input\ContextControl.cpp" />
     <ClCompile Include="include\imgui\imgui.cpp" />
@@ -130,6 +131,7 @@
     <ClInclude Include="include\yaml-cpp\token.h" />
     <ClInclude Include="include\yaml-cpp\traits.h" />
     <ClInclude Include="include\yaml-cpp\yaml.h" />
+    <ClInclude Include="object_loader.h" />
     <ClInclude Include="src\engine\graphic\Skybox.h" />
     <ClInclude Include="src\game\components\RaceGameComponent.h" />
     <ClInclude Include="src\engine\input\ContextControl.h" />

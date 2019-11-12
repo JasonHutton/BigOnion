@@ -285,6 +285,9 @@
     <ClCompile Include="include\yaml-cpp\tag.cpp">
       <Filter>Source Files\libs\yaml-cpp</Filter>
     </ClCompile>
+    <ClCompile Include="object_loader.cpp">
+      <Filter>Source Files\game</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\engine\BOEngine.h">
@@ -556,6 +559,9 @@
     </ClInclude>
     <ClInclude Include="include\yaml-cpp\yaml.h">
       <Filter>Source Files\libs\yaml-cpp</Filter>
+    </ClInclude>
+    <ClInclude Include="object_loader.h">
+      <Filter>Header Files\game</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
