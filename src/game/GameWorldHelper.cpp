@@ -157,20 +157,37 @@ void GameWorldHelper::initTestScene(BOEngine* engine)
 	carControl->tires = tires;
 
 	// create race track walls
-	GameObject* trackWall = new GameObject("RaceTrackWalls");
+	/*GameObject* trackWall = new GameObject("RaceTrackWalls");
 	trackWall->transform.position = Vector3f(0, -3.25, 0);
 	trackWall->transform.rotation = Vector3f(0, 0, 0);
 	trackWall->transform.scale = Vector3f(1.0, 2.0, 1.0);
 	trackWall->addComponent(new RenderComponent(engine, "game/assets/track2/track_walls.obj", shader)); // connect object - model
 	trackWall->addComponent(RigidBodyComponent::createWithMesh(&trackWall->getComponent<RenderComponent>()->model, 1.0, 1));//note id is set to 1, DO NOT CHANGE unless you change the id in the isHit()
+	engine->gameWorld->addGameObject(trackWall);*/
+
+	GameObject* trackWall = new GameObject("RaceTrackWalls");
+	trackWall->transform.position = Vector3f(0, -3.25, 0);
+	trackWall->transform.rotation = Vector3f(0, 0, 0);
+	trackWall->transform.scale = Vector3f(1.0, 2.0, 1.0);
+	trackWall->addComponent(new RenderComponent(engine, "game/assets/track2/track_walls2.obj", shader)); // connect object - model
+	trackWall->addComponent(RigidBodyComponent::createWithMesh(&trackWall->getComponent<RenderComponent>()->model, 1.0, 1));//note id is set to 1, DO NOT CHANGE unless you change the id in the isHit()
 	engine->gameWorld->addGameObject(trackWall);
 
 	// create race track
-	GameObject* raceTrack = new GameObject("RaceTrack");
+	/*GameObject* raceTrack = new GameObject("RaceTrack");
 	raceTrack->transform.position = Vector3f(0, -3.23, 0);
 	raceTrack->transform.rotation = Vector3f(0, 0, 0);
 	raceTrack->transform.scale = Vector3f(1.0, 1.0, 1.0);
 	raceTrack->addComponent(new RenderComponent(engine, "game/assets/track2/track_only.obj", shader)); // connect object - model
+	//raceTrack->addComponent(new RenderComponent(engine, "game/assets/racetrack/racetrack.obj", shader)); // connect object - model
+	// raceTrack->addComponent(RigidBodyComponent::createWithMesh(&raceTrack->getComponent<RenderComponent>()->model)); // connect object - rigibody
+	engine->gameWorld->addGameObject(raceTrack);*/ // maybe auto register?
+
+	GameObject* raceTrack = new GameObject("RaceTrack");
+	raceTrack->transform.position = Vector3f(0, -3.23, 0);
+	raceTrack->transform.rotation = Vector3f(0, 0, 0);
+	raceTrack->transform.scale = Vector3f(1.0, 1.0, 1.0);
+	raceTrack->addComponent(new RenderComponent(engine, "game/assets/track2/track_only2.obj", shader)); // connect object - model
 	//raceTrack->addComponent(new RenderComponent(engine, "game/assets/racetrack/racetrack.obj", shader)); // connect object - model
 	// raceTrack->addComponent(RigidBodyComponent::createWithMesh(&raceTrack->getComponent<RenderComponent>()->model)); // connect object - rigibody
 	engine->gameWorld->addGameObject(raceTrack); // maybe auto register?
@@ -194,7 +211,7 @@ void GameWorldHelper::initTestScene(BOEngine* engine)
 	// create ground
 	GameObject* ground = new GameObject("Ground");
 	ground->transform.position = Vector3f(0, -3.25, 0);
-	ground->transform.scale = Vector3f(100.0f, 1.0f, 100.0f);
+	ground->transform.scale = Vector3f(400.0f, 1.0f, 400.0f);
 	ground->addComponent(new RenderComponent(engine, "game/assets/ground/plane.obj", shader));
 	ground->addComponent(RigidBodyComponent::createWithPlane());
 	engine->gameWorld->addGameObject(ground);
