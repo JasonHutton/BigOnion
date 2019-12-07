@@ -1,7 +1,7 @@
 # Blender MTL File: 'None'
 # Material Count: 6
 
-newmtl None
+newmtl None.008
 Ns 0.000000
 Ka 1.000000 1.000000 1.000000
 Kd 0.800000 0.800000 0.800000
@@ -10,9 +10,9 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 d 1.000000
 illum 2
-map_Kd D:\Documents\BigOnion\src\game\assets\track2\start.jpg
+map_Kd start.jpg
 
-newmtl None.001
+newmtl None.009
 Ns 0.000000
 Ka 1.000000 1.000000 1.000000
 Kd 0.800000 0.800000 0.800000
@@ -21,9 +21,9 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 d 1.000000
 illum 2
-map_Kd D:\Documents\BigOnion\src\game\assets\track2\start.jpg
+map_Kd start.jpg
 
-newmtl None_metal.jpg
+newmtl None_metal.jpg.008
 Ns 0.000000
 Ka 1.000000 1.000000 1.000000
 Kd 0.800000 0.800000 0.800000
@@ -32,9 +32,9 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 d 1.000000
 illum 2
-map_Kd D:\Documents\BigOnion\src\game\assets\track2\metal.jpg
+map_Kd metal.jpg
 
-newmtl None_metal.jpg.001
+newmtl None_metal.jpg.009
 Ns 0.000000
 Ka 1.000000 1.000000 1.000000
 Kd 0.800000 0.800000 0.800000
@@ -43,9 +43,9 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 d 1.000000
 illum 2
-map_Kd D:\Documents\BigOnion\src\game\assets\track2\metal.jpg
+map_Kd metal.jpg
 
-newmtl None_striped-angled-concrete.jpg
+newmtl None_striped-angled-concrete.jpg.007
 Ns 0.000000
 Ka 1.000000 1.000000 1.000000
 Kd 0.800000 0.800000 0.800000
@@ -54,9 +54,9 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 d 1.000000
 illum 2
-map_Kd D:\Documents\BigOnion\src\game\assets\track2\Four_lane_road_clean_01_3K_Base_Color.png
+map_Kd Four_lane_road_clean_01_3K_Base_Color.png
 
-newmtl None_striped-angled-concrete.jpg.001
+newmtl None_striped-angled-concrete.jpg.008
 Ns 0.000000
 Ka 1.000000 1.000000 1.000000
 Kd 0.800000 0.800000 0.800000
@@ -65,4 +65,4 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 d 1.000000
 illum 2
-map_Kd D:\Documents\BigOnion\src\game\assets\track2\Four_lane_road_clean_01_3K_Base_Color.png
+map_Kd Four_lane_road_clean_01_3K_Base_Color.png
