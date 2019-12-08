@@ -2,7 +2,6 @@
 
 #include <unordered_map> 
 #include "Component.fwd.h"
-#include "../utils/ThreadPool.h"
 
 class ComponentManager
 {
@@ -21,5 +20,5 @@ private:
 	std::string* strategy;
 	const size_t n;
 	bool isPaused;
-	ThreadPool threadPool;
+
 };
