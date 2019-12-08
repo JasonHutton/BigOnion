@@ -13,6 +13,7 @@
 #include "../object_loader.h"
 #include <vector>
 #include "../engine/utils/ThreadPool.h"
+#include <thread>
 
 /*
 	Loads a test scene into the given BOEngine.
@@ -76,11 +77,10 @@ void GameWorldHelper::initTestScene(BOEngine* engine)
 	/* COMPONENT SETUP */
 
 	// parallelization stuff
-	ThreadPool pool(10);
-	auto futures = std::vector<std::future<void>>();
+	auto threads = std::vector<std::thread*>();
 
 	// create car
-	futures.push_back(pool.enqueue([](BOEngine* engine, Shader* shader)
+	threads.push_back(new std::thread([](BOEngine* engine, Shader* shader)
 		{
 			Vector3f carPos = Vector3f(0.0f, -3.0f, -43.0f);
 			GameObject* player_car = new  GameObject("PlayerCar");
@@ -110,93 +110,86 @@ void GameWorldHelper::initTestScene(BOEngine* engine)
 			}
 			carControl->tires = tires;
 		}, engine, shader));
-	
+
 	
 	//background music
 	
 	//engine sound
-	futures.push_back(pool.enqueue([](BOEngine* engine, AudioEngine& audio, Camera& camera)
+	threads.push_back(new std::thread([](BOEngine* engine, AudioEngine* audio, Camera* camera)
 		{
 			GameObject* engine_sound = new  GameObject("EngineSound");
-			engine_sound->transform.position = { camera.Position.x, camera.Position.y, camera.Position.z };
+			engine_sound->transform.position = { camera->Position.x, camera->Position.y, camera->Position.z };
 			engine->gameWorld->addGameObject(engine_sound);
-			engine_sound->addComponent(new AudioPlayerComponent(audio, "game/assets/sounds/startup.wav", 1, true, false, false));
+			engine_sound->addComponent(new AudioPlayerComponent(*audio, "game/assets/sounds/startup.wav", 1, true, false, false));
 			engine_sound->getComponent<AudioPlayerComponent>()->onAddToGameWorld();
 			engine_sound->getComponent<AudioPlayerComponent>()->volume(1);
 			engine_sound->getComponent<AudioPlayerComponent>()->play();
-			engine_sound->addComponent(new AudioPlayerComponent(audio, "game/assets/sounds/idle.wav", 1, true, true, false));
+			engine_sound->addComponent(new AudioPlayerComponent(*audio, "game/assets/sounds/idle.wav", 1, true, true, false));
 			engine_sound->getComponent<AudioPlayerComponent>()->onAddToGameWorld();
 			engine_sound->getComponent<AudioPlayerComponent>()->volume(0.3);
 			engine_sound->getComponent<AudioPlayerComponent>()->setSpeed(0);
 			engine_sound->getComponent<AudioPlayerComponent>()->play();
-		}, engine, audio, camera));
+		}, engine, &audio, &camera));
 
 	//skid sound
-	futures.push_back(pool.enqueue([](BOEngine* engine, AudioEngine& audio, Camera& camera)
+	threads.push_back(new std::thread([](BOEngine* engine, AudioEngine* audio, Camera* camera)
 		{
 			GameObject* skid_sound = new  GameObject("SkidSound");
-			skid_sound->transform.position = { camera.Position.x, camera.Position.y, camera.Position.z };
+			skid_sound->transform.position = { camera->Position.x, camera->Position.y, camera->Position.z };
 			engine->gameWorld->addGameObject(skid_sound);
-			skid_sound->addComponent(new AudioPlayerComponent(audio, "game/assets/sounds/car_break.mp3", 0.5, true, true, false));
+			skid_sound->addComponent(new AudioPlayerComponent(*audio, "game/assets/sounds/car_break.mp3", 0.5, true, true, false));
 			skid_sound->getComponent<AudioPlayerComponent>()->onAddToGameWorld();
-		}, engine, audio, camera));
-	
+		}, engine, &audio, &camera));
 
 	//impact sound
-	futures.push_back(pool.enqueue([](BOEngine* engine, AudioEngine& audio, Camera& camera)
+	threads.push_back(new std::thread([](BOEngine* engine, AudioEngine* audio, Camera* camera)
 		{
 			GameObject* impact_sound_small = new  GameObject("SmallImpact");
-			impact_sound_small->transform.position = { camera.Position.x, camera.Position.y, camera.Position.z };
+			impact_sound_small->transform.position = { camera->Position.x, camera->Position.y, camera->Position.z };
 			engine->gameWorld->addGameObject(impact_sound_small);
-			impact_sound_small->addComponent(new AudioPlayerComponent(audio, "game/assets/sounds/small_impact.mp3", 30, true, true, false));
+			impact_sound_small->addComponent(new AudioPlayerComponent(*audio, "game/assets/sounds/small_impact.mp3", 30, true, true, false));
 			impact_sound_small->getComponent<AudioPlayerComponent>()->onAddToGameWorld();
-		}, engine, audio, camera));
-	
-	futures.push_back(pool.enqueue([](BOEngine* engine, AudioEngine& audio, Camera& camera)
+		}, engine, &audio, &camera));
+
+	threads.push_back(new std::thread([](BOEngine* engine, AudioEngine* audio, Camera* camera)
 		{
 			GameObject* impact_sound_big = new  GameObject("BigImpact");
-			impact_sound_big->transform.position = { camera.Position.x, camera.Position.y, camera.Position.z };
+			impact_sound_big->transform.position = { camera->Position.x, camera->Position.y, camera->Position.z };
 			engine->gameWorld->addGameObject(impact_sound_big);
-			impact_sound_big->addComponent(new AudioPlayerComponent(audio, "game/assets/sounds/big_impact.mp3", 20, true, true, false));
+			impact_sound_big->addComponent(new AudioPlayerComponent(*audio, "game/assets/sounds/big_impact.mp3", 20, true, true, false));
 			impact_sound_big->getComponent<AudioPlayerComponent>()->onAddToGameWorld();
-		}, engine, audio, camera));
-	
+		}, engine, &audio, &camera));
 
 	//background music
-	futures.push_back(pool.enqueue([](BOEngine* engine, AudioEngine& audio)
+	threads.push_back(new std::thread([](BOEngine* engine, AudioEngine* audio)
 		{
 			GameObject* background_music = new  GameObject("BackgroundMusic");
 			engine->gameWorld->addGameObject(background_music);
-			background_music->addComponent(new AudioPlayerComponent(audio, "game/assets/sounds/start.mp3", 1, false, true, false));
+			background_music->addComponent(new AudioPlayerComponent(*audio, "game/assets/sounds/start.mp3", 1, false, true, false));
 			background_music->getComponent<AudioPlayerComponent>()->onAddToGameWorld();
 			background_music->getComponent<AudioPlayerComponent>()->volume(0.3, true);
 			background_music->getComponent<AudioPlayerComponent>()->play();
-		}, engine, audio));
+		}, engine, &audio));
 	
-
 	//win lose music
-	futures.push_back(pool.enqueue([](BOEngine* engine, AudioEngine& audio)
+	threads.push_back(new std::thread([](BOEngine* engine, AudioEngine* audio)
 		{
 			GameObject* win1_music = new  GameObject("WinMusic1");
 			engine->gameWorld->addGameObject(win1_music);
-			win1_music->addComponent(new AudioPlayerComponent(audio, "game/assets/sounds/win1.mp3", 1, false, true, false));
+			win1_music->addComponent(new AudioPlayerComponent(*audio, "game/assets/sounds/win1.mp3", 1, false, true, false));
 			win1_music->getComponent<AudioPlayerComponent>()->onAddToGameWorld();
-		}, engine, audio));
-	
-	futures.push_back(pool.enqueue([](BOEngine* engine, AudioEngine& audio, Camera& camera)
+		}, engine, &audio));
+
+	threads.push_back(new std::thread([](BOEngine* engine, AudioEngine* audio)
 		{
 			GameObject* win2_music = new  GameObject("WinMusic2");
 			engine->gameWorld->addGameObject(win2_music);
-			win2_music->addComponent(new AudioPlayerComponent(audio, "game/assets/sounds/win2.mp3", 1, false, true, false));
+			win2_music->addComponent(new AudioPlayerComponent(*audio, "game/assets/sounds/win2.mp3", 1, false, true, false));
 			win2_music->getComponent<AudioPlayerComponent>()->onAddToGameWorld();
-		}, engine, audio, camera));
-	
-
-
-	
+		}, engine, &audio));
 
 	// create race track walls
-	futures.push_back(pool.enqueue([](BOEngine* engine, Shader* shader)
+	threads.push_back(new std::thread([](BOEngine* engine, Shader* shader)
 		{
 			
 			GameObject* trackWall = new GameObject("RaceTrackWalls");
@@ -209,9 +202,10 @@ void GameWorldHelper::initTestScene(BOEngine* engine)
 			engine->gameWorld->addGameObject(trackWall);
 		}, engine, shader));
 
-	futures.push_back(pool.enqueue([](BOEngine* engine, Shader* shader)
+	// create race track
+	threads.push_back(new std::thread([](BOEngine* engine, Shader* shader)
 		{
-			// create race track
+			
 			GameObject* raceTrack = new GameObject("RaceTrack");
 			raceTrack->transform.position = Vector3f(0, -3.23, 0);
 			raceTrack->transform.rotation = Vector3f(0, 0, 0);
@@ -225,7 +219,7 @@ void GameWorldHelper::initTestScene(BOEngine* engine)
 	
 
 	// Light
-	futures.push_back(pool.enqueue([](BOEngine* engine, glm::vec3* pointLightPositions, Shader* lightshader)
+	threads.push_back(new std::thread([](BOEngine* engine, glm::vec3* pointLightPositions, Shader* lightshader)
 		{
 			GameObject* light = new  GameObject("Light");
 			light->transform.position = Vector3f(pointLightPositions[0].x, pointLightPositions[0].y, pointLightPositions[0].z);
@@ -243,7 +237,7 @@ void GameWorldHelper::initTestScene(BOEngine* engine)
 		}, engine, pointLightPositions, lightshader));
 
 	// create ground
-	futures.push_back(pool.enqueue([](BOEngine* engine, Shader* shader)
+	threads.push_back(new std::thread([](BOEngine* engine, Shader* shader)
 		{
 			GameObject* ground = new GameObject("Ground");
 			ground->transform.position = Vector3f(0, -3.25, 0);
@@ -253,18 +247,19 @@ void GameWorldHelper::initTestScene(BOEngine* engine)
 			engine->gameWorld->addGameObject(ground);
 
 		}, engine, shader));
+
 	
 	// onion
-	futures.push_back(pool.enqueue([](BOEngine* engine, Shader* shader)
+	threads.push_back(new std::thread([](BOEngine* engine, Shader* shader)
 		{
 			engine->gameWorld->addGameObject(Object_Load("game/assets/objects/onion.yaml", engine, shader));
 		}, engine, shader));
 	
 
 	// and to re-synchronize
-	for (auto& future : futures)
+	for (std::thread* thread : threads)
 	{
-		future.wait();
+		thread->join();
 	}
 
 	auto end = std::chrono::steady_clock::now();
