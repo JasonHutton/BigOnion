@@ -65,7 +65,7 @@ private:
 
 	unsigned int TextureFromFile(const char* path, const string& directory, bool gamma = false);
 
-	std::mutex modelLoadMutex;
+	static std::mutex modelLoadMutex;
 };
 
 #endif

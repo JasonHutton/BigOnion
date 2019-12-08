@@ -7,6 +7,8 @@
 
 using namespace std;
 
+std::mutex Model::modelLoadMutex;
+
 // constructor, expects a filepath to a 3D model.
 Model::Model(string const& path, Shader* _shader) : shader(_shader), shaderAttribute()
 {
@@ -38,6 +40,8 @@ void Model::Draw(Shader* _shader)
 // loads a model with supported ASSIMP extensions from file and stores the resulting meshes in the meshes vector.
 void Model::loadModel(string const& path)
 {
+	const std::lock_guard<std::mutex> lock(modelLoadMutex);
+
 	// read file via ASSIMP
 	Assimp::Importer importer;
 	string osPath;
@@ -63,7 +67,6 @@ void Model::loadModel(string const& path)
 // processes a node in a recursive fashion. Processes each individual mesh located at the node and repeats this process on its children nodes (if any).
 void Model::processNode(aiNode* node, const aiScene* scene)
 {
-	const std::lock_guard<std::mutex> lock(modelLoadMutex);
 	// process each mesh located at the current node
 	for (unsigned int i = 0; i < node->mNumMeshes; i++)
 	{
