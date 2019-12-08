@@ -4,6 +4,7 @@
 ComponentManager::ComponentManager(std::string updateStrategy[], size_t n)
 	: n(n)
 	, isPaused(false)
+	, threadPool(10)
 {
 	strategy = new std::string[n];
 
@@ -47,16 +48,30 @@ bool ComponentManager::remove(Component* component)
 */
 void ComponentManager::update(float deltaTime)
 {
+	auto futureBuffer = std::vector<std::future<void>>();
+
 	for (unsigned int i = 0; i < n; ++i)
 	{
 		std::string id = strategy[i];
-		for (Component* component : componentPools[id])
+
+		std::vector<Component*>* componentPool = &componentPools[id];
+		int count = componentPool->size();
+
+		for (Component* component : *componentPool)
 		{
 			if (!isPaused || component->ignorePause)
 			{
-				component->update(deltaTime);
+				auto future = threadPool.enqueue([](Component* component, int deltaTime) { component->update(deltaTime); }, component, deltaTime);
+				futureBuffer.push_back(std::move(future));
 			}
 		}
+
+		for (auto& future : futureBuffer)
+		{
+			future.wait();
+		}
+
+		futureBuffer.clear();
 	}
 }
 
@@ -65,13 +80,30 @@ void ComponentManager::update(float deltaTime)
 */
 void ComponentManager::fixedUpdate(float deltaTime)
 {
+	auto futureBuffer = std::vector<std::future<void>>();
+
 	for (unsigned int i = 0; i < n; ++i)
 	{
 		std::string id = strategy[i];
-		for (Component* component : componentPools[id])
+
+		std::vector<Component*>* componentPool = &componentPools[id];
+		int count = componentPool->size();
+
+		for (Component* component : *componentPool)
 		{
-			component->fixedUpdate(deltaTime);
+			if (!isPaused || component->ignorePause)
+			{
+				auto future = threadPool.enqueue([](Component* component, int deltaTime) { component->fixedUpdate(deltaTime); }, component, deltaTime);
+				futureBuffer.push_back(std::move(future));
+			}
 		}
+
+		for (auto& future : futureBuffer)
+		{
+			future.wait();
+		}
+
+		futureBuffer.clear();
 	}
 }
 
