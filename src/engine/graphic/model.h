@@ -21,6 +21,7 @@
 #include <iostream>
 #include <map>
 #include <vector>
+#include <mutex>
 
 class Model
 {
@@ -63,6 +64,8 @@ private:
 	vector<Texture> loadMaterialTextures(aiMaterial* mat, aiTextureType type, string typeName);
 
 	unsigned int TextureFromFile(const char* path, const string& directory, bool gamma = false);
+
+	std::mutex modelLoadMutex;
 };
 
 #endif

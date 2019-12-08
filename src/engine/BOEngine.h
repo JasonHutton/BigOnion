@@ -21,6 +21,7 @@
 #include "../game/components/RigidbodyComponent.h"
 
 #include <iostream>
+#include <mutex>
 
 class BOEngine
 {
@@ -52,7 +53,8 @@ private:
 	std::chrono::duration<double> accumulator;
 	
 	int exitCode;
-	
+
+	std::mutex renderComponentMutex;
 
 	std::vector<RenderComponent*> renderComponents;
 };

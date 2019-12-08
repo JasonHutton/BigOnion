@@ -55,6 +55,7 @@ void Model::loadModel(string const& path)
 	// retrieve the directory path of the filepath
 	directory = path.substr(0, path.find_last_of('/'));
 
+
 	// process ASSIMP's root node recursively
 	processNode(scene->mRootNode, scene);
 }
@@ -62,6 +63,7 @@ void Model::loadModel(string const& path)
 // processes a node in a recursive fashion. Processes each individual mesh located at the node and repeats this process on its children nodes (if any).
 void Model::processNode(aiNode* node, const aiScene* scene)
 {
+	const std::lock_guard<std::mutex> lock(modelLoadMutex);
 	// process each mesh located at the current node
 	for (unsigned int i = 0; i < node->mNumMeshes; i++)
 	{

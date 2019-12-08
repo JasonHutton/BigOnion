@@ -140,7 +140,9 @@ void BOEngine::render()
 */
 void BOEngine::addRenderComponent(RenderComponent* renderComponent)
 {
+	const std::lock_guard<std::mutex> lock(renderComponentMutex);
 	renderComponents.push_back(renderComponent);
+
 }
 
 void BOEngine::exitInError(const std::string& error)
