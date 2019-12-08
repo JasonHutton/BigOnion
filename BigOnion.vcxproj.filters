@@ -566,6 +566,9 @@
     <ClInclude Include="object_loader.h">
       <Filter>Header Files\game</Filter>
     </ClInclude>
+    <ClInclude Include="src\engine\utils\ThreadPool.h">
+      <Filter>Header Files\engine\utils</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="src\engine\vertex.glsl">

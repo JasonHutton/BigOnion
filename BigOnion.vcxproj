@@ -181,6 +181,7 @@
     <ClInclude Include="src\game\GameWorldHelper.h" />
     <ClInclude Include="TextFile.h" />
     <ClInclude Include="src\engine\graphic\ThirdPersonCamera.h" />
+    <ClInclude Include="src\engine\utils\ThreadPool.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="src\engine\graphic\shader\model_loading.fs" />
