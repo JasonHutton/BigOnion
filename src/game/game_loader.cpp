@@ -70,7 +70,10 @@ float timeSkid = 0;
 bool recordtime = true;
 int timego;
 int starttime;
-
+int temp = 0;
+int oldtimego = 0;
+bool timing ;
+int differ;
 
 GameLoader::GameLoader()
 {
@@ -344,15 +347,28 @@ void GameLoader::startGame() {
 				}
 
 			}
-			if (timego>5) {
+			if (timego > 5) {
 				stopgame = false;
-				ImGui::SetCursorPos(ImVec2((windowW / 2) , 200.0f));
-				if (66-timego == 0) {
+				ImGui::SetCursorPos(ImVec2((windowW / 2), 200.0f));
+
+				if (timing) {
+					temp = 66 - (timego- differ);
+				}
+				if (temp == 0) {
 					ImGui::TextColored(ImVec4(1.0f, 0.0f, 1.0f, 1.0f), "0");
 				}
-				else {
-					ImGui::TextColored(ImVec4(1.0f, 0.0f, 1.0f, 1.0f), "%.d", 66-timego);
-				}		
+				if (stopcase == 0) {
+					timing = true;	
+					ImGui::TextColored(ImVec4(1.0f, 0.0f, 1.0f, 1.0f), "%.d", temp);
+				}
+				if (stopcase == 1) {
+					timing = false;
+					if (!timing) {
+						oldtimego = 66 - temp;
+					}
+					differ = timego - oldtimego;
+					ImGui::TextColored(ImVec4(1.0f, 0.0f, 1.0f, 1.0f), "%.d", temp);
+				}
 			}
 		}
 
@@ -395,16 +411,20 @@ void GameLoader::startGame() {
 
 		if (ImGui::Button("Stop", ImVec2(200.0f, 60.0f))) // press stop to stop player movement
 		{
+			
 			switch (stopcase) {
 			case 0:
 				engine->gameWorld->pause();
 				stopcase = 1;
+			
 				break;
 			case 1:
 				engine->gameWorld->unpause();
 				stopcase = 0;
+			
 				break;
 			}
+			
 		}
 		ImGui::End();
 
@@ -571,10 +591,10 @@ void GameLoader::startGame() {
 		}
 
 		//***********lost window******************
-		if (timego > 66) {
+		if (temp <0) {
 			gamelost = true;
 		}
-		if (gamelost)
+		if (gamelost&&!gamewin)
 		{
 			ImGui::SetNextWindowSize(ImVec2(windowW, windowH));
 			ImGui::SetNextWindowPos(ImVec2(0, 0));
