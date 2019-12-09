@@ -347,11 +347,11 @@ void GameLoader::startGame() {
 			if (timego>5) {
 				stopgame = false;
 				ImGui::SetCursorPos(ImVec2((windowW / 2) , 200.0f));
-				if (timego - 6 == 0) {
+				if (66-timego == 0) {
 					ImGui::TextColored(ImVec4(1.0f, 0.0f, 1.0f, 1.0f), "0");
 				}
 				else {
-					ImGui::TextColored(ImVec4(1.0f, 0.0f, 1.0f, 1.0f), "%.d", timego-6);
+					ImGui::TextColored(ImVec4(1.0f, 0.0f, 1.0f, 1.0f), "%.d", 66-timego);
 				}		
 			}
 		}
@@ -561,12 +561,17 @@ void GameLoader::startGame() {
 				gamewin = false;
 				show_GameMenu_window = true;
 			}
+
+			ImGui::SetCursorPos(ImVec2((windowW / 2) - (windowW / 4), 400.0f));                 //next level
+			if (ImGui::Button("Next Level", ImVec2(windowW / 2, 50.0f))) {
+				
+			}
 			
 			ImGui::End();
 		}
 
 		//***********lost window******************
-		if (timego > 36) {
+		if (timego > 66) {
 			gamelost = true;
 		}
 		if (gamelost)
