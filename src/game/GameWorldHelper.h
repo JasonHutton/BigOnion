@@ -6,4 +6,5 @@
 namespace GameWorldHelper
 {
 	void initTestScene(BOEngine* engine);
+	void initTestScene2(BOEngine* engine);
 };

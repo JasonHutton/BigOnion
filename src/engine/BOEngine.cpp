@@ -63,7 +63,7 @@ void BOEngine::initialize()
 
 	audio.Init();
 
-	GameWorldHelper::initTestScene(this);
+	GameWorldHelper::initTestScene2(this);
 
 }
 

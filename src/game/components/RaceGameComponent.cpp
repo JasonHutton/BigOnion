@@ -7,10 +7,6 @@ const std::string RaceGameComponent::typeID = "RaceGameComponent";
 RaceGameComponent::RaceGameComponent()
 {
 	reachCheckPoint = 0;
-	checkpoints.push_back(glm::vec3(-45.0f, -3.0f, 0.0f));
-	checkpoints.push_back(glm::vec3(0.0f, -3.0f, 45.0f));
-	checkpoints.push_back(glm::vec3(45.0f, -3.0f, 0.0f));
-	checkpoints.push_back(glm::vec3(0.0f, -3.0f, -45.0f));
 }
 
 void RaceGameComponent::update(float deltaTime)
