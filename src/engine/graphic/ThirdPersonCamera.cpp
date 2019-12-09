@@ -37,7 +37,6 @@ void ThirdPersonCamera::update(float deltaTime, const glm::vec3& targetPosition,
 {
 
 	// Determine how many degrees of rotation to apply based on current time.
-
 	float targetEulerAngleY = targetRotation.y; // eulerAngle pitch is [0,90], [-0, -90]
 	if (abs(targetRotation.x) > 1.57) // x = only 0 or 180
 	{
@@ -46,21 +45,22 @@ void ThirdPersonCamera::update(float deltaTime, const glm::vec3& targetPosition,
 
 	targetEulerAngleY += pitch;
 
-	//debug
-	//glm::vec3 rt = targetRotation;
-	//printf("rotation.x=%f, y: %f, z:%f fixed= %f \n", glm::degrees(rt.x), glm::degrees(rt.y), glm::degrees(rt.z), glm::degrees(fixedEulerAngleY));
-
-
 	float rotateDistanceX = targetEulerAngleY - lastEulerAngleY;
+	if (abs(rotateDistanceX) >= 3.14) {
+		lastEulerAngleY += (rotateDistanceX > 0 ? 1 : -1) * glm::radians(360.0f);
+		rotateDistanceX = targetEulerAngleY - lastEulerAngleY;
+	}
+
 	float deltaMove = (rotateSpeed + rotateDistanceX / 60) * deltaTime; // speed * time, add speed when distance is too big
-	float fixedEulerAngleY = lastEulerAngleY;
+	float fixedEulerAngleY = targetEulerAngleY;
 
 	if (abs(rotateDistanceX) > deltaMove) {
-		fixedEulerAngleY += std::copysign(deltaMove, rotateDistanceX);
+		fixedEulerAngleY = lastEulerAngleY + std::copysign(deltaMove, rotateDistanceX);
 	}
-	else {
-		fixedEulerAngleY = targetEulerAngleY;
-	}
+
+	//debug
+	//glm::vec3 rt = targetRotation;
+	//printf("target:%f - last=%f = distance: %f,  fixed= %f \n", glm::degrees(targetEulerAngleY), glm::degrees(lastEulerAngleY), glm::degrees(rotateDistanceX), glm::degrees(fixedEulerAngleY));
 
 	m_cameraPosition.x = targetPosition.x + sin(fixedEulerAngleY) * cameraDistance;
 	m_cameraPosition.y = cameraHeight;
