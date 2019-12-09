@@ -404,11 +404,11 @@ void GameLoader::startGame() {
 
 		//***************HUD: stop game***************
 
-		ImGui::SetNextWindowSize(ImVec2(200, 80));
+		//ImGui::SetNextWindowSize(ImVec2(200, 80));
+		 ImGui::SetNextWindowSize(ImVec2(windowW, windowH));
 		ImGui::SetNextWindowPos(ImVec2(0, 0));
 		ImGui::StyleColorsLight();
 		ImGui::Begin("Stop", 0, flags);
-
 		if (ImGui::Button("Stop", ImVec2(200.0f, 60.0f))) // press stop to stop player movement
 		{
 			
@@ -424,15 +424,15 @@ void GameLoader::startGame() {
 			
 				break;
 			}
-			
 		}
 		ImGui::End();
 
 		//*************HUD: Back Game Menu*****************
 
-		ImGui::SetNextWindowSize(ImVec2(200, 80));
-		ImGui::SetNextWindowPos(ImVec2(windowW - 200, 0));
-		ImGui::Begin("menu", 0, flags);
+		ImGui::SetNextWindowSize(ImVec2(windowW, windowH));
+		ImGui::SetNextWindowPos(ImVec2(0.0f, 0.0f));
+		
+		ImGui::Begin("Stop", 0, flags);
 		ImGui::StyleColorsLight();
 
 		if (ImGui::Button("Menu", ImVec2(200.0f, 60.0f)))
@@ -442,6 +442,7 @@ void GameLoader::startGame() {
 
 
 		ImGui::End();
+		
 
 		//***************Game Main Menu****************
 
