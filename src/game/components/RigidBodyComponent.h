@@ -30,7 +30,7 @@ public:
 	}
 
 	static RigidBodyComponent* createWithCube(float width, float height, float depth, float mass = 0, float bounciness = 0, int id = -1);
-	static RigidBodyComponent* createWithPlane();
+	static RigidBodyComponent* createWithPlane(float x, float y, float z, float constant);
 	static RigidBodyComponent* createWithCylinder(float width, float height, float depth, float mass = 0);
 	static RigidBodyComponent* createWithMesh(Model* model, float bounciness = 0, int id = -1);
 

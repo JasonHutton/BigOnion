@@ -124,12 +124,12 @@ RigidBodyComponent* RigidBodyComponent::createWithCube(float width, float height
 /*
 	Returns a RigidBodyComponent with an attached Plane collider.
 */
-RigidBodyComponent* RigidBodyComponent::createWithPlane()
+RigidBodyComponent* RigidBodyComponent::createWithPlane(float x, float y, float z, float constant)
 {
 	btTransform t;
 	t.setIdentity();
 
-	btStaticPlaneShape* plane = new btStaticPlaneShape(btVector3(0, 1, 0), 0);
+	btStaticPlaneShape* plane = new btStaticPlaneShape(btVector3(x, y, z), constant);
 	btMotionState* motion = new btDefaultMotionState(t);
 	btRigidBody::btRigidBodyConstructionInfo info(0.0, motion, plane);
 	btRigidBody* body = new btRigidBody(info);

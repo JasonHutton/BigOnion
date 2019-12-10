@@ -50,7 +50,8 @@ std::string NodeType(YAML::Node node)
 enum rbTypes
 {
 	RB_NONE = 0,
-	RB_CUBE
+	RB_CUBE,
+	RB_PLANE
 };
 
 class ComponentProperties
@@ -70,6 +71,12 @@ public:
 
 	bool useRender = false;
 	std::string renderModel;
+
+	bool useConstant = false;
+	float constant;
+
+	bool useNormal = false;
+	Vector3f normal;
 };
 
 // It probably makes more sense to try to handle individual component collections rather than all of them at once here. Fix later.
@@ -103,6 +110,10 @@ void Component_Load(YAML::Node node, GameObject* gObj, BOEngine* engine, Shader*
 				{
 					properties.rbType = RB_CUBE;
 				}
+				else if (sit->first.as<string>().compare("plane") == 0) // This is really brittle, fix it up later.
+				{
+					properties.rbType = RB_PLANE;
+				}
 				else if (sit->first.as<string>().compare("size") == 0)
 				{
 					std::vector<float> size;
@@ -118,6 +129,22 @@ void Component_Load(YAML::Node node, GameObject* gObj, BOEngine* engine, Shader*
 				{
 					properties.mass = atof(sit->second.as<string>().c_str());
 					properties.useMass = true;
+				}
+				else if (sit->first.as<string>().compare("normal") == 0)
+				{
+					std::vector<float> normal;
+					for (auto pit = sit->second.begin(); pit != sit->second.end(); ++pit)
+					{
+						normal.push_back(atof(pit->Scalar().c_str())); // Kinda questionable, clean up later...
+					}
+
+					properties.normal = Vector3f(normal[0], normal[1], normal[2]);
+					properties.useNormal = true;
+				}
+				else if (sit->first.as<string>().compare("constant") == 0)
+				{
+					properties.constant = atof(sit->second.as<string>().c_str());
+					properties.useConstant = true;
 				}
 				/*else
 				{
@@ -136,41 +163,23 @@ void Component_Load(YAML::Node node, GameObject* gObj, BOEngine* engine, Shader*
 
 	if (properties.useRigidBody)
 	{
-		if (properties.useSize && properties.useMass && properties.useBounciness)
+		switch (properties.rbType)
 		{
-			switch (properties.rbType)
-			{
-			case RB_CUBE:
+		case RB_CUBE:
+			if (properties.useSize && properties.useMass && properties.useBounciness)
 				gObj->addComponent(RigidBodyComponent::createWithCube(properties.size[0], properties.size[1], properties.size[2], properties.mass, properties.bounciness));
-				break;
-			case RB_NONE:
-			default:
-				break;
-			}
-		}
-		else if (properties.useSize && properties.useMass)
-		{
-			switch (properties.rbType)
-			{
-			case RB_CUBE:
+			else if (properties.useSize && properties.useMass)
 				gObj->addComponent(RigidBodyComponent::createWithCube(properties.size[0], properties.size[1], properties.size[2], properties.mass));
-				break;
-			case RB_NONE:
-			default:
-				break;
-			}
-		}
-		else if (properties.useSize)
-		{
-			switch (properties.rbType)
-			{
-			case RB_CUBE:
+			else if (properties.useSize)
 				gObj->addComponent(RigidBodyComponent::createWithCube(properties.size[0], properties.size[1], properties.size[2]));
-				break;
-			case RB_NONE:
-			default:
-				break;
-			}
+			break;
+		case RB_PLANE:
+			if(properties.useNormal && properties.useConstant)
+				gObj->addComponent(RigidBodyComponent::createWithPlane(properties.normal[0], properties.normal[1], properties.normal[2], properties.constant));
+			break;
+		case RB_NONE:
+		default:
+			break;
 		}
 	}
 }
@@ -191,20 +200,20 @@ GameObject* Object_Load(YAML::Node node, BOEngine* engine, Shader* shader)
 		}
 		else if (it->first.as<std::string>().compare("scale") == 0)
 		{
-			/*
-			std::vector<float> scale;
-			for (auto pit = it->second.begin(); pit != it->second.end(); ++pit)
+			if(it->second.Type() == YAML::NodeType::Sequence)
 			{
-				scale.push_back(atof(pit->Scalar().c_str())); // Kinda questionable, clean up later...
-			}
-
-			if (scale.size() == 1)
-				gObj->transform.scale = scale[0];
-			else
+				std::vector<float> scale;
+				for (auto pit = it->second.begin(); pit != it->second.end(); ++pit)
+				{
+					scale.push_back(atof(pit->Scalar().c_str())); // Kinda questionable, clean up later...
+				}
 				gObj->transform.scale = Vector3f(scale[0], scale[1], scale[2]);
-			*/
-			string scale = it->second.as<string>();
-			gObj->transform.scale = atof(scale.c_str());
+			}
+			else if (it->second.Type() == YAML::NodeType::Scalar)
+			{
+				string scale = it->second.as<string>();
+				gObj->transform.scale = Vector3f(atof(scale.c_str()), atof(scale.c_str()), atof(scale.c_str()));
+			}
 		}
 		else if (it->first.as<std::string>().compare("position") == 0)
 		{
