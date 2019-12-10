@@ -1,9 +1,0 @@
-skybox:
- name: "Skybox_Water"
- faces: 
-  - "game/assets/skybox/right.jpg"
-  - "game/assets/skybox/left.jpg"
-  - "game/assets/skybox/top.jpg"
-  - "game/assets/skybox/bottom.jpg"
-  - "game/assets/skybox/front.jpg"
-  - "game/assets/skybox/back.jpg"

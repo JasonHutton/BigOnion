@@ -84,19 +84,10 @@ public:
 
 	bool useRenderComponentModel = false;
 	// useRenderComponentModel REQUIRES the renderComponent to be loaded first, for now.
-
-	bool useAudioPlayer = false;
-	std::string sound;
-
-	float volumeDb;
-
-	bool is3D = false;
-	bool isLooping = false;
-	bool isStreaming = false;
 };
 
 // It probably makes more sense to try to handle individual component collections rather than all of them at once here. Fix later.
-void Component_Load(YAML::Node node, GameObject* gObj, BOEngine* engine, Shader* shader, AudioEngine* audio)
+void Component_Load(YAML::Node node, GameObject* gObj, BOEngine* engine, Shader* shader)
 {
 	ComponentProperties properties;
 
@@ -117,10 +108,6 @@ void Component_Load(YAML::Node node, GameObject* gObj, BOEngine* engine, Shader*
 					{
 						properties.useRender = true;
 					}
-					else if (sit->second.as<string>().compare("AudioPlayer") == 0)
-					{
-						properties.useAudioPlayer = true;
-					}
 				}
 				else if (sit->first.as<string>().compare("model") == 0)
 				{
@@ -130,26 +117,6 @@ void Component_Load(YAML::Node node, GameObject* gObj, BOEngine* engine, Shader*
 						properties.useRenderComponentModel = true; // useRenderComponentModel REQUIRES the renderComponent to be loaded first, for now.
 						properties.renderModel = ""; // It may make sense to actually not clear this, or set it to something specific, but just doing so for now.
 					}
-				}
-				else if (sit->first.as<string>().compare("sound") == 0)
-				{
-					properties.sound = sit->second.as<string>();
-				}
-				else if (sit->first.as<string>().compare("volumeDB") == 0)
-				{
-					properties.volumeDb = atof(sit->second.as<string>().c_str());
-				}
-				else if (sit->first.as<string>().compare("is3D") == 0)
-				{
-					properties.is3D = atoi(sit->second.as<string>().c_str());
-				}
-				else if (sit->first.as<string>().compare("isLooping") == 0)
-				{
-					properties.isLooping = atoi(sit->second.as<string>().c_str());
-				}
-				else if (sit->first.as<string>().compare("isStreaming") == 0)
-				{
-					properties.isStreaming = atoi(sit->second.as<string>().c_str());
 				}
 				else if (sit->first.as<string>().compare("cube") == 0) // This is really brittle, fix it up later.
 				{
@@ -246,11 +213,6 @@ void Component_Load(YAML::Node node, GameObject* gObj, BOEngine* engine, Shader*
 			break;
 		}
 	}
-
-	if (properties.useAudioPlayer)
-	{
-		gObj->addComponent(new AudioPlayerComponent(*audio, properties.sound, properties.volumeDb, properties.is3D, properties.isLooping, properties.isStreaming));
-	}
 }
 
 GameObject* Object_Load(YAML::Node node, BOEngine* engine, Shader* shader)
@@ -306,7 +268,7 @@ GameObject* Object_Load(YAML::Node node, BOEngine* engine, Shader* shader)
 		}
 		else if (it->first.as<std::string>().compare("component") == 0)
 		{
-			Component_Load(it->second, gObj, engine, shader, NULL); // There may be purposes to walking through it->first, but for the uses so far, this just results in "component" which we already know.
+			Component_Load(it->second, gObj, engine, shader); // There may be purposes to walking through it->first, but for the uses so far, this just results in "component" which we already know.
 		}
 	}
 
@@ -318,110 +280,8 @@ GameObject* Object_Load(std::string filename, BOEngine* engine, Shader* shader)
 	std::string osPath;
 	FileSystem::BuildOSPath(FileSystem::FindFile(filename), filename, osPath);
 	YAML::Node node = YAML::LoadFile(osPath);
-	YAML::Node obj;
 
-	if (obj = node["object"])
-	{
-		return Object_Load(obj, engine, shader);
-	}
-	else if (obj = node["skybox"])
-	{
-		return NULL; // Not actually using this route for now, just testing how this loads.
-	}	
-}
+	YAML::Node obj = node["object"];
 
-// This is ugly and hacky, needs cleaning up later, into something inherited with OOP.
-GameObject* Audio_Load(std::string filename, BOEngine* engine, Shader* shader, Camera* camera, AudioEngine* audio)
-{
-	std::string osPath;
-	FileSystem::BuildOSPath(FileSystem::FindFile(filename), filename, osPath);
-	YAML::Node node = YAML::LoadFile(osPath);
-	YAML::Node obj;
-
-	GameObject* gObj = NULL;
-
-	if (obj = node["audio"])
-	{
-		for (YAML::const_iterator it = obj.begin(); it != obj.end(); ++it)
-		{
-			//std::cout << NodeType(it->first) << std::endl;
-			//std::cout << NodeType(it->second) << std::endl;
-
-			if (it->first.as<std::string>().compare("name") == 0)
-			{
-				string name = it->second.as<string>();
-				gObj = new GameObject(name);
-			}
-			else if (it->first.as<std::string>().compare("position") == 0)
-			{
-				if (it->second.Type() == YAML::NodeType::Sequence)
-				{
-					for (auto pit = it->second.begin(); pit != it->second.end(); ++pit)
-					{
-						std::vector<float> pos;
-						for (auto pit = it->second.begin(); pit != it->second.end(); ++pit)
-						{
-							pos.push_back(atof(pit->Scalar().c_str())); // Kinda questionable, clean up later...
-						}
-
-						gObj->transform.position = Vector3f(pos[0], pos[1], pos[2]);
-					}
-				}
-				else if (it->second.Type() == YAML::NodeType::Scalar)
-				{
-					Vector3f pos;
-					if (it->second.as<string>().compare("CameraPosition") == 0) // This is really brittle, fix it up later.
-					{
-						pos.x = camera->Position.x;
-						pos.y = camera->Position.y;
-						pos.z = camera->Position.z;
-
-						gObj->transform.position = pos;
-					}
-
-					gObj->transform.position = Vector3f(pos.x, pos.y, pos.z);
-				}
-			}
-			else if (it->first.as<std::string>().compare("component") == 0)
-			{
-				Component_Load(it->second, gObj, engine, shader, audio); // There may be purposes to walking through it->first, but for the uses so far, this just results in "component" which we already know.
-			}
-		}
-
-		return gObj;
-	}
-
-	return gObj;
-}
-
-vector<std::string> Skybox_Load(std::string filename)
-{
-	std::string osPath;
-	FileSystem::BuildOSPath(FileSystem::FindFile(filename), filename, osPath);
-	YAML::Node node = YAML::LoadFile(osPath);
-	YAML::Node obj;
-
-	vector<std::string> faces;
-	if (obj = node["skybox"])
-	{
-		for (YAML::const_iterator it = obj.begin(); it != obj.end(); ++it)
-		{
-			if (it->first.as<std::string>().compare("name") == 0)
-			{
-				// Do nothing. We don't really care currently.
-			}
-			else if (it->first.as<std::string>().compare("faces") == 0)
-			{
-				if (it->second.Type() == YAML::NodeType::Sequence)
-				{
-					for (auto pit = it->second.begin(); pit != it->second.end(); ++pit)
-					{
-						faces.push_back(pit->as<std::string>()); // Kinda questionable, clean up later...
-					}
-				}
-			}
-		}
-	}
-
-	return faces;
+	return Object_Load(obj, engine, shader);
 }

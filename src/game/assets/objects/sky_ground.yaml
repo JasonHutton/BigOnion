@@ -1,9 +1,0 @@
-skybox:
- name: "Skybox_Ground"
- faces: 
-  - "game/assets/cmm_skybox/right.jpg"
-  - "game/assets/cmm_skybox/left.jpg"
-  - "game/assets/cmm_skybox/top.jpg"
-  - "game/assets/cmm_skybox/bottom.jpg"
-  - "game/assets/cmm_skybox/front.jpg"
-  - "game/assets/cmm_skybox/back.jpg"
