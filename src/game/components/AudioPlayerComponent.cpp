@@ -22,6 +22,12 @@ AudioPlayerComponent::AudioPlayerComponent(AudioEngine audio, const string& strS
 	soundChannel = 0;
 }
 
+AudioPlayerComponent::~AudioPlayerComponent()
+{
+	audio.Shutdown();
+	audio.Init();
+}
+
 void AudioPlayerComponent::onAddToGameWorld()
 {
 	soundChannel = audio.LoadSound(soundName, convert(gameObject->transform.position), fVolume, surround, looping, streaming);
@@ -87,4 +93,9 @@ void AudioPlayerComponent::wait(int seconds)
 	endwait = clock() + seconds * CLOCKS_PER_SEC;
 	//std::this_thread::sleep_for(std::chrono::milliseconds(miliseconds));
 	while (clock() < endwait) {}
+}
+
+void AudioPlayerComponent::stopAll()
+{
+	audio.StopAllChannels();
 }
