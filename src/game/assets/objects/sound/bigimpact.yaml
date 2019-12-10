@@ -1,0 +1,10 @@
+audio:
+ name: "BigImpact"
+ position: CameraPosition
+ component:
+ - type: "AudioPlayer"
+ - sound: "game/assets/sounds/big_impact.mp3"
+ - volumeDB: 20.0
+ - is3D: 1
+ - isLooping: 1
+ - isStreaming: 0

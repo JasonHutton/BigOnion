@@ -14,6 +14,7 @@
 #include <vector>
 #include <thread>
 
+
 /*
 	The main Menu Scene which cantains audio only.
 */
@@ -176,17 +177,19 @@ void GameWorldHelper::initTestScene(BOEngine* engine)
 	skid_sound->getComponent<AudioPlayerComponent>()->onAddToGameWorld();
 
 	//impact sound
-	GameObject* impact_sound_small = new  GameObject("SmallImpact");
+	/*GameObject* impact_sound_small = new  GameObject("SmallImpact");
 			impact_sound_small->transform.position = { camera->Position.x, camera->Position.y, camera->Position.z };
 	engine->gameWorld->addGameObject(impact_sound_small);
 			impact_sound_small->addComponent(new AudioPlayerComponent(*audio, "game/assets/sounds/small_impact.mp3", 30, true, true, false));
-	impact_sound_small->getComponent<AudioPlayerComponent>()->onAddToGameWorld();
+	impact_sound_small->getComponent<AudioPlayerComponent>()->onAddToGameWorld();*/
+	engine->gameWorld->addGameObject(Audio_Load("game/assets/objects/sound/smallimpact.yaml", engine, NULL, camera, audio));
 	
-	GameObject* impact_sound_big = new  GameObject("BigImpact");
+	/*GameObject* impact_sound_big = new  GameObject("BigImpact");
 			impact_sound_big->transform.position = { camera->Position.x, camera->Position.y, camera->Position.z };
 	engine->gameWorld->addGameObject(impact_sound_big);
 			impact_sound_big->addComponent(new AudioPlayerComponent(*audio, "game/assets/sounds/big_impact.mp3", 20, true, true, false));
-	impact_sound_big->getComponent<AudioPlayerComponent>()->onAddToGameWorld();
+	impact_sound_big->getComponent<AudioPlayerComponent>()->onAddToGameWorld();*/
+	engine->gameWorld->addGameObject(Audio_Load("game/assets/objects/sound/bigimpact.yaml", engine, NULL, camera, audio));
 
 	//background music
 	GameObject* background_music = new  GameObject("BackgroundMusic");
@@ -380,17 +383,19 @@ void GameWorldHelper::initTestScene2(BOEngine* engine)
 	skid_sound->getComponent<AudioPlayerComponent>()->onAddToGameWorld();
 
 	//impact sound
-	GameObject* impact_sound_small = new  GameObject("SmallImpact");
+	/*GameObject* impact_sound_small = new  GameObject("SmallImpact");
 			impact_sound_small->transform.position = { camera->Position.x, camera->Position.y, camera->Position.z };
 	engine->gameWorld->addGameObject(impact_sound_small);
 			impact_sound_small->addComponent(new AudioPlayerComponent(*audio, "game/assets/sounds/small_impact.mp3", 30, true, true, false));
-	impact_sound_small->getComponent<AudioPlayerComponent>()->onAddToGameWorld();
+	impact_sound_small->getComponent<AudioPlayerComponent>()->onAddToGameWorld();*/
+	engine->gameWorld->addGameObject(Audio_Load("game/assets/objects/sound/smallimpact.yaml", engine, NULL, camera, audio));
 
-	GameObject* impact_sound_big = new  GameObject("BigImpact");
+	/*GameObject* impact_sound_big = new  GameObject("BigImpact");
 			impact_sound_big->transform.position = { camera->Position.x, camera->Position.y, camera->Position.z };
 	engine->gameWorld->addGameObject(impact_sound_big);
 			impact_sound_big->addComponent(new AudioPlayerComponent(*audio, "game/assets/sounds/big_impact.mp3", 20, true, true, false));
-	impact_sound_big->getComponent<AudioPlayerComponent>()->onAddToGameWorld();
+	impact_sound_big->getComponent<AudioPlayerComponent>()->onAddToGameWorld();*/
+	engine->gameWorld->addGameObject(Audio_Load("game/assets/objects/sound/bigimpact.yaml", engine, NULL, camera, audio));
 
 	//background music
 	GameObject* background_music = new  GameObject("BackgroundMusic");
