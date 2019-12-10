@@ -64,8 +64,6 @@ void BOEngine::initialize()
 	// Game World initialization
 	currentTime = std::chrono::high_resolution_clock::now();
 
-	audio.Init();
-
 	int scrWidth, scrHeight;
 	glfwGetWindowSize(window, &scrWidth, &scrHeight);
 	this->gwidth = scrWidth;

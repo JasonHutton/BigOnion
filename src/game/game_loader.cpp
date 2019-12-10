@@ -80,6 +80,7 @@ bool firstStart = true;
 
 GameLoader::GameLoader()
 {
+
 }
 
 bool LoadTextureFromFile(const char* filename, GLuint* out_texture, int* out_width, int* out_height)
@@ -122,7 +123,7 @@ bool callbackFunc(btManifoldPoint& cp, void* body0, void* body1)
 	RigidBodyComponent* rbc1 = static_cast<RigidBodyComponent*>(colObj1Wrap->getUserPointer());
 	if (rbc0->isHit(rbc1))
 	{
-		if (speed > 100)
+		if (speed > 120)
 		{
 			impactB = true;
 		}
@@ -134,7 +135,7 @@ bool callbackFunc(btManifoldPoint& cp, void* body0, void* body1)
 	}
 	if (rbc1->isHit(rbc0))
 	{
-		if (speed > 100)
+		if (speed > 120)
 		{
 			impactB = true;
 		}
@@ -172,11 +173,6 @@ void GameLoader::startGame() {
 
 	GameWorldHelper::initMenuScene(engine);
 
-	GameObject* engineSound = engine->gameWorld->getGameObjectById("EngineSound");
-	GameObject* background_music = engine->gameWorld->getGameObjectById("BackgroundMusic");
-	GameObject* win1 = engine->gameWorld->getGameObjectById("WinMusic1");
-	GameObject* win2 = engine->gameWorld->getGameObjectById("WinMusic2");
-
 	std::cout << "startGame" << std::endl;
 	// glfw window creation
 	// --------------------
@@ -190,7 +186,6 @@ void GameLoader::startGame() {
 	//background img
 	bool ret = LoadTextureFromFile("src\\game\\assets\\img\\racing.jpg", &my_image_texture, &my_image_width, &my_image_height);
 	IM_ASSERT(ret);
-
 
 	// inputs
 
@@ -246,10 +241,16 @@ void GameLoader::startGame() {
 				}
 			}
 		}
-
+		GameObject* engineSound = engine->gameWorld->getGameObjectById("EngineSound");
 		GameObject* skid = engine->gameWorld->getGameObjectById("SkidSound");
 		GameObject* impactBig = engine->gameWorld->getGameObjectById("BigImpact");
 		GameObject* impactSmall = engine->gameWorld->getGameObjectById("SmallImpact");
+		GameObject* background_music = engine->gameWorld->getGameObjectById("BackgroundMusic");
+
+		if (MusicToggle == true)
+		{
+			background_music->getComponent<AudioPlayerComponent>()->play();
+		}
 		
 		if (speed > 10)
 		{
@@ -478,9 +479,7 @@ void GameLoader::startGame() {
 
 		if (show_GameMenu_window)
 		{
-			win1->getComponent<AudioPlayerComponent>()->pause();
-			win2->getComponent<AudioPlayerComponent>()->pause();
-			engineSound->getComponent<AudioPlayerComponent>()->pause();
+			GameObject* background_music = engine->gameWorld->getGameObjectById("BackgroundMusic");
 
 			ImGui::SetNextWindowSize(ImVec2(windowW, windowH));
 			ImGui::SetNextWindowPos(ImVec2(0, 0));
@@ -499,12 +498,16 @@ void GameLoader::startGame() {
 			if (ImGui::Button("Play Game", ImVec2(windowW / 2, 50.0f))) {
 				show_GameMenu_window = false;
 				current_level = 1;
+				stopcase = 0;
+				stopgame = true;
 				reload();
 			}
 
 			ImGui::SetCursorPos(ImVec2((windowW / 2) - (windowW / 4), 400.0f));
 			if (ImGui::Button("Load Game", ImVec2(windowW / 2, 50.0f))) {
 				show_GameMenu_window = false;
+				stopcase = 0;
+				stopgame = true;
 				reload();	
 			}
 
@@ -578,18 +581,24 @@ void GameLoader::startGame() {
 		}
 		if (gamewin)
 		{
+			GameObject* background_music = engine->gameWorld->getGameObjectById("BackgroundMusic");
+			GameObject* win1 = engine->gameWorld->getGameObjectById("WinMusic1");
+			GameObject* win2 = engine->gameWorld->getGameObjectById("WinMusic2");
+
 			if (!isPlaying)
 			{
 				if (rand() % 1 == 0)
 				{
-					background_music->getComponent<AudioPlayerComponent>()->stop();
+					background_music->getComponent<AudioPlayerComponent>()->pause();
 					win1->getComponent<AudioPlayerComponent>()->play();
+					win1->getComponent<AudioPlayerComponent>()->volume((float)MusicSlider * 0.1);
 					isPlaying = true;
 				}
 				else
 				{
-					background_music->getComponent<AudioPlayerComponent>()->stop();
+					background_music->getComponent<AudioPlayerComponent>()->pause();
 					win2->getComponent<AudioPlayerComponent>()->play();
+					win2->getComponent<AudioPlayerComponent>()->volume((float)MusicSlider * 0.1);
 					isPlaying = true;
 				}
 			}
@@ -612,7 +621,7 @@ void GameLoader::startGame() {
 				current_level--;
 				reload();
 				gamewin = false;
-
+				isPlaying = false;
 			}
 
 			if (current_level <= max_level) {
@@ -620,6 +629,7 @@ void GameLoader::startGame() {
 				if (ImGui::Button("Next Level", ImVec2(windowW / 2, 50.0f))) {
 					reload();
 					gamewin = false;
+					isPlaying = false;
 				}
 			}
 
@@ -627,6 +637,10 @@ void GameLoader::startGame() {
 			if (ImGui::Button("Back to Menu", ImVec2(windowW / 2, 50.0f))) {
 				gamewin = false;
 				show_GameMenu_window = true;
+				isPlaying = false;
+				win1->getComponent<AudioPlayerComponent>()->pause();
+				win2->getComponent<AudioPlayerComponent>()->pause();
+				background_music->getComponent<AudioPlayerComponent>()->volume((float)MusicSlider * 0.1);
 			}
 
 			ImGui::End();
@@ -638,20 +652,47 @@ void GameLoader::startGame() {
 		}
 		if (gamelost && !gamewin)
 		{
+			GameObject* background_music = engine->gameWorld->getGameObjectById("BackgroundMusic");
+			GameObject* lose1 = engine->gameWorld->getGameObjectById("LoseMusic1");
+			GameObject* lose2 = engine->gameWorld->getGameObjectById("LoseMusic2");
+
 			ImGui::SetNextWindowSize(ImVec2(windowW, windowH));
 			ImGui::SetNextWindowPos(ImVec2(0, 0));
 			ImGui::StyleColorsDark();
 			ImGui::Begin("lost", &gamelost, flags);
 
+			if (!isPlaying)
+			{
+				if (rand() % 1 == 0)
+				{
+					background_music->getComponent<AudioPlayerComponent>()->pause();
+					lose1->getComponent<AudioPlayerComponent>()->play();
+					lose1->getComponent<AudioPlayerComponent>()->volume((float)MusicSlider * 0.1);
+					isPlaying = true;
+				}
+				else
+				{
+					background_music->getComponent<AudioPlayerComponent>()->pause();
+					lose2->getComponent<AudioPlayerComponent>()->play();
+					lose2->getComponent<AudioPlayerComponent>()->volume((float)MusicSlider * 0.1);
+					isPlaying = true;
+				}
+			}
+
 			ImGui::SetCursorPos(ImVec2((windowW / 2) - (windowW / 4), 100.0f));
 			if (ImGui::Button("Restart Game", ImVec2(windowW / 2, 50.0f))) {
 				gamelost = false;
 				reload();
+				isPlaying = false;
 			}
 			ImGui::SetCursorPos(ImVec2((windowW / 2) - (windowW / 4), 200.0f));
 			if (ImGui::Button("Back to Menu", ImVec2(windowW / 2, 50.0f))) {
 				gamelost = false;
 				show_GameMenu_window = true;
+				isPlaying = false;
+				lose1->getComponent<AudioPlayerComponent>()->pause();
+				lose2->getComponent<AudioPlayerComponent>()->pause();
+				background_music->getComponent<AudioPlayerComponent>()->volume((float)MusicSlider * 0.1);
 			}
 			ImGui::End();
 		}
