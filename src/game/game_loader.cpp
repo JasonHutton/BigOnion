@@ -82,17 +82,19 @@ GameLoader::GameLoader()
 
 bool LoadTextureFromFile(const char* filename, GLuint* out_texture, int* out_width, int* out_height)
 {
+	
+
+	// Create a OpenGL texture identifier
+	GLuint image_texture;
+	glGenTextures(1, &image_texture);
+	glBindTexture(GL_TEXTURE_2D, image_texture);
+
 	// Load from file
 	int image_width = 0;
 	int image_height = 0;
 	unsigned char* image_data = stbi_load(filename, &image_width, &image_height, NULL, 4);
 	if (image_data == NULL)
 		return false;
-
-	// Create a OpenGL texture identifier
-	GLuint image_texture;
-	glGenTextures(1, &image_texture);
-	glBindTexture(GL_TEXTURE_2D, image_texture);
 
 	// Setup filtering parameters for display
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
@@ -174,10 +176,10 @@ void GameLoader::startGame() {
 	int my_image_height = 404;
 	GLuint my_image_texture = 0;
 	GLuint my_image_texture1 = 0;
+	//background img
 	bool ret = LoadTextureFromFile("src\\game\\assets\\img\\racing.jpg", &my_image_texture, &my_image_width, &my_image_height);
-	bool ret1 = LoadTextureFromFile("src\\game\\assets\\img\\onion.png", &my_image_texture1, &my_image_width, &my_image_height);
 	IM_ASSERT(ret);
-	IM_ASSERT(ret1);
+
 
 	// inputs
 
@@ -322,9 +324,9 @@ void GameLoader::startGame() {
 				//CalcTextSize
 				ImVec2 timeW = ImGui::CalcTextSize("The game starts in % .d second", NULL, true);
 				ImVec2 firetW = ImGui::CalcTextSize("Hi BIG Onion", NULL, true);
-				ImVec2 secondW = ImGui::CalcTextSize("Are you ready for tonight's game?", NULL, true);
+				ImVec2 secondW = ImGui::CalcTextSize("Are you ready?", NULL, true);
+				
 				ImVec2 thirdW = ImGui::CalcTextSize("Let's GO.", NULL, true);
-
 				ImGui::SetCursorPos(ImVec2((windowW / 2) - (timeW.x / 2), 200.0f));
 				ImGui::TextColored(ImVec4(1.0f, 0.0f, 1.0f, 1.0f), "The game starts in %.d second", 6 - timego);
 
@@ -339,15 +341,15 @@ void GameLoader::startGame() {
 					break;
 				case 2:
 					ImGui::SetCursorPos(ImVec2((windowW / 2) - (secondW.x / 2), 300.0f));
-					ImGui::TextColored(ImVec4(1.0f, 0.0f, 1.0f, 1.0f), "Are you ready for tonight's game?");
+					ImGui::TextColored(ImVec4(1.0f, 0.0f, 1.0f, 1.0f), "Are you ready?");
 					break;
 				case 3:
 					ImGui::SetCursorPos(ImVec2((windowW / 2) - (secondW.x / 2), 300.0f));
-					ImGui::TextColored(ImVec4(1.0f, 0.0f, 1.0f, 1.0f), "Are you ready for tonight's game?");
+					ImGui::TextColored(ImVec4(1.0f, 0.0f, 1.0f, 1.0f), "Are you ready?");
 					break;
 				case 4:
-					ImGui::SetCursorPos(ImVec2((windowW / 2) - (thirdW.x / 2), 300.0f));
-					ImGui::TextColored(ImVec4(1.0f, 0.0f, 1.0f, 1.0f), "Let's GO.");
+					ImGui::SetCursorPos(ImVec2((windowW / 2) - (secondW.x / 2), 300.0f));
+					ImGui::TextColored(ImVec4(1.0f, 0.0f, 1.0f, 1.0f), "Are you ready?");
 					break;
 				case 5:
 					ImGui::SetCursorPos(ImVec2((windowW / 2) - (thirdW.x / 2), 300.0f));
@@ -358,6 +360,7 @@ void GameLoader::startGame() {
 
 			}
 			if (timego > 5) {
+				
 				stopgame = false;
 				ImGui::SetCursorPos(ImVec2((windowW / 2), 200.0f));
 
