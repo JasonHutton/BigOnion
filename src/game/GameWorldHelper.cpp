@@ -167,7 +167,7 @@ void GameWorldHelper::initTestScene(BOEngine* engine)
 	engine->gameWorld->addGameObject(trackWall);
 
 	// create race track
-	GameObject* raceTrack = new GameObject("RaceTrack");
+	/*GameObject* raceTrack = new GameObject("RaceTrack");
 	raceTrack->transform.position = Vector3f(0, -3.23, 0);
 	raceTrack->transform.rotation = Vector3f(0, 0, 0);
 	raceTrack->transform.scale = Vector3f(1.0, 1.0, 1.0);
@@ -176,6 +176,9 @@ void GameWorldHelper::initTestScene(BOEngine* engine)
 	//raceTrack->addComponent(new RenderComponent(engine, "game/assets/racetrack/racetrack.obj", shader)); // connect object - model
 	// raceTrack->addComponent(RigidBodyComponent::createWithMesh(&raceTrack->getComponent<RenderComponent>()->model)); // connect object - rigibody
 	engine->gameWorld->addGameObject(raceTrack); // maybe auto register?
+	*/
+	//engine->gameWorld->addGameObject(Object_Load("game/assets/objects/track1.yaml", engine, shader));
+	engine->gameWorld->addGameObject(Object_Load("game/assets/objects/track2.yaml", engine, shader));
 
 	// Light
 	GameObject* light = new  GameObject("Light");

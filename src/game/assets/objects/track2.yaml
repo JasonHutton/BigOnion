@@ -1,0 +1,8 @@
+object:
+ name: "RaceTrack2"
+ position: [0.0, -3.23, 0.0]
+ rotation: [0.0, 0.0, 0.0]
+ scale: 1.0
+ component:
+  - type: "Render"
+  - model: "game/assets/track2/track_only2.obj"
