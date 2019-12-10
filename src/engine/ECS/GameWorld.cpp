@@ -30,11 +30,11 @@ GameWorld::~GameWorld()
 		delete pair.second;
 	}
 
+	delete physicsWorld;
 	delete dispatcher;
 	delete collisionConfig;
 	delete broadphase;
 	delete solver;
-	delete physicsWorld;
 }
 
 /*
