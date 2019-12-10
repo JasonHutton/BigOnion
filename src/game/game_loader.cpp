@@ -532,6 +532,7 @@ void GameLoader::startGame() {
 
 		}
 		//**********High score list Window************
+		static const char* ids[]{ "1","2","3","4","5","6","7","8","9","10" };
 		static const char* scores[]{ "1","2","3","4","5","6","7","8","9","10" };//high score list
 		static int selectscore = 0;
 
@@ -548,6 +549,10 @@ void GameLoader::startGame() {
 				show_GameMenu_window = true;
 			}
 			ImGui::End();
+
+			std::string s = std::to_string(score1);
+			std::string id = ids[0];
+			scores[0] = (id.append(": ").append(s).append(" seconds")).c_str();
 
 			ImGui::SetNextWindowSize(ImVec2(windowW / 2, windowH / 2));
 			ImGui::SetNextWindowPos(ImVec2(windowW / 2 - windowW / 3.3, windowH / 2 - windowH / 3.3));
