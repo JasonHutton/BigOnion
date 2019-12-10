@@ -1,0 +1,15 @@
+object:
+ name: "RaceTrackWalls2"
+ position: [0.0, -3.25, 0.0]
+ rotation: [0.0, 0.0, 0.0]
+ scale: [1.0, 2.0, 1.0]
+ component:
+  - type: "Render"
+  - model: "game/assets/track2/track_walls2.obj"
+ component:
+  - type: "RigidBody"
+  - mesh:
+  - model: RenderComponentModel
+  - bounciness: 1.0
+  # ID is forced here. Don't change it.
+  - id: 1

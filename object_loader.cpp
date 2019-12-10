@@ -51,7 +51,8 @@ enum rbTypes
 {
 	RB_NONE = 0,
 	RB_CUBE,
-	RB_PLANE
+	RB_PLANE,
+	RB_MESH
 };
 
 class ComponentProperties
@@ -77,6 +78,12 @@ public:
 
 	bool useNormal = false;
 	Vector3f normal;
+
+	bool useId = false;
+	int id;
+
+	bool useRenderComponentModel = false;
+	// useRenderComponentModel REQUIRES the renderComponent to be loaded first, for now.
 };
 
 // It probably makes more sense to try to handle individual component collections rather than all of them at once here. Fix later.
@@ -105,6 +112,11 @@ void Component_Load(YAML::Node node, GameObject* gObj, BOEngine* engine, Shader*
 				else if (sit->first.as<string>().compare("model") == 0)
 				{
 					properties.renderModel = sit->second.as<string>();
+					if (properties.renderModel.compare("RenderComponentModel") == 0) // This is really brittle, fix it up later.
+					{
+						properties.useRenderComponentModel = true; // useRenderComponentModel REQUIRES the renderComponent to be loaded first, for now.
+						properties.renderModel = ""; // It may make sense to actually not clear this, or set it to something specific, but just doing so for now.
+					}
 				}
 				else if (sit->first.as<string>().compare("cube") == 0) // This is really brittle, fix it up later.
 				{
@@ -113,6 +125,10 @@ void Component_Load(YAML::Node node, GameObject* gObj, BOEngine* engine, Shader*
 				else if (sit->first.as<string>().compare("plane") == 0) // This is really brittle, fix it up later.
 				{
 					properties.rbType = RB_PLANE;
+				}
+				else if (sit->first.as<string>().compare("mesh") == 0) // This is really brittle, fix it up later.
+				{
+					properties.rbType = RB_MESH;
 				}
 				else if (sit->first.as<string>().compare("size") == 0)
 				{
@@ -146,6 +162,16 @@ void Component_Load(YAML::Node node, GameObject* gObj, BOEngine* engine, Shader*
 					properties.constant = atof(sit->second.as<string>().c_str());
 					properties.useConstant = true;
 				}
+				else if (sit->first.as<string>().compare("bounciness") == 0)
+				{
+					properties.bounciness = atof(sit->second.as<string>().c_str());
+					properties.useBounciness = true;
+				}
+				else if (sit->first.as<string>().compare("id") == 0)
+				{
+					properties.id = atoi(sit->second.as<string>().c_str());
+					properties.useId = true;
+				}
 				/*else
 				{
 					std::cout << NodeType(sit->first) << " " << sit->first.as<string>() << std::endl;
@@ -176,6 +202,11 @@ void Component_Load(YAML::Node node, GameObject* gObj, BOEngine* engine, Shader*
 		case RB_PLANE:
 			if(properties.useNormal && properties.useConstant)
 				gObj->addComponent(RigidBodyComponent::createWithPlane(properties.normal[0], properties.normal[1], properties.normal[2], properties.constant));
+			break;
+		case RB_MESH:
+			// useRenderComponentModel REQUIRES the renderComponent to be loaded first, for now.
+			if (properties.useRenderComponentModel && properties.useBounciness && properties.useId)
+				gObj->addComponent(RigidBodyComponent::createWithMesh(&gObj->getComponent<RenderComponent>()->model, properties.bounciness, properties.id));
 			break;
 		case RB_NONE:
 		default:
