@@ -469,24 +469,14 @@ void GameWorldHelper::initTestScene2(BOEngine* engine)
 	carControl->tires = tires;
 
 	// create race track walls
-	GameObject* trackWall = new GameObject("RaceTrackWalls");
-	trackWall->transform.position = Vector3f(0, -3.25, 0);
-	trackWall->transform.rotation = Vector3f(0, 0, 0);
-	trackWall->transform.scale = Vector3f(1.0, 2.0, 1.0);
-	//trackWall->addComponent(new RenderComponent(engine, "game/assets/track2/track_walls.obj", shader)); // connect object - model
-	trackWall->addComponent(new RenderComponent(engine, "game/assets/track3/track3_walls.obj", shader)); // connect object - model
-	trackWall->addComponent(RigidBodyComponent::createWithMesh(&trackWall->getComponent<RenderComponent>()->model, 1.0, 1));//note id is set to 1, DO NOT CHANGE unless you change the id in the isHit()
-	engine->gameWorld->addGameObject(trackWall);
+	//engine->gameWorld->addGameObject(Object_Load("game/assets/objects/track_walls1.yaml", engine, shader));
+	//engine->gameWorld->addGameObject(Object_Load("game/assets/objects/track_walls2.yaml", engine, shader));
+	engine->gameWorld->addGameObject(Object_Load("game/assets/objects/track_walls3.yaml", engine, shader));
 
 	// create race track
-	GameObject* raceTrack = new GameObject("RaceTrack");
-	raceTrack->transform.position = Vector3f(0, -3.23, 0);
-	raceTrack->transform.rotation = Vector3f(0, 0, 0);
-	raceTrack->transform.scale = Vector3f(1.0, 1.0, 1.0);
-	//raceTrack->addComponent(new RenderComponent(engine, "game/assets/track2/track_only.obj", shader)); // connect object - model
-	raceTrack->addComponent(new RenderComponent(engine, "game/assets/track3/track3_road.obj", shader)); // connect object - model
-	// raceTrack->addComponent(RigidBodyComponent::createWithMesh(&raceTrack->getComponent<RenderComponent>()->model)); // connect object - rigibody
-	engine->gameWorld->addGameObject(raceTrack); // maybe auto register?
+	//engine->gameWorld->addGameObject(Object_Load("game/assets/objects/track1.yaml", engine, shader));
+	//engine->gameWorld->addGameObject(Object_Load("game/assets/objects/track2.yaml", engine, shader));
+	engine->gameWorld->addGameObject(Object_Load("game/assets/objects/track3.yaml", engine, shader));
 
 	// Light
 	GameObject* light = new  GameObject("Light");

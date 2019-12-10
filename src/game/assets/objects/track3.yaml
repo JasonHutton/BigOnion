@@ -1,0 +1,8 @@
+object:
+ name: "RaceTrack3"
+ position: [0.0, -3.23, 0.0]
+ rotation: [0.0, 0.0, 0.0]
+ scale: 1.0
+ component:
+  - type: "Render"
+  - model: "game/assets/track3/track3_road.obj"
