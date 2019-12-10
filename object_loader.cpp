@@ -240,7 +240,8 @@ GameObject* Object_Load(std::string filename, BOEngine* engine, Shader* shader)
 	std::string osPath;
 	FileSystem::BuildOSPath(FileSystem::FindFile(filename), filename, osPath);
 	YAML::Node node = YAML::LoadFile(osPath);
-	YAML::Node obj = node["onion"]; // Fix me
+
+	YAML::Node obj = node["object"];
 
 	return Object_Load(obj, engine, shader);
 }

@@ -202,6 +202,8 @@ void GameWorldHelper::initTestScene(BOEngine* engine)
 	engine->gameWorld->addGameObject(ground);
 
 	engine->gameWorld->addGameObject(Object_Load("game/assets/objects/onion.yaml", engine, shader));
+	engine->gameWorld->addGameObject(Object_Load("game/assets/objects/box.yaml", engine, shader));
+	engine->gameWorld->addGameObject(Object_Load("game/assets/objects/box2.yaml", engine, shader));
 
 
 	/*GameObject* onion = new  GameObject("Onion");

@@ -1,4 +1,4 @@
-onion:
+object:
  name: "Onion"
  position: [5.0, 10.0, 0.0]
  scale: 3.5
