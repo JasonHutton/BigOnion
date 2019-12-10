@@ -39,13 +39,11 @@ void GameWorldHelper::initMenuScene(BOEngine* engine)
 	engine_sound->addComponent(new AudioPlayerComponent(audio, "game/assets/sounds/startup.wav", 1, true, false, false));
 	engine_sound->getComponent<AudioPlayerComponent>()->onAddToGameWorld();
 	engine_sound->getComponent<AudioPlayerComponent>()->volume(1);
-	engine_sound->getComponent<AudioPlayerComponent>()->play();
 	Sleep(3000);
 	engine_sound->addComponent(new AudioPlayerComponent(audio, "game/assets/sounds/idle.wav", 1, true, true, false));
 	engine_sound->getComponent<AudioPlayerComponent>()->onAddToGameWorld();
 	engine_sound->getComponent<AudioPlayerComponent>()->volume(0.3);
 	engine_sound->getComponent<AudioPlayerComponent>()->setSpeed(0);
-	engine_sound->getComponent<AudioPlayerComponent>()->play();
 
 	//skid sound
 	GameObject* skid_sound = new  GameObject("SkidSound");
@@ -73,7 +71,6 @@ void GameWorldHelper::initMenuScene(BOEngine* engine)
 	background_music->addComponent(new AudioPlayerComponent(audio, "game/assets/sounds/start.mp3", 1, false, true, false));
 	background_music->getComponent<AudioPlayerComponent>()->onAddToGameWorld();
 	background_music->getComponent<AudioPlayerComponent>()->volume(0.3, true);
-	background_music->getComponent<AudioPlayerComponent>()->play();
 
 	//win lose music
 	GameObject* win1_music = new  GameObject("WinMusic1");
@@ -85,6 +82,16 @@ void GameWorldHelper::initMenuScene(BOEngine* engine)
 	engine->gameWorld->addGameObject(win2_music);
 	win2_music->addComponent(new AudioPlayerComponent(audio, "game/assets/sounds/win2.mp3", 1, false, true, false));
 	win2_music->getComponent<AudioPlayerComponent>()->onAddToGameWorld();
+
+	GameObject* lose1_music = new  GameObject("LoseMusic1");
+	engine->gameWorld->addGameObject(lose1_music);
+	lose1_music->addComponent(new AudioPlayerComponent(audio, "game/assets/sounds/lose1.mp3", 1, false, true, false));
+	lose1_music->getComponent<AudioPlayerComponent>()->onAddToGameWorld();
+
+	GameObject* lose2_music = new  GameObject("LoseMusic2");
+	engine->gameWorld->addGameObject(lose2_music);
+	lose2_music->addComponent(new AudioPlayerComponent(audio, "game/assets/sounds/lose2.mp3", 1, false, true, false));
+	lose2_music->getComponent<AudioPlayerComponent>()->onAddToGameWorld();
 }
 /*
 	Loads a test scene into the given BOEngine.
@@ -113,6 +120,9 @@ void GameWorldHelper::initTestScene(BOEngine* engine)
 		"game/assets/cmm_skybox/back.jpg"
 	};
 
+	audio.Shutdown();
+	audio.Init();
+
 	engine->skybox.load(faces);
 
 	shader->use();
@@ -128,8 +138,6 @@ void GameWorldHelper::initTestScene(BOEngine* engine)
 		glm::vec3(0.0f,  0.0f, -3.0f)
 	};
 
-	audio.Shutdown();
-	audio.Init();
 	// point light 1
 	shader->setVec3("pointLights[0].position", pointLightPositions[0]);
 	shader->setVec3("pointLights[0].ambient", 0.05f, 0.05f, 0.05f);
@@ -213,7 +221,6 @@ void GameWorldHelper::initTestScene(BOEngine* engine)
 	background_music->addComponent(new AudioPlayerComponent(audio, "game/assets/sounds/start.mp3", 1, false, true, false));
 	background_music->getComponent<AudioPlayerComponent>()->onAddToGameWorld();
 	background_music->getComponent<AudioPlayerComponent>()->volume(0.3, true);
-	background_music->getComponent<AudioPlayerComponent>()->play();
 
 	//win lose music
 	GameObject* win1_music = new  GameObject("WinMusic1");
@@ -225,6 +232,16 @@ void GameWorldHelper::initTestScene(BOEngine* engine)
 	engine->gameWorld->addGameObject(win2_music);
 	win2_music->addComponent(new AudioPlayerComponent(audio, "game/assets/sounds/win2.mp3", 1, false, true, false));
 	win2_music->getComponent<AudioPlayerComponent>()->onAddToGameWorld();
+
+	GameObject* lose1_music = new  GameObject("LoseMusic1");
+	engine->gameWorld->addGameObject(lose1_music);
+	lose1_music->addComponent(new AudioPlayerComponent(audio, "game/assets/sounds/lose1.mp3", 1, false, true, false));
+	lose1_music->getComponent<AudioPlayerComponent>()->onAddToGameWorld();
+
+	GameObject* lose2_music = new  GameObject("LoseMusic2");
+	engine->gameWorld->addGameObject(lose2_music);
+	lose2_music->addComponent(new AudioPlayerComponent(audio, "game/assets/sounds/lose2.mp3", 1, false, true, false));
+	lose2_music->getComponent<AudioPlayerComponent>()->onAddToGameWorld();
 
 
 	std::vector<GameObject*> tires(4);
@@ -457,7 +474,6 @@ void GameWorldHelper::initTestScene2(BOEngine* engine)
 	background_music->addComponent(new AudioPlayerComponent(audio, "game/assets/sounds/start.mp3", 1, false, true, false));
 	background_music->getComponent<AudioPlayerComponent>()->onAddToGameWorld();
 	background_music->getComponent<AudioPlayerComponent>()->volume(0.3, true);
-	background_music->getComponent<AudioPlayerComponent>()->play();
 
 	//win lose music
 	GameObject* win1_music = new  GameObject("WinMusic1");
@@ -469,6 +485,16 @@ void GameWorldHelper::initTestScene2(BOEngine* engine)
 	engine->gameWorld->addGameObject(win2_music);
 	win2_music->addComponent(new AudioPlayerComponent(audio, "game/assets/sounds/win2.mp3", 1, false, true, false));
 	win2_music->getComponent<AudioPlayerComponent>()->onAddToGameWorld();
+
+	GameObject* lose1_music = new  GameObject("LoseMusic1");
+	engine->gameWorld->addGameObject(lose1_music);
+	lose1_music->addComponent(new AudioPlayerComponent(audio, "game/assets/sounds/lose1.mp3", 1, false, true, false));
+	lose1_music->getComponent<AudioPlayerComponent>()->onAddToGameWorld();
+
+	GameObject* lose2_music = new  GameObject("LoseMusic2");
+	engine->gameWorld->addGameObject(lose2_music);
+	lose2_music->addComponent(new AudioPlayerComponent(audio, "game/assets/sounds/lose2.mp3", 1, false, true, false));
+	lose2_music->getComponent<AudioPlayerComponent>()->onAddToGameWorld();
 
 
 	std::vector<GameObject*> tires(4);
