@@ -13,6 +13,11 @@ ComponentManager::ComponentManager(std::string updateStrategy[], size_t n)
 	}
 }
 
+ComponentManager::~ComponentManager()
+{
+	delete[] strategy;
+}
+
 /*
 	Add a component to be updated.
 */
