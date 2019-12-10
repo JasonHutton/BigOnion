@@ -123,7 +123,7 @@ bool callbackFunc(btManifoldPoint& cp, void* body0, void* body1)
 	RigidBodyComponent* rbc1 = static_cast<RigidBodyComponent*>(colObj1Wrap->getUserPointer());
 	if (rbc0->isHit(rbc1))
 	{
-		if (speed > 120)
+		if (speed > 150)
 		{
 			impactB = true;
 		}
@@ -135,7 +135,7 @@ bool callbackFunc(btManifoldPoint& cp, void* body0, void* body1)
 	}
 	if (rbc1->isHit(rbc0))
 	{
-		if (speed > 120)
+		if (speed > 150)
 		{
 			impactB = true;
 		}
@@ -247,9 +247,10 @@ void GameLoader::startGame() {
 		GameObject* impactSmall = engine->gameWorld->getGameObjectById("SmallImpact");
 		GameObject* background_music = engine->gameWorld->getGameObjectById("BackgroundMusic");
 
-		if (MusicToggle == true)
+		if (MusicToggle == true && !gamewin && !gamelost)
 		{
 			background_music->getComponent<AudioPlayerComponent>()->play();
+			background_music->getComponent<AudioPlayerComponent>()->volume((float)MusicSlider * 0.1);
 		}
 		
 		if (speed > 10)
@@ -645,7 +646,6 @@ void GameLoader::startGame() {
 				isPlaying = false;
 				win1->getComponent<AudioPlayerComponent>()->pause();
 				win2->getComponent<AudioPlayerComponent>()->pause();
-				background_music->getComponent<AudioPlayerComponent>()->volume((float)MusicSlider * 0.1);
 			}
 
 			ImGui::End();
@@ -697,7 +697,6 @@ void GameLoader::startGame() {
 				isPlaying = false;
 				lose1->getComponent<AudioPlayerComponent>()->pause();
 				lose2->getComponent<AudioPlayerComponent>()->pause();
-				background_music->getComponent<AudioPlayerComponent>()->volume((float)MusicSlider * 0.1);
 			}
 			ImGui::End();
 		}
