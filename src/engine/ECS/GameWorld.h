@@ -4,6 +4,7 @@
 #include <unordered_map> 
 #include "GameObject.h"
 #include "ComponentManager.h"
+#include <mutex>
 
 class GameWorld
 {
@@ -31,6 +32,8 @@ private:
 	btCollisionConfiguration* collisionConfig;	//what collision algorithm to use?
 	btBroadphaseInterface* broadphase;			//should Bullet examine every object, or just what close to each other
 	btConstraintSolver* solver;					//solve collisions, apply forces, impulses
+
+	std::mutex mtx;
 
 	GameWorld();
 

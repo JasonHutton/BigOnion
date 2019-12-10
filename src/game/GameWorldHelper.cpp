@@ -12,6 +12,7 @@
 #include "yaml-cpp/yaml.h"
 #include "../object_loader.h"
 #include <vector>
+#include <thread>
 
 /*
 	The main Menu Scene which cantains audio only.
@@ -159,6 +160,73 @@ void GameWorldHelper::initTestScene(BOEngine* engine)
 	std::string strategy[] = {CarControlComponent::typeID, RigidBodyComponent::typeID, RenderComponent::typeID, RaceGameComponent::typeID };
 	engine->gameWorld = new GameWorld(strategy, 4, 1.0 / 60.0);
 
+	std::thread audioThread = std::thread([](BOEngine* engine, AudioEngine* audio, Camera* camera)
+		{
+			//background music
+
+			//engine sound
+			GameObject* engine_sound = new  GameObject("EngineSound");
+			engine_sound->transform.position = { camera->Position.x, camera->Position.y, camera->Position.z };
+			engine->gameWorld->addGameObject(engine_sound);
+			engine_sound->addComponent(new AudioPlayerComponent(*audio, "game/assets/sounds/startup.wav", 1, true, false, false));
+			engine_sound->getComponent<AudioPlayerComponent>()->onAddToGameWorld();
+			engine_sound->getComponent<AudioPlayerComponent>()->volume(1);
+			engine_sound->getComponent<AudioPlayerComponent>()->play();
+			engine_sound->addComponent(new AudioPlayerComponent(*audio, "game/assets/sounds/idle.wav", 1, true, true, false));
+			engine_sound->getComponent<AudioPlayerComponent>()->onAddToGameWorld();
+			engine_sound->getComponent<AudioPlayerComponent>()->volume(0.3);
+			engine_sound->getComponent<AudioPlayerComponent>()->setSpeed(0);
+			engine_sound->getComponent<AudioPlayerComponent>()->play();
+
+			//skid sound
+			GameObject* skid_sound = new  GameObject("SkidSound");
+			skid_sound->transform.position = { camera->Position.x, camera->Position.y, camera->Position.z };
+			engine->gameWorld->addGameObject(skid_sound);
+			skid_sound->addComponent(new AudioPlayerComponent(*audio, "game/assets/sounds/car_break.mp3", 0.5, true, true, false));
+			skid_sound->getComponent<AudioPlayerComponent>()->onAddToGameWorld();
+
+			//impact sound
+			GameObject* impact_sound_small = new  GameObject("SmallImpact");
+			impact_sound_small->transform.position = { camera->Position.x, camera->Position.y, camera->Position.z };
+			engine->gameWorld->addGameObject(impact_sound_small);
+			impact_sound_small->addComponent(new AudioPlayerComponent(*audio, "game/assets/sounds/small_impact.mp3", 30, true, true, false));
+			impact_sound_small->getComponent<AudioPlayerComponent>()->onAddToGameWorld();
+
+			GameObject* impact_sound_big = new  GameObject("BigImpact");
+			impact_sound_big->transform.position = { camera->Position.x, camera->Position.y, camera->Position.z };
+			engine->gameWorld->addGameObject(impact_sound_big);
+			impact_sound_big->addComponent(new AudioPlayerComponent(*audio, "game/assets/sounds/big_impact.mp3", 20, true, true, false));
+			impact_sound_big->getComponent<AudioPlayerComponent>()->onAddToGameWorld();
+
+			//background music
+			GameObject* background_music = new  GameObject("BackgroundMusic");
+			engine->gameWorld->addGameObject(background_music);
+			background_music->addComponent(new AudioPlayerComponent(*audio, "game/assets/sounds/start.mp3", 1, false, true, false));
+			background_music->getComponent<AudioPlayerComponent>()->onAddToGameWorld();
+			background_music->getComponent<AudioPlayerComponent>()->volume(0.3, true);
+
+			//win lose music
+			GameObject* win1_music = new  GameObject("WinMusic1");
+			engine->gameWorld->addGameObject(win1_music);
+			win1_music->addComponent(new AudioPlayerComponent(*audio, "game/assets/sounds/win1.mp3", 1, false, true, false));
+			win1_music->getComponent<AudioPlayerComponent>()->onAddToGameWorld();
+
+			GameObject* win2_music = new  GameObject("WinMusic2");
+			engine->gameWorld->addGameObject(win2_music);
+			win2_music->addComponent(new AudioPlayerComponent(*audio, "game/assets/sounds/win2.mp3", 1, false, true, false));
+			win2_music->getComponent<AudioPlayerComponent>()->onAddToGameWorld();
+
+			GameObject* lose1_music = new  GameObject("LoseMusic1");
+			engine->gameWorld->addGameObject(lose1_music);
+			lose1_music->addComponent(new AudioPlayerComponent(*audio, "game/assets/sounds/lose1.mp3", 1, false, true, false));
+			lose1_music->getComponent<AudioPlayerComponent>()->onAddToGameWorld();
+
+			GameObject* lose2_music = new  GameObject("LoseMusic2");
+			engine->gameWorld->addGameObject(lose2_music);
+			lose2_music->addComponent(new AudioPlayerComponent(*audio, "game/assets/sounds/lose2.mp3", 1, false, true, false));
+			lose2_music->getComponent<AudioPlayerComponent>()->onAddToGameWorld();
+		}, engine, &audio, &camera);
+
 	Vector3f carPos = Vector3f(0.0f, -3.0f, -43.0f);
 	GameObject* player_car = new  GameObject("PlayerCar");
 	player_car->transform.position = carPos;
@@ -177,70 +245,6 @@ void GameWorldHelper::initTestScene(BOEngine* engine)
 	race->checkpoints.push_back(glm::vec3(0.0f, -3.0f, -45.0f));
 	player_car->addComponent(race);
 	engine->gameWorld->addGameObject(player_car);
-	
-	//background music
-	
-	//engine sound
-	GameObject* engine_sound = new  GameObject("EngineSound");
-	engine_sound->transform.position = { camera.Position.x, camera.Position.y, camera.Position.z };
-	engine->gameWorld->addGameObject(engine_sound);
-	engine_sound->addComponent(new AudioPlayerComponent(audio, "game/assets/sounds/startup.wav", 1, true, false, false));
-	engine_sound->getComponent<AudioPlayerComponent>()->onAddToGameWorld();
-	engine_sound->getComponent<AudioPlayerComponent>()->volume(1);
-	engine_sound->getComponent<AudioPlayerComponent>()->play();
-	engine_sound->addComponent(new AudioPlayerComponent(audio, "game/assets/sounds/idle.wav", 1, true, true, false));
-	engine_sound->getComponent<AudioPlayerComponent>()->onAddToGameWorld();
-	engine_sound->getComponent<AudioPlayerComponent>()->volume(0.3);
-	engine_sound->getComponent<AudioPlayerComponent>()->setSpeed(0);
-	engine_sound->getComponent<AudioPlayerComponent>()->play();
-
-	//skid sound
-	GameObject* skid_sound = new  GameObject("SkidSound");
-	skid_sound->transform.position = { camera.Position.x, camera.Position.y, camera.Position.z };
-	engine->gameWorld->addGameObject(skid_sound);
-	skid_sound->addComponent(new AudioPlayerComponent(audio, "game/assets/sounds/car_break.mp3", 0.5, true, true, false));
-	skid_sound->getComponent<AudioPlayerComponent>()->onAddToGameWorld();
-
-	//impact sound
-	GameObject* impact_sound_small = new  GameObject("SmallImpact");
-	impact_sound_small->transform.position = { camera.Position.x, camera.Position.y, camera.Position.z };
-	engine->gameWorld->addGameObject(impact_sound_small);
-	impact_sound_small->addComponent(new AudioPlayerComponent(audio, "game/assets/sounds/small_impact.mp3", 30, true, true, false));
-	impact_sound_small->getComponent<AudioPlayerComponent>()->onAddToGameWorld();
-	
-	GameObject* impact_sound_big = new  GameObject("BigImpact");
-	impact_sound_big->transform.position = { camera.Position.x, camera.Position.y, camera.Position.z };
-	engine->gameWorld->addGameObject(impact_sound_big);
-	impact_sound_big->addComponent(new AudioPlayerComponent(audio, "game/assets/sounds/big_impact.mp3", 20, true, true, false));
-	impact_sound_big->getComponent<AudioPlayerComponent>()->onAddToGameWorld();
-
-	//background music
-	GameObject* background_music = new  GameObject("BackgroundMusic");
-	engine->gameWorld->addGameObject(background_music);
-	background_music->addComponent(new AudioPlayerComponent(audio, "game/assets/sounds/start.mp3", 1, false, true, false));
-	background_music->getComponent<AudioPlayerComponent>()->onAddToGameWorld();
-	background_music->getComponent<AudioPlayerComponent>()->volume(0.3, true);
-
-	//win lose music
-	GameObject* win1_music = new  GameObject("WinMusic1");
-	engine->gameWorld->addGameObject(win1_music);
-	win1_music->addComponent(new AudioPlayerComponent(audio, "game/assets/sounds/win1.mp3", 1, false, true, false));
-	win1_music->getComponent<AudioPlayerComponent>()->onAddToGameWorld();
-
-	GameObject* win2_music = new  GameObject("WinMusic2");
-	engine->gameWorld->addGameObject(win2_music);
-	win2_music->addComponent(new AudioPlayerComponent(audio, "game/assets/sounds/win2.mp3", 1, false, true, false));
-	win2_music->getComponent<AudioPlayerComponent>()->onAddToGameWorld();
-
-	GameObject* lose1_music = new  GameObject("LoseMusic1");
-	engine->gameWorld->addGameObject(lose1_music);
-	lose1_music->addComponent(new AudioPlayerComponent(audio, "game/assets/sounds/lose1.mp3", 1, false, true, false));
-	lose1_music->getComponent<AudioPlayerComponent>()->onAddToGameWorld();
-
-	GameObject* lose2_music = new  GameObject("LoseMusic2");
-	engine->gameWorld->addGameObject(lose2_music);
-	lose2_music->addComponent(new AudioPlayerComponent(audio, "game/assets/sounds/lose2.mp3", 1, false, true, false));
-	lose2_music->getComponent<AudioPlayerComponent>()->onAddToGameWorld();
 
 
 	std::vector<GameObject*> tires(4);
@@ -304,46 +308,7 @@ void GameWorldHelper::initTestScene(BOEngine* engine)
 
 	engine->gameWorld->addGameObject(Object_Load("game/assets/objects/onion.yaml", engine, shader));
 
-
-	/*GameObject* onion = new  GameObject("Onion");
-	onion->transform.position = Vector3f(5.0f, 10.0f, 0.0f);
-	onion->transform.scale = 3.0;
-	onion->addComponent(new RenderComponent(engine, "game/assets/onion/Onion.3DS", shader));
-	onion->addComponent(RigidBodyComponent::createWithCube(1.0, 0.3, 1.0, 1.0, 1.0));
-	engine->gameWorld->addGameObject(onion);*/
-
-	// create box
-	/*GameObject* box = new  GameObject("Box");
-	box->transform.position = Vector3f(5.0, 10.0, 0);
-	box->transform.scale = 2.0; // has to be double because dimensions of 1.0 entered above refer to distance from origin to edge
-	box->addComponent(new RenderComponent(engine, "game/assets/box/cube.obj", shader));
-	box->addComponent(RigidBodyComponent::createWithCube(1.0, 1.0, 1.0, 1.0));
-	engine->gameWorld->addGameObject(box);*/
-
-	/*GameObject* box2 = new  GameObject("Box2");
-	box2->transform.position = Vector3f(5.0, 15.0, 0);
-	box2->transform.scale = 2.0; // has to be double because dimensions of 1.0 entered above refer to distance from origin to edge
-	box2->addComponent(new RenderComponent(engine, "game/assets/box/cube.obj", shader));
-	box2->addComponent(RigidBodyComponent::createWithCube(1.0, 1.0, 1.0, 1.0));
-	engine->gameWorld->addGameObject(box2);
-
-
-	GameObject* box3 = new  GameObject("Box3");
-	box3->transform.position = Vector3f(5.0, 20.0, 0);
-	box3->transform.scale = 2.0; // has to be double because dimensions of 1.0 entered above refer to distance from origin to edge
-	box3->addComponent(new RenderComponent(engine, "game/assets/box/cube.obj", shader));
-	box3->addComponent(RigidBodyComponent::createWithCube(1.0, 1.0, 1.0, 1.0));
-	engine->gameWorld->addGameObject(box3);
-
-	GameObject* box4 = new  GameObject("Box4");
-	box4->transform.position = Vector3f(5.0, 25.0, 0);
-	box4->transform.scale = 2.0; // has to be double because dimensions of 1.0 entered above refer to distance from origin to edge
-	box4->addComponent(new RenderComponent(engine, "game/assets/box/cube.obj", shader));
-	box4->addComponent(RigidBodyComponent::createWithCube(1.0, 1.0, 1.0, 1.0));
-	box4->addComponent(new TypeTestComponent("This is a test message!"));
-	engine->gameWorld->addGameObject(box4);*/
-
-	//box4->getComponent<TypeTestComponent>()->talk();
+	audioThread.join();
 
 	auto end = std::chrono::steady_clock::now();
 
@@ -411,6 +376,73 @@ void GameWorldHelper::initTestScene2(BOEngine* engine)
 	std::string strategy[] = { CarControlComponent::typeID, RigidBodyComponent::typeID, RenderComponent::typeID, RaceGameComponent::typeID };
 	engine->gameWorld = new GameWorld(strategy, 4, 1.0 / 60.0);
 
+	std::thread audioThread = std::thread([](BOEngine* engine, AudioEngine* audio, Camera* camera)
+		{
+			//background music
+
+			//engine sound
+			GameObject* engine_sound = new  GameObject("EngineSound");
+			engine_sound->transform.position = { camera->Position.x, camera->Position.y, camera->Position.z };
+			engine->gameWorld->addGameObject(engine_sound);
+			engine_sound->addComponent(new AudioPlayerComponent(*audio, "game/assets/sounds/startup.wav", 1, true, false, false));
+			engine_sound->getComponent<AudioPlayerComponent>()->onAddToGameWorld();
+			engine_sound->getComponent<AudioPlayerComponent>()->volume(1);
+			engine_sound->getComponent<AudioPlayerComponent>()->play();
+			engine_sound->addComponent(new AudioPlayerComponent(*audio, "game/assets/sounds/idle.wav", 1, true, true, false));
+			engine_sound->getComponent<AudioPlayerComponent>()->onAddToGameWorld();
+			engine_sound->getComponent<AudioPlayerComponent>()->volume(0.3);
+			engine_sound->getComponent<AudioPlayerComponent>()->setSpeed(0);
+			engine_sound->getComponent<AudioPlayerComponent>()->play();
+
+			//skid sound
+			GameObject* skid_sound = new  GameObject("SkidSound");
+			skid_sound->transform.position = { camera->Position.x, camera->Position.y, camera->Position.z };
+			engine->gameWorld->addGameObject(skid_sound);
+			skid_sound->addComponent(new AudioPlayerComponent(*audio, "game/assets/sounds/car_break.mp3", 0.5, true, true, false));
+			skid_sound->getComponent<AudioPlayerComponent>()->onAddToGameWorld();
+
+			//impact sound
+			GameObject* impact_sound_small = new  GameObject("SmallImpact");
+			impact_sound_small->transform.position = { camera->Position.x, camera->Position.y, camera->Position.z };
+			engine->gameWorld->addGameObject(impact_sound_small);
+			impact_sound_small->addComponent(new AudioPlayerComponent(*audio, "game/assets/sounds/small_impact.mp3", 30, true, true, false));
+			impact_sound_small->getComponent<AudioPlayerComponent>()->onAddToGameWorld();
+
+			GameObject* impact_sound_big = new  GameObject("BigImpact");
+			impact_sound_big->transform.position = { camera->Position.x, camera->Position.y, camera->Position.z };
+			engine->gameWorld->addGameObject(impact_sound_big);
+			impact_sound_big->addComponent(new AudioPlayerComponent(*audio, "game/assets/sounds/big_impact.mp3", 20, true, true, false));
+			impact_sound_big->getComponent<AudioPlayerComponent>()->onAddToGameWorld();
+
+			//background music
+			GameObject* background_music = new  GameObject("BackgroundMusic");
+			engine->gameWorld->addGameObject(background_music);
+			background_music->addComponent(new AudioPlayerComponent(*audio, "game/assets/sounds/start.mp3", 1, false, true, false));
+			background_music->getComponent<AudioPlayerComponent>()->onAddToGameWorld();
+			background_music->getComponent<AudioPlayerComponent>()->volume(0.3, true);
+
+			//win lose music
+			GameObject* win1_music = new  GameObject("WinMusic1");
+			engine->gameWorld->addGameObject(win1_music);
+			win1_music->addComponent(new AudioPlayerComponent(*audio, "game/assets/sounds/win1.mp3", 1, false, true, false));
+			win1_music->getComponent<AudioPlayerComponent>()->onAddToGameWorld();
+
+			GameObject* win2_music = new  GameObject("WinMusic2");
+			engine->gameWorld->addGameObject(win2_music);
+			win2_music->addComponent(new AudioPlayerComponent(*audio, "game/assets/sounds/win2.mp3", 1, false, true, false));
+			win2_music->getComponent<AudioPlayerComponent>()->onAddToGameWorld();
+
+			GameObject* lose1_music = new  GameObject("LoseMusic1");
+			engine->gameWorld->addGameObject(lose1_music);
+			lose1_music->addComponent(new AudioPlayerComponent(*audio, "game/assets/sounds/lose1.mp3", 1, false, true, false));
+			lose1_music->getComponent<AudioPlayerComponent>()->onAddToGameWorld();
+
+			GameObject* lose2_music = new  GameObject("LoseMusic2");
+			engine->gameWorld->addGameObject(lose2_music);
+			lose2_music->addComponent(new AudioPlayerComponent(*audio, "game/assets/sounds/lose2.mp3", 1, false, true, false));
+			lose2_music->getComponent<AudioPlayerComponent>()->onAddToGameWorld();
+		}, engine, &audio, &camera);
+
 	Vector3f carPos = Vector3f(0.0f, -3.0f, -43.0f);
 	GameObject* player_car = new  GameObject("PlayerCar");
 	player_car->transform.position = carPos;
@@ -429,70 +461,6 @@ void GameWorldHelper::initTestScene2(BOEngine* engine)
 	race->checkpoints.push_back(glm::vec3(0.0f, -3.0f, -45.0f));
 	player_car->addComponent(race);
 	engine->gameWorld->addGameObject(player_car);
-
-	//background music
-
-	//engine sound
-	GameObject* engine_sound = new  GameObject("EngineSound");
-	engine_sound->transform.position = { camera.Position.x, camera.Position.y, camera.Position.z };
-	engine->gameWorld->addGameObject(engine_sound);
-	engine_sound->addComponent(new AudioPlayerComponent(audio, "game/assets/sounds/startup.wav", 1, true, false, false));
-	engine_sound->getComponent<AudioPlayerComponent>()->onAddToGameWorld();
-	engine_sound->getComponent<AudioPlayerComponent>()->volume(1);
-	engine_sound->getComponent<AudioPlayerComponent>()->play();
-	engine_sound->addComponent(new AudioPlayerComponent(audio, "game/assets/sounds/idle.wav", 1, true, true, false));
-	engine_sound->getComponent<AudioPlayerComponent>()->onAddToGameWorld();
-	engine_sound->getComponent<AudioPlayerComponent>()->volume(0.3);
-	engine_sound->getComponent<AudioPlayerComponent>()->setSpeed(0);
-	engine_sound->getComponent<AudioPlayerComponent>()->play();
-
-	//skid sound
-	GameObject* skid_sound = new  GameObject("SkidSound");
-	skid_sound->transform.position = { camera.Position.x, camera.Position.y, camera.Position.z };
-	engine->gameWorld->addGameObject(skid_sound);
-	skid_sound->addComponent(new AudioPlayerComponent(audio, "game/assets/sounds/car_break.mp3", 0.5, true, true, false));
-	skid_sound->getComponent<AudioPlayerComponent>()->onAddToGameWorld();
-
-	//impact sound
-	GameObject* impact_sound_small = new  GameObject("SmallImpact");
-	impact_sound_small->transform.position = { camera.Position.x, camera.Position.y, camera.Position.z };
-	engine->gameWorld->addGameObject(impact_sound_small);
-	impact_sound_small->addComponent(new AudioPlayerComponent(audio, "game/assets/sounds/small_impact.mp3", 30, true, true, false));
-	impact_sound_small->getComponent<AudioPlayerComponent>()->onAddToGameWorld();
-
-	GameObject* impact_sound_big = new  GameObject("BigImpact");
-	impact_sound_big->transform.position = { camera.Position.x, camera.Position.y, camera.Position.z };
-	engine->gameWorld->addGameObject(impact_sound_big);
-	impact_sound_big->addComponent(new AudioPlayerComponent(audio, "game/assets/sounds/big_impact.mp3", 20, true, true, false));
-	impact_sound_big->getComponent<AudioPlayerComponent>()->onAddToGameWorld();
-
-	//background music
-	GameObject* background_music = new  GameObject("BackgroundMusic");
-	engine->gameWorld->addGameObject(background_music);
-	background_music->addComponent(new AudioPlayerComponent(audio, "game/assets/sounds/start.mp3", 1, false, true, false));
-	background_music->getComponent<AudioPlayerComponent>()->onAddToGameWorld();
-	background_music->getComponent<AudioPlayerComponent>()->volume(0.3, true);
-
-	//win lose music
-	GameObject* win1_music = new  GameObject("WinMusic1");
-	engine->gameWorld->addGameObject(win1_music);
-	win1_music->addComponent(new AudioPlayerComponent(audio, "game/assets/sounds/win1.mp3", 1, false, true, false));
-	win1_music->getComponent<AudioPlayerComponent>()->onAddToGameWorld();
-
-	GameObject* win2_music = new  GameObject("WinMusic2");
-	engine->gameWorld->addGameObject(win2_music);
-	win2_music->addComponent(new AudioPlayerComponent(audio, "game/assets/sounds/win2.mp3", 1, false, true, false));
-	win2_music->getComponent<AudioPlayerComponent>()->onAddToGameWorld();
-
-	GameObject* lose1_music = new  GameObject("LoseMusic1");
-	engine->gameWorld->addGameObject(lose1_music);
-	lose1_music->addComponent(new AudioPlayerComponent(audio, "game/assets/sounds/lose1.mp3", 1, false, true, false));
-	lose1_music->getComponent<AudioPlayerComponent>()->onAddToGameWorld();
-
-	GameObject* lose2_music = new  GameObject("LoseMusic2");
-	engine->gameWorld->addGameObject(lose2_music);
-	lose2_music->addComponent(new AudioPlayerComponent(audio, "game/assets/sounds/lose2.mp3", 1, false, true, false));
-	lose2_music->getComponent<AudioPlayerComponent>()->onAddToGameWorld();
 
 
 	std::vector<GameObject*> tires(4);
@@ -555,5 +523,7 @@ void GameWorldHelper::initTestScene2(BOEngine* engine)
 	engine->gameWorld->addGameObject(ground);
 
 	engine->gameWorld->addGameObject(Object_Load("game/assets/objects/onion.yaml", engine, shader));
+
+	audioThread.join();
 
 }
