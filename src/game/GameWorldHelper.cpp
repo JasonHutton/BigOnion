@@ -111,20 +111,10 @@ void GameWorldHelper::initTestScene(BOEngine* engine)
 
 	Shader* lightshader = new Shader("engine/graphic/shader/model_loading.vs", "engine/graphic/shader/light.fs.glsl");
 
-	vector<std::string> faces
-	{
-		"game/assets/cmm_skybox/right.jpg",
-		"game/assets/cmm_skybox/left.jpg",
-		"game/assets/cmm_skybox/top.jpg",
-		"game/assets/cmm_skybox/bottom.jpg",
-		"game/assets/cmm_skybox/front.jpg",
-		"game/assets/cmm_skybox/back.jpg"
-	};
-
 	audio.Shutdown();
 	audio.Init();
 
-	engine->skybox.load(faces);
+	engine->skybox.load(Skybox_Load("game/assets/objects/sky_ground.yaml"));
 
 	shader->use();
 	shader->setVec3("dirLight.direction", -0.2f, -1.0f, -0.3f); //obj to light
@@ -326,18 +316,9 @@ void GameWorldHelper::initTestScene2(BOEngine* engine)
 
 	Shader* lightshader = new Shader("engine/graphic/shader/model_loading.vs", "engine/graphic/shader/light.fs.glsl");
 
-	vector<std::string> faces
-	{
-		"game/assets/skybox/right.jpg",
-		"game/assets/skybox/left.jpg",
-		"game/assets/skybox/top.jpg",
-		"game/assets/skybox/bottom.jpg",
-		"game/assets/skybox/front.jpg",
-		"game/assets/skybox/back.jpg"
-	};
 	audio.Shutdown();
 	audio.Init();
-	engine->skybox.load(faces);
+	engine->skybox.load(Skybox_Load("game/assets/objects/sky_water.yaml"));
 
 	shader->use();
 	shader->setVec3("dirLight.direction", -0.2f, -1.0f, -0.3f); //obj to light

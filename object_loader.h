@@ -18,3 +18,4 @@ void HandleScalar(std::string scalar);
 void WalkNode(YAML::Node node);
 GameObject* Object_Load(YAML::Node node, BOEngine* engine, Shader* shader);
 GameObject* Object_Load(std::string filename, BOEngine* engine, Shader* shader);
+vector<std::string> Skybox_Load(std::string filename);

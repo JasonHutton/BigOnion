@@ -280,8 +280,46 @@ GameObject* Object_Load(std::string filename, BOEngine* engine, Shader* shader)
 	std::string osPath;
 	FileSystem::BuildOSPath(FileSystem::FindFile(filename), filename, osPath);
 	YAML::Node node = YAML::LoadFile(osPath);
+	YAML::Node obj;
 
-	YAML::Node obj = node["object"];
+	if (obj = node["object"])
+	{
+		return Object_Load(obj, engine, shader);
+	}
+	else if (obj = node["skybox"])
+	{
+		return NULL; // Not actually using this route for now, just testing how this loads.
+	}	
+}
 
-	return Object_Load(obj, engine, shader);
+vector<std::string> Skybox_Load(std::string filename)
+{
+	std::string osPath;
+	FileSystem::BuildOSPath(FileSystem::FindFile(filename), filename, osPath);
+	YAML::Node node = YAML::LoadFile(osPath);
+	YAML::Node obj;
+
+	vector<std::string> faces;
+	if (obj = node["skybox"])
+	{
+		for (YAML::const_iterator it = obj.begin(); it != obj.end(); ++it)
+		{
+			if (it->first.as<std::string>().compare("name") == 0)
+			{
+				// Do nothing. We don't really care currently.
+			}
+			else if (it->first.as<std::string>().compare("faces") == 0)
+			{
+				if (it->second.Type() == YAML::NodeType::Sequence)
+				{
+					for (auto pit = it->second.begin(); pit != it->second.end(); ++pit)
+					{
+						faces.push_back(pit->as<std::string>()); // Kinda questionable, clean up later...
+					}
+				}
+			}
+		}
+	}
+
+	return faces;
 }
