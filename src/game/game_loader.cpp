@@ -632,6 +632,9 @@ void GameLoader::startGame() {
 			}
 
 			ImGui::End();
+			//std::string pi = std::to_string(100);
+			//scores[0] = (char*)pi.data();
+
 		}
 
 		//***********lost window******************
