@@ -476,13 +476,9 @@ void GameWorldHelper::initTestScene2(BOEngine* engine)
 	carControl->tires = tires;
 
 	// create race track walls
-	//engine->gameWorld->addGameObject(Object_Load("game/assets/objects/track_walls1.yaml", engine, shader));
-	//engine->gameWorld->addGameObject(Object_Load("game/assets/objects/track_walls2.yaml", engine, shader));
 	engine->gameWorld->addGameObject(Object_Load("game/assets/objects/track_walls3.yaml", engine, shader));
 
 	// create race track
-	//engine->gameWorld->addGameObject(Object_Load("game/assets/objects/track1.yaml", engine, shader));
-	//engine->gameWorld->addGameObject(Object_Load("game/assets/objects/track2.yaml", engine, shader));
 	engine->gameWorld->addGameObject(Object_Load("game/assets/objects/track3.yaml", engine, shader));
 
 	// Light
@@ -502,7 +498,7 @@ void GameWorldHelper::initTestScene2(BOEngine* engine)
 	engine->gameWorld->addGameObject(light2);
 
 	// create ground
-	engine->gameWorld->addGameObject(Object_Load("game/assets/objects/ground.yaml", engine, shader));
+	engine->gameWorld->addGameObject(Object_Load("game/assets/objects/ground_water.yaml", engine, shader));
 
 	engine->gameWorld->addGameObject(Object_Load("game/assets/objects/onion.yaml", engine, shader));
 

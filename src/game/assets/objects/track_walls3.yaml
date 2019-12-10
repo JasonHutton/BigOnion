@@ -5,7 +5,7 @@ object:
  scale: [1.0, 2.0, 1.0]
  component:
   - type: "Render"
-  - model: "game/assets/track3/track3_walls.obj"
+  - model: "game/assets/track3/track3.obj"
  component:
   - type: "RigidBody"
   - mesh:
