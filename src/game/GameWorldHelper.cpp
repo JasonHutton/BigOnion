@@ -505,12 +505,7 @@ void GameWorldHelper::initTestScene2(BOEngine* engine)
 	engine->gameWorld->addGameObject(light2);
 
 	// create ground
-	GameObject* ground = new GameObject("Ground");
-	ground->transform.position = Vector3f(0, -3.25, 0);
-	ground->transform.scale = Vector3f(400.0f, 1.0f, 400.0f);
-	ground->addComponent(new RenderComponent(engine, "game/assets/ground_water/plane.obj", shader));
-	ground->addComponent(RigidBodyComponent::createWithPlane());
-	engine->gameWorld->addGameObject(ground);
+	engine->gameWorld->addGameObject(Object_Load("game/assets/objects/ground.yaml", engine, shader));
 
 	engine->gameWorld->addGameObject(Object_Load("game/assets/objects/onion.yaml", engine, shader));
 

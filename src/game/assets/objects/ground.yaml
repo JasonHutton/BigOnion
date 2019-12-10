@@ -4,7 +4,7 @@ object:
  scale: [400.0, 1.0f, 400.0f]
  component:
   - type: "Render"
-  - model: "game/assets/ground/plane.obj"
+  - model: "game/assets/ground_water/plane.obj"
  component:
   - type: "RigidBody"
   - plane:
