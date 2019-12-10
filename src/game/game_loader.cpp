@@ -157,6 +157,9 @@ void GameLoader::createGame() {
 }
 
 void GameLoader::loadGameScene() {
+	GameInput::setVerticalAxis(0);
+	GameInput::setHorizontalAxis(0);
+
 	game_loaded = true;
 	if (current_level == 1)
 		GameWorldHelper::initTestScene(engine);
