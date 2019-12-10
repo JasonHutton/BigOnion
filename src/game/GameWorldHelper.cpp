@@ -18,6 +18,8 @@
 */
 void GameWorldHelper::initTestScene(BOEngine* engine)
 {
+	auto start = std::chrono::steady_clock::now();
+
 	delete engine->gameWorld;
 	engine->gameWorld = nullptr;
 
@@ -251,6 +253,12 @@ void GameWorldHelper::initTestScene(BOEngine* engine)
 	engine->gameWorld->addGameObject(box4);*/
 
 	//box4->getComponent<TypeTestComponent>()->talk();
+
+	auto end = std::chrono::steady_clock::now();
+
+	std::chrono::duration<float> duration = end - start;
+
+	std::cout << "Loading complete! Took " << duration.count() << " seconds." << std::endl;
 }
 
 void GameWorldHelper::initTestScene2(BOEngine* engine)
