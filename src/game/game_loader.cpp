@@ -14,6 +14,7 @@
 #include "imgui.h"
 #include "imgui/imgui_impl_glfw_gl3.h"
 #include "components/RaceGameComponent.h"
+#include "GameWorldHelper.h"
 
 // functions
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
@@ -32,8 +33,9 @@ bool firstMouse = true;
 float deltaTime = 0.0f;	// time between current frame and last frame
 float lastFrame = 0.0f;
 
-// lighting
-glm::vec3 lightPos(1.2f, 1.0f, 2.0f);
+// level control
+int current_level = 1; // may be larger than max
+const int max_level = 2;
 
 //listener
 Vector3 position{ 0,0,0 };
@@ -59,7 +61,6 @@ bool showmouse = true;
 int mousecase = 0;
 float speed = 0;
 ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
-bool again = false;
 bool isPlaying = false;
 bool skidSound = false;
 bool impactS = false;
@@ -72,7 +73,7 @@ int timego;
 int starttime;
 int temp = 0;
 int oldtimego = 0;
-bool timing ;
+bool timing;
 int differ;
 
 GameLoader::GameLoader()
@@ -151,10 +152,18 @@ void GameLoader::createGame() {
 
 }
 
-int BOEngine::gwidth;
-int BOEngine::gHeight;
+void GameLoader::loadGameScene() {
+	if (current_level == 1)
+		GameWorldHelper::initTestScene(engine);
+	else {
+		GameWorldHelper::initTestScene2(engine);
+	}
+}
 
 void GameLoader::startGame() {
+
+	loadGameScene();
+
 	std::cout << "startGame" << std::endl;
 	// glfw window creation
 	// --------------------
@@ -187,7 +196,7 @@ void GameLoader::startGame() {
 	// -----------
 	while (!glfwWindowShouldClose(window))
 	{
-		
+
 
 		float currentFrame = (float)glfwGetTime(); // We should probably be using double instead of float, but that's spawning off a LOT of required changes...
 		deltaTime = currentFrame - lastFrame;
@@ -200,10 +209,11 @@ void GameLoader::startGame() {
 			processInput(window);
 		}
 
+		// game logic
 
-
+		//if (game_loaded) {
 		GameObject* playerCar = engine->gameWorld->getGameObjectById("PlayerCar");
-		
+
 		if (playerCar) {
 			glm::vec3 rot = playerCar->transform.rotation.getGlmVec3();
 			glm::vec3 pos = playerCar->transform.position.getGlmVec3() + glm::vec3(0.0f, 1.15f, 0.0f); // look a few upper
@@ -215,6 +225,7 @@ void GameLoader::startGame() {
 		GameObject* impactBig = engine->gameWorld->getGameObjectById("BigImpact");
 		GameObject* impactSmall = engine->gameWorld->getGameObjectById("SmallImpact");
 		GameObject* background_music = engine->gameWorld->getGameObjectById("BackgroundMusic");
+
 		if (speed > 10)
 		{
 			if (impactB)
@@ -227,7 +238,7 @@ void GameLoader::startGame() {
 			}
 		}
 
-			
+
 		/*if (impactSmall)
 		{
 			if (speed > 50)
@@ -254,7 +265,7 @@ void GameLoader::startGame() {
 				lastRacePercentage = racePercentage;
 			}
 		}
-
+		//}
 		// glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
 		// -------------------------------------------------------------------------------
 		if (showmouse) {
@@ -267,9 +278,8 @@ void GameLoader::startGame() {
 
 		glfwPollEvents();
 
-		BOEngine boe;
-		int windowW = boe.gwidth;
-		int windowH = boe.gHeight;
+		int windowW = engine->gwidth;
+		int windowH = engine->gHeight;
 
 		//new Imgui frame
 		ImGui_ImplGlfwGL3_NewFrame();
@@ -352,13 +362,13 @@ void GameLoader::startGame() {
 				ImGui::SetCursorPos(ImVec2((windowW / 2), 200.0f));
 
 				if (timing) {
-					temp = 66 - (timego- differ);
+					temp = 66 - (timego - differ);
 				}
 				if (temp == 0) {
 					ImGui::TextColored(ImVec4(1.0f, 0.0f, 1.0f, 1.0f), "0");
 				}
 				if (stopcase == 0) {
-					timing = true;	
+					timing = true;
 					ImGui::TextColored(ImVec4(1.0f, 0.0f, 1.0f, 1.0f), "%.d", temp);
 				}
 				if (stopcase == 1) {
@@ -398,30 +408,30 @@ void GameLoader::startGame() {
 		if (stopcase == 1) {
 			speed = 0;
 		}
-		
+
 		ImGui::TextColored(ImVec4(1.0f, 0.0f, 0.0f, 1.0f), "Speed:%d km/h", (int)speed);
 		ImGui::End();
 
 		//***************HUD: stop game***************
 
 		//ImGui::SetNextWindowSize(ImVec2(200, 80));
-		 ImGui::SetNextWindowSize(ImVec2(windowW, windowH));
+		ImGui::SetNextWindowSize(ImVec2(windowW, windowH));
 		ImGui::SetNextWindowPos(ImVec2(0, 0));
 		ImGui::StyleColorsLight();
-		ImGui::Begin("Stop", 0, flags);
-		if (ImGui::Button("Stop", ImVec2(200.0f, 60.0f))) // press stop to stop player movement
+		ImGui::Begin("Pause", 0, flags);
+		if (ImGui::Button("Pause", ImVec2(200.0f, 60.0f))) // press stop to stop player movement
 		{
-			
+
 			switch (stopcase) {
 			case 0:
 				engine->gameWorld->pause();
 				stopcase = 1;
-			
+
 				break;
 			case 1:
 				engine->gameWorld->unpause();
 				stopcase = 0;
-			
+
 				break;
 			}
 		}
@@ -431,18 +441,20 @@ void GameLoader::startGame() {
 
 		ImGui::SetNextWindowSize(ImVec2(windowW, windowH));
 		ImGui::SetNextWindowPos(ImVec2(0.0f, 0.0f));
-		
-		ImGui::Begin("Stop", 0, flags);
+
+		ImGui::Begin("Pause", 0, flags);
 		ImGui::StyleColorsLight();
 
-		if (ImGui::Button("Menu", ImVec2(200.0f, 60.0f)))
-		{
-			show_GameMenu_window = true;
+		if (stopcase) {
+			if (ImGui::Button("Back to Menu", ImVec2(200.0f, 60.0f)))
+			{
+				show_GameMenu_window = true;
+			}
 		}
 
 
 		ImGui::End();
-		
+
 
 		//***************Game Main Menu****************
 
@@ -457,28 +469,32 @@ void GameLoader::startGame() {
 			ImGui::Image((void*)(intptr_t)my_image_texture1, ImVec2(my_image_width * 0.125, my_image_height * 0.125));
 			ImGui::Image((void*)(intptr_t)my_image_texture, ImVec2(my_image_width, my_image_height));
 
-			ImGui::SetCursorPos(ImVec2((windowW / 1)- (windowW / 1.85), 200.0f));
+			ImGui::SetCursorPos(ImVec2((windowW / 1) - (windowW / 1.85), 200.0f));
 			ImGui::Text("Big Onion", ImVec2(windowW / 2, 50.0f));
 
 			ImGui::SetCursorPos(ImVec2((windowW / 2) - (windowW / 4), 300.0f));
 			//if (ImGui::Button("Play Game", ImVec2(-1.0f, 0.0f)))
 			if (ImGui::Button("Play Game", ImVec2(windowW / 2, 50.0f))) {
 				show_GameMenu_window = false;
+				current_level = 1;
+				reload();
 			}
 
 			ImGui::SetCursorPos(ImVec2((windowW / 2) - (windowW / 4), 400.0f));
-			ImGui::Button("Load Game", ImVec2(windowW / 2, 50.0f));
+			if (ImGui::Button("Load Game", ImVec2(windowW / 2, 50.0f))) {
+				show_GameMenu_window = false;
+				reload();
+			}
 
 			ImGui::SetCursorPos(ImVec2((windowW / 2) - (windowW / 4), 500.0f));
 			if (ImGui::Button("High Score", ImVec2(windowW / 2, 50.0f)))
-
 			{
 				show_GameMenu_window = false;
 				show_HighScore_window = true;
 			}
-			
+
 			ImGui::SetCursorPos(ImVec2((windowW / 2) - (windowW / 20), 600.0f));
-			if (ImGui::Checkbox("Music Toggle", &MusicToggle)) 
+			if (ImGui::Checkbox("Music Toggle", &MusicToggle))
 			{
 				if (!MusicToggle)
 				{
@@ -491,7 +507,7 @@ void GameLoader::startGame() {
 			}
 
 			ImGui::SetCursorPos(ImVec2((windowW / 6), 650.0f));
-			if (ImGui::SliderInt("Volume", &MusicSlider, 1, 5)) 
+			if (ImGui::SliderInt("Volume", &MusicSlider, 1, 5))
 			{
 				background_music->getComponent<AudioPlayerComponent>()->volume((float)MusicSlider * 0.1);
 			}
@@ -532,9 +548,11 @@ void GameLoader::startGame() {
 			ImGui::End();
 		}
 		//***********win window******************
-		
-		if (racePercentage * 100.0f >= 100 && !again) {
+
+		if (racePercentage * 100.0f >= 100 && !gamewin) {
 			gamewin = true;
+			playerCar->getComponent<RaceGameComponent>()->resetPercentage();
+			current_level += (current_level >= max_level) ? 0 : 1;
 		}
 		if (gamewin)
 		{
@@ -572,30 +590,34 @@ void GameLoader::startGame() {
 
 			ImGui::SetCursorPos(ImVec2((windowW / 2) - (windowW / 4), 200.0f));
 			if (ImGui::Button("Try Again", ImVec2(windowW / 2, 50.0f))) {
+				current_level--;
 				reload();
-				again = true;
 				gamewin = false;
-				
+
 			}
-			ImGui::SetCursorPos(ImVec2((windowW / 2) - (windowW / 4), 300.0f));
-			if (ImGui::Button("Back Menu", ImVec2(windowW / 2, 50.0f))) {
+
+			if (current_level <= max_level) {
+				ImGui::SetCursorPos(ImVec2((windowW / 2) - (windowW / 4), 300.0f));                 //next level
+				if (ImGui::Button("Next Level", ImVec2(windowW / 2, 50.0f))) {
+					reload();
+					gamewin = false;
+				}
+			}
+
+			ImGui::SetCursorPos(ImVec2((windowW / 2) - (windowW / 4), 600.0f));
+			if (ImGui::Button("Back to Menu", ImVec2(windowW / 2, 50.0f))) {
 				gamewin = false;
 				show_GameMenu_window = true;
 			}
 
-			ImGui::SetCursorPos(ImVec2((windowW / 2) - (windowW / 4), 400.0f));                 //next level
-			if (ImGui::Button("Next Level", ImVec2(windowW / 2, 50.0f))) {
-				
-			}
-			
 			ImGui::End();
 		}
 
 		//***********lost window******************
-		if (temp <0) {
+		if (temp < 0) {
 			gamelost = true;
 		}
-		if (gamelost&&!gamewin)
+		if (gamelost && !gamewin)
 		{
 			ImGui::SetNextWindowSize(ImVec2(windowW, windowH));
 			ImGui::SetNextWindowPos(ImVec2(0, 0));
@@ -603,11 +625,12 @@ void GameLoader::startGame() {
 			ImGui::Begin("lost", &gamelost, flags);
 
 			ImGui::SetCursorPos(ImVec2((windowW / 2) - (windowW / 4), 100.0f));
-			if (ImGui::Button("Restar Game", ImVec2(windowW / 2, 50.0f))) {
+			if (ImGui::Button("Restart Game", ImVec2(windowW / 2, 50.0f))) {
 				gamelost = false;
+				reload();
 			}
 			ImGui::SetCursorPos(ImVec2((windowW / 2) - (windowW / 4), 200.0f));
-			if (ImGui::Button("Back Menu", ImVec2(windowW / 2, 50.0f))) {
+			if (ImGui::Button("Back to Menu", ImVec2(windowW / 2, 50.0f))) {
 				gamelost = false;
 				show_GameMenu_window = true;
 			}
@@ -762,7 +785,7 @@ void GameLoader::processInput(GLFWwindow* window)
 				//camera->ProcessKeyboard(BACKWARD, deltaTime);
 				GameInput::setVerticalAxis(1.0);
 				calculateSpeed(-0.04);
-				if(speed > 10)
+				if (speed > 10)
 					skid->getComponent<AudioPlayerComponent>()->play();
 				skidSound = true;
 				break;
@@ -838,8 +861,8 @@ void GameLoader::setEngine(BOEngine& boe) {
 }
 
 void GameLoader::reload() {
-
-	std::cout << "reload" << std::endl;
+	recordtime = true;
+	loadGameScene();
 }
 
 void GameLoader::exitGame() {

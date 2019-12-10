@@ -6,6 +6,9 @@
 #include "imgui.h"
 #include "imgui/imgui_impl_glfw_gl3.h"
 
+int BOEngine::gwidth;
+int BOEngine::gHeight;
+
 BOEngine::BOEngine()
 {
 }
@@ -63,8 +66,10 @@ void BOEngine::initialize()
 
 	audio.Init();
 
-	GameWorldHelper::initTestScene2(this);
-
+	int scrWidth, scrHeight;
+	glfwGetWindowSize(window, &scrWidth, &scrHeight);
+	this->gwidth = scrWidth;
+	this->gHeight = scrHeight;
 }
 
 void BOEngine::preRender()
@@ -95,17 +100,13 @@ void BOEngine::render()
 
 
 
-	 int scrWidth = 10; //TODO get from window
-	 int scrHeight = 8; //TODO get from window
-
-
+	int scrWidth, scrHeight;
 	glfwGetWindowSize(window, &scrWidth, &scrHeight);
-
-	gwidth = scrWidth;
-	gHeight = scrHeight;
+	this->gwidth = scrWidth;
+	this->gHeight = scrHeight;
 	
 	// view/projection transformations
-	glm::mat4 projection = glm::perspective(glm::radians(ZOOM), (float)scrWidth / (float)scrHeight, 0.1f, 100.0f);
+	glm::mat4 projection = glm::perspective(glm::radians(ZOOM), (float)gwidth / (float)gHeight, 0.1f, 100.0f);
 	glm::mat4 view = tpCamera.GetViewMatrix();
 
 	// don't forget to enable shader before setting uniforms

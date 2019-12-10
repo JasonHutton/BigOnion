@@ -20,6 +20,7 @@ class GameLoader
 		void createGame();
 		void setEngine(BOEngine&);
 		void reload();
+		void loadGameScene();
 		void startGame();
 		void exitGame();
 };
