@@ -55,6 +55,8 @@ void GameWorldHelper::initTestScene(BOEngine* engine)
 		glm::vec3(0.0f,  0.0f, -3.0f)
 	};
 
+	audio.Shutdown();
+	audio.Init();
 	// point light 1
 	shader->setVec3("pointLights[0].position", pointLightPositions[0]);
 	shader->setVec3("pointLights[0].ambient", 0.05f, 0.05f, 0.05f);
@@ -282,7 +284,8 @@ void GameWorldHelper::initTestScene2(BOEngine* engine)
 		"game/assets/skybox/front.jpg",
 		"game/assets/skybox/back.jpg"
 	};
-
+	audio.Shutdown();
+	audio.Init();
 	engine->skybox.load(faces);
 
 	shader->use();

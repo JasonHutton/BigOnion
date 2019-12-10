@@ -132,6 +132,24 @@ void AudioEngine::SetChannel3dPosition(int nChannelId, const Vector3& vPosition)
 	}
 }
 
+void AudioEngine::StopAllChannels()
+{
+	int playingChannels = NULL;
+	AudioEngine::ErrorCheck(sgpImplementation->mpSystem->getChannelsPlaying(&playingChannels));
+	printf("There are %d", playingChannels);
+	for (int i = 0; i < playingChannels; i++)
+	{
+		FMOD::Channel* pChannel = nullptr;
+		FMOD_RESULT res = sgpImplementation->mpSystem->getChannel(i, &pChannel);
+
+		if (res == FMOD_OK && pChannel)
+		{
+			pChannel->stop();
+		}
+	}
+
+}
+
 void AudioEngine::SetVolume(int nChannelId, float fVolumedB, bool isMusic)
 {
 	auto tFoundIt = sgpImplementation->mChannels.find(nChannelId);
@@ -224,6 +242,7 @@ float  AudioEngine::VolumeTodB(float volume)
 	return 20.0f * log10f(volume);
 }
 
-void AudioEngine::Shutdown() {
+void AudioEngine::Shutdown() 
+{
 	delete sgpImplementation;
 }

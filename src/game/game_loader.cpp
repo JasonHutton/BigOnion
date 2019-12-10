@@ -75,6 +75,7 @@ int temp = 0;
 int oldtimego = 0;
 bool timing;
 int differ;
+bool firstStart = true;
 
 GameLoader::GameLoader()
 {
@@ -120,7 +121,7 @@ bool callbackFunc(btManifoldPoint& cp, void* body0, void* body1)
 	RigidBodyComponent* rbc1 = static_cast<RigidBodyComponent*>(colObj1Wrap->getUserPointer());
 	if (rbc0->isHit(rbc1))
 	{
-		if (speed > 150)
+		if (speed > 100)
 		{
 			impactB = true;
 		}
@@ -132,7 +133,7 @@ bool callbackFunc(btManifoldPoint& cp, void* body0, void* body1)
 	}
 	if (rbc1->isHit(rbc0))
 	{
-		if (speed > 150)
+		if (speed > 100)
 		{
 			impactB = true;
 		}
@@ -165,6 +166,11 @@ void GameLoader::loadGameScene() {
 void GameLoader::startGame() {
 
 	loadGameScene();
+
+	GameObject* engineSound = engine->gameWorld->getGameObjectById("EngineSound");
+	GameObject* background_music = engine->gameWorld->getGameObjectById("BackgroundMusic");
+	GameObject* win1 = engine->gameWorld->getGameObjectById("WinMusic1");
+	GameObject* win2 = engine->gameWorld->getGameObjectById("WinMusic2");
 
 	std::cout << "startGame" << std::endl;
 	// glfw window creation
@@ -222,12 +228,10 @@ void GameLoader::startGame() {
 			engine->tpCamera.update(deltaTime, playerCar->transform.position.getGlmVec3(), rot);
 		}
 
-		GameObject* engineSound = engine->gameWorld->getGameObjectById("EngineSound");
 		GameObject* skid = engine->gameWorld->getGameObjectById("SkidSound");
 		GameObject* impactBig = engine->gameWorld->getGameObjectById("BigImpact");
 		GameObject* impactSmall = engine->gameWorld->getGameObjectById("SmallImpact");
-		GameObject* background_music = engine->gameWorld->getGameObjectById("BackgroundMusic");
-
+		
 		if (speed > 10)
 		{
 			if (impactB)
@@ -463,6 +467,10 @@ void GameLoader::startGame() {
 
 		if (show_GameMenu_window)
 		{
+			win1->getComponent<AudioPlayerComponent>()->pause();
+			win2->getComponent<AudioPlayerComponent>()->pause();
+			engineSound->getComponent<AudioPlayerComponent>()->pause();
+
 			ImGui::SetNextWindowSize(ImVec2(windowW, windowH));
 			ImGui::SetNextWindowPos(ImVec2(0, 0));
 			ImGui::StyleColorsDark();
@@ -486,7 +494,7 @@ void GameLoader::startGame() {
 			ImGui::SetCursorPos(ImVec2((windowW / 2) - (windowW / 4), 400.0f));
 			if (ImGui::Button("Load Game", ImVec2(windowW / 2, 50.0f))) {
 				show_GameMenu_window = false;
-				reload();
+				reload();	
 			}
 
 			ImGui::SetCursorPos(ImVec2((windowW / 2) - (windowW / 4), 500.0f));
@@ -559,20 +567,17 @@ void GameLoader::startGame() {
 		}
 		if (gamewin)
 		{
-			GameObject* background = engine->gameWorld->getGameObjectById("BackgroundMusic");
-			GameObject* win1 = engine->gameWorld->getGameObjectById("WinMusic1");
-			GameObject* win2 = engine->gameWorld->getGameObjectById("WinMusic2");
 			if (!isPlaying)
 			{
 				if (rand() % 1 == 0)
 				{
-					background->getComponent<AudioPlayerComponent>()->stop();
+					background_music->getComponent<AudioPlayerComponent>()->stop();
 					win1->getComponent<AudioPlayerComponent>()->play();
 					isPlaying = true;
 				}
 				else
 				{
-					background->getComponent<AudioPlayerComponent>()->stop();
+					background_music->getComponent<AudioPlayerComponent>()->stop();
 					win2->getComponent<AudioPlayerComponent>()->play();
 					isPlaying = true;
 				}

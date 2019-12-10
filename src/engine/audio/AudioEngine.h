@@ -52,7 +52,7 @@ public:
 	void PlaySounds(int nChannelId);
 	void StopSounds(int nChannelId);
 	void PauseSounds(int nChannelId);
-	//void StopAllChannels();
+	void StopAllChannels();
 	void RestartSound(const string& soundName, int nChannelId);
 	void SetChannel3dPosition(int nChannelId, const Vector3& vPosition);
 	void SetVolume(int nChannelId, float fVolumedB, bool isMusic = false);
