@@ -29,6 +29,8 @@ void GameWorldHelper::initMenuScene(BOEngine* engine)
 	Camera camera;
 
 	//background music
+	audio.Shutdown();
+	audio.Init();
 
 	//engine sound
 	GameObject* engine_sound = new  GameObject("EngineSound");
