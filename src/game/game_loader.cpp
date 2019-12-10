@@ -403,7 +403,7 @@ void GameLoader::startGame() {
 
 		ImGui::Begin("Score", 0, flags);
 
-		int score1 = 100;
+		int score1 = 100+temp;
 
 		ImGui::TextColored(ImVec4(0.0f, 1.0f, 1.0f, 1.0f), "Score: %.d", score1);
 		ImGui::End();
@@ -537,6 +537,7 @@ void GameLoader::startGame() {
 		}
 		//**********High score list Window************
 		static const char* scores[]{ "1","2","3","4","5","6","7","8","9","10" };//high score list
+		static const char* ids[]{ "1","2","3","4","5","6","7","8","9","10" };
 		static int selectscore = 0;
 
 		if (show_HighScore_window)
@@ -561,6 +562,17 @@ void GameLoader::startGame() {
 			ImGui::SetCursorPos(ImVec2((windowW / 3.3) - (scoreW.x / 2), 0.0f));
 			ImGui::TextColored(ImVec4(1.0f, 0.0f, 0.0f, 1.0f), "High Score");
 
+			std::string s[10];
+			std::string id[10];
+			for (int i = 0; i < 10; i++) {
+				s[i] = std::to_string(100);
+				id[i] = ids[i];
+				scores[i] = (id[i].append(": ").append(s[i]).append(" seconds")).c_str();
+			}
+			s[0] = std::to_string(score1);
+			id[0] = ids[0];
+			scores[0] = (id[0].append(": ").append(s[0]).append(" seconds")).c_str();
+
 			ImGui::ListBox("", &selectscore, scores, IM_ARRAYSIZE(scores));
 			ImGui::End();
 		}
@@ -573,6 +585,7 @@ void GameLoader::startGame() {
 		}
 		if (gamewin)
 		{
+			timing = false;
 			GameObject* background_music = engine->gameWorld->getGameObjectById("BackgroundMusic");
 			GameObject* win1 = engine->gameWorld->getGameObjectById("WinMusic1");
 			GameObject* win2 = engine->gameWorld->getGameObjectById("WinMusic2");
