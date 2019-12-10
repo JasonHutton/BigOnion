@@ -157,14 +157,6 @@ void GameWorldHelper::initTestScene(BOEngine* engine)
 	carControl->tires = tires;
 
 	// create race track walls
-	/*GameObject* trackWall = new GameObject("RaceTrackWalls");
-	trackWall->transform.position = Vector3f(0, -3.25, 0);
-	trackWall->transform.rotation = Vector3f(0, 0, 0);
-	trackWall->transform.scale = Vector3f(1.0, 2.0, 1.0);
-	//trackWall->addComponent(new RenderComponent(engine, "game/assets/track2/track_walls.obj", shader)); // connect object - model
-	trackWall->addComponent(new RenderComponent(engine, "game/assets/track2/track_walls2.obj", shader)); // connect object - model
-	trackWall->addComponent(RigidBodyComponent::createWithMesh(&trackWall->getComponent<RenderComponent>()->model, 1.0, 1));//note id is set to 1, DO NOT CHANGE unless you change the id in the isHit()
-	engine->gameWorld->addGameObject(trackWall);*/
 	engine->gameWorld->addGameObject(Object_Load("game/assets/objects/track_walls1.yaml", engine, shader));
 	//engine->gameWorld->addGameObject(Object_Load("game/assets/objects/track_walls2.yaml", engine, shader));
 
