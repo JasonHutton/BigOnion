@@ -67,7 +67,7 @@ void AudioPlayerComponent::volume(float volume, bool isMusic)
 
 void AudioPlayerComponent::setSpeed(float speed, bool isMusic)
 {
-	audio.SetSpeed(soundChannel, speed / 50 + 1);
+    audio.SetSpeed(soundChannel, speed / 50 + 1);
 	audio.SetVolume(soundChannel, audio.VolumeTodB(speed / 50 + fVolume), isMusic);
 }
 

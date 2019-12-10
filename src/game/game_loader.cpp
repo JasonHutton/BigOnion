@@ -496,12 +496,16 @@ void GameLoader::startGame() {
 			if (ImGui::Button("Play Game", ImVec2(windowW / 2, 50.0f))) {
 				show_GameMenu_window = false;
 				current_level = 1;
+				stopcase = 0;
+				stopgame = true;
 				reload();
 			}
 
 			ImGui::SetCursorPos(ImVec2((windowW / 2) - (windowW / 4), 400.0f));
 			if (ImGui::Button("Load Game", ImVec2(windowW / 2, 50.0f))) {
 				show_GameMenu_window = false;
+				stopcase = 0;
+				stopgame = true;
 				reload();	
 			}
 
