@@ -365,7 +365,7 @@ void GameLoader::startGame() {
 					break;
 
 				}
-
+				
 			}
 			if (timego > 5) {
 				
@@ -489,6 +489,8 @@ void GameLoader::startGame() {
 			//if (ImGui::Button("Play Game", ImVec2(-1.0f, 0.0f)))
 			if (ImGui::Button("Play Game", ImVec2(windowW / 2, 50.0f))) {
 				show_GameMenu_window = false;
+				stopcase = 0;
+				stopgame = true;
 				current_level = 1;
 				reload();
 			}
@@ -496,6 +498,8 @@ void GameLoader::startGame() {
 			ImGui::SetCursorPos(ImVec2((windowW / 2) - (windowW / 4), 400.0f));
 			if (ImGui::Button("Load Game", ImVec2(windowW / 2, 50.0f))) {
 				show_GameMenu_window = false;
+				stopcase = 0;
+				stopgame = true;
 				reload();	
 			}
 

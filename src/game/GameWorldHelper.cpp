@@ -14,6 +14,7 @@
 #include <vector>
 #include <thread>
 
+
 /*
 	The main Menu Scene which cantains audio only.
 */
@@ -111,20 +112,10 @@ void GameWorldHelper::initTestScene(BOEngine* engine)
 
 	Shader* lightshader = new Shader("engine/graphic/shader/model_loading.vs", "engine/graphic/shader/light.fs.glsl");
 
-	vector<std::string> faces
-	{
-		"game/assets/cmm_skybox/right.jpg",
-		"game/assets/cmm_skybox/left.jpg",
-		"game/assets/cmm_skybox/top.jpg",
-		"game/assets/cmm_skybox/bottom.jpg",
-		"game/assets/cmm_skybox/front.jpg",
-		"game/assets/cmm_skybox/back.jpg"
-	};
-
 	audio.Shutdown();
 	audio.Init();
 
-	engine->skybox.load(faces);
+	engine->skybox.load(Skybox_Load("game/assets/objects/sky_ground.yaml"));
 
 	shader->use();
 	shader->setVec3("dirLight.direction", -0.2f, -1.0f, -0.3f); //obj to light
@@ -185,18 +176,9 @@ void GameWorldHelper::initTestScene(BOEngine* engine)
 			skid_sound->addComponent(new AudioPlayerComponent(*audio, "game/assets/sounds/car_break.mp3", 0.5, true, true, false));
 	skid_sound->getComponent<AudioPlayerComponent>()->onAddToGameWorld();
 
-	//impact sound
-	GameObject* impact_sound_small = new  GameObject("SmallImpact");
-			impact_sound_small->transform.position = { camera->Position.x, camera->Position.y, camera->Position.z };
-	engine->gameWorld->addGameObject(impact_sound_small);
-			impact_sound_small->addComponent(new AudioPlayerComponent(*audio, "game/assets/sounds/small_impact.mp3", 30, true, true, false));
-	impact_sound_small->getComponent<AudioPlayerComponent>()->onAddToGameWorld();
-	
-	GameObject* impact_sound_big = new  GameObject("BigImpact");
-			impact_sound_big->transform.position = { camera->Position.x, camera->Position.y, camera->Position.z };
-	engine->gameWorld->addGameObject(impact_sound_big);
-			impact_sound_big->addComponent(new AudioPlayerComponent(*audio, "game/assets/sounds/big_impact.mp3", 20, true, true, false));
-	impact_sound_big->getComponent<AudioPlayerComponent>()->onAddToGameWorld();
+	//impact sounds
+	engine->gameWorld->addGameObject(Audio_Load("game/assets/objects/sound/smallimpact.yaml", engine, NULL, camera, audio));
+	engine->gameWorld->addGameObject(Audio_Load("game/assets/objects/sound/bigimpact.yaml", engine, NULL, camera, audio));
 
 	//background music
 	GameObject* background_music = new  GameObject("BackgroundMusic");
@@ -326,18 +308,9 @@ void GameWorldHelper::initTestScene2(BOEngine* engine)
 
 	Shader* lightshader = new Shader("engine/graphic/shader/model_loading.vs", "engine/graphic/shader/light.fs.glsl");
 
-	vector<std::string> faces
-	{
-		"game/assets/skybox/right.jpg",
-		"game/assets/skybox/left.jpg",
-		"game/assets/skybox/top.jpg",
-		"game/assets/skybox/bottom.jpg",
-		"game/assets/skybox/front.jpg",
-		"game/assets/skybox/back.jpg"
-	};
 	audio.Shutdown();
 	audio.Init();
-	engine->skybox.load(faces);
+	engine->skybox.load(Skybox_Load("game/assets/objects/sky_water.yaml"));
 
 	shader->use();
 	shader->setVec3("dirLight.direction", -0.2f, -1.0f, -0.3f); //obj to light
@@ -398,18 +371,9 @@ void GameWorldHelper::initTestScene2(BOEngine* engine)
 			skid_sound->addComponent(new AudioPlayerComponent(*audio, "game/assets/sounds/car_break.mp3", 0.5, true, true, false));
 	skid_sound->getComponent<AudioPlayerComponent>()->onAddToGameWorld();
 
-	//impact sound
-	GameObject* impact_sound_small = new  GameObject("SmallImpact");
-			impact_sound_small->transform.position = { camera->Position.x, camera->Position.y, camera->Position.z };
-	engine->gameWorld->addGameObject(impact_sound_small);
-			impact_sound_small->addComponent(new AudioPlayerComponent(*audio, "game/assets/sounds/small_impact.mp3", 30, true, true, false));
-	impact_sound_small->getComponent<AudioPlayerComponent>()->onAddToGameWorld();
-
-	GameObject* impact_sound_big = new  GameObject("BigImpact");
-			impact_sound_big->transform.position = { camera->Position.x, camera->Position.y, camera->Position.z };
-	engine->gameWorld->addGameObject(impact_sound_big);
-			impact_sound_big->addComponent(new AudioPlayerComponent(*audio, "game/assets/sounds/big_impact.mp3", 20, true, true, false));
-	impact_sound_big->getComponent<AudioPlayerComponent>()->onAddToGameWorld();
+	//impact sounds
+	engine->gameWorld->addGameObject(Audio_Load("game/assets/objects/sound/smallimpact.yaml", engine, NULL, camera, audio));
+	engine->gameWorld->addGameObject(Audio_Load("game/assets/objects/sound/bigimpact.yaml", engine, NULL, camera, audio));
 
 	//background music
 	GameObject* background_music = new  GameObject("BackgroundMusic");
@@ -476,13 +440,9 @@ void GameWorldHelper::initTestScene2(BOEngine* engine)
 	carControl->tires = tires;
 
 	// create race track walls
-	//engine->gameWorld->addGameObject(Object_Load("game/assets/objects/track_walls1.yaml", engine, shader));
-	//engine->gameWorld->addGameObject(Object_Load("game/assets/objects/track_walls2.yaml", engine, shader));
 	engine->gameWorld->addGameObject(Object_Load("game/assets/objects/track_walls3.yaml", engine, shader));
 
 	// create race track
-	//engine->gameWorld->addGameObject(Object_Load("game/assets/objects/track1.yaml", engine, shader));
-	//engine->gameWorld->addGameObject(Object_Load("game/assets/objects/track2.yaml", engine, shader));
 	engine->gameWorld->addGameObject(Object_Load("game/assets/objects/track3.yaml", engine, shader));
 
 	// Light
@@ -502,7 +462,7 @@ void GameWorldHelper::initTestScene2(BOEngine* engine)
 	engine->gameWorld->addGameObject(light2);
 
 	// create ground
-	engine->gameWorld->addGameObject(Object_Load("game/assets/objects/ground.yaml", engine, shader));
+	engine->gameWorld->addGameObject(Object_Load("game/assets/objects/ground_water.yaml", engine, shader));
 
 	engine->gameWorld->addGameObject(Object_Load("game/assets/objects/onion.yaml", engine, shader));
 
