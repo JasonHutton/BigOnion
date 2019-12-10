@@ -6,6 +6,9 @@
 #include "imgui.h"
 #include "imgui/imgui_impl_glfw_gl3.h"
 
+int BOEngine::gwidth;
+int BOEngine::gHeight;
+
 BOEngine::BOEngine()
 {
 }
@@ -38,10 +41,10 @@ void BOEngine::initialize()
 	//Imgui
 	ImGui::CreateContext();
 	ImGuiIO& io = ImGui::GetIO(); (void)io;
-	
+
 	ImGui_ImplGlfwGL3_Init(window, true);
 	ImFont* pFont = io.Fonts->AddFontFromFileTTF("engine/assets/ui/Roboto-Black.ttf", 30.0f);
-	
+
 	ImGui::PushStyleColor(ImGuiCol_WindowBg, (0, 0, 0, 0));
 
 
@@ -61,10 +64,10 @@ void BOEngine::initialize()
 	// Game World initialization
 	currentTime = std::chrono::high_resolution_clock::now();
 
-	audio.Init();
-
-	GameWorldHelper::initTestScene(this);
-
+	int scrWidth, scrHeight;
+	glfwGetWindowSize(window, &scrWidth, &scrHeight);
+	this->gwidth = scrWidth;
+	this->gHeight = scrHeight;
 }
 
 void BOEngine::preRender()
@@ -95,17 +98,13 @@ void BOEngine::render()
 
 
 
-	 int scrWidth = 10; //TODO get from window
-	 int scrHeight = 8; //TODO get from window
-
-
+	int scrWidth, scrHeight;
 	glfwGetWindowSize(window, &scrWidth, &scrHeight);
+	this->gwidth = scrWidth;
+	this->gHeight = scrHeight;
 
-	gwidth = scrWidth;
-	gHeight = scrHeight;
-	
 	// view/projection transformations
-	glm::mat4 projection = glm::perspective(glm::radians(ZOOM), (float)scrWidth / (float)scrHeight, 0.1f, 100.0f);
+	glm::mat4 projection = glm::perspective(glm::radians(ZOOM), (float)gwidth / (float)gHeight, 0.1f, 100.0f);
 	glm::mat4 view = tpCamera.GetViewMatrix();
 
 	// don't forget to enable shader before setting uniforms
@@ -124,12 +123,14 @@ void BOEngine::render()
 	}
 
 	// draw skybox as last
-	this->skybox.skyboxShader->use();
-	view = glm::mat4(glm::mat3(tpCamera.GetViewMatrix())); // remove translation from the view matrix
-	this->skybox.skyboxShader->setMat4("view", view);
-	this->skybox.skyboxShader->setMat4("projection", projection);
-	// skybox cube
-	this->skybox.draw();
+	if (this->skybox.skyboxShader) {
+		this->skybox.skyboxShader->use();
+		view = glm::mat4(glm::mat3(tpCamera.GetViewMatrix())); // remove translation from the view matrix
+		this->skybox.skyboxShader->setMat4("view", view);
+		this->skybox.skyboxShader->setMat4("projection", projection);
+		// skybox cube
+		this->skybox.draw();
+	}
 }
 
 
@@ -141,6 +142,11 @@ void BOEngine::render()
 void BOEngine::addRenderComponent(RenderComponent* renderComponent)
 {
 	renderComponents.push_back(renderComponent);
+}
+
+void BOEngine::removeRenderComponent(RenderComponent* renderComponent)
+{
+	renderComponents.erase(std::remove(renderComponents.begin(), renderComponents.end(), renderComponent), renderComponents.end());
 }
 
 void BOEngine::exitInError(const std::string& error)

@@ -8,9 +8,15 @@ const std::string RenderComponent::typeID = "Render";
 
 RenderComponent::RenderComponent(BOEngine* engine, std::string modelPath, Shader* shader)
 	: model(modelPath, shader)
+	, engine(engine)
 {
 	engine->addRenderComponent(this);
 	ignorePause = true;
+}
+
+RenderComponent::~RenderComponent()
+{
+	engine->removeRenderComponent(this);
 }
 
 
