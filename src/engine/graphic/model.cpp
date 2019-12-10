@@ -10,9 +10,8 @@ using namespace std;
 std::mutex Model::modelLoadMutex;
 
 // constructor, expects a filepath to a 3D model.
-Model::Model(string const& path, Shader* _shader) : shader(_shader), shaderAttribute()
+Model::Model(string const& _path, Shader* _shader) : path(_path), shader(_shader), shaderAttribute()
 {
-	loadModel(path);
 }
 
 // draws the model, and thus all its meshes
@@ -32,6 +31,12 @@ void Model::Draw(Shader* _shader, ShaderAttribute* shaderAttribute)
 // draws the model, and thus all its meshes with a outside shader which already set
 void Model::Draw(Shader* _shader)
 {
+	if (firstDraw) { // load second time in main thread, abandend first load data;
+		meshes = vector<Mesh>();
+		textures_loaded = vector<Texture>();
+		loadModel(this->path);
+		firstDraw = false;
+	}
 	for (unsigned int i = 0; i < meshes.size(); i++)
 		meshes[i].Draw(*_shader);
 }
@@ -281,6 +286,9 @@ unsigned int Model::TextureFromFile(const char* path, const string& directory, b
 
 vector<Mesh>& Model::getMeshes()
 {
+	if (meshes.size() <= 0) {
+		loadModel(this->path); // first load to support meshes for phyics
+	}
 	return meshes;
 }
 

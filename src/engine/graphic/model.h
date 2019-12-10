@@ -30,8 +30,9 @@ public:
 
 	Shader* shader;
 	ShaderAttribute shaderAttribute;
+	string path;
 
-	Model(string const& path, Shader* shader);
+	Model(string const& _path, Shader* shader);
 
 	// draws the model, and thus all its meshes
 	void Draw();
@@ -66,6 +67,8 @@ private:
 	unsigned int TextureFromFile(const char* path, const string& directory, bool gamma = false);
 
 	static std::mutex modelLoadMutex;
+
+	bool firstDraw = true;
 };
 
 #endif
