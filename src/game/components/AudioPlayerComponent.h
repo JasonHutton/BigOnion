@@ -10,6 +10,7 @@ public:
 	static const std::string typeID;
 	int soundChannel;
 	AudioPlayerComponent(AudioEngine audio, const string& strSoundName,float volumeDb, bool is3D, bool isLooping, bool isStreaming);
+	~AudioPlayerComponent();
 
 	void play();
 	void stop();
@@ -21,6 +22,7 @@ public:
 	void unpauseExec() override;
 	void volume(float volume, bool isMusic = false);
 	void playEffect();
+	void stopAll();
 	std::string componentTypeID() override { return typeID; }
 
 private:
