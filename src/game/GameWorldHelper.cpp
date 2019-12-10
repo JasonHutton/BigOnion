@@ -167,16 +167,6 @@ void GameWorldHelper::initTestScene(BOEngine* engine)
 	engine->gameWorld->addGameObject(trackWall);
 
 	// create race track
-	/*GameObject* raceTrack = new GameObject("RaceTrack");
-	raceTrack->transform.position = Vector3f(0, -3.23, 0);
-	raceTrack->transform.rotation = Vector3f(0, 0, 0);
-	raceTrack->transform.scale = Vector3f(1.0, 1.0, 1.0);
-	//raceTrack->addComponent(new RenderComponent(engine, "game/assets/track2/track_only.obj", shader)); // connect object - model
-	raceTrack->addComponent(new RenderComponent(engine, "game/assets/track2/track_only2.obj", shader)); // connect object - model
-	//raceTrack->addComponent(new RenderComponent(engine, "game/assets/racetrack/racetrack.obj", shader)); // connect object - model
-	// raceTrack->addComponent(RigidBodyComponent::createWithMesh(&raceTrack->getComponent<RenderComponent>()->model)); // connect object - rigibody
-	engine->gameWorld->addGameObject(raceTrack); // maybe auto register?
-	*/
 	//engine->gameWorld->addGameObject(Object_Load("game/assets/objects/track1.yaml", engine, shader));
 	engine->gameWorld->addGameObject(Object_Load("game/assets/objects/track2.yaml", engine, shader));
 
@@ -197,12 +187,6 @@ void GameWorldHelper::initTestScene(BOEngine* engine)
 	engine->gameWorld->addGameObject(light2);
 
 	// create ground
-	/*GameObject* ground = new GameObject("Ground");
-	ground->transform.position = Vector3f(0, -3.25, 0);
-	ground->transform.scale = Vector3f(400.0f, 1.0f, 400.0f);
-	ground->addComponent(new RenderComponent(engine, "game/assets/ground/plane.obj", shader));
-	ground->addComponent(RigidBodyComponent::createWithPlane());
-	engine->gameWorld->addGameObject(ground);*/
 	engine->gameWorld->addGameObject(Object_Load("game/assets/objects/ground.yaml", engine, shader));
 
 
@@ -210,38 +194,8 @@ void GameWorldHelper::initTestScene(BOEngine* engine)
 	engine->gameWorld->addGameObject(Object_Load("game/assets/objects/box.yaml", engine, shader));
 	engine->gameWorld->addGameObject(Object_Load("game/assets/objects/box2.yaml", engine, shader));
 
-
-	/*GameObject* onion = new  GameObject("Onion");
-	onion->transform.position = Vector3f(5.0f, 10.0f, 0.0f);
-	onion->transform.scale = 3.0;
-	onion->addComponent(new RenderComponent(engine, "game/assets/onion/Onion.3DS", shader));
-	onion->addComponent(RigidBodyComponent::createWithCube(1.0, 0.3, 1.0, 1.0, 1.0));
-	engine->gameWorld->addGameObject(onion);*/
-
 	// create box
-	/*GameObject* box = new  GameObject("Box");
-	box->transform.position = Vector3f(5.0, 10.0, 0);
-	box->transform.scale = 2.0; // has to be double because dimensions of 1.0 entered above refer to distance from origin to edge
-	box->addComponent(new RenderComponent(engine, "game/assets/box/cube.obj", shader));
-	box->addComponent(RigidBodyComponent::createWithCube(1.0, 1.0, 1.0, 1.0));
-	engine->gameWorld->addGameObject(box);*/
-
-	/*GameObject* box2 = new  GameObject("Box2");
-	box2->transform.position = Vector3f(5.0, 15.0, 0);
-	box2->transform.scale = 2.0; // has to be double because dimensions of 1.0 entered above refer to distance from origin to edge
-	box2->addComponent(new RenderComponent(engine, "game/assets/box/cube.obj", shader));
-	box2->addComponent(RigidBodyComponent::createWithCube(1.0, 1.0, 1.0, 1.0));
-	engine->gameWorld->addGameObject(box2);
-
-
-	GameObject* box3 = new  GameObject("Box3");
-	box3->transform.position = Vector3f(5.0, 20.0, 0);
-	box3->transform.scale = 2.0; // has to be double because dimensions of 1.0 entered above refer to distance from origin to edge
-	box3->addComponent(new RenderComponent(engine, "game/assets/box/cube.obj", shader));
-	box3->addComponent(RigidBodyComponent::createWithCube(1.0, 1.0, 1.0, 1.0));
-	engine->gameWorld->addGameObject(box3);
-
-	GameObject* box4 = new  GameObject("Box4");
+	/*GameObject* box4 = new  GameObject("Box4");
 	box4->transform.position = Vector3f(5.0, 25.0, 0);
 	box4->transform.scale = 2.0; // has to be double because dimensions of 1.0 entered above refer to distance from origin to edge
 	box4->addComponent(new RenderComponent(engine, "game/assets/box/cube.obj", shader));
