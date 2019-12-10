@@ -403,7 +403,7 @@ void GameLoader::startGame() {
 
 		ImGui::Begin("Score", 0, flags);
 
-		int score1 = 100;
+		int score1 = 100+temp;
 
 		ImGui::TextColored(ImVec4(0.0f, 1.0f, 1.0f, 1.0f), "Score: %.d", score1);
 		ImGui::End();
@@ -550,9 +550,17 @@ void GameLoader::startGame() {
 			}
 			ImGui::End();
 
-			std::string s = std::to_string(score1);
-			std::string id = ids[0];
-			scores[0] = (id.append(": ").append(s).append(" seconds")).c_str();
+			//std::string s = std::to_string(score1);
+			std::string s[10];
+			std::string id[10];
+			for (int i = 0; i < 10; i++) {
+				s[i] = std::to_string(100);
+				id[i] = ids[i];
+				scores[i] = (id[i].append(": ").append(s[i]).append(" seconds")).c_str();
+			}
+		    s[0] = std::to_string(score1);
+			id[0] = ids[0];
+			scores[0] = (id[0].append(": ").append(s[0]).append(" seconds")).c_str();
 
 			ImGui::SetNextWindowSize(ImVec2(windowW / 2, windowH / 2));
 			ImGui::SetNextWindowPos(ImVec2(windowW / 2 - windowW / 3.3, windowH / 2 - windowH / 3.3));
@@ -574,6 +582,7 @@ void GameLoader::startGame() {
 		}
 		if (gamewin)
 		{
+			timing = false;
 			GameObject* background_music = engine->gameWorld->getGameObjectById("BackgroundMusic");
 			GameObject* win1 = engine->gameWorld->getGameObjectById("WinMusic1");
 			GameObject* win2 = engine->gameWorld->getGameObjectById("WinMusic2");
@@ -639,7 +648,6 @@ void GameLoader::startGame() {
 			ImGui::End();
 			//std::string pi = std::to_string(100);
 			//scores[0] = (char*)pi.data();
-
 		}
 
 		//***********lost window******************
@@ -648,6 +656,7 @@ void GameLoader::startGame() {
 		}
 		if (gamelost && !gamewin)
 		{
+			
 			GameObject* background_music = engine->gameWorld->getGameObjectById("BackgroundMusic");
 			GameObject* lose1 = engine->gameWorld->getGameObjectById("LoseMusic1");
 			GameObject* lose2 = engine->gameWorld->getGameObjectById("LoseMusic2");
