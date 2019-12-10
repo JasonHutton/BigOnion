@@ -54,7 +54,7 @@ void CarControlComponent::fixedUpdate(float deltaTime)
 {
 	// attenuate the horizontal velocity
 	Vector3f v = rb->getVelocityRelativeToDirection();
-	v.z -= v.z * deltaTime;
+	v.z -= v.z * deltaTime * 2;
 	rb->setVelocityRelativeToDirection(v);
 }
 

@@ -39,7 +39,7 @@ void GameWorldHelper::initMenuScene(BOEngine* engine)
 	engine_sound->addComponent(new AudioPlayerComponent(audio, "game/assets/sounds/startup.wav", 1, true, false, false));
 	engine_sound->getComponent<AudioPlayerComponent>()->onAddToGameWorld();
 	engine_sound->getComponent<AudioPlayerComponent>()->volume(1);
-	Sleep(3000);
+
 	engine_sound->addComponent(new AudioPlayerComponent(audio, "game/assets/sounds/idle.wav", 1, true, true, false));
 	engine_sound->getComponent<AudioPlayerComponent>()->onAddToGameWorld();
 	engine_sound->getComponent<AudioPlayerComponent>()->volume(0.3);
@@ -188,7 +188,6 @@ void GameWorldHelper::initTestScene(BOEngine* engine)
 	engine_sound->getComponent<AudioPlayerComponent>()->onAddToGameWorld();
 	engine_sound->getComponent<AudioPlayerComponent>()->volume(1);
 	engine_sound->getComponent<AudioPlayerComponent>()->play();
-	Sleep(2000);
 	engine_sound->addComponent(new AudioPlayerComponent(audio, "game/assets/sounds/idle.wav", 1, true, true, false));
 	engine_sound->getComponent<AudioPlayerComponent>()->onAddToGameWorld();
 	engine_sound->getComponent<AudioPlayerComponent>()->volume(0.3);
@@ -441,7 +440,6 @@ void GameWorldHelper::initTestScene2(BOEngine* engine)
 	engine_sound->getComponent<AudioPlayerComponent>()->onAddToGameWorld();
 	engine_sound->getComponent<AudioPlayerComponent>()->volume(1);
 	engine_sound->getComponent<AudioPlayerComponent>()->play();
-	Sleep(2000);
 	engine_sound->addComponent(new AudioPlayerComponent(audio, "game/assets/sounds/idle.wav", 1, true, true, false));
 	engine_sound->getComponent<AudioPlayerComponent>()->onAddToGameWorld();
 	engine_sound->getComponent<AudioPlayerComponent>()->volume(0.3);
