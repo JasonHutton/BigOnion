@@ -52,6 +52,7 @@ bool show_demo_window = true;
 bool show_another_window = false;
 bool show_GameMenu_window = true;//
 bool show_HighScore_window = false;
+bool game_loaded = false;
 bool stopgame = true;
 bool gamewin = false;
 bool gamelost = false;
@@ -155,6 +156,7 @@ void GameLoader::createGame() {
 }
 
 void GameLoader::loadGameScene() {
+	game_loaded = true;
 	if (current_level == 1)
 		GameWorldHelper::initTestScene(engine);
 	else {
@@ -164,7 +166,7 @@ void GameLoader::loadGameScene() {
 
 void GameLoader::startGame() {
 
-	loadGameScene();
+	GameWorldHelper::initMenuScene(engine);
 
 	std::cout << "startGame" << std::endl;
 	// glfw window creation
@@ -210,16 +212,30 @@ void GameLoader::startGame() {
 		if (!stopgame) {
 			processInput(window);
 		}
+		else {
+			// clear last gameinput state
+			GameInput::clearState();
+		}
 
 		// game logic
+		GameObject* playerCar = nullptr;
+		if (game_loaded) {
+			playerCar = engine->gameWorld->getGameObjectById("PlayerCar");
 
-		//if (game_loaded) {
-		GameObject* playerCar = engine->gameWorld->getGameObjectById("PlayerCar");
+			if (playerCar) {
+				// update third person camera
+				glm::vec3 rot = playerCar->transform.rotation.getGlmVec3();
+				glm::vec3 pos = playerCar->transform.position.getGlmVec3() + glm::vec3(0.0f, 1.15f, 0.0f); // look a few upper
+				engine->tpCamera.update(deltaTime, playerCar->transform.position.getGlmVec3(), rot);
 
-		if (playerCar) {
-			glm::vec3 rot = playerCar->transform.rotation.getGlmVec3();
-			glm::vec3 pos = playerCar->transform.position.getGlmVec3() + glm::vec3(0.0f, 1.15f, 0.0f); // look a few upper
-			engine->tpCamera.update(deltaTime, playerCar->transform.position.getGlmVec3(), rot);
+				// update percentage
+				racePercentage = playerCar->getComponent<RaceGameComponent>()->GetPercentage();
+				if (lastRacePercentage != racePercentage)
+				{
+					printf("Game finished %f percent \n", racePercentage * 100.0f);
+					lastRacePercentage = racePercentage;
+				}
+			}
 		}
 
 		GameObject* engineSound = engine->gameWorld->getGameObjectById("EngineSound");
@@ -259,14 +275,6 @@ void GameLoader::startGame() {
 		//printf("Camera Position: %f, %f, %f \n", playerCar->transform.position.x, playerCar->transform.position.y, playerCar->transform.position.z);
 		//playerCar->getComponent<AudioPlayerComponent>()->update(deltaTime);
 
-		if (playerCar) {
-			racePercentage = playerCar->getComponent<RaceGameComponent>()->GetPercentage();
-			if (lastRacePercentage != racePercentage)
-			{
-				printf("Game finished %f percent \n", racePercentage * 100.0f);
-				lastRacePercentage = racePercentage;
-			}
-		}
 		//}
 		// glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
 		// -------------------------------------------------------------------------------

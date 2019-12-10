@@ -41,10 +41,10 @@ void BOEngine::initialize()
 	//Imgui
 	ImGui::CreateContext();
 	ImGuiIO& io = ImGui::GetIO(); (void)io;
-	
+
 	ImGui_ImplGlfwGL3_Init(window, true);
 	ImFont* pFont = io.Fonts->AddFontFromFileTTF("engine/assets/ui/Roboto-Black.ttf", 30.0f);
-	
+
 	ImGui::PushStyleColor(ImGuiCol_WindowBg, (0, 0, 0, 0));
 
 
@@ -104,7 +104,7 @@ void BOEngine::render()
 	glfwGetWindowSize(window, &scrWidth, &scrHeight);
 	this->gwidth = scrWidth;
 	this->gHeight = scrHeight;
-	
+
 	// view/projection transformations
 	glm::mat4 projection = glm::perspective(glm::radians(ZOOM), (float)gwidth / (float)gHeight, 0.1f, 100.0f);
 	glm::mat4 view = tpCamera.GetViewMatrix();
@@ -125,12 +125,14 @@ void BOEngine::render()
 	}
 
 	// draw skybox as last
-	this->skybox.skyboxShader->use();
-	view = glm::mat4(glm::mat3(tpCamera.GetViewMatrix())); // remove translation from the view matrix
-	this->skybox.skyboxShader->setMat4("view", view);
-	this->skybox.skyboxShader->setMat4("projection", projection);
-	// skybox cube
-	this->skybox.draw();
+	if (this->skybox.skyboxShader) {
+		this->skybox.skyboxShader->use();
+		view = glm::mat4(glm::mat3(tpCamera.GetViewMatrix())); // remove translation from the view matrix
+		this->skybox.skyboxShader->setMat4("view", view);
+		this->skybox.skyboxShader->setMat4("projection", projection);
+		// skybox cube
+		this->skybox.draw();
+	}
 }
 
 
