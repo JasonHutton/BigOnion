@@ -10,6 +10,12 @@ RigidBodyComponent::RigidBodyComponent(btRigidBody* _body)
 {
 }
 
+RigidBodyComponent::~RigidBodyComponent()
+{
+	gameObject->world->physicsWorld->removeRigidBody(rigidBody);
+	delete rigidBody;
+}
+
 
 void RigidBodyComponent::update(float deltaTime)
 {

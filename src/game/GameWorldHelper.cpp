@@ -18,6 +18,9 @@
 */
 void GameWorldHelper::initTestScene(BOEngine* engine)
 {
+	delete engine->gameWorld;
+	engine->gameWorld = nullptr;
+
 	// std::cout << "Game init" << std::endl;
 	AudioEngine audio;
 	Camera camera;
@@ -254,6 +257,9 @@ void GameWorldHelper::initTestScene(BOEngine* engine)
 
 void GameWorldHelper::initTestScene2(BOEngine* engine)
 {
+	delete engine->gameWorld;
+	engine->gameWorld = nullptr;
+
 	// std::cout << "Game init" << std::endl;
 	AudioEngine audio;
 	Camera camera;
