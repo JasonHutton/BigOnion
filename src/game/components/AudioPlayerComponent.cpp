@@ -84,7 +84,7 @@ void AudioPlayerComponent::pauseExec()
 
 void AudioPlayerComponent::unpauseExec()
 {
-	play();
+	//play();
 }
 
 void AudioPlayerComponent::wait(int seconds)

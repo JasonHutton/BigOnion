@@ -158,6 +158,9 @@ void GameLoader::createGame() {
 }
 
 void GameLoader::loadGameScene() {
+	GameInput::setVerticalAxis(0);
+	GameInput::setHorizontalAxis(0);
+
 	game_loaded = true;
 	if (current_level == 1)
 		GameWorldHelper::initTestScene(engine);
@@ -261,14 +264,6 @@ void GameLoader::startGame() {
 			}
 		}
 
-
-		/*if (impactSmall)
-		{
-			if (speed > 50)
-			{
-				impactSmall->getComponent<AudioPlayerComponent>()->play();
-			}
-		}*/
 		Wait(impactSmall, impactS, deltaTime, 0.3, 1);
 		Wait(impactBig, impactB, deltaTime, 1.6, 2);
 		Wait(skid, skidSound, deltaTime, 1.2, 0);
@@ -495,16 +490,12 @@ void GameLoader::startGame() {
 			if (ImGui::Button("Play Game", ImVec2(windowW / 2, 50.0f))) {
 				show_GameMenu_window = false;
 				current_level = 1;
-				stopcase = 0;
-				stopgame = true;
 				reload();
 			}
 
 			ImGui::SetCursorPos(ImVec2((windowW / 2) - (windowW / 4), 400.0f));
 			if (ImGui::Button("Load Game", ImVec2(windowW / 2, 50.0f))) {
 				show_GameMenu_window = false;
-				stopcase = 0;
-				stopgame = true;
 				reload();	
 			}
 
@@ -574,7 +565,7 @@ void GameLoader::startGame() {
 		if (racePercentage * 100.0f >= 100 && !gamewin) {
 			gamewin = true;
 			playerCar->getComponent<RaceGameComponent>()->resetPercentage();
-			current_level += (current_level >= max_level) ? 0 : 1;
+			current_level += (current_level > max_level) ? 0 : 1;
 		}
 		if (gamewin)
 		{

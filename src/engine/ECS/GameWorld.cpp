@@ -42,6 +42,8 @@ GameWorld::~GameWorld()
 */
 void GameWorld::addGameObject(GameObject* gameObject)
 {
+	const std::lock_guard<std::mutex> lock(mtx);
+
 	gameObject->addToGameWorld(this);
 	gameObjects.emplace(std::pair<std::string, GameObject*>(gameObject->id, gameObject));
 }
@@ -51,6 +53,8 @@ void GameWorld::addGameObject(GameObject* gameObject)
 */
 bool GameWorld::removeGameObject(std::string id)
 {
+	const std::lock_guard<std::mutex> lock(mtx);
+
 	if (gameObjects.find(id) == gameObjects.end())
 	{
 		return false;
