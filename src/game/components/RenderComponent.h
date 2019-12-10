@@ -13,9 +13,12 @@ public:
 	bool isSelfRotation = false; // rotate axis, world is defualt,
 
 	RenderComponent(BOEngine* engine, std::string modelPath, Shader* shader);
+	~RenderComponent();
 	void update(float deltaTime) override;
 	std::string componentTypeID() override { return typeID; }
 	glm::mat4 toModelMatrix();
+private:
+	BOEngine* engine;
 
 };
 

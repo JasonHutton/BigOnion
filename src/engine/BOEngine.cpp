@@ -144,6 +144,11 @@ void BOEngine::addRenderComponent(RenderComponent* renderComponent)
 	renderComponents.push_back(renderComponent);
 }
 
+void BOEngine::removeRenderComponent(RenderComponent* renderComponent)
+{
+	renderComponents.erase(std::remove(renderComponents.begin(), renderComponents.end(), renderComponent), renderComponents.end());
+}
+
 void BOEngine::exitInError(const std::string& error)
 {
 	std::cout << "\n\nUnknown unhandled exception. " << error << std::endl;

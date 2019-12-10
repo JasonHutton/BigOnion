@@ -12,6 +12,8 @@ public:
 	static const std::string typeID;
 	RigidBodyComponent(btRigidBody*);
 
+	~RigidBodyComponent() override;
+
 	void update(float deltaTime) override;
 	void onAddToGameWorld() override;
 	std::string componentTypeID() override { return "RigidBody"; }

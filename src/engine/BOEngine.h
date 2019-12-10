@@ -40,6 +40,7 @@ public:
 	void updateEngine(float deltaTime);
 	void render();
 	void addRenderComponent(RenderComponent* renderComponent);
+	void removeRenderComponent(RenderComponent* renderComponent);
 
 	void exitInError(const std::string& error);
 	int exit() const { return exitCode; }
