@@ -8,6 +8,7 @@ No special setup should be required beyond this.
 
 ## Git Repostiroy
 Github repoository is publicly accessible, here: https://github.com/JasonHutton/BigOnion.git
+The master branch should be used to build from.
 
 ## Controls
 
