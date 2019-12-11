@@ -170,11 +170,7 @@ void GameWorldHelper::initTestScene(BOEngine* engine)
 	engine_sound->getComponent<AudioPlayerComponent>()->play();
 
 	//skid sound
-	GameObject* skid_sound = new  GameObject("SkidSound");
-			skid_sound->transform.position = { camera->Position.x, camera->Position.y, camera->Position.z };
-	engine->gameWorld->addGameObject(skid_sound);
-			skid_sound->addComponent(new AudioPlayerComponent(*audio, "game/assets/sounds/car_break.mp3", 0.5, true, true, false));
-	skid_sound->getComponent<AudioPlayerComponent>()->onAddToGameWorld();
+	engine->gameWorld->addGameObject(Audio_Load("game/assets/objects/sound/skidsound.yaml", engine, NULL, camera, audio));
 
 	//impact sounds
 	engine->gameWorld->addGameObject(Audio_Load("game/assets/objects/sound/smallimpact.yaml", engine, NULL, camera, audio));
@@ -365,11 +361,7 @@ void GameWorldHelper::initTestScene2(BOEngine* engine)
 	engine_sound->getComponent<AudioPlayerComponent>()->play();
 
 	//skid sound
-	GameObject* skid_sound = new  GameObject("SkidSound");
-			skid_sound->transform.position = { camera->Position.x, camera->Position.y, camera->Position.z };
-	engine->gameWorld->addGameObject(skid_sound);
-			skid_sound->addComponent(new AudioPlayerComponent(*audio, "game/assets/sounds/car_break.mp3", 0.5, true, true, false));
-	skid_sound->getComponent<AudioPlayerComponent>()->onAddToGameWorld();
+	engine->gameWorld->addGameObject(Audio_Load("game/assets/objects/sound/skidsound.yaml", engine, NULL, camera, audio));
 
 	//impact sounds
 	engine->gameWorld->addGameObject(Audio_Load("game/assets/objects/sound/smallimpact.yaml", engine, NULL, camera, audio));
