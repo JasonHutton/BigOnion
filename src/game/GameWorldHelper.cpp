@@ -14,6 +14,7 @@
 #include <vector>
 #include <thread>
 
+auto shaders = std::unordered_map<std::string, Shader*>();
 
 /*
 	The main Menu Scene which cantains audio only.
@@ -108,9 +109,26 @@ void GameWorldHelper::initTestScene(BOEngine* engine)
 	// std::cout << "Game init" << std::endl;
 	AudioEngine audio;
 	Camera camera;
-	Shader * shader = new Shader("engine/graphic/shader/model_loading.vs", "engine/graphic/shader/model_loading.fs");
 
-	Shader* lightshader = new Shader("engine/graphic/shader/model_loading.vs", "engine/graphic/shader/light.fs.glsl");
+	Shader* shader;
+	if (shaders.count("model") > 0)
+	{
+		shader = shaders["model"];
+	}
+	else
+	{
+		shader = shaders["model"] = new Shader("engine/graphic/shader/model_loading.vs", "engine/graphic/shader/model_loading.fs");
+	}
+
+	Shader* lightshader;
+	if (shaders.count("light") > 0)
+	{
+		lightshader = shaders["light"];
+	}
+	else
+	{
+		lightshader = shaders["light"] = new Shader("engine/graphic/shader/model_loading.vs", "engine/graphic/shader/light.fs.glsl");
+	}
 
 	audio.Shutdown();
 	audio.Init();
@@ -281,9 +299,26 @@ void GameWorldHelper::initTestScene2(BOEngine* engine)
 	// std::cout << "Game init" << std::endl;
 	AudioEngine audio;
 	Camera camera;
-	Shader* shader = new Shader("engine/graphic/shader/model_loading.vs", "engine/graphic/shader/model_loading.fs");
 
-	Shader* lightshader = new Shader("engine/graphic/shader/model_loading.vs", "engine/graphic/shader/light.fs.glsl");
+	Shader* shader;
+	if (shaders.count("model") > 0)
+	{
+		shader = shaders["model"];
+	}
+	else
+	{
+		shader = shaders["model"] = new Shader("engine/graphic/shader/model_loading.vs", "engine/graphic/shader/model_loading.fs");
+	}
+
+	Shader* lightshader;
+	if (shaders.count("light") > 0)
+	{
+		lightshader = shaders["light"];
+	}
+	else
+	{
+		lightshader = shaders["light"] = new Shader("engine/graphic/shader/model_loading.vs", "engine/graphic/shader/light.fs.glsl");
+	}
 
 	audio.Shutdown();
 	audio.Init();
