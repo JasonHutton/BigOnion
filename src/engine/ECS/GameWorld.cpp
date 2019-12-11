@@ -89,7 +89,11 @@ void GameWorld::updateGameObjects(float deltaTime)
 */
 GameObject* GameWorld::getGameObjectById(std::string id)
 {
-	return gameObjects.at(id);
+	auto itr = gameObjects.find(id);
+	if (itr != gameObjects.end())
+	{
+		return itr->second;
+	}
 }
 
 /*
