@@ -90,16 +90,78 @@ Mesh Model::processMesh(aiMesh* mesh, const aiScene* scene)
 	{
 		Vertex vertex;
 		glm::vec3 vector;
+
+		_asm {
+			// vector.x = mesh->mVertices[i].x;
+			imul        eax, dword ptr[ebp - 9Ch], 0Ch
+			mov         ecx, dword ptr[mesh]
+			mov         edx, dword ptr[ecx + 0Ch]
+			movss       xmm0, dword ptr[edx + eax]
+			// movss       dword ptr[ebp - 0F0h], xmm0
+			movss         dword ptr[ebp - 0DCh], xmm0 // vertex.Position.x = x
+			// vector.y = mesh->mVertices[i].y;
+			//imul        eax, dword ptr[ebp - 9Ch], 0Ch
+			//mov         ecx, dword ptr[mesh]
+			//mov         edx, dword ptr[ecx + 0Ch]
+			movss       xmm0, dword ptr[edx + eax + 4]
+			// movss       dword ptr[ebp - 0ECh], xmm0
+			movss         dword ptr[ebp - 0D8h], xmm0  // vertex.Position.y = y
+			//	vector.z = mesh->mVertices[i].z;
+			/*imul        eax, dword ptr[ebp - 9Ch], 0Ch
+			mov         ecx, dword ptr[mesh]
+			mov         edx, dword ptr[ecx + 0Ch]*/
+			movss       xmm0, dword ptr[edx + eax + 8]
+			// movss       dword ptr[ebp - 0E8h], xmm0
+			movss       dword ptr[ebp - 0D4h], xmm0 // vertex.Position.z = z
+
+			//	vertex.Position = vector;
+			//mov         eax, dword ptr[ebp - 0F0h]
+			//mov         dword ptr[ebp - 0DCh], eax // x
+			//mov         ecx, dword ptr[ebp - 0ECh]
+			//mov         dword ptr[ebp - 0D8h], ecx // y
+			//mov         edx, dword ptr[ebp - 0E8h]
+			//mov         dword ptr[ebp - 0D4h], edx // z
+
+			// normals
+			//	vector.x = mesh->mNormals[i].x;
+			/*imul        eax, dword ptr[ebp - 9Ch], 0Ch
+			mov         ecx, dword ptr[mesh]*/
+			mov         edx, dword ptr[ecx + 10h]
+			movss       xmm0, dword ptr[edx + eax]
+			// movss       dword ptr[ebp - 0F0h], xmm0
+			movss         dword ptr[ebp - 0D0h], xmm0
+			//	vector.y = mesh->mNormals[i].y;
+			/*imul        eax, dword ptr[ebp - 9Ch], 0Ch
+			mov         ecx, dword ptr[mesh]
+			mov         edx, dword ptr[ecx + 10h]*/
+			movss       xmm0, dword ptr[edx + eax + 4]
+			// movss       dword ptr[ebp - 0ECh], xmm0
+			movss         dword ptr[ebp - 0CCh], xmm0
+			//	vector.z = mesh->mNormals[i].z;
+		/*	imul        eax, dword ptr[ebp - 9Ch], 0Ch
+			mov         ecx, dword ptr[mesh]
+			mov         edx, dword ptr[ecx + 10h]*/
+			movss       xmm0, dword ptr[edx + eax + 8]
+			// movss       dword ptr[ebp - 0E8h], xmm0
+			movss         dword ptr[ebp - 0C8h], xmm0
+			//	vertex.Normal = vector;
+			/*mov         eax, dword ptr[ebp - 0F0h]
+			mov         dword ptr[ebp - 0D0h], eax
+			mov         ecx, dword ptr[ebp - 0ECh]
+			mov         dword ptr[ebp - 0CCh], ecx
+			mov         edx, dword ptr[ebp - 0E8h]
+			mov         dword ptr[ebp - 0C8h], edx*/
+		}
 		// positions
-		vector.x = mesh->mVertices[i].x;
-		vector.y = mesh->mVertices[i].y;
-		vector.z = mesh->mVertices[i].z;
-		vertex.Position = vector;
-		// normals
-		vector.x = mesh->mNormals[i].x;
-		vector.y = mesh->mNormals[i].y;
-		vector.z = mesh->mNormals[i].z;
-		vertex.Normal = vector;
+		//vector.x = mesh->mVertices[i].x;
+		//vector.y = mesh->mVertices[i].y;
+		//vector.z = mesh->mVertices[i].z;
+		//vertex.Position = vector;
+		//// normals
+		//vector.x = mesh->mNormals[i].x;
+		//vector.y = mesh->mNormals[i].y;
+		//vector.z = mesh->mNormals[i].z;
+		//vertex.Normal = vector;
 		// texture coordinates
 		if (mesh->mTextureCoords[0])
 		{
