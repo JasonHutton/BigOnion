@@ -1,0 +1,9 @@
+audio:
+ name: "LoseMusic2"
+ component:
+ - type: "AudioPlayer"
+ - sound: "game/assets/sounds/lose2.mp3"
+ - volumeDB: 1.0
+ - is3D: 0
+ - isLooping: 1
+ - isStreaming: 0
