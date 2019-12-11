@@ -3,6 +3,7 @@
 
 ## Compiling
 Windows is our build target.
+Only x86 builds will work
 Please compile using Microsoft Visual Studio 2019.
 No special setup should be required beyond this.
 
