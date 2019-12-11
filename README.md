@@ -7,8 +7,8 @@ Only x86 builds will work
 Please compile using Microsoft Visual Studio 2019.
 No special setup should be required beyond this.
 
-## Git Repostiroy
-Github repoository is publicly accessible, here: https://github.com/JasonHutton/BigOnion.git
+## Git Repository
+Github repository is publicly accessible, here: https://github.com/JasonHutton/BigOnion.git
 The master branch should be used to build from.
 
 ## Controls
