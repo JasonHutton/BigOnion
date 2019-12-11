@@ -6,6 +6,9 @@ Windows is our build target.
 Please compile using Microsoft Visual Studio 2019.
 No special setup should be required beyond this.
 
+## Git Repostiroy
+Github repoository is publicly accessible, here: https://github.com/JasonHutton/BigOnion.git
+
 ## Controls
 
 Default controls are as follows:
