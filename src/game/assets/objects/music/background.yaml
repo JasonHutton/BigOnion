@@ -1,0 +1,11 @@
+audio:
+ name: "BackgroundMusic"
+ component:
+ - type: "AudioPlayer"
+ - sound: "game/assets/sounds/start.mp3"
+ - isMusic: 1
+ - volumeDB: 0.3
+ - is3D: 0
+ - isLooping: 1
+ - isStreaming: 0
+ - volume: 0.3
