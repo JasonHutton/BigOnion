@@ -93,6 +93,10 @@ public:
 	bool is3D = false;
 	bool isLooping = false;
 	bool isStreaming = false;
+
+	bool useSetVolume;
+	float volume; // Not really sure what's different here from volumeDb, no time to look into it.
+	bool isMusic = false;
 };
 
 // It probably makes more sense to try to handle individual component collections rather than all of them at once here. Fix later.
@@ -205,6 +209,15 @@ void Component_Load(YAML::Node node, GameObject* gObj, BOEngine* engine, Shader*
 					properties.id = atoi(sit->second.as<string>().c_str());
 					properties.useId = true;
 				}
+				else if (sit->first.as<string>().compare("volume") == 0)
+				{
+					properties.volume = atof(sit->second.as<string>().c_str());
+					properties.useSetVolume = true;
+				}
+				else if (sit->first.as<string>().compare("isMusic") == 0)
+				{
+					properties.isMusic = atoi(sit->second.as<string>().c_str());
+				}
 				/*else
 				{
 					std::cout << NodeType(sit->first) << " " << sit->first.as<string>() << std::endl;
@@ -250,6 +263,10 @@ void Component_Load(YAML::Node node, GameObject* gObj, BOEngine* engine, Shader*
 	if (properties.useAudioPlayer)
 	{
 		gObj->addComponent(new AudioPlayerComponent(*audio, properties.sound, properties.volumeDb, properties.is3D, properties.isLooping, properties.isStreaming));
+		if (properties.useSetVolume)
+		{
+			gObj->getComponent<AudioPlayerComponent>()->volume(properties.volume, properties.isMusic);
+		}
 	}
 }
 

@@ -177,11 +177,7 @@ void GameWorldHelper::initTestScene(BOEngine* engine)
 	engine->gameWorld->addGameObject(Audio_Load("game/assets/objects/sound/bigimpact.yaml", engine, NULL, camera, audio));
 
 	//background music
-	GameObject* background_music = new  GameObject("BackgroundMusic");
-	engine->gameWorld->addGameObject(background_music);
-			background_music->addComponent(new AudioPlayerComponent(*audio, "game/assets/sounds/start.mp3", 1, false, true, false));
-	background_music->getComponent<AudioPlayerComponent>()->onAddToGameWorld();
-	background_music->getComponent<AudioPlayerComponent>()->volume(0.3, true);
+	engine->gameWorld->addGameObject(Audio_Load("game/assets/objects/music/background.yaml", engine, NULL, camera, audio));
 
 	//win lose music
 	GameObject* win1_music = new  GameObject("WinMusic1");
@@ -368,11 +364,7 @@ void GameWorldHelper::initTestScene2(BOEngine* engine)
 	engine->gameWorld->addGameObject(Audio_Load("game/assets/objects/sound/bigimpact.yaml", engine, NULL, camera, audio));
 
 	//background music
-	GameObject* background_music = new  GameObject("BackgroundMusic");
-	engine->gameWorld->addGameObject(background_music);
-			background_music->addComponent(new AudioPlayerComponent(*audio, "game/assets/sounds/start.mp3", 1, false, true, false));
-	background_music->getComponent<AudioPlayerComponent>()->onAddToGameWorld();
-	background_music->getComponent<AudioPlayerComponent>()->volume(0.3, true);
+	engine->gameWorld->addGameObject(Audio_Load("game/assets/objects/music/background.yaml", engine, NULL, camera, audio));
 
 	//win lose music
 	GameObject* win1_music = new  GameObject("WinMusic1");
